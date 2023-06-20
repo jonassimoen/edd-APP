@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360px" height="112px" viewBox="0 0 360 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Bg</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-2">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-3">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-4">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-5">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-6">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-7">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-8">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-9">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-10">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-11">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-12">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-13">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-14">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-15">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-16">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-17">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-18">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-19">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-20">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-21">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-22">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-23">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-24">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-25">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-26">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-27">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-28">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-29">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-30">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-31">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-32">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-33">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-34">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-35">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-36">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-37">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-38">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-39">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-40">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-41">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-42">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-43">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-44">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-45">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-46">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-47">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-48">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-49">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-50">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-51">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-52">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-53">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-54">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-55">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-56">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-57">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-58">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-59">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <filter color-interpolation-filters="auto" id="filter-60">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0.250000 0"></feColorMatrix>
+        </filter>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="163.056292%" gradientTransform="translate(0.500000,0.500000),scale(0.311111,1.000000),translate(-0.500000,-0.500000)" id="radialGradient-61">
+            <stop stop-color="#16002B" stop-opacity="0.25" offset="0.00819493007%"></stop>
+            <stop stop-color="#16002B" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Views" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile" transform="translate(0.000000, -704.000000)">
+            <g id="Lineup" transform="translate(0.000000, 256.000000)">
+                <g id="Bg" transform="translate(0.000000, 448.000000)">
+                    <rect id="Rectangle" fill="#16002B" x="0" y="0" width="360" height="112"></rect>
+                    <g id="Graphical-element" filter="url(#filter-1)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(48.000000, 0.000000)" filter="url(#filter-2)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(96.000000, 0.000000)" filter="url(#filter-3)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(192.000000, 0.000000)" filter="url(#filter-4)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(288.000000, 0.000000)" filter="url(#filter-5)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(144.000000, 0.000000)" filter="url(#filter-6)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(240.000000, 0.000000)" filter="url(#filter-7)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(336.000000, 0.000000)" filter="url(#filter-8)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(0.000000, 28.000000)" filter="url(#filter-9)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(48.000000, 28.000000)" filter="url(#filter-10)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(96.000000, 28.000000)" filter="url(#filter-11)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(192.000000, 28.000000)" filter="url(#filter-12)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(288.000000, 28.000000)" filter="url(#filter-13)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(144.000000, 28.000000)" filter="url(#filter-14)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(240.000000, 28.000000)" filter="url(#filter-15)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(336.000000, 28.000000)" filter="url(#filter-16)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(0.000000, 56.000000)" filter="url(#filter-17)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(48.000000, 56.000000)" filter="url(#filter-18)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(96.000000, 56.000000)" filter="url(#filter-19)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(192.000000, 56.000000)" filter="url(#filter-20)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(288.000000, 56.000000)" filter="url(#filter-21)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(144.000000, 56.000000)" filter="url(#filter-22)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(240.000000, 56.000000)" filter="url(#filter-23)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(336.000000, 56.000000)" filter="url(#filter-24)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(0.000000, 84.000000)" filter="url(#filter-25)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(48.000000, 84.000000)" filter="url(#filter-26)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(96.000000, 84.000000)" filter="url(#filter-27)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(192.000000, 84.000000)" filter="url(#filter-28)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(288.000000, 84.000000)" filter="url(#filter-29)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(144.000000, 84.000000)" filter="url(#filter-30)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(240.000000, 84.000000)" filter="url(#filter-31)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(336.000000, 84.000000)" filter="url(#filter-32)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(24.000000, 84.000000)" filter="url(#filter-33)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(72.000000, 84.000000)" filter="url(#filter-34)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(120.000000, 84.000000)" filter="url(#filter-35)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(216.000000, 84.000000)" filter="url(#filter-36)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(312.000000, 84.000000)" filter="url(#filter-37)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(168.000000, 84.000000)" filter="url(#filter-38)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(264.000000, 84.000000)" filter="url(#filter-39)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(24.000000, 56.000000)" filter="url(#filter-40)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(72.000000, 56.000000)" filter="url(#filter-41)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(120.000000, 56.000000)" filter="url(#filter-42)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(216.000000, 56.000000)" filter="url(#filter-43)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(312.000000, 56.000000)" filter="url(#filter-44)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(168.000000, 56.000000)" filter="url(#filter-45)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(264.000000, 56.000000)" filter="url(#filter-46)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(24.000000, 28.000000)" filter="url(#filter-47)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(72.000000, 28.000000)" filter="url(#filter-48)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(120.000000, 28.000000)" filter="url(#filter-49)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(216.000000, 28.000000)" filter="url(#filter-50)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(312.000000, 28.000000)" filter="url(#filter-51)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(168.000000, 28.000000)" filter="url(#filter-52)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(264.000000, 28.000000)" filter="url(#filter-53)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(24.000000, 0.000000)" filter="url(#filter-54)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(72.000000, 0.000000)" filter="url(#filter-55)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(120.000000, 0.000000)" filter="url(#filter-56)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(216.000000, 0.000000)" filter="url(#filter-57)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(312.000000, 0.000000)" filter="url(#filter-58)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(168.000000, 0.000000)" filter="url(#filter-59)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <g id="Graphical-element" transform="translate(264.000000, 0.000000)" filter="url(#filter-60)">
+                        <g>
+                            <path d="M12,25.6667245 L12,28 L0,28 L0,14 L1.99990792,14 C1.99990792,20.4432931 6.47709236,25.6667245 12,25.6667245" id="Path" fill="#3DF4B4"></path>
+                            <path d="M12,0 L12,2.33332507 C17.5228226,2.33332507 22,7.55670691 22,14 L24,14 L24,0 L12,0" id="Path" fill="#3DF4B4"></path>
+                        </g>
+                    </g>
+                    <rect id="Rectangle" fill="url(#radialGradient-61)" x="0" y="0" width="360" height="112"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

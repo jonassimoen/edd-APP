@@ -1,0 +1,13 @@
+{
+  "menu": {
+    "newTeam": "New team",
+    "team": "My team",
+    "stats": "Statistics",
+    "rankings": "Ranking",
+    "rules": "Rules",
+    "admin": "Adminpage"
+  },
+  "admin": {
+    "welcome": "Welcome, fantasy magician {{name}}!"
+  }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="639px" height="608px" viewBox="0 0 639 608" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>fpl-pitch</title>
+    <g id="fpl-pitch" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Field" transform="translate(0.000000, 70.000000)">
+            <polygon id="Rectangle" stroke="#D3CBDC" stroke-width="1.99927798" fill="#FFFFFF" points="86.5509366 0 552.449063 0 639 538 0 538"></polygon>
+            <path d="M320,473 C369.436981,473 407.907723,438.525926 405.926807,396 C403.945892,353.474074 365.47515,319 320,319 C274.52485,319 236.054108,353.474074 234.073193,396 C232.092277,438.525926 270.563019,473 320,473 Z" id="Oval" stroke="#D3CBDC" stroke-width="1.99927798"></path>
+            <polygon id="Rectangle" fill="#D3CBDC" fill-rule="nonzero" points="24.3084042 395 233 395 232.90949 397 24 397"></polygon>
+            <polygon id="Rectangle" fill="#D3CBDC" fill-rule="nonzero" points="407 395 616.690583 395 617 397 407.090479 397"></polygon>
+            <path d="M319.5,173 C292.480261,173 269.249208,158.206816 257,136 L382,136 C369.750792,158.206816 346.5188,173 319.5,173 Z" id="Path" stroke="#D3CBDC" stroke-width="1.99927798"></path>
+            <polygon id="Rectangle" stroke="#D3CBDC" stroke-width="1.99927798" points="176.500279 0 463.420307 0 477 136 163 136"></polygon>
+            <polygon id="Rectangle" stroke="#D3CBDC" stroke-width="1.99927798" points="246.944179 0 393.021586 0 396 59 244 59"></polygon>
+        </g>
+    </g>
+</svg>

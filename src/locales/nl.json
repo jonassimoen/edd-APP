@@ -1,0 +1,105 @@
+{
+  "menu": {
+    "newTeam": "Nieuw team",
+    "team": "Mijn team",
+    "stats": "Statistieken",
+    "rankings": "Klassement",
+    "rules": "Regels",
+    "admin": "Adminpagina"
+  },
+  "home": {
+    "title": "Welkom bij Fantasy Team, speel mee !",
+    "welcome": "Koekoek!",
+    "playBtn": "Log in en speel mee",
+    "howDoesItWork": "Hoe werkt het?"
+  },
+  "general": {
+    "footballLineup": "Opstelling",
+    "footballAllPlayers": "Spelers",
+    "pick": "Kies",
+    "choosePlayer": "Kies speler",
+    "footballCalendar": "Wedstrijden"
+  },
+  "player": {
+    "midfielder": "Middenvelder",
+    "goalkeeper": "Doelman",
+    "defender": "Verdediger",
+    "attacker": "Aanvaller",
+    "goalkeeperShort": "DM"
+  },
+  "propertyRequired": "Vul alsjeblieft deze eigenschap in",
+  "property": {
+    "club": {
+      "name": {
+        "required": "Clubnaam verplicht"
+      },
+      "short": {
+        "required": "Korte clubnaam verplicht"
+      }
+    },
+    "player": {
+      "forename": {
+        "required": "Voornaam speler verplicht"
+      },
+      "surname": {
+        "required": "Achternaam speler verplicht"
+      },
+      "shortname": {
+        "required": "Korte naam speler verplicht"
+      },
+      "externalId": "Extern ID",
+      "position": "Positie",
+      "value": "Waarde",
+      "portraitUrl": {
+        "required": "Portret afbeelding vereist"
+      }
+    }
+  },
+  "form": {
+    "positionId": {
+      "tooltip": ""
+    }
+  },
+  "editBtn": "Wijzig",
+  "cancelBtn": "Annuleer",
+  "editTitle": "Wijzigen",
+  "clubTitle": "club",
+  "playerTitle": "speler",
+  "admin": {
+    "welcome": "Welkom, fantasy magiër {{name}}!",
+    "importing": {
+      "loading": "Bezig met importeren..."
+    }
+  },
+  "management": {
+    "player": {
+      "add": "Maak nieuwe speler aan",
+      "import": "Importeer spelers"
+    },
+    "club": {
+      "import": "Importeer clubs",
+      "add": "Nieuwe club"
+    },
+    "import": {
+      "confirmTitle": "Ben je zeker dat je wilt importeren?"
+    }
+  },
+  "modal": {
+    "create": "Creëer",
+    "edit": "Wijzig"
+  },
+  "createTitle": "Nieuwe",
+  "profile": {
+    "mail": "E-mailadres",
+    "firstname": "Voornaam",
+    "lastname": "Achternaam"
+  },
+  "stats": {
+    "allPlayersTable": {
+      "playerColumn": "Speler",
+      "clubColumn": "Club",
+      "positionColumn": "Positie",
+      "pointsColumn": "Punten"
+    }
+  }
+}
