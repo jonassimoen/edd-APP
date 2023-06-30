@@ -1,10 +1,8 @@
-import { Component, useEffect, useState } from "react";
-import { useSelector, useStore } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { FootballPicker } from "@/lib/football-picker";
 import { FootballMaxPositionsPicks, FootballPositionIds } from "@/lib/constants";
 import Decimal from "decimal.js";
-import { useTranslation } from "react-i18next";
-import { pick } from "lodash";
 import { useAddTeamMutation } from "@/services/teamsApi";
 
 declare type AbstractTeamProps = {
@@ -15,16 +13,16 @@ declare type AbstractTeamProps = {
 declare type Options = {
 	type?: string
 	mode?: string
-	useFootballValidatorOnPick?: boolean
+	usevalidatorOnPick?: boolean
 }
 
-const defaultLineUp = [
+const defaultLineUp: { id?: number, positionId: number }[] = [
 	{ id: null, positionId: 1 },
 	{ id: null, positionId: 2 }, { id: null, positionId: 2 }, { id: null, positionId: 2 }, { id: null, positionId: 2 },
 	{ id: null, positionId: 3 }, { id: null, positionId: 3 }, { id: null, positionId: 3 }, { id: null, positionId: 3 },
 	{ id: null, positionId: 4 }, { id: null, positionId: 4 }
 ];
-const defaultBench = [
+const defaultBench: { id?: number, positionId: number }[] = [
 	{ id: null, positionId: 1 },
 	{ id: null, positionId: 2 },
 	{ id: null, positionId: 3 },
@@ -38,29 +36,21 @@ declare type AbstractTeamState = {
 	captainId: number | undefined
 	viceCaptainId: number | undefined
 	teamName: string
-	teamNameInitial: string
+	initialTeamName: string
 	teamNameChanged: boolean
 	swapPlayerId: number | null
 	swapPlayer: Player | null
 	swappedFrom: string | null
-	deadlineWeekTransfer: Transfer[]
-	savingTeamPending: boolean
-	visibleWeekId: number | null
-	// boosters: Transfer[]
 	initialStarting: any[]
 	initialBench: any[]
 	initialBudget: number
-	draftTransfers: Transfer[]
 	activePositionFilter: number
 	teamUser?: any
-	footballValidator?: any
-	useFootballValidatorOnPick: boolean
+	validator?: any
 }
 
 function playersToValidatorFormat(players: any) {
-	return players
-		.filter((player: Player) => player && player.id)
-		.map((player: Player) => ({ Player: { id: player.id, positionId: player.positionId } }));
+	return players.filter((player: Player) => player && player.id);
 }
 
 const getInitializedList = (size: number, forStarting?: boolean) => {
@@ -77,32 +67,31 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam] = useAddTeamMutation();
+
 	const application = useSelector((state: StoreState.All) => state.application);
+
 	const [state, setState] = useState<AbstractTeamState>({
+		validator: FootballPicker(FootballMaxPositionsPicks, FootballPositionIds),
+
 		starting: getInitializedList(application.competition.lineupSize, true),
-		// visibleWeekId: options && options.mode === 'points' ? matches.info.displayWeek : this.props.matches.info.deadlineWeek,
-		visibleWeekId: 1,
 		bench: getInitializedList(application.competition.benchSize),
 		budget: application.competition.budget,
+
 		captainId: undefined,
 		viceCaptainId: undefined,
 		teamName: "",
-		teamNameInitial: "",
+		initialTeamName: "",
 		teamNameChanged: false,
 		swapPlayerId: null,
 		swapPlayer: null,
 		swappedFrom: null,
-		deadlineWeekTransfer: [],
-		draftTransfers: [],
-		savingTeamPending: false,
-		// boosters: [],
+
 		initialStarting: getInitializedList(application.competition.lineupSize, true),
 		initialBench: getInitializedList(application.competition.benchSize),
 		initialBudget: application.competition.budget,
+
 		teamUser: undefined,
-		footballValidator: FootballPicker(FootballMaxPositionsPicks, FootballPositionIds),
 		activePositionFilter: -1,
-		useFootballValidatorOnPick: !!(options && options.useFootballValidatorOnPick),
 	});
 
 	const setStarting = (starting: any[]) => {
@@ -115,10 +104,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		setState({ ...state, teamName });
 	};
 	const resetTeamName = () => {
-		setState({ ...state, teamName: state.teamNameInitial, teamNameChanged: false });
+		setState({ ...state, teamName: state.initialTeamName, teamNameChanged: false });
 	};
 	const updateTeamName = (teamId: number) => {
-		setState({ ...state, teamNameChanged: false, teamNameInitial: state.teamName });
+		setState({ ...state, teamNameChanged: false, initialTeamName: state.teamName });
 
 		// updateTeamName(teamId, this.state.teamName); 
 		// POST team/:teamid/name
@@ -126,9 +115,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const setCaptainId = (captainId: number) => {
 		setState({ ...state, captainId });
 	};
-	// const activateCacheChanges = () => {
-	//     setState({ ...state, cacheChanges: true });
-	// };
+
 	const setBudget = (budget: number) => {
 		setState({ ...state, budget });
 	};
@@ -141,13 +128,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		captainId?: number,
 		viceCaptainId?: number,
 		teamUser?: any,
-		visibleWeekId?: number | undefined,
 	) => {
-		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
-		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
-
-		state.footballValidator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
-
 		setState({
 			...state,
 			starting,
@@ -156,110 +137,91 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			teamName,
 			captainId,
 			viceCaptainId,
-			teamNameInitial: teamName,
+			initialTeamName: teamName,
 			teamUser: teamUser || null,
 			initialBench: bench,
 			initialStarting: starting,
 			initialBudget: budget,
-			draftTransfers: [],
-			visibleWeekId: visibleWeekId || state.visibleWeekId,
 		});
 	};
 
 	const pickPlayer = (player: Player) => {
-		const emptyPlayer = null;
+		const nilPlayer: any = null;
 
-		const wasInStartingOrBench: any = []
-			.concat(state.initialStarting as any, state.initialBench as any)
-			.find((item: Player) => item && player && item.id === player.id);
+		const alreadyInTeam: Player = [].concat(state.initialStarting, state.initialBench).find((item: Player) => item && player && item.id === player.id);
 
-		let startingHasEmptySpot = state.starting.find(teamPlayer => !teamPlayer) === emptyPlayer;
-		let benchHasEmptySpot = state.starting.find(teamPlayer => !teamPlayer) === emptyPlayer;
-
-		let playerValue = player.value;
-
-		if (wasInStartingOrBench) {
-			playerValue = wasInStartingOrBench.value;
-		}
-		if (state.useFootballValidatorOnPick) {
-			const pickRes = state.footballValidator.pick({ Player: { id: player.id, positionId: player.positionId } });
-			if (pickRes.result.Bench.includes(player.id)) {
-				startingHasEmptySpot = false;
-				benchHasEmptySpot = true;
-			} else {
-				startingHasEmptySpot = true;
-				benchHasEmptySpot = false;
-			}
+		let pValue = player && player.value;
+		if (alreadyInTeam) {
+			pValue = alreadyInTeam.value;
 		}
 
-		if (!state.useFootballValidatorOnPick) {
-			startingHasEmptySpot = state.starting
-				.find(teamPlayer => (teamPlayer && !teamPlayer.id) && (teamPlayer && teamPlayer.positionId === player.positionId));
+		const startingSpotEmpty = state.starting.find((p: Player) => (p && !p.id) && (p && p.positionId === player.positionId));
+		const benchSpotEmpty = state.bench.find((p: Player) => (p && !p.id) && (p && p.positionId === player.positionId));
 
-			benchHasEmptySpot = state.bench
-				.find(benchPlayer => (benchPlayer && !benchPlayer.id) && (benchPlayer && benchPlayer.positionId === player.positionId));
-		}
+		console.log("Starting empty spot", startingSpotEmpty);
+		console.log("Bench empty spot", benchSpotEmpty);
 
-		if (startingHasEmptySpot) {
-			let firstEmpyIndexInStarting: any = null;
-			state.starting.forEach((teamPlayer: any, index: number) => {
-				if (!firstEmpyIndexInStarting && (!teamPlayer || (teamPlayer && !teamPlayer.id && teamPlayer.positionId === player.positionId))) {
-					firstEmpyIndexInStarting = index;
+		// const pickingResult = state.validator.pick(player);
+		// if (pickingResult.result.Bench.includes(player.id)) {
+		// 	startingSpotEmpty = false;
+		// 	benchSpotEmpty = true;
+		// } else {
+		// 	startingSpotEmpty = true;
+		// 	benchSpotEmpty = false;
+		// }
+
+		if (startingSpotEmpty) {
+			let firstIndex: any = null;
+			state.starting.forEach(
+				(p: any, idx: number) => {
+					if (!firstIndex && (!p || (p && !p.id && p.positionId === player.positionId))) {
+						firstIndex = idx;
+					}
 				}
-			});
+			);
 
-			const starting = state.starting.map((teamPlayer: Player | null, playerIndex: number) => {
-				if (playerIndex === firstEmpyIndexInStarting) {
-					return !wasInStartingOrBench ? player : wasInStartingOrBench;
+			const starting = state.starting.map((p: Player | null, pIdx: number) => {
+				if (pIdx === firstIndex) {
+					return alreadyInTeam ? alreadyInTeam : player;
 				} else {
-					return teamPlayer;
+					return p;
 				}
 			});
 
-			const budget = parseFloat(new Decimal(state.budget.toFixed(2))
-				.minus(playerValue.toFixed(2))
-				.toString());
+			const budget = parseFloat(new Decimal(state.budget.toFixed(2)).minus(pValue.toFixed(2)).toString());
 
-			if (!state.captainId) {
+			if (!state.captainId && player.positionId !== 0) {
 				setState({ ...state, captainId: player.id });
-			} else if (!state.viceCaptainId) {
+			}
+			if (!state.viceCaptainId && player.positionId !== 0) {
 				setState({ ...state, viceCaptainId: player.id });
 			}
 
 			setState({ ...state, starting, budget });
-		} else if (benchHasEmptySpot) {
-			let firstEmpyIndexInBench: any = null;
-			state.bench.forEach((teamPlayer: any, index: number) => {
-				if (!firstEmpyIndexInBench && (!teamPlayer || (teamPlayer && !teamPlayer.id && teamPlayer.positionId === player.positionId))) {
-					firstEmpyIndexInBench = index;
-				}
-			});
+			console.log(starting);
+		}
 
-			const bench = state.bench.map((teamPlayer: Player | null, playerIndex: number) => {
-				if (playerIndex === firstEmpyIndexInBench) {
-					return !wasInStartingOrBench ? player : wasInStartingOrBench;
+		else if (benchSpotEmpty) {
+			let firstIndex: any = null;
+			state.bench.forEach(
+				(p: any, idx: number) => {
+					if (!firstIndex && (!p || (p && !p.id && p.positionId === player.positionId))) {
+						firstIndex = idx;
+					}
+				}
+			);
+
+			const bench = state.bench.map((p: Player | null, pIdx: number) => {
+				if (pIdx === firstIndex) {
+					return alreadyInTeam ? alreadyInTeam : player;
 				} else {
-					return teamPlayer;
+					return p;
 				}
 			});
 
-			const budget = parseFloat(new Decimal(state.budget.toFixed(2))
-				.minus(playerValue.toFixed(2))
-				.toString());
+			const budget = parseFloat(new Decimal(state.budget.toFixed(2)).minus(pValue.toFixed(2)).toString());
 
 			setState({ ...state, bench, budget });
-		}
-	};
-
-	const removePlayer = (player: Player) => {
-		const inStarting = state.starting.find((startingPlayer: Player | null) => !!(startingPlayer && startingPlayer.id === player.id));
-		const inBench = state.bench.find((benchPlayer: Player | null) => !!(benchPlayer && benchPlayer.id === player.id));
-
-		if (inStarting) {
-			removeStartingPlayer(player);
-		}
-		if (inBench) {
-			removeBenchPlayer(player);
 		}
 	};
 
@@ -273,14 +235,12 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				}
 			});
 
-		const budget = parseFloat(new Decimal(state.budget.toFixed(2))
-			.plus(player.value.toFixed(2))
-			.toString());
+		const budget = parseFloat(new Decimal(state.budget.toFixed(2)).plus(player.value.toFixed(2)).toString());
 
 		const captainId = state.captainId === player.id ? undefined : state.captainId;
 		const viceCaptainId = state.viceCaptainId === player.id ? undefined : state.captainId;
 
-		const removeResult = state.footballValidator.remove({ Player: { id: player.id, positionId: player.positionId } });
+		// const removeResult = state.validator.remove(player);
 
 		setState({ ...state, starting: newStarting, budget, captainId, viceCaptainId });
 	};
@@ -299,9 +259,21 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			.plus(player.value.toFixed(2))
 			.toString());
 
-		const removeResult = state.footballValidator.remove({ Player: { id: player.id, positionId: player.positionId } });
+		// const removeResult = state.validator.remove(player);
 
 		setState({ ...state, bench: newBench, budget });
+	};
+
+	const removePlayer = (player: Player) => {
+		const inStarting = state.starting.find((startingPlayer: Player | null) => !!(startingPlayer && startingPlayer.id === player.id));
+		const inBench = state.bench.find((benchPlayer: Player | null) => !!(benchPlayer && benchPlayer.id === player.id));
+
+		if (inStarting) {
+			removeStartingPlayer(player);
+		}
+		if (inBench) {
+			removeBenchPlayer(player);
+		}
 	};
 
 	const onCaptainSelect = (player: Player, captainFirstInList?: boolean) => {
@@ -344,47 +316,11 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	};
 
 	const onTeamNameChange = (name: string) => {
-		// TODO: teamNameChanged attribute in state
-		setState({ ...state, teamName: name });
+		setState({ ...state, teamName: name, teamNameChanged: true });
 	};
 
 	const validateTeam = (showNotifications?: boolean) => {
-		let valid = true;
-
-		const hasCaptain = !!state.captainId;
-		const hasViceCaptain = !!state.viceCaptainId;
-
-		const allStarting = state.starting.filter((player: any) => player && player.id)
-			.length === application.competition.lineupSize;
-		const allBenchPicked = state.bench.filter((player: any) => player && player.id)
-			.length === application.competition.benchSize;
-
-		const validTeamName = state.teamName.length > 2;
-
-		// if (!hasCaptain) {
-		// 	if (showNotifications) {
-		// 		notifications.show({ color: "orange", message: t("team.captainSelect") });
-		// 	}
-		// 	valid = false;
-		// }
-		// if (!hasViceCaptain) {
-		// 	if (showNotifications) {
-		// 		notifications.show({ color: "oange", message: t("team.viceCaptainSelect") });
-		// 	}
-		// 	valid = false;
-		// }
-		// if (!allStarting || !allBenchPicked) {
-		// 	if (showNotifications) {
-		// 		notifications.show({ color: "orange", message: t("team.teamLineupIncomplete") });
-		// 	}
-		// 	valid = false;
-		// }
-		// if (!validTeamName) {
-		// 	if (showNotifications) {
-		// 		notifications.show({ color: "orange", message: t("team.teamNameInvalid") });
-		// 	}
-		// 	valid = false;
-		// }
+		const valid = true;
 		return valid;
 	};
 
@@ -422,14 +358,14 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const startingIds = starting.map(player => player && player.id);
 			const benchIds = bench.map(player => player && player.id);
 
-			setState({ ...state, savingTeamPending: true });
+			setState({ ...state });
 
 			// create function: /team/add
 			return Promise.resolve(addTeam({
 				starting: starting.map((p: any) => p.id),
 				bench: bench.map((p: any) => p.id),
 				teamName: state.teamName,
-			})).then(() => setState({ ...state, savingTeamPending: false }));
+			})).then(() => setState({ ...state }));
 		} else {
 			return Promise.reject(
 				// notifications.show({ color: "orange", message: t("team.teamSaveFailed") })
@@ -479,9 +415,8 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	};
 
 	const onPlayerSwap = (player: Player) => {
-		console.log("SWAP RECEIVED PLAYER", player)
 		if (player && player.id === state.swapPlayerId) {
-			const pickBackResult = state.footballValidator.pick({ Player: { id: player.id, positionId: player.positionId } });
+			// const pickBackResult = state.validator.pick(player);
 			setState({ ...state, swapPlayerId: null, swappedFrom: null, swapPlayer: null });
 		}
 		else if (state.swapPlayerId) {
@@ -490,7 +425,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 			let starting = null;
 			let bench = null;
-			const captainId = null;
+			const captainId: number = null;
 
 			if (previousSwapFromLineup) {
 				starting = state.starting
@@ -530,7 +465,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 			const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
-			state.footballValidator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
+			// state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
 
 			setState({
 				...state, starting, bench, swappedFrom: null, swapPlayerId: null, swapPlayer: null, captainId: captainId || state.captainId
@@ -540,60 +475,47 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const isLineupSwap = state.starting
 				.find((startingPlayer: any) => startingPlayer && player && startingPlayer.id === player.id);
 			if (isLineupSwap) {
-				const removeResult = state.footballValidator.remove({ Player: { id: player.id, positionId: player.positionId } });
+				// const removeResult = state.validator.remove(player);
 			}
 			setState({ ...state, swapPlayerId: player.id, swapPlayer: player, swappedFrom: isLineupSwap ? "starting" : "bench" });
 		}
 	};
 
-	const isPickable = (player: Player, transferPick?: boolean) => {
+	const isPickable = (player: Player) => {
 		const notInStarting = !state.starting.find(startingPlayer => startingPlayer && startingPlayer.id && startingPlayer.id === player.id);
 		const notInBench = !state.bench.find(benchPlayer => benchPlayer && benchPlayer.id && benchPlayer.id === player.id);
 		const affordable = player.value <= state.budget;
-
-		const notTransferredOut = transferPick ? !state.draftTransfers.find(tf => tf.outId === player.id) : true;
 
 		const emptySpotInTeam =
 			!!state.starting.find(startingPlayer => !startingPlayer.id) ||
 			!!state.bench.find(benchPlayer => !benchPlayer.id);
 
 		const pickerSoFarFromSameClub =
-			state.starting.filter(startingPlayer => startingPlayer && startingPlayer.clubId === player.clubId)
-				.length
-			+
-			state.bench.filter(benchPlayer => benchPlayer && benchPlayer.clubId === player.clubId)
-				.length;
+			state.starting.filter(startingPlayer => startingPlayer && startingPlayer.clubId === player.clubId).length +
+			state.bench.filter(benchPlayer => benchPlayer && benchPlayer.clubId === player.clubId).length;
 
 		const underClubLimit = pickerSoFarFromSameClub < application.competition.teamSameClubPlayersLimit;
-		let validFootballLineup = true;
-		if (state.useFootballValidatorOnPick) {
-			validFootballLineup = state.footballValidator.canPick({ Player: { 'id': player.id, 'position_id': player.positionId } });
-		}
-		if (!state.useFootballValidatorOnPick) {
-			const playerPositionMaxPicks = []
-				.concat(state.starting as any, state.bench as any)
-				.filter((item: any) => item.positionId === player.positionId)
-				.length;
-			const playerPositionAlreadyPicked = []
-				.concat(state.starting as any, state.bench as any)
-				.filter((item: any) => item.positionId === player.positionId && item.id)
-				.length;
-			validFootballLineup = playerPositionAlreadyPicked < playerPositionMaxPicks;
-		}
-		// const validFootballLineup = state.footballValidator.canPick({ Player: { id: player.id, positionId: player.positionId } });
 
-		return notInStarting && notInBench && affordable && emptySpotInTeam && underClubLimit && notTransferredOut && validFootballLineup;
+		const playerPositionMaxPicks = [].concat(state.starting as any, state.bench as any)
+			.filter((p: Player) => p.positionId === player.positionId).length;
+		const playerPositionAlreadyPicked = [].concat(state.starting as any, state.bench as any)
+			.filter((p: Player) => p.positionId === player.positionId && p.id).length;
+
+		const validFootballLineup = playerPositionAlreadyPicked < playerPositionMaxPicks;
+
+		return notInStarting && notInBench && affordable && emptySpotInTeam && underClubLimit && validFootballLineup;
 	};
 
 	const isSwapable = (player: Player) => {
 		if (state.swapPlayerId && state.swapPlayer) {
-			const swapInitInLineup = state.starting
-				.find((startingPlayer: any) => startingPlayer && startingPlayer.id === state.swapPlayerId);
+			const swapInitInLineup = state.starting.find(
+				(startingPlayer: any) => startingPlayer && startingPlayer.id === state.swapPlayerId
+			);
+
 			if (swapInitInLineup) {
-				const canPick = state.footballValidator.canPick({ Player: { id: player.id, positionId: player.positionId } }, true);
+				const canPick = state.validator.canPick(player, true);
 				return (canPick); // TODO: upcomingMatches of player => check date is after now
 			} else {
-				console.log("swap init in ", swapInitInLineup)
 				const benchSwappedPlayer = state.bench.find((benchPlayer: any) => benchPlayer && benchPlayer.id === state.swapPlayerId);
 				const isBenchedGoalie = !player.inStarting && player.positionId === 1;
 				const swappedPlayerGoalieAndCurrentIteratedPlayerInBench =
@@ -603,18 +525,15 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				}
 
 				if (player && player.id) {
-					state.footballValidator.remove({ Player: { id: player.id, positionId: player.positionId } });
-					const canPick = state.footballValidator.canPick({ Player: { id: state.swapPlayerId, positionId: state.swapPlayer.positionId } }, true);
-					state.footballValidator.pick({ Player: { id: player.id, positionId: player.positionId } });
+					state.validator.remove(player);
+					const canPick = state.validator.canPick({ Player: { id: state.swapPlayerId, positionId: state.swapPlayer.positionId } }, true);
+					state.validator.pick(player);
 
 					return canPick;
 				} else {
 					return false;
 				}
 			}
-		// } else if (player) { // TODO: check visible weekId & deadlineWeek
-		// 	if (player.inStarting) { return false; }
-		// 	return false; // TODO check more
 		} else {
 			return true;
 		}
@@ -627,45 +546,44 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const onTransferPlayerOut = (player: Player, extra?: boolean) => {
 		removePlayer(player);
 
-		const draftTransfers = state.draftTransfers
-			.concat([{
-				inId: null,
-				outId: player.id,
-				outPlayer: player,
-				extra,
-				// weekId: matches.info.deadlineWeek
-			}]);
-		setState({ ...state, draftTransfers });
+		// const draftTransfers = state.draftTransfers
+		// 	.concat([{
+		// 		inId: null,
+		// 		outId: player.id,
+		// 		outPlayer: player,
+		// 		extra,
+		// 		// weekId: matches.info.deadlineWeek
+		// 	}]);
+		// setState({ ...state, draftTransfers });
 	};
 
 	const onTransferPlayerIn = (player: Player) => {
-		const draftTransfers = ([] as Transfer[]).concat(state.draftTransfers);
-		for (let tfIdx = 0; tfIdx < draftTransfers.length; tfIdx++) {
-			if (!draftTransfers[tfIdx].inId && draftTransfers[tfIdx].outPlayer?.positionId === player.positionId) {
-				draftTransfers[tfIdx].inId = player.id;
-				draftTransfers[tfIdx].inPlayer = player;
-				break;
-			}
-		}
-		setState({ ...state, draftTransfers });
+		// const draftTransfers = ([] as Transfer[]).concat(state.draftTransfers);
+		// for (let tfIdx = 0; tfIdx < draftTransfers.length; tfIdx++) {
+		// 	if (!draftTransfers[tfIdx].inId && draftTransfers[tfIdx].outPlayer?.positionId === player.positionId) {
+		// 		draftTransfers[tfIdx].inId = player.id;
+		// 		draftTransfers[tfIdx].inPlayer = player;
+		// 		break;
+		// 	}
+		// }
+		// setState({ ...state, draftTransfers });
 	};
 
 	const onDraftTransfersClear = () => {
 		const startingPlayersValidatorFormat = playersToValidatorFormat(state.initialStarting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(state.initialBench);
-		state.footballValidator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
+		state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
 
 		setState({
 			...state,
-			draftTransfers: [],
 			starting: state.initialStarting,
 			bench: state.initialBench,
 			budget: state.initialBudget
 		});
 	};
 	const onTransfersSubmit = (teamId: number) => {
-		const transfers = state.draftTransfers
-			.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
+		// const transfers = state.draftTransfers
+		// 	.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
 		// return teamsActions.submitTransfers(teamId, transfers)
 		// TODO: POST team/transfers/:teamid
 	};
@@ -684,9 +602,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		setState({ ...state, activePositionFilter: positionId });
 	};
 
-	const possibleFormation = () => {
-		return state.footballValidator.getPossibleFormations();
-	};
 
 	return (
 		<Component
@@ -714,34 +629,21 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			viceCaptainId={state.viceCaptainId}
 			teamName={state.teamName}
 			budget={state.budget}
-			// leagues={state.leagues}
-			savingTeamPending={state.savingTeamPending}
 			swapPlayerId={state.swapPlayerId}
 			swappedFrom={state.swappedFrom}
-			// initializedExternally={state.initializedExternally}
-			visibleWeekId={state.visibleWeekId}
 			teamNameChanged={state.teamNameChanged}
-			// teamPointsInfo={state.teamPointsInfo}
-			draftTransfers={state.draftTransfers}
-			// deadlineWeekTransfers={state.deadlineWeekTransfers}
-			// pastTransfers={state.pastTransfers}
 			initTeamState={initTeamState}
-			// activateCacheChanges={activateCacheChanges}
 			resetTeamName={resetTeamName}
 			onTeamNameUpdate={updateTeamName}
 			onTeamEdit={onTeamEdit}
 			onTeamSelectionsUpdate={onTeamSelectionsUpdate}
-			// onDayChange={onDayChange}
 			onPlayerSwap={onPlayerSwap}
 			loadAllMatches={loadAllMatches}
-			possibleFormation={possibleFormation}
 			onTransferPlayerOut={onTransferPlayerOut}
 			onDraftTransfersClear={onDraftTransfersClear}
 			onTransferPlayerIn={onTransferPlayerIn}
 			onTransfersSubmit={onTransfersSubmit}
 			onTransfersReset={onTransfersReset}
-			// boosters={state.boosters}
-			// isTeamOwner={state.isTeamOwner}
 			reloadUserTeams={reloadUserTeams}
 			teamUser={state.teamUser}
 			{...props}

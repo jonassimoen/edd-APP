@@ -52,7 +52,7 @@ export const startingListToPositionsList = (starting: any, rowConfig: number[], 
 
 
 export const getPlayerPositionHexColor = (player: any, theme: any) => {
-	const defaultHex = '#000';
+	const defaultHex = "#000";
 
 	if (!player) {
 		return defaultHex;
@@ -69,11 +69,11 @@ export const getPlayerPositionHexColor = (player: any, theme: any) => {
 	} else {
 		return defaultHex;
 	}
-}
+};
 
 export const firstLetterUppercased = (string: string) => {
 	return string.charAt(0).toUpperCase();
-}
+};
 
 type NotificationConfig = {
 	title: string
@@ -87,7 +87,7 @@ export const openErrorNotification = (config: NotificationConfig) => {
 			<b>{config.title}</b>
 		</React.Fragment>
 	));
-}
+};
 export const openSuccessNotification = (config: NotificationConfig) => {
 	toast.success(({ closeToast }) => (
 		<React.Fragment>
@@ -95,4 +95,4 @@ export const openSuccessNotification = (config: NotificationConfig) => {
 			{config.message}
 		</React.Fragment>
 	));
-}
+};

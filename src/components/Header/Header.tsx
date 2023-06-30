@@ -37,9 +37,9 @@ export const Header = () => {
 	const [state, setState] = useState({
 		windowWidth: window.innerWidth,
 		menuToggled: false,
-		pageTitle: '',
+		pageTitle: "",
 		showTeams: false,
-	})
+	});
 
 	console.log(teams);
 
@@ -65,7 +65,7 @@ export const Header = () => {
 		allMenuItems.push("admin");
 	}
 	const openSubMenu = (ev: any) => {
-		setState({ ...state, menuToggled: !state.menuToggled })
+		setState({ ...state, menuToggled: !state.menuToggled });
 	};
 
 	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
@@ -75,18 +75,18 @@ export const Header = () => {
 	};
 
 	if (authenticated && !userTeam) {
-		insertToMenuAtPosition(1, 'new');
+		insertToMenuAtPosition(1, "new");
 	}
 
 	if (user && userTeam) {
-		insertToMenuAtPosition(2, 'team');
+		insertToMenuAtPosition(2, "team");
 	}
 	const onLogout = (e: any) => {
-		secureLocalStorage.removeItem('token');
-		secureLocalStorage.removeItem('user');
+		secureLocalStorage.removeItem("token");
+		secureLocalStorage.removeItem("user");
 		dispatch(logout);
 		window.location.reload();
-	}
+	};
 
 
 	return (
@@ -96,11 +96,11 @@ export const Header = () => {
 					<div className="c-header__nav">
 						<Layout>
 							<div className="c-header__nav-inner">
-								<Link to="/"><h1 className="c-logo" style={{ backgroundImage: "url('/logo_fantasy.svg')" }}>Fantasy League</h1></Link>
+								<Link to="/"><h1 className="c-logo" style={{ backgroundImage: "url('/euro_DD_HOR.png')" }}>Fantasy League</h1></Link>
 								<nav className="c-nav-main js-nav" role="navigation">
 									<ul className="c-nav-main__list">
 										{(userTeam &&
-											<li className={`c-nav_item ${(isActive('team')) ? 'is-selected' : ' '}`}>
+											<li className={`c-nav_item ${(isActive("team")) ? "is-selected" : " "}`}>
 												<Link
 													className="c-nav-main__link"
 													to={`/team/${userTeam.id}`}
@@ -110,44 +110,44 @@ export const Header = () => {
 											</li>
 										) || null
 										}
-										{(!userTeam && isVisible('new') &&
-											<li className={`c-nav-main__item ${(isActive('new')) ? 'is-selected' : ''}`}>
+										{(!userTeam && isVisible("new") &&
+											<li className={`c-nav-main__item ${(isActive("new")) ? "is-selected" : ""}`}>
 												<Link
 													className="c-nav-main__link"
-													to={`/new`}
+													to={"/new"}
 												>
 													{t("menu.newTeam")}
 												</Link>
 											</li>
 										) || null
 										}
-										{(isVisible('stats') &&
-											<li className={`c-nav-main__item ${(isActive('stats')) ? 'is-selected' : ''}`}>
-												<Link className="c-nav-main__link" to="/stats">{t('menu.stats')}</Link>
+										{(isVisible("stats") &&
+											<li className={`c-nav-main__item ${(isActive("stats")) ? "is-selected" : ""}`}>
+												<Link className="c-nav-main__link" to="/stats">{t("menu.stats")}</Link>
 											</li>
 										) || null
 										}
-										{(isVisible('rankings') &&
-											<li className={`c-nav-main__item ${(isActive('rankings')) ? 'is-selected' : ''}`}>
-												<Link className="c-nav-main__link" to="/rankings">{t('menu.rankings')}</Link>
+										{(isVisible("rankings") &&
+											<li className={`c-nav-main__item ${(isActive("rankings")) ? "is-selected" : ""}`}>
+												<Link className="c-nav-main__link" to="/rankings">{t("menu.rankings")}</Link>
 											</li>
 										) || null
 										}
-										{(isVisible('rules') &&
-											<li className={`c-nav-main__item ${(isActive('rules')) ? 'is-selected' : ''}`}>
-												<Link className="c-nav-main__link" to="/rules">{t('menu.rules')}</Link>
+										{(isVisible("rules") &&
+											<li className={`c-nav-main__item ${(isActive("rules")) ? "is-selected" : ""}`}>
+												<Link className="c-nav-main__link" to="/rules">{t("menu.rules")}</Link>
 											</li>
 										) || null
 										}
-										{(isVisible('admin') &&
-											<li className={`c-nav-main__item ${(isActive('admin')) ? 'is-selected' : ''}`}>
-												<Link className="c-nav-main__link" to="/admin">{t('menu.admin')}</Link>
+										{(isVisible("admin") &&
+											<li className={`c-nav-main__item ${(isActive("admin")) ? "is-selected" : ""}`}>
+												<Link className="c-nav-main__link" to="/admin">{t("menu.admin")}</Link>
 											</li>
 										) || null
 										}
-										{(isVisible('logout') &&
-											<li className={`c-nav-main__item ${(isActive('logout')) ? 'is-selected' : ''}`}>
-												<Link className="c-nav-main__link" onClick={onLogout} to="/home">{t('menu.logout')}</Link>
+										{(isVisible("logout") &&
+											<li className={`c-nav-main__item ${(isActive("logout")) ? "is-selected" : ""}`}>
+												<Link className="c-nav-main__link" onClick={onLogout} to="/home">{t("menu.logout")}</Link>
 											</li>
 										) || null
 										}
@@ -162,55 +162,55 @@ export const Header = () => {
 				<nav className="c-nav-mobile js-nav-mobile">
 					<div className="c-nav-mobile__main">
 						<ul className="o-list c-nav-mobile__list">
-							{((userTeam && isVisible('points')) &&
-								<li className={`c-nav-mobile__item ${isActive('points') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/points">{t('menu.points')}</Link></li>) || null}
+							{((userTeam && isVisible("points")) &&
+								<li className={`c-nav-mobile__item ${isActive("points") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/points">{t("menu.points")}</Link></li>) || null}
 
-							{(userTeam && isVisible('team') &&
-								<li className={`c-nav-mobile__item ${isActive('team') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/team/${userTeam.id}`}>{t('menu.team')}</Link></li>) || null}
+							{(userTeam && isVisible("team") &&
+								<li className={`c-nav-mobile__item ${isActive("team") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/team/${userTeam.id}`}>{t("menu.team")}</Link></li>) || null}
 
-							{(userTeam && isVisible('edit') &&
-								<li className={`c-nav-mobile__item ${isActive('edit') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/edit/${userTeam.id}`}>{t('menu.transfers')}</Link>
+							{(userTeam && isVisible("edit") &&
+								<li className={`c-nav-mobile__item ${isActive("edit") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/edit/${userTeam.id}`}>{t("menu.transfers")}</Link>
 								</li>) || null}
 
-							{(!userTeam && isVisible('new') &&
-								<li className={`c-nav-mobile__item ${isActive('new') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/new">{t('menu.newTeam')}</Link></li>) || null
+							{(!userTeam && isVisible("new") &&
+								<li className={`c-nav-mobile__item ${isActive("new") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/new">{t("menu.newTeam")}</Link></li>) || null
 							}
 
-							{(userTeam && isVisible('transfers') &&
-								<li className={`c-nav-mobile__item ${isActive('transfers') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/transfers/${userTeam.id}`}>{t('menu.transfers')}</Link>
+							{(userTeam && isVisible("transfers") &&
+								<li className={`c-nav-mobile__item ${isActive("transfers") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/transfers/${userTeam.id}`}>{t("menu.transfers")}</Link>
 								</li>) || null}
 
-							{(isVisible('leagues') &&
-								<li className={`c-nav-mobile__item ${isActive('leagues') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/leagues">{t('menu.minicompetition')}</Link></li>) || null}
+							{(isVisible("leagues") &&
+								<li className={`c-nav-mobile__item ${isActive("leagues") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/leagues">{t("menu.minicompetition")}</Link></li>) || null}
 
-							{(isVisible('stats') &&
-								<li className={`c-nav-mobile__item ${isActive('stats') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/stats">{t('menu.stats')}</Link></li>) || null}
+							{(isVisible("stats") &&
+								<li className={`c-nav-mobile__item ${isActive("stats") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/stats">{t("menu.stats")}</Link></li>) || null}
 
-							{(isVisible('rankings') &&
-								<li className={`c-nav-mobile__item ${isActive('rankings') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/rankings">{t('menu.rankings')}</Link></li>) || null}
+							{(isVisible("rankings") &&
+								<li className={`c-nav-mobile__item ${isActive("rankings") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/rankings">{t("menu.rankings")}</Link></li>) || null}
 
-							{(isVisible('rules') &&
-								<li className={`c-nav-mobile__item ${isActive('rules') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/rules">{t('menu.rules')}</Link>
+							{(isVisible("rules") &&
+								<li className={`c-nav-mobile__item ${isActive("rules") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/rules">{t("menu.rules")}</Link>
 								</li>) || null}
 
 
-							{(isVisible('admin') &&
-								<li className={`c-nav-mobile__item ${(isActive('admin')) ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/admin">{t('menu.admin')}</Link>
+							{(isVisible("admin") &&
+								<li className={`c-nav-mobile__item ${(isActive("admin")) ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/admin">{t("menu.admin")}</Link>
 								</li>) || null}
 
-							{(isVisible('logout') &&
-								<li className={`c-nav-mobile__item ${isActive('logout') ? 'active' : ''}`}>
-									<Link className="c-nav-mobile__link" onClick={onLogout} to="/home">{t('menu.logout')}</Link>
+							{(isVisible("logout") &&
+								<li className={`c-nav-mobile__item ${isActive("logout") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={onLogout} to="/home">{t("menu.logout")}</Link>
 								</li>) || null}
 
 							{/* </li>) || null} */}

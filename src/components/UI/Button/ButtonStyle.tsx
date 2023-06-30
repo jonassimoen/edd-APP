@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import {Button} from 'antd';
+import {Button} from "antd";
 
-import 'antd/lib/button/style';
+import "antd/lib/button/style";
 import { theme } from "@/styles/theme";
 
 export const ButtonStyle = styled(Button)`

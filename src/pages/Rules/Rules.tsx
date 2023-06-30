@@ -7,12 +7,12 @@ type RulesProps = {
 }
 
 export const Rules = (props: RulesProps) => {
-    return (
-        <Row>
-            <Col span={24}>
-                <Title level={2}>{t('general.rules')}</Title>
+	return (
+		<Row>
+			<Col span={24}>
+				<Title level={2}>{t("general.rules")}</Title>
                 
-            </Col>
-        </Row>
-    );
-}
+			</Col>
+		</Row>
+	);
+};

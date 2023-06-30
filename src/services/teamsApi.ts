@@ -13,8 +13,8 @@ export const teamsApi = createApi({
 
 		addTeam: builder.mutation<Team, object>({
 			query: (data) => ({
-				url: `add`,
-				method: 'POST',
+				url: "add",
+				method: "POST",
 				body: data
 			})
 		}),

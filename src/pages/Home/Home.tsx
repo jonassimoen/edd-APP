@@ -34,13 +34,13 @@ export const Home = (props: HomeProps) => {
 				!authenticated ?
 					<Row className="login">
 						<Col md={12} lg={12} sm={24} xs={24}>
-							<h2>{t('home.title')}</h2>
-							<p>{t('home.welcome')}</p>
+							<h2>{t("home.title")}</h2>
+							<p>{t("home.welcome")}</p>
 						</Col>
 						<Col md={12} lg={12} sm={24} xs={24}>
 							<Link to="/login">
 								<Button className="playNow">
-									{t('home.playBtn')}
+									{t("home.playBtn")}
 								</Button>
 							</Link>
 						</Col>
@@ -50,7 +50,7 @@ export const Home = (props: HomeProps) => {
 
 			<Row gutter={32}>
 				<Col span={24}>
-					<Title level={2}>{t('home.howDoesItWork')}</Title>
+					<Title level={2}>{t("home.howDoesItWork")}</Title>
 				</Col>
 			</Row>
 			<Row gutter={32}>

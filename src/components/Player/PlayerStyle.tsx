@@ -4,51 +4,39 @@ import styled from "@/styles/styled-components";
 export const PlayerStyle = styled.div`
     position: relative;
     cursor: pointer;
-    width: 70px;
-    height: 50px;
-    text-align: ${(props: any) => !props.player ? 'center' : 'inherit'};
+    text-align: ${(props: any) => !props.player ? "center" : "inherit"};
+    width: 100px;
+    height: 60px;
 
     @media ${mediaQueries.mobileM} {
-        width: 60px;
+        width: 70px;
         height: 55px;
     }
 
     @media ${mediaQueries.tablet} {
-        width: 75px;
+        width: 85px;
         height: 70px;
     }
 
     .position-label {
         position: absolute;
         top: 100%;
-        bottom: 0;
-        left: 0;
-        right: 0;
         margin: 0 auto;
         text-align: center;
         color: white;
     }
+
+    margin: auto;
 ` as any;
 
-export const PlayerBg = styled.div`
-    background-size: 125%;
-    background-position-x: center;
-    background-image: url(${(props: any) => props.src});
-    position: absolute;
-    top: 4%;
-    left: 0;
-    right: 0;
-    bottom: 25%;
-    opacity: ${(props: any) => props.inactive ? 0.6 : 1};
-    max-width: 55%;
-    margin: 0 auto;
-
-    @media ${mediaQueries.mobileM} {
-        max-width: 65%;
-    }
+export const PlayerBg = styled.img`
+    position: relative;
+    width: 50px;
+    height: 50px;
 ` as any;
 
 export const Badge = styled.div`
+    background-color: ${(props: any) => props.bgColor};
     position: absolute;
     top: 75%;
     bottom: 0;
@@ -58,36 +46,24 @@ export const Badge = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${(props: any) => props.bgColor};
-
-    @media ${mediaQueries.tablet} {
-        padding: 0 5px;
-        padding-right: ${(props: any) => props.paddingRight}px;
-        overflow: hidden;
-    }
 
     span {
         font-weight: 400;
-        color: black;
-        line-height: 1.1;
-        font-size: 9px;
-        white-space: nowrap;
         text-overflow: ellipsis;
-        overflow: hidden;
-        margin: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		font-size: 12px;
+		line-height: 1.1;
 
-        @media ${mediaQueries.mobileM} {
-            font-size: 10px;
-            margin: 2px;
-            margin-top: 4px;
-        }
-        color: ${(props: any) => props.color};
+		@media ${mediaQueries.mobileM} {
+			font-size: 10px;
+		}
 
-        @media ${mediaQueries.tablet} {
-            font-family: inherit;
-            font-size: 11px;
-            font-weight: bold;
-        }
+		@media ${mediaQueries.tablet} {
+			font-family: inherit;
+			font-size: 12px;
+			font-weight: bold;
+		}
     }
 ` as any;
 
@@ -113,7 +89,7 @@ export const Value = styled.div`
 	h4 {
 		font-family: Aeonik,"Helvetica Neue",Helvetica,Arial,sans-serif;
 		font-weight: 400;
-		color: ${(props: any) => props.benchPlayer ? '#000' : '#000'};
+		color: ${(props: any) => props.benchPlayer ? "#000" : "#000"};
 		line-height: 1.1;
 		white-space: nowrap;
 		margin: 0;

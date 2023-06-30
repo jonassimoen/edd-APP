@@ -44,7 +44,10 @@ html {
         background: theme;
     }
 
-    background-color: #f2f0f4
+    background-color: #f2f0f4;
+    @media screen-md {
+        background-color: red !important;
+    }
 }
 
 body {

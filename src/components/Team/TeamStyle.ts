@@ -48,7 +48,7 @@ export const TeamStyle = styled.div`
     @media ${mediaQueries.mobileM} {
         padding: 0px 0 30px;
         height: ${(props: TeamProps) => (props.heightRatio / props.widthRatio) * 1.5 * 375}px;
-        margin: ${(props: TeamProps) => (props.centerAligned ? '0 auto;' : 'inherit')};
+        margin: ${(props: TeamProps) => (props.centerAligned ? "0 auto;" : "inherit")};
     }
 
     @media ${mediaQueries.tablet} {

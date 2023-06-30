@@ -31,322 +31,322 @@ declare type GameManagementState = {
 }
 
 export const GameManagement = () => {
-    const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
-    const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
-    const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
-    const [importMatches, { data: imports, isLoading: isImportMatchesLoading, isError: isImportMatchesError, error: importMatchesError, isSuccess: isImportMatchesSuccess }] = useImportMatchesMutation();
+	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
+	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
+	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
+	const [importMatches, { data: imports, isLoading: isImportMatchesLoading, isError: isImportMatchesError, error: importMatchesError, isSuccess: isImportMatchesSuccess }] = useImportMatchesMutation();
 
-    const [createMatch] = useCreateMatchMutation();
-    const [updateMatch] = useUpdateMatchMutation();
-    const [state, setState] = useState<GameManagementState>({
-        openEditModal: false,
-        openCreateModal: false,
-        openImportModal: false,
-    });
-    const { t } = useTranslation();
+	const [createMatch] = useCreateMatchMutation();
+	const [updateMatch] = useUpdateMatchMutation();
+	const [state, setState] = useState<GameManagementState>({
+		openEditModal: false,
+		openCreateModal: false,
+		openImportModal: false,
+	});
+	const { t } = useTranslation();
 
-    const ScoreMatchEdit =
+	const ScoreMatchEdit =
         <>
-            <Row gutter={16}>
-                <Col span={12}>
-                    <FormItem
-                        name={'homeScore'}
-                        label={'Home'}
-                        rules={([{
-                            required: true,
-                            message: t('property.match.homescore.required')
-                        }])}
-                    >
-                        <Input />
-                    </FormItem>
-                </Col>
-                <Col span={12}>
-                    <FormItem
-                        name={'awayScore'}
-                        label={'Away'}
-                        rules={([{
-                            required: true,
-                            message: t('property.match.awayscore.required')
-                        }])}
-                    >
-                        <Input />
-                    </FormItem>
-                </Col>
-            </Row>
-        </>
+        	<Row gutter={16}>
+        		<Col span={12}>
+        			<FormItem
+        				name={"homeScore"}
+        				label={"Home"}
+        				rules={([{
+        					required: true,
+        					message: t("property.match.homescore.required")
+        				}])}
+        			>
+        				<Input />
+        			</FormItem>
+        		</Col>
+        		<Col span={12}>
+        			<FormItem
+        				name={"awayScore"}
+        				label={"Away"}
+        				rules={([{
+        					required: true,
+        					message: t("property.match.awayscore.required")
+        				}])}
+        			>
+        				<Input />
+        			</FormItem>
+        		</Col>
+        	</Row>
+        </>;
 
-    const MatchCreateForm =
+	const MatchCreateForm =
         <>
-            <Row gutter={16}>
-                <Col span={12}>
-                    <FormItem
-                        name={'date'}
-                        label={'Date'}
-                        getValueProps={(i: string) => ({ value: dayjs(i) || dayjs('') })}
-                        rules={([{
-                            required: true,
-                            message: t('property.match.date.required')
-                        }])}
-                    >
-                        <DatePicker
-                            showTime={true}
-                            locale={locale}
-                            defaultPickerValue={dayjs()}
-                            allowClear={false}
-                        // format={["DD/MM/YYYY HH:mm", "YYYY-MM-DD\THH:mm:ss.SSS\Z"]}
-                        />
-                    </FormItem>
-                </Col>
-                <Col span={12}>
-                    <FormItem
-                        name={'weekId'}
-                        label={'Week'}
-                        rules={([{
-                            required: true,
-                            message: t('property.match.week.required').toString()
-                        }])}
-                    >
-                        <Select
-                            keyProperty="id"
-                            textProperty="name"
-                            placeholder={"Week"}
-                            values={weeks || []}
-                            onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
-                        />
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row gutter={16}>
-                <Col span={12}>
-                    <FormItem
-                        name={'homeId'}
-                        label={'Home'}
-                        rules={([
-                            {
-                                required: true,
-                                message: t('property.match.home.required')
-                            },
-                            {
-                                message: t('property.match.differentClubs'),
-                                validator: (_: any, value: number) => {
-                                    if (state.selectedAwayId !== value) {
-                                        return Promise.resolve();
-                                    } else {
-                                        return Promise.reject("Same value for home and club");
-                                    }
-                                }
-                            }
-                        ])}
-                    >
-                        <Select
-                            keyProperty="id"
-                            textProperty="name"
-                            placeholder={"Home"}
-                            values={clubs || []}
-                            onChange={(value: number) => setState({ ...state, selectedHomeId: value })}
-                        />
-                    </FormItem>
-                </Col>
-                <Col span={12}>
-                    <FormItem
-                        name={'awayId'}
-                        label={'Away'}
-                        rules={([
-                            {
-                                required: true,
-                                message: t('property.match.away.required')
-                            },
-                            {
-                                message: t('property.match.differentClubs'),
-                                validator: (_: any, value: number) => {
-                                    if (state.selectedHomeId !== value) {
-                                        return Promise.resolve();
-                                    } else {
-                                        return Promise.reject("Same value for home and club");
-                                    }
-                                }
-                            }
-                        ])}
-                    >
-                        <Select
-                            keyProperty="id"
-                            textProperty="name"
-                            placeholder={"Away"}
-                            values={clubs || []}
-                            onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
-                        />
-                    </FormItem>
-                </Col>
-            </Row>
-        </>
-    return (
-        <>
-            <Row align='middle'>
-                <Col lg={16} md={10}>
-                    <Title level={2}>Game management</Title>
-                </Col>
+        	<Row gutter={16}>
+        		<Col span={12}>
+        			<FormItem
+        				name={"date"}
+        				label={"Date"}
+        				getValueProps={(i: string) => ({ value: dayjs(i) || dayjs("") })}
+        				rules={([{
+        					required: true,
+        					message: t("property.match.date.required")
+        				}])}
+        			>
+        				<DatePicker
+        					showTime={true}
+        					locale={locale}
+        					defaultPickerValue={dayjs()}
+        					allowClear={false}
+        					// format={["DD/MM/YYYY HH:mm", "YYYY-MM-DD\THH:mm:ss.SSS\Z"]}
+        				/>
+        			</FormItem>
+        		</Col>
+        		<Col span={12}>
+        			<FormItem
+        				name={"weekId"}
+        				label={"Week"}
+        				rules={([{
+        					required: true,
+        					message: t("property.match.week.required").toString()
+        				}])}
+        			>
+        				<Select
+        					keyProperty="id"
+        					textProperty="name"
+        					placeholder={"Week"}
+        					values={weeks || []}
+        					onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
+        				/>
+        			</FormItem>
+        		</Col>
+        	</Row>
+        	<Row gutter={16}>
+        		<Col span={12}>
+        			<FormItem
+        				name={"homeId"}
+        				label={"Home"}
+        				rules={([
+        					{
+        						required: true,
+        						message: t("property.match.home.required")
+        					},
+        					{
+        						message: t("property.match.differentClubs"),
+        						validator: (_: any, value: number) => {
+        							if (state.selectedAwayId !== value) {
+        								return Promise.resolve();
+        							} else {
+        								return Promise.reject("Same value for home and club");
+        							}
+        						}
+        					}
+        				])}
+        			>
+        				<Select
+        					keyProperty="id"
+        					textProperty="name"
+        					placeholder={"Home"}
+        					values={clubs || []}
+        					onChange={(value: number) => setState({ ...state, selectedHomeId: value })}
+        				/>
+        			</FormItem>
+        		</Col>
+        		<Col span={12}>
+        			<FormItem
+        				name={"awayId"}
+        				label={"Away"}
+        				rules={([
+        					{
+        						required: true,
+        						message: t("property.match.away.required")
+        					},
+        					{
+        						message: t("property.match.differentClubs"),
+        						validator: (_: any, value: number) => {
+        							if (state.selectedHomeId !== value) {
+        								return Promise.resolve();
+        							} else {
+        								return Promise.reject("Same value for home and club");
+        							}
+        						}
+        					}
+        				])}
+        			>
+        				<Select
+        					keyProperty="id"
+        					textProperty="name"
+        					placeholder={"Away"}
+        					values={clubs || []}
+        					onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
+        				/>
+        			</FormItem>
+        		</Col>
+        	</Row>
+        </>;
+	return (
+		<>
+			<Row align='middle'>
+				<Col lg={16} md={10}>
+					<Title level={2}>Game management</Title>
+				</Col>
 
-                <Col lg={4} md={7}>
-                    <Button
-                        style={{ width: '100%' }}
-                        icon={<DownloadOutlined />}
-                        onClick={() => setState({ ...state, openImportModal: true })}
-                        type="default"
-                        disabled={isImportMatchesLoading}
-                    >{t(`management.game.import`)}
-                    </Button>
-                </Col>
-                <Col lg={4} md={7}>
-                    <Button
-                        style={{ width: '100%' }}
-                        icon={<PlusOutlined />}
-                        onClick={() => setState({ ...state, openCreateModal: true })}
-                        type="primary"
-                    >
-                        {t(`management.game.add`)}
-                    </Button>
-                </Col>
-            </Row>
-            {matches && (
-                <Table
-                    loading={matchesLoading}
-                    dataSource={matches}
-                    rowKey={"id"}
-                    size="small"
-                    bordered
-                    rowClassName={"ant-table-row"}
-                    pagination={{ position: ['bottomCenter'], showSizeChanger: false}}
-                    columns={[
-                        {
-                            title: 'ID',
-                            dataIndex: 'id',
-                            width: '5%',
-                            render: (txt: number, record: any) => {
-                                return (
-                                    <p>{txt}</p>
-                                )
-                            }
-                        },
-                        {
-                            title: 'Date',
-                            dataIndex: 'date',
-                            width: '25%',
-                            render: (date: Date, record: any) => {
-                                return (
-                                    <p>{date.toLocaleString()}</p>
-                                )
-                            }
-                        },
-                        {
-                            title: 'Home',
-                            dataIndex: 'home',
-                            width: '25%',
-                            render: (club: Club, record: any) => {
-                                return (
-                                    <p>{club?.name}</p>
-                                )
-                            }
-                        },
-                        {
-                            title: 'Away',
-                            dataIndex: 'away',
-                            width: '25%',
-                            render: (club: Club, record: any) => {
-                                return (
-                                    <p>{club?.name}</p>
-                                )
-                            }
-                        },
-                        {
-                            title: 'Score',
-                            dataIndex: 'homeScore',
-                            width: '10%',
-                            align: 'center',
-                            render: (txt: string, record: Match) => {
-                                if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now()) {
-                                    if (record.homeScore !== -1 && record.awayScore !== -1) {
-                                        return (<p>{record.homeScore} - {record.awayScore}</p>);
-                                    } else {
-                                        return (<QuestionOutlined />)
-                                    }
-                                } else {
-                                    return (<CloseOutlined />);
-                                }
-                            }
-                        },
-                        {
-                            dataIndex: 'operation',
-                            width: '10%',
-                            align: 'center',
-                            render: (_: any, record: any) => {
-                                if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now()) {
-                                    return (<Link to={`events/${record.id}`}>
-                                        <Button
-                                            icon={<SkinOutlined />}
-                                            shape={'circle'}
-                                            type="primary"
-                                        />
-                                    </Link>)
-                                } else {
-                                    return (<Button
-                                        icon={<EditOutlined />}
-                                        onClick={() => setState({ ...state, openEditModal: true, editObject: record })}
-                                        shape={'circle'}
-                                        type="primary"
-                                    />)
-                                }
-                            }
-                        }
-                    ]}
-                />
-            )}
-            <EditModal
-                open={state.openEditModal}
-                onCreate={(match: Match) => { updateMatch(match); setState({ ...state, openEditModal: false }); }}
-                onCancel={() => setState({ ...state, openEditModal: false })}
-                object={state.editObject!}
-                type='match'
-                action='edit'
-            >
-                <FormItem
-                    name={'id'}
-                    hidden={true}
-                >
-                    <InputNumber />
-                </FormItem>
-                {MatchCreateForm}
+				<Col lg={4} md={7}>
+					<Button
+						style={{ width: "100%" }}
+						icon={<DownloadOutlined />}
+						onClick={() => setState({ ...state, openImportModal: true })}
+						type="default"
+						disabled={isImportMatchesLoading}
+					>{t("management.game.import")}
+					</Button>
+				</Col>
+				<Col lg={4} md={7}>
+					<Button
+						style={{ width: "100%" }}
+						icon={<PlusOutlined />}
+						onClick={() => setState({ ...state, openCreateModal: true })}
+						type="primary"
+					>
+						{t("management.game.add")}
+					</Button>
+				</Col>
+			</Row>
+			{matches && (
+				<Table
+					loading={matchesLoading}
+					dataSource={matches}
+					rowKey={"id"}
+					size="small"
+					bordered
+					rowClassName={"ant-table-row"}
+					pagination={{ position: ["bottomCenter"], showSizeChanger: false}}
+					columns={[
+						{
+							title: "ID",
+							dataIndex: "id",
+							width: "5%",
+							render: (txt: number, record: any) => {
+								return (
+									<p>{txt}</p>
+								);
+							}
+						},
+						{
+							title: "Date",
+							dataIndex: "date",
+							width: "25%",
+							render: (date: Date, record: any) => {
+								return (
+									<p>{date.toLocaleString()}</p>
+								);
+							}
+						},
+						{
+							title: "Home",
+							dataIndex: "home",
+							width: "25%",
+							render: (club: Club, record: any) => {
+								return (
+									<p>{club?.name}</p>
+								);
+							}
+						},
+						{
+							title: "Away",
+							dataIndex: "away",
+							width: "25%",
+							render: (club: Club, record: any) => {
+								return (
+									<p>{club?.name}</p>
+								);
+							}
+						},
+						{
+							title: "Score",
+							dataIndex: "homeScore",
+							width: "10%",
+							align: "center",
+							render: (txt: string, record: Match) => {
+								if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now()) {
+									if (record.homeScore !== -1 && record.awayScore !== -1) {
+										return (<p>{record.homeScore} - {record.awayScore}</p>);
+									} else {
+										return (<QuestionOutlined />);
+									}
+								} else {
+									return (<CloseOutlined />);
+								}
+							}
+						},
+						{
+							dataIndex: "operation",
+							width: "10%",
+							align: "center",
+							render: (_: any, record: any) => {
+								if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now()) {
+									return (<Link to={`events/${record.id}`}>
+										<Button
+											icon={<SkinOutlined />}
+											shape={"circle"}
+											type="primary"
+										/>
+									</Link>);
+								} else {
+									return (<Button
+										icon={<EditOutlined />}
+										onClick={() => setState({ ...state, openEditModal: true, editObject: record })}
+										shape={"circle"}
+										type="primary"
+									/>);
+								}
+							}
+						}
+					]}
+				/>
+			)}
+			<EditModal
+				open={state.openEditModal}
+				onCreate={(match: Match) => { updateMatch(match); setState({ ...state, openEditModal: false }); }}
+				onCancel={() => setState({ ...state, openEditModal: false })}
+				object={state.editObject!}
+				type='match'
+				action='edit'
+			>
+				<FormItem
+					name={"id"}
+					hidden={true}
+				>
+					<InputNumber />
+				</FormItem>
+				{MatchCreateForm}
 
-            </EditModal>
-            <EditModal
-                object={{} as Match}
-                open={state.openCreateModal}
-                onCreate={(match: Match) => { createMatch(match); setState({ ...state, openCreateModal: false }); }}
-                onCancel={() => setState({ ...state, openCreateModal: false })}
-                type='match'
-                action='create'
-            >
-                {MatchCreateForm}
+			</EditModal>
+			<EditModal
+				object={{} as Match}
+				open={state.openCreateModal}
+				onCreate={(match: Match) => { createMatch(match); setState({ ...state, openCreateModal: false }); }}
+				onCancel={() => setState({ ...state, openCreateModal: false })}
+				type='match'
+				action='create'
+			>
+				{MatchCreateForm}
 
-            </EditModal>
+			</EditModal>
 
-            <Modal
-                title={t('management.import.confirmTitle')}
-                open={state.openImportModal}
-                onOk={() => {
-                    toast.loading(t('admin.importing.loading'), { toastId: "loading-importing-games" });
-                    importMatches().then(() => {
-                        toast.dismiss('loading-importing-games');
-                        openSuccessNotification({ title: "Import successfull", message: `${imports.count} games imported` });
-                    }).catch(() => {
-                        openErrorNotification({ title: "Importing games failed" })
-                    });
-                    setState({ ...state, openImportModal: false });
-                }}
-                onCancel={() => setState({ ...state, openImportModal: false })}
-                cancelText={t('cancelBtn')}
-            >
+			<Modal
+				title={t("management.import.confirmTitle")}
+				open={state.openImportModal}
+				onOk={() => {
+					toast.loading(t("admin.importing.loading"), { toastId: "loading-importing-games" });
+					importMatches().then(() => {
+						toast.dismiss("loading-importing-games");
+						openSuccessNotification({ title: "Import successfull", message: `${imports.count} games imported` });
+					}).catch(() => {
+						openErrorNotification({ title: "Importing games failed" });
+					});
+					setState({ ...state, openImportModal: false });
+				}}
+				onCancel={() => setState({ ...state, openImportModal: false })}
+				cancelText={t("cancelBtn")}
+			>
                 Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan? Het importeren kan enkele seconden tot minuten duren!
-            </Modal >
-        </>
-    );
-}
+			</Modal >
+		</>
+	);
+};

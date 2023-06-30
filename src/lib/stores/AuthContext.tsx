@@ -40,7 +40,7 @@ export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children })
 	});
 
 	useEffect(() => {
-		if (secureLocalStorage.getItem('token')) {
+		if (secureLocalStorage.getItem("token")) {
 			console.log("found token");
 			if (!isFetchingProfile) {
 				console.log("FETCHING PROFILE");
@@ -65,7 +65,7 @@ export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children })
 						teams: data.teams,
 					});
 					console.log("STATE BEFORE FETCH TEAMS",userAuth);
-				})
+				});
 			}
 		}
 	}, [secureLocalStorage]);
@@ -98,4 +98,4 @@ export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children })
 
 export const useAuth = () => {
 	return useContext(AuthContext);
-}
+};

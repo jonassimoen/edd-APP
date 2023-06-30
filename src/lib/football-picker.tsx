@@ -1,66 +1,156 @@
-export const FootballPicker = (maxPositions: { [key: string]: { min: number, max: number } }, positionsIds: { [key: string]: number }) => {
-	const result: { [key: string]: number[] } = {
+declare type PositionsMinMax = {
+	[key: string]: { min: number, max: number },
+}
+
+declare type PositionsIds = {
+	[key: string]: number,
+}
+
+declare type Player = {
+	id: number,
+	positionId: number,
+}
+
+export const FootballPicker = (maxPositionsPicks: PositionsMinMax, positionsIds: PositionsIds) => {
+	let res: { [key: string]: number[] } = {
+		Coach: [],
 		Goalkeeper: [],
 		Defender: [],
 		Midfielder: [],
 		Forward: [],
-		Bench: [],
+		Bench: []
 	};
 
 	const pickAtPosition = (positionName: string, playerId: number) => {
-		result[positionName].push(playerId);
+		res[positionName].push(playerId);
 	};
 
-	const setPositionLimit = (positionName: string, limit: { min: number, max: number }) => {
-		maxPositions[positionName] = limit;
+	const setPositionPickLimit = (positionName: string, limits: { min: number, max: number }) => {
+		maxPositionsPicks[positionName] = limits;
 	};
 
-	const set = (starting: { Player: any }[], bench: { Player: any }[]) => {
-		result.Goalkeeper = [];
-		result.Defender = [];
-		result.Midfielder = [];
-		result.Forward = [];
-		result.Bench = [];
+	const getPositionNameById = (id: number) => {
+		return Object.keys(positionsIds).find((name: string) => positionsIds[name] === id);
+	};
 
-		starting.forEach((player: { Player: any }) => {
-			result[getPositionNameById(player.Player.positionId)].push(player.Player.id);
+	const getCombinations = (maxAllowedPlayersPerPosition: { [key: string]: number }) => {
+		const combis: string[] = [];
+		const current = {
+			defenderN: Math.max(res.Defender.length, maxPositionsPicks.Defender.min),
+			midfielderN: Math.max(res.Midfielder.length, maxPositionsPicks.Midfielder.min),
+			forwardN: Math.max(res.Forward.length, maxPositionsPicks.Forward.min),
+		};
+
+		for (let defI = current.defenderN; defI <= maxAllowedPlayersPerPosition.Defender; defI++) {
+			for (let midI = current.midfielderN; midI <= maxAllowedPlayersPerPosition.Midfielder; midI++) {
+				for (let fwI = current.forwardN; fwI <= maxAllowedPlayersPerPosition.Forward; fwI++) {
+					const combi = `${defI}-${midI}-${fwI}`;
+					if ((defI + midI + fwI == 10) && (combis.indexOf(combi) === -1)) {
+						combis.push(combi);
+					}
+				}
+			}
+		}
+		return combis;
+	};
+
+	const getMaxAllowedForPositions = (positionsNames: string[]) => {
+		const maxPerPos: { [key: string]: number } = {
+			Coach: 1,
+			Goalkeeper: 1,
+			Defender: 0,
+			Midfielder: 0,
+			Forward: 0,
+			Bench: 0
+		};
+
+		const nrFieldPlayers = 10;
+
+		// for each position => check how many players can be selected for this position
+		// considering current selection of other positions & min/max per position
+		positionsNames.forEach((positionName: string) => {
+			const amountPickedAtThisPosition = res[positionName].length;
+			const otherPositions = positionsNames.filter((pos: string) => pos !== positionName);
+
+			let left = nrFieldPlayers - amountPickedAtThisPosition;
+
+			otherPositions.forEach((otherPositionName: string) => {
+				left -= Math.max(res[otherPositionName].length, maxPositionsPicks[otherPositionName].min);
+			});
+			if (left > 0) {
+				let maxForPosition = amountPickedAtThisPosition;
+				while (left > 0 && maxForPosition < maxPositionsPicks[positionName].max) {
+					maxForPosition += 1;
+					left -= 1;
+				}
+				maxPerPos[positionName] = maxForPosition;
+			} else {
+				maxPerPos[positionName] = amountPickedAtThisPosition;
+			}
+		});
+		return maxPerPos;
+	};
+
+	const getPossibleFormations = () => {
+		const positionsToCheck = ["Defender", "Midfielder", "Forward"];
+		const maxAllowedPlayersPerPositions = getMaxAllowedForPositions(positionsToCheck);
+		return getCombinations(maxAllowedPlayersPerPositions);
+	};
+
+	const set = (starting: any[], bench: any[]) => {
+		res = {
+			Coach: [],
+			Goalkeeper: [],
+			Defender: [],
+			Midfielder: [],
+			Forward: [],
+			Bench: []
+		};
+
+		starting.forEach((player: Player) => {
+			res[getPositionNameById(player.positionId)].push(player.id);
 		});
 
-		bench.forEach((player: { Player: any }) => {
-			result.Bench.push(player.Player.id);
+		bench.forEach((player: Player) => {
+			res.Bench.push(player.id);
 		});
 
 		return {
 			possibleFormations: getPossibleFormations(),
-			result: result
+			result: res,
 		};
 	};
 
-	const canPick = (player: { Player: any }, ignoreBench: boolean) => {
+	const canPick = (player: Player, ignoreBench: boolean) => {
 		return checkAndPick(player, true, ignoreBench);
 	};
 
-	const checkAndPick = (player: { Player: any }, justCheck = false, ignoreBench = false) => {
-		const checkedPositions = ["Defender", "Midfielder", "Forward"];
-		const maxAllowedForPositions = getMaxAllowedForPositions(checkedPositions);
-		const pickedPositionName = getPositionNameById(player.Player.positionId);
-		if (result[pickedPositionName].indexOf(player.Player.id) !== -1) {
+	const checkAndPick = (player: Player, checkOnly = false, ignoreBench = false) => {
+		const positionsToCheck = ["Defender", "Midfielder", "Forward"];
+		const maxAllowedPlayersPerPositions = getMaxAllowedForPositions(positionsToCheck);
+		const currentPlayerPositionName = getPositionNameById(player.positionId);
+
+		if (res[currentPlayerPositionName].indexOf(player.id) !== -1) {
+			// player already in starting
+			return false;
+		}
+		if (!ignoreBench && res.Bench.indexOf(player.id) !== -1) {
+			// player already in bench
 			return false;
 		}
 
-		if (!ignoreBench && result.Bench.indexOf(player.Player.id) !== -1) {
-			return false;
-		}
-
-		if (result[pickedPositionName] && (result[pickedPositionName].length < maxAllowedForPositions[pickedPositionName])) {
-			if (!justCheck) {
-				pickAtPosition(pickedPositionName, player.Player.id);
+		if (res[currentPlayerPositionName] && (res[currentPlayerPositionName].length < maxAllowedPlayersPerPositions[currentPlayerPositionName])) {
+			if (!checkOnly) {
+				pickAtPosition(currentPlayerPositionName, player.id);
+				console.log(`Picked player at position ${player.positionId}`);
 			}
 			return true;
 		} else {
-			if (result["Bench"].length < maxPositions["Bench"].max) {
-				if (!justCheck) {
-					pickAtPosition("Bench", player.Player.id);
+			const benchN = res.Bench.length;
+			if (benchN < maxPositionsPicks.Bench.max) {
+				if (!checkOnly) {
+					console.log(`Picked BENCH player at position ${player.positionId}`);
+					pickAtPosition("Bench", player.id);
 				}
 				return true;
 			} else {
@@ -70,105 +160,36 @@ export const FootballPicker = (maxPositions: { [key: string]: { min: number, max
 	};
 
 	const isValid = () => {
-		const fieldPlayers = 11;
-		return (result.Goal.length >= maxPositions.Goal.min && result.Goal.length <= maxPositions.Goal.max)
-            && (result.Defender.length >= maxPositions.Defender.min && result.Defender.length <= maxPositions.Defender.max)
-            && (result.Midfielder.length >= maxPositions.Midfielder.min && result.Midfielder.length <= maxPositions.Midfielder.max)
-            && (result.Forward.length >= maxPositions.Forward.min && result.Forward.length <= maxPositions.Forward.max)
-            && (result.Bench.length >= maxPositions.Bench.min && result.Bench.length <= maxPositions.Bench.max)
-            && ((fieldPlayers) === (result.Goal.length + result.Defender.length + result.Midfielder.length + result.Forward.length));
-	};
+		const nrFieldPlayers = 11;
+		let validated =
+			(res.Goalkeeper.length >= maxPositionsPicks.Goalkeeper.min && res.Goalkeeper.length <= maxPositionsPicks.Goalkeeper.max) &&
+			(res.Defender.length >= maxPositionsPicks.Defender.min && res.Defender.length <= maxPositionsPicks.Defender.max) &&
+			(res.Midfielder.length >= maxPositionsPicks.Midfielder.min && res.Midfielder.length <= maxPositionsPicks.Midfielder.max) &&
+			(res.Forward.length >= maxPositionsPicks.Forward.min && res.Forward.length <= maxPositionsPicks.Forward.max) &&
+			(res.Bench.length >= maxPositionsPicks.Bench.min && res.Bench.length <= maxPositionsPicks.Bench.max) &&
+			(nrFieldPlayers === (res.Goalkeeper.length + res.Defender.length + res.Midfielder.length + res.Forward.length));
 
-	const getMaxAllowedForPositions = (checkedPositions: string[]) => {
-		const maxPlayerPerPosition: { [key: string]: number } = {
-			Goalkeeper: 1,
-			Defender: 0,
-			Midfielder: 0,
-			Forward: 0
-		};
-
-		const totalFieldPlayers = 10;
-
-		checkedPositions.forEach((positionToCheck: string) => {
-			const alreadyPicked = result[positionToCheck].length;
-
-			const otherPositions = checkedPositions.filter((position: string) => {
-				return position !== positionToCheck;
-			});
-
-			let spotsLeft = totalFieldPlayers - alreadyPicked;
-
-			otherPositions.forEach((otherPosition: string) => {
-				spotsLeft -= Math.max((result[otherPosition].length, maxPositions[otherPosition].min));
-			});
-
-			if (spotsLeft > 0) {
-				let maxForPosition = alreadyPicked;
-				while (spotsLeft > 0 && maxForPosition < maxPositions[positionToCheck].max) {
-					maxForPosition += 1;
-					spotsLeft -= 1;
-				}
-				maxPlayerPerPosition[positionToCheck] = maxForPosition;
-			} else {
-				maxPlayerPerPosition[positionToCheck] = alreadyPicked;
-			}
-		});
-
-		return maxPlayerPerPosition;
-	};
-
-	const getCombinations = (maxAllowedPlayersPerPositions: { [key: string]: number }) => {
-		const combinations = [];
-		const defaults = {
-			nrDefender: Math.max(result.Defender.length, maxPositions.Defender.min),
-			nrMidfielder: Math.max(result.Midfielder.length, maxPositions.Midfielder.min),
-			nrForward: Math.max(result.Forward.length, maxPositions.Forward.min),
-		};
-
-		for (let defNr = defaults.nrDefender; defNr <= maxAllowedPlayersPerPositions.Defender; defNr++) {
-			for (let midNr = defaults.nrMidfielder; midNr <= maxAllowedPlayersPerPositions.Midfielder; midNr++) {
-				for (let fwNr = defaults.nrForward; fwNr <= maxAllowedPlayersPerPositions.Forward; fwNr++) {
-					const combi = `${defNr}-${midNr}-${fwNr}`;
-					if (((defNr + midNr + fwNr) === 10) && ((combinations.indexOf(combi) === -1))) {
-						combinations.push(combi);
-					}
-				}
-			}
+		if (maxPositionsPicks.Coach !== undefined) {
+			validated = validated &&
+				(res.Coach.length >= maxPositionsPicks.Coach.min && res.Coach.length <= maxPositionsPicks.Coach.max);
 		}
-
-		return combinations;
+		return validated;
 	};
 
-	const getPossibleFormations = () => {
-		const checkedPositions = ["Defender", "Midfielder", "Forward"];
-		const maxAllowedForPositions = getMaxAllowedForPositions(checkedPositions);
-		return getCombinations(maxAllowedForPositions);
-	};
-
-	const pick = (player: { Player: any }) => {
+	const pick = (player: Player) => {
 		const picked = checkAndPick(player);
-
 		return {
 			possibleFormations: getPossibleFormations(),
-			result: result,
+			result: res,
 			picked: picked
 		};
 	};
 
-	const getPositionNameById = (positionId: number) => {
-		return Object.keys(positionsIds)
-			.find((positionName) => {
-				return positionsIds[positionName] === positionId;
-			}) || "";
-	};
-
-	const remove = (player: { Player: any }) => {
-		const removeId = player.Player.id;
-		const positionId = player.Player.positionId;
+	const remove = (player: Player) => {
 		let removed = false;
 
-		const removeHandler = (playerId: number) => {
-			if(playerId === removeId) {
+		const handler = (playerId: number) => {
+			if (playerId === player.id) {
 				removed = true;
 				return false;
 			} else {
@@ -176,13 +197,13 @@ export const FootballPicker = (maxPositions: { [key: string]: { min: number, max
 			}
 		};
 
-		result[getPositionNameById(positionId)] = result[getPositionNameById(positionId)].filter(removeHandler);
-		result.Bench = result.Bench.filter(removeHandler);
+		res[getPositionNameById(player.positionId)] = res[getPositionNameById(player.positionId)].filter(handler);
+		res.Bench = res.Bench.filter(handler);
 
 		return {
 			possibleFormations: getPossibleFormations(),
-			result: result,
-			removed: removed
+			result: res,
+			removed: removed,
 		};
 	};
 
@@ -193,6 +214,7 @@ export const FootballPicker = (maxPositions: { [key: string]: { min: number, max
 		isValid: isValid,
 		canPick: canPick,
 		getPossibleFormations: getPossibleFormations,
-		setPositionLimit: setPositionLimit
+		setPositionPickLimit: setPositionPickLimit,
 	};
 };
+

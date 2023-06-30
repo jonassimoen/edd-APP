@@ -43,8 +43,9 @@ type Player = {
     squadStatus: string
     clubId: number
     inStarting?: boolean
+    points: number
 
-    stats?: Statistic
+    stats?: Statistic[]
     selection?: PlayerSelection
 }
 

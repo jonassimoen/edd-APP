@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { scroller } from "react-scroll";
 import { useGetPlayersQuery } from "@/services/playersApi";
-import { Col, Row } from "antd";
 import Title from "antd/es/typography/Title";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { PlayerType } from "@/types/PlayerTypes";
@@ -18,6 +17,10 @@ import { NewTeamStyle } from "./NewTeamStyle";
 import { Button } from "@/components/UI/Button/Button";
 import { SaveOutlined } from "@ant-design/icons";
 import { useAppSelector } from "@/reducers";
+import { Grid, Tag } from "antd";
+import { Col, Row } from "@/components/UI/Grid/Grid";
+
+const { useBreakpoint } = Grid;
 
 declare type NewTeamState = {
 	redirectToPayments: boolean;
@@ -91,12 +94,20 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const totalPlayersToPick = application.competition.lineupSize + application.competition.benchSize;
 	const startingPicked = useMemo(() => starting?.filter(player => !!player.id), [props.starting]);
 	const benchPicked = useMemo(() => bench?.filter(player => !!player.id), [props.bench]);
-	const totalPlayersPicked = useMemo(() => (startingPicked?.length || 0) + (benchPicked?.length || 0),[startingPicked, benchPicked]);
+	const totalPlayersPicked = useMemo(() => (startingPicked?.length || 0) + (benchPicked?.length || 0), [startingPicked, benchPicked]);
 	const team = user && user.teams && user.teams[0];
 
+	const screens = useBreakpoint();
 	return (
 		// <Title>{props.starting.map(p => p.id)}</Title>
 		<NewTeamStyle>
+			{Object.entries(screens)
+				.filter((screen) => !!screen[1])
+				.map((screen) => (
+					<Tag color="blue" key={screen[0]}>
+						{screen[0]}
+					</Tag>
+				))}
 			{team && team.id && hasPlayers && <Navigate to={{ pathname: `/team/${team.id}` }} />}
 			{team && team.id && redirectToPayments && <Navigate to={{ pathname: `/team/${team.id}` }} />}
 
@@ -104,7 +115,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 			{players && clubs &&
 				<>
 					<Row>
-						<Col md={12} sm={24} xs={24} className="left">
+						<Col lg={12} md={24} sm={24} xs={24} className="left">
 							<Title level={2}>{t("general.footballLineup")}</Title>
 							{budget}
 							<Team
@@ -131,34 +142,34 @@ const _NewTeam = (props: AbstractTeamType) => {
 								playerPointsColor={"#000"}
 								playerPointsBgColor="#84FF00" />
 
-								<Row>
-									{(team && !hasPlayers && 
-										<Button
-											onClick={(e: any) => onTeamReset(team)}
-											type="primary"
-											disabled={savingTeamPending}
-											loading={savingTeamPending}
-											style={{ width: '100%', maxWidth: '100%', margin: "10px 0" }}
-											size="large">
-											<SaveOutlined/>
-											{t('team.saveTeam')}
-										</Button>
-										) || <Button
-											onClick={onTeamSave}
-											type="primary"
-											disabled={savingTeamPending}
-											loading={savingTeamPending}
-											style={{ width: '100%', maxWidth: '100%', margin: "10px 0" }}
-											size="large">
-											<SaveOutlined/>
-											{t('team.saveTeam')}
-										</Button>
-									}
-								</Row>
+							<Row>
+								{(team && !hasPlayers &&
+									<Button
+										onClick={(e: any) => onTeamReset(team)}
+										type="primary"
+										disabled={savingTeamPending}
+										loading={savingTeamPending}
+										style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+										size="large">
+										<SaveOutlined />
+										{t("team.saveTeam")}
+									</Button>
+								) || <Button
+									onClick={onTeamSave}
+									type="primary"
+									disabled={savingTeamPending}
+									loading={savingTeamPending}
+									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+									size="large">
+									<SaveOutlined />
+									{t("team.saveTeam")}
+								</Button>
+								}
+							</Row>
 						</Col>
-						<Col md={12} sm={24} xs={24} className="right">
+						<Col lg={12} md={24} sm={24} xs={24} className="right">
 
-							<Title level={2}>{t('general.footballAllPlayers')}</Title>
+							<Title level={2}>{t("general.footballAllPlayers")}</Title>
 							<PlayerList
 								data={players}
 								clubs={clubs}

@@ -5,11 +5,11 @@ import { Middleware, MiddlewareAPI } from "redux";
 const {notification} = App.useApp();
 
 export const rtkQueryNotification: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
-    if(isRejectedWithValue(action)) {
-        console.log(action, "rejected");
-        notification.error({
-            message: 'Something went wrong!',
-            description: action.payload.data.message
-        })
-    }
-}
+	if(isRejectedWithValue(action)) {
+		console.log(action, "rejected");
+		notification.error({
+			message: "Something went wrong!",
+			description: action.payload.data.message
+		});
+	}
+};

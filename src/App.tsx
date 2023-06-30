@@ -3,14 +3,14 @@ import { RouterProvider } from "react-router-dom";
 import React from "react";
 import { router } from "./routes";
 import { ConfigProvider } from "antd";
-import * as dayjs from 'dayjs'
+import * as dayjs from "dayjs";
 import { AuthContextProvider } from "./lib/stores/AuthContext";
 import { theme } from "./styles/theme";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 // import 'dayjs/locale/nl-BE'
-dayjs.locale('nl-BE');
+dayjs.locale("nl-BE");
 
 class App extends React.PureComponent<WithTranslation> {
 	render() {
@@ -29,11 +29,7 @@ class App extends React.PureComponent<WithTranslation> {
 		return (
 			<ConfigProvider theme={{
 				token: {
-					// colorPrimary: theme.primaryContrast,
-					// colorBorder: theme.primaryColor,
-					// colorTextLightSolid: '#FFF',
-					// borderRadius: 0,
-					fontFamily: "UEFASupercup"
+					fontFamily: "UEFASupercup",
 				}
 			}}>
 				<ToastContainer

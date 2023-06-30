@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { Input } from 'antd';
+import styled from "styled-components";
+import { Input } from "antd";
 
-import { theme } from '@/styles/theme';
+import { theme } from "@/styles/theme";
 
 const inputFocusStyle = `
 	border-color: #d9d9d9;

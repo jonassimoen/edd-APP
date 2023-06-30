@@ -28,14 +28,14 @@ export const SelectGroupStyle = styled.div`
 
 export const PlayerStyle = styled.div`
     ${(props: any) =>
-        props.type === "desktop" &&
+	props.type === "desktop" &&
         `
         display: none;
     `}
     
     @media ${mediaQueries.mobileL} {
         ${(props: any) =>
-            props.type === "desktop" &&
+        	props.type === "desktop" &&
             `
             display: block;
         `}
@@ -66,14 +66,14 @@ export const PlayerStyle = styled.div`
     // }
 
     ${(props: any) =>
-        props.type === "mobile" &&
+            	props.type === "mobile" &&
         `
         display: block;
     `}
 
     @media ${mediaQueries.mobileL} {
         ${(props: any) =>
-            props.type === "mobile" &&
+        	props.type === "mobile" &&
             `
             display: none;
         `}
@@ -91,25 +91,25 @@ export const PlayerStyle = styled.div`
 
             span {
                 ${(props: any) =>
-                    props.position === "gk" &&
+            	props.position === "gk" &&
                     `
                     color: ${props.theme.positionGk};
                 `}
 
                 ${(props: any) =>
-                    props.position === "df" &&
+                    	props.position === "df" &&
                     `
                     color: ${props.theme.positionDf};
                 `}
 
                 ${(props: any) =>
-                    props.position === "mf" &&
+                    	props.position === "mf" &&
                     `
                     color: ${props.theme.positionMf};
                 `}
 
                 ${(props: any) =>
-                    props.position === "fw" &&
+                    	props.position === "fw" &&
                     `
                     color: ${props.theme.positionFw};
                 `}
@@ -169,9 +169,9 @@ export const TableStyle = styled(Table)`
         }
     }
 
-    .avatar-container {
-        margin-bottom: -10px;
-    }
+	.avatar-container {
+		margin-bottom: -15px;
+	}
 
     .ant-table-tbody {
         .ant-table-row {
@@ -182,6 +182,10 @@ export const TableStyle = styled(Table)`
 
                 &:first-child {
                     padding: 2.5px 10px 0 15px;
+                }
+
+                & p {
+                    margin-top:0;
                 }
             }
 

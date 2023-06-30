@@ -21,11 +21,11 @@ export const LoginCallback = () => {
 			console.log("user has been authenticated --> saved in localstorage");
 			secureLocalStorage.setItem("user", JSON.stringify(userState.user));
 		}
-	})
+	});
 
 	useEffect(() => {
 		if (access_token) {
-			console.log("token set")
+			console.log("token set");
 			secureLocalStorage.setItem("token", access_token as string);
 			getProfile();
 			getTeams();
@@ -47,7 +47,7 @@ export const LoginCallback = () => {
 			console.log("TEAMID", userState.authenticated && userState.teams && userState.teams.length !== 0);
 			console.log("HOME", !userState.authenticated);
 		}
-	})
+	});
 
 	
 

@@ -2,12 +2,12 @@ import config from "@/config";
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 import { Mutex } from "async-mutex";
 
-const baseUrl = `${config.API_URL}/api`
+const baseUrl = `${config.API_URL}/api`;
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
-    baseUrl,
-})
+	baseUrl,
+});
 
 
 // const customFetchBase: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> 

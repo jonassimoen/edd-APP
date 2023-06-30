@@ -6,4 +6,4 @@ type MyLayoutProps = LayoutProps & {};
 export const Layout = (props: MyLayoutProps) => {
 	const {...rest} = props;
 	return (<LayoutStyle {...rest} />);
-}
+};

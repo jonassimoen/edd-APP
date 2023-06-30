@@ -26,7 +26,7 @@ export const Login = () => {
 
 	return (
 		<PageStyle>
-			{authenticated && <Navigate to={{ pathname: '/home' }} />}
+			{authenticated && <Navigate to={{ pathname: "/home" }} />}
 			{!authenticated &&
 				<Row align={"middle"} justify={"center"}>
 					<Col>

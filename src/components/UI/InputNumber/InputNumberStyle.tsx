@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { InputNumber } from 'antd';
+import styled from "styled-components";
+import { InputNumber } from "antd";
 
-import { theme } from '@/styles/theme';
+import { theme } from "@/styles/theme";
 
 const inputNumberFocusStyle = `
 	border-color: #d9d9d9;
