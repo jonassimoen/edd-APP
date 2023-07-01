@@ -108,8 +108,6 @@ export const Player = (props: PlayerProps) => {
 		portraitFace,
 	} = state;
 
-	console.log(player);
-
 	return (
 		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}`}>
 			{

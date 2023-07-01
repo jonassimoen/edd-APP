@@ -1,11 +1,8 @@
-import { Table, Avatar } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EditableTable } from "../EditableTable";
-import { useGetClubsQuery } from "@/services/clubsApi";
 import { ContainerStyle, PlayerStyle, SelectGroupStyle, TableStyle } from "./PlayerListStyle";
-import Icon, { SearchOutlined, StarOutlined } from "@ant-design/icons";
-import { CaptainSvg, GreenSvg, OrangeSvg, RedSvg, SetPiecesSvg, StarSvg } from "@/styles/custom-icons";
+import Icon, { EuroOutlined, SearchOutlined, StarOutlined, TagsOutlined } from "@ant-design/icons";
+import { CaptainSvg, FootballSvg, GreenSvg, OrangeSvg, RedSvg, SetPiecesSvg, StarSvg } from "@/styles/custom-icons";
 import { getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { Input } from "@/components/UI/Input/Input";
@@ -13,6 +10,7 @@ import { Button } from "../UI/Button/Button";
 import { Select } from "../UI/Select/Select";
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
+import { Empty } from "antd";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainSvg} {...props} />;
 const SetPiecesIcon = (props: any) => <Icon component={SetPiecesSvg} {...props} />;
@@ -22,23 +20,23 @@ const OrangeIcon = (props: any) => <Icon component={OrangeSvg} {...props} />;
 const RedIcon = (props: any) => <Icon component={RedSvg} {...props} />;
 
 declare type PlayerListProps = {
-    data: Player[]
-    clubs: Club[]
-    size: number
-    activePositionFilter?: number
-    setActivePositionFilter?: any
-    showHeader: boolean
-    hidePositions?: boolean
-    onPick?: (player: Player, pickingTax?: boolean) => void
-    isPickable?: (player: Player, transferPick?: boolean) => any
-    action: boolean
-    actionLabel?: string
-    isLoading?: boolean
-    playerType: PlayerType
+	data: Player[]
+	clubs: Club[]
+	size: number
+	activePositionFilter?: number
+	setActivePositionFilter?: any
+	showHeader: boolean
+	hidePositions?: boolean
+	onPick?: (player: Player, pickingTax?: boolean) => void
+	isPickable?: (player: Player, transferPick?: boolean) => any
+	action: boolean
+	actionLabel?: string
+	isLoading?: boolean
+	playerType: PlayerType
 }
 
 declare type PlayerListState = {
-    filters: any
+	filters: any
 }
 
 export const PlayerList = (props: PlayerListProps) => {
@@ -53,7 +51,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	});
 
 	const positions = [
-		// { id: -1, name: <span className={'prefixed-label'}> <FootballFieldIcon /> {t('general.footballAllPositions')} </span> },
+		{ id: -1, name: <span className={'prefixed-label'}> <TagsOutlined style={{ marginRight: 5 }} /> {t('general.footballAllPositions')} </span> },
 		{ id: 1, name: t("player.goalkeeper") },
 		{ id: 2, name: t("player.defender") },
 		{ id: 3, name: t("player.midfielder") },
@@ -61,7 +59,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	];
 
 	const budgets = [
-		// { text: <span className={'prefixed-label'}> <EuroIcon /> {t('general.footballAllBudget')} </span>, value: 100 },
+		{ text: <span className={'prefixed-label'}> <EuroOutlined style={{ marginRight: 5 }} /> {t('general.footballAllBudget')} </span>, value: 100 },
 		{ text: `${t("general.budgetFilterPrefix")} 10 ${t("general.budgetFilterSuffix")}`, value: 10 },
 		{ text: `${t("general.budgetFilterPrefix")} 7 ${t("general.budgetFilterSuffix")}`, value: 7 },
 		{ text: `${t("general.budgetFilterPrefix")} 6 ${t("general.budgetFilterSuffix")}`, value: 6 },
@@ -129,14 +127,14 @@ export const PlayerList = (props: PlayerListProps) => {
 			width: "15%",
 			render: (txt: string, record: any) => {
 				const sportSpecificProps: {
-                    shirtSoccer?: string,
-                    soccerJersey?: string,
-                    clubBadge?: string,
-                    portraitFace?: string,
-                    shirtFallback?: string,
-                    portraitFaceFallBack?: string,
-                    club?: Club
-                } = {};
+					shirtSoccer?: string,
+					soccerJersey?: string,
+					clubBadge?: string,
+					portraitFace?: string,
+					shirtFallback?: string,
+					portraitFaceFallBack?: string,
+					club?: Club
+				} = {};
 
 				if (PlayerType.SoccerPortrait === props.playerType && record) {
 					// sportSpecificProps.soccerJersey = `${assetsCdn}/jerseys/club_${record.clubId}.png`;
@@ -160,7 +158,6 @@ export const PlayerList = (props: PlayerListProps) => {
 							{...sportSpecificProps}
 						/>
 					</div>
-				// <></>
 				);
 			}
 		},
@@ -169,26 +166,49 @@ export const PlayerList = (props: PlayerListProps) => {
 			title: "Player",
 			dataIndex: "name",
 			width: "45%",
-			render: (txt: string, record: any) => {
+			render: (txt: string, record: Player) => {
 				const club = props.clubs?.find(club => club.id === record.clubId);
 				const position = positions.find(
 					position => position.id === record.positionId
 				);
 				const positionColor = getPlayerPositionHexColor(record, theme);
+
+				// fetch weekmatches
+				const opponentInfo: any = null;
+
 				return (
 					<>
-						<PlayerStyle
+						<PlayerStyle>
+							<p className="name">
+								<span>
+									{record.short}
+								</span>
+								<p style={{float:'right', marginRight: "10px"}}>
+									{record.star && <StarIcon style={{ marginRight: "2px" }} />}
+									{record.caps && <CaptainIcon style={{ marginRight: "2px" }} />}
+									{record.setPieces && <SetPiecesIcon style={{ marginRight: "2px" }} />}
+								</p>
+							</p>
+							<p>
+								<span>{club && club.short} {opponentInfo ? `vs ${opponentInfo.short}` : null} </span>
+								<span className="player-position" style={{ color: positionColor }}>
+									{(!props.hidePositions && position && position.name) || null}
+								</span>
+							</p>
+						</PlayerStyle>
+						{/* <PlayerStyle
 							type="mobile"
 							clubColor={"#81FFBC"}
 							position={record.positionId}
 						>
+							MOBILE
 							<p className="mobile-name">{record.short}</p>
 							<p>
 								<span style={{ color: "#16002b" }}>{club && club.short}</span> <span className="player-position" style={{ color: positionColor }}>
 									{(!props.hidePositions && position && position.name) || null}
 								</span>
 							</p>
-							<p>
+							<p className="icons">
 								{(record.squadStatus === "First team") && <GreenIcon style={{ marginRight: "2px" }} />}
 								{(record.squadStatus === "Rotation") && <OrangeIcon style={{ marginRight: "2px" }} />}
 								{(record.squadStatus === "Backup") && <RedIcon style={{ marginRight: "2px" }} />}
@@ -220,7 +240,7 @@ export const PlayerList = (props: PlayerListProps) => {
 									{(!props.hidePositions && position && position.name) || null}
 								</span>
 							</p>
-						</PlayerStyle>
+						</PlayerStyle> */}
 					</>
 				);
 			}
@@ -232,8 +252,8 @@ export const PlayerList = (props: PlayerListProps) => {
 			width: "20%",
 			render: (value: string, record: any) => {
 				return (
-					<span style={{ fontSize: "1rem" }}>
-                        €{value}M
+					<span style={{ fontSize: "1.2rem" }}>
+						€{value}M
 					</span>
 				);
 			}
@@ -252,7 +272,7 @@ export const PlayerList = (props: PlayerListProps) => {
 						<Button
 							type="primary"
 							onClick={(e: any) => onPickHandler(e, record)}
-							style={{ width: "100%" }}
+							style={{ width: "100%", marginLeft:0 }}
 							size="small"
 						>
 							{props.actionLabel || t("general.pick")}
@@ -296,6 +316,18 @@ export const PlayerList = (props: PlayerListProps) => {
 					placeholder={budgets[0].text}
 				/>
 			</SelectGroupStyle>
+			<SelectGroupStyle>
+				<Select
+					$block
+					values={positions}
+					value={state.filters.position}
+					style={{ margin: '0px 0px' }}
+					keyProperty={"id"}
+					onSelect={(value: any) => onFilterChange("position", value)}
+					textProperty={"name"}
+					placeholder={positions[0].name}
+				/>
+			</SelectGroupStyle>
 			<TableStyle
 				loading={props.isLoading}
 				showHeader={props.showHeader}
@@ -306,19 +338,10 @@ export const PlayerList = (props: PlayerListProps) => {
 					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"}`
 				}
 				pagination={{ position: ["bottomCenter"], pageSize: 9, showLessItems: true, showSizeChanger: false }}
+				locale={{
+					emptyText: t("players.noneFound")
+				}}
 			>
-				{/* <tbody>
-                {
-                    props.data.filter(player => playerFilter(player)).map(player => {
-                        return (
-                            <tr key={player.id}>
-                                <td>{player.positionId}</td>
-                                <td>{player.name}</td>
-                            </tr>
-                        );
-                    })
-                }
-            </tbody> */}
 			</TableStyle>
 		</ContainerStyle>
 	);

@@ -28,7 +28,7 @@ export const ButtonStyle = styled(Button)`
     &.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
 		padding-left: 40px;
 		
-		&.ant-btn-sm {
+		&.ant-btn-sm, &.ant-btn-lg {
 			padding-left: 21.5px;
 
 			span {

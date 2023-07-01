@@ -3,8 +3,10 @@ import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
 import { Table } from "antd";
 
+import "antd/lib/table/style";
+
 export const ContainerStyle = styled.div`
-	
+	width: 100%;
 `;
 
 export const tablePagination = `
@@ -51,109 +53,84 @@ export const tablePagination = `
 export const TableStyle = styled(Table)`
 	.ant-table-content {
 		overflow-x: scroll;
+	}
 
-		.ant-table-thead {
-			th {
-				padding-top: 10px;
-				padding-bottom: 10px;
-				background: ${theme.primaryContrast};
-				color: ${theme.primaryColor};
-				border-radius: 0px !important;
-				padding: 7.5px;
-				border: none
-	
-				&:last-child {
-					text-align: left;
-				}
-			
-				&.ant-table-column-has-sorters {
-					border-bottom: 1px solid #e8e8e8;
-					
-					&:hover {
-						background: ${theme.primaryColor} !important;
-						color: ${theme.primaryContrast} !important;
-					}
-				}
-	
-				&.ant-table-column-sort {
-					background: ${theme.primaryContrast} !important;
-				}
-	
-				&.ant-table-column-has-actions {
-					background-clip: initial;
-				}
+	.ant-table-thead {
+		>tr>th {
+			background-color: ${theme.primaryContrast};
+			color: ${theme.primaryColor};
+			padding-top: 10px;
+			padding-bottom: 10px;
+			border-radius: 0px !important;
+			padding: 7.5px;
 
-				&::before {
-					background: transparent !important;
-				}
-
-				.ant-table-column-sorter-up, .ant-table-column-sorter-down {
-					color: #e8e8e8;
-					&.active {
-						color: ${theme.primaryColor};
-					}
-				}
-
-
+			&:last-child {
+				text-align: left;
 			}
-		}
-		.avatar-container {
-			margin-bottom: -10px;
-		}
-	
-		.ant-table-tbody {
-			.ant-table-row {
-				color: #000;
-				background-color: #f2f2f2;
-	
-				> td {
-					border: none;
-					padding: 7.5px;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-	
-					&:first-child {
-						padding: 2.5px 10px 0 15px;
-					}
-	
-					&:last-child {
-						text-align: right;
-					}
 
-					&.ant-table-column-sort:not(:hover) {
-						background: rgba(22, 0, 43, 0.01);
-					}
-				}
-	
-				&--odd {
-					background-color: #FFF;
-				}
+			&.ant-table-column-has-sorters:hover {
+				background: ${theme.primaryColor} !important;
+				color: ${theme.primaryContrast} !important;
 			}
-	
-			.cursor-pointer {
-				cursor: pointer;
+
+			&.ant-table-column-has-actions {
+                background-clip: initial;
 			}
-		}
-	
-		.ant-table-row {
-			cursor: pointer;
+
+			.ant-table-column-sorter .ant-table-column-sorter-inner {
+				color: #bfbfbf;
+			}
+
+			&::before {
+				display: none;
+			}
 		}
 	}
 
-	${tablePagination}	
+	.avatar-container {
+		margin-bottom: -10px;
+	}
+
+	.ant-table-tbody {
+		.ant-table-row {
+			> td {
+				color: #000;
+				border: none;
+				padding: 7.5px;
+				white-space:nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+
+				&:first-child {
+					padding: 2.5px 10px 0 15px;
+				}
+
+				&:last-child {
+					text-align: left;
+				}
+			}
+			&--even {
+				background-color: #f2f0f4;
+			}
+			&--od {
+				background-color: #e9e7ec;
+			}
+		}
+	}
+
+	${tablePagination}
 ` as any;
 
 export const PlayerStyle = styled.div`
 	${(props: any) =>
-	props.type === "desktop" &&
+		props.type === "desktop" &&
 		`
 		display: none;
 	`}
 	
 	@media ${mediaQueries.mobileL} {
 		${(props: any) =>
-			props.type === "desktop" &&
+		props.type === "desktop" &&
 		`
 			display: block;
 		`}
@@ -168,14 +145,14 @@ export const PlayerStyle = styled.div`
 	}
 
 	${(props: any) =>
-			props.type === "mobile" &&
+		props.type === "mobile" &&
 		`
 		display: block;
 	`}
 
 	@media ${mediaQueries.mobileL} {
 		${(props: any) =>
-			props.type === "mobile" &&
+		props.type === "mobile" &&
 		`
 			display: none;
 		`}
@@ -193,25 +170,25 @@ export const PlayerStyle = styled.div`
 
 			span {
 				${(props: any) =>
-			props.position === "gk" &&
+		props.position === "gk" &&
 		`
 					color: ${props.theme.positionGk};
 				`}
 
 				${(props: any) =>
-			props.position === "df" &&
+		props.position === "df" &&
 		`
 					color: ${props.theme.positionDf};
 				`}
 
 				${(props: any) =>
-			props.position === "mf" &&
+		props.position === "mf" &&
 		`
 					color: ${props.theme.positionMf};
 				`}
 
 				${(props: any) =>
-			props.position === "fw" &&
+		props.position === "fw" &&
 		`
 					color: ${props.theme.positionFw};
 				`}

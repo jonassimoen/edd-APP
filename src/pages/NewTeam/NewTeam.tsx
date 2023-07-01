@@ -8,7 +8,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
-import { scroller } from "react-scroll";
+import { Element, scroller } from "react-scroll";
 import { useGetPlayersQuery } from "@/services/playersApi";
 import Title from "antd/es/typography/Title";
 import { useGetClubsQuery } from "@/services/clubsApi";
@@ -19,7 +19,7 @@ import { SaveOutlined } from "@ant-design/icons";
 import { useAppSelector } from "@/reducers";
 import { Grid, Tag } from "antd";
 import { Col, Row } from "@/components/UI/Grid/Grid";
-
+import { NewGameStats } from "@/components/Stats/NewGameStats";
 const { useBreakpoint } = Grid;
 
 declare type NewTeamState = {
@@ -32,6 +32,8 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
 	const [getTeam, { data: teamData, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess }] = useLazyGetTeamQuery();
+	// add team
+	// drop team
 
 	const user = useAppSelector((state) => state.userState.user);
 
@@ -58,6 +60,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 		if (player && player.positionId) {
 			props.setActivePositionFilter(player.positionId);
 		}
+		console.log(props.activePositionFilter);
 		scroller.scrollTo("all-players", {
 			duration: 1000,
 			delay: 100,
@@ -99,25 +102,20 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 	const screens = useBreakpoint();
 	return (
-		// <Title>{props.starting.map(p => p.id)}</Title>
 		<NewTeamStyle>
-			{Object.entries(screens)
-				.filter((screen) => !!screen[1])
-				.map((screen) => (
-					<Tag color="blue" key={screen[0]}>
-						{screen[0]}
-					</Tag>
-				))}
 			{team && team.id && hasPlayers && <Navigate to={{ pathname: `/team/${team.id}` }} />}
 			{team && team.id && redirectToPayments && <Navigate to={{ pathname: `/team/${team.id}` }} />}
 
-			{/* {clubs && clubs.data && clubs.data.length > 0 && */}
 			{players && clubs &&
 				<>
 					<Row>
 						<Col lg={12} md={24} sm={24} xs={24} className="left">
 							<Title level={2}>{t("general.footballLineup")}</Title>
-							{budget}
+							<NewGameStats
+								budget={budget}
+								totalPlayers={totalPlayersToPick}
+								selectedPlayers={totalPlayersPicked}
+							/>
 							<Team
 								widthRatio={15}
 								heightRatio={10}
@@ -161,28 +159,30 @@ const _NewTeam = (props: AbstractTeamType) => {
 									loading={savingTeamPending}
 									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 									size="large">
-									<SaveOutlined />
-									{t("team.saveTeam")}
-								</Button>
+										<SaveOutlined />
+										{t("team.saveTeam")}
+									</Button>
 								}
 							</Row>
 						</Col>
 						<Col lg={12} md={24} sm={24} xs={24} className="right">
 
 							<Title level={2}>{t("general.footballAllPlayers")}</Title>
-							<PlayerList
-								data={players}
-								clubs={clubs}
-								isLoading={playersLoading}
-								playerType={PlayerType.SoccerPortrait}
-								size={10}
-								activePositionFilter={activePositionFilter}
-								showHeader={false}
-								hidePositions={false}
-								action={true}
-								isPickable={props.isPickAble}
-								onPick={props.pickPlayer}
-							/>
+							<Element name="all-players">
+								<PlayerList
+									data={players}
+									clubs={clubs}
+									isLoading={playersLoading}
+									playerType={PlayerType.SoccerPortrait}
+									size={10}
+									activePositionFilter={activePositionFilter}
+									showHeader={false}
+									hidePositions={false}
+									action={true}
+									isPickable={props.isPickAble}
+									onPick={props.pickPlayer}
+								/>
+							</Element>
 						</Col>
 					</Row>
 				</>

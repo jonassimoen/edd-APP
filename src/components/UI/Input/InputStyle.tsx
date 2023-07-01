@@ -14,7 +14,7 @@ const antInputStyle = `
 		padding: 5px 10px;
 		border: 1px solid #d9d9d9;
 		border-radius: 0;
-		font-size: 0.75rem;
+		margin: 10px auto;
 
 		@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 			height: 50px;
@@ -59,8 +59,6 @@ const antInputStyle = `
 `;
 
 export const InputStyle = styled(Input)`
-    margin: 20px auto;
-
     &.ant-input-affix-wrapper {
         ${antInputStyle}
     }

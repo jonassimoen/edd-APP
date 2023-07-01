@@ -16,12 +16,27 @@ export const SelectStyle = styled(Select)`
         box-shadow: none;
     }
 
+    &.ant-select-focused {
+        .ant-select-selector {
+            border-color: #00FAFA !important;
+            outline: 0;
+        }
+    }
+
     .ant-select-selector {
         border-radius: 0px;
         
         &:hover {
             border-color: #00FAFA !important;
         }
+
+        .ant-select-selection-placeholder {
+            color: #000000;
+        }
+    }
+
+    .ant-select:hover {
+        border-color: #00FAFA !important;
     }
 
 ` as any;

@@ -105,7 +105,6 @@ export const Team = (props: TeamProps) => {
 									sportSpecificProps.clubBadge = `${assetsCdn}/badges/club_${player.clubId}.png`;
 									// sportSpecificProps.portraitFace = player.portraitUrl;
 									sportSpecificProps.portraitFace = `http://localhost:8080/static/${player.externalId}.png`;
-									console.log(sportSpecificProps.portraitFace);
 									sportSpecificProps.portraitFaceFallBack = `${assetsCdn}/players/dummy.png`;
 								}
 								return (

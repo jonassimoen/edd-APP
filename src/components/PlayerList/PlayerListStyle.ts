@@ -1,5 +1,6 @@
 import { mediaQueries } from "@/styles/media-queries";
 import styled from "@/styles/styled-components";
+import { theme } from "@/styles/theme";
 import { Table } from "antd";
 
 export const ContainerStyle = styled.div`
@@ -27,95 +28,22 @@ export const SelectGroupStyle = styled.div`
 ` as any;
 
 export const PlayerStyle = styled.div`
-    ${(props: any) =>
-	props.type === "desktop" &&
-        `
-        display: none;
-    `}
-    
-    @media ${mediaQueries.mobileL} {
-        ${(props: any) =>
-        	props.type === "desktop" &&
-            `
-            display: block;
-        `}
-    }
+    display: block;
 
     .name {
-        font-size: 0.9rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 250px;
-
-        .icons {
-            display: inline;
-            margin-left: 50px;
-        }
-    }
-
-    .mobile-name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 120px;
-    }
-
-    // .player-position {
-    //  display: block;
-    // }
-
-    ${(props: any) =>
-            	props.type === "mobile" &&
-        `
-        display: block;
-    `}
-
-    @media ${mediaQueries.mobileL} {
-        ${(props: any) =>
-        	props.type === "mobile" &&
-            `
-            display: none;
-        `}
+        display: inline;
     }
 
     p {
-        margin-bottom: 0;
+		margin-bottom: 0;
 
-        &:first-child {
-            font-weight: bold;
-        }
-
-        &:last-child {
-            color: ${(props: any) => props.clubColor};
-
-            span {
-                ${(props: any) =>
-            	props.position === "gk" &&
-                    `
-                    color: ${props.theme.positionGk};
-                `}
-
-                ${(props: any) =>
-                    	props.position === "df" &&
-                    `
-                    color: ${props.theme.positionDf};
-                `}
-
-                ${(props: any) =>
-                    	props.position === "mf" &&
-                    `
-                    color: ${props.theme.positionMf};
-                `}
-
-                ${(props: any) =>
-                    	props.position === "fw" &&
-                    `
-                    color: ${props.theme.positionFw};
-                `}
-            }
-        }
-
+		&:first-child {
+			font-weight: bold;
+		}
     }
 ` as any;
 
@@ -134,14 +62,20 @@ export const tablePagination = `
         }
     }
 
+    .ant-pagination-jump-next, .ant-pagination-jump-prev {
+        .ant-pagination-item-link-icon {
+            color: ${theme.primaryContrast};
+        }
+    }
+
     .ant-pagination-item {
         border-radius: 0px;
 
         &:hover:not(.ant-pagination-disabled), &.ant-pagination-item-active {
-
+            border-color: ${theme.primaryColor};
             a {
                 font-weight: bold;
-                color: #121212;
+                color: ${theme.primaryContrast};
             }
         }
     }

@@ -9,5 +9,8 @@
   },
   "admin": {
     "welcome": "Welcome, fantasy magician {{name}}!"
+  },
+  "players": {
+    "noneFound": "No players found"
   }
 }

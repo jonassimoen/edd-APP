@@ -102,7 +102,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			key: "rank",
 			title: "#",
 			dataIndex: "generalInfo",
-			width: "5%",
 			render: (text: string, record: any, index: number) => {
 				const rank = ((state.pagination.page - 1) * state.pagination.pageRecords) + index + 1;
 
@@ -113,8 +112,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			key: "name",
 			title: t("stats.allPlayersTable.playerColumn"),
 			sorter: (a: any, b: any) => a.generalInfo.short.localeCompare(b.generalInfo.short),
-			dataIndex: "generalInfo", 
-			width: "20%",
+			dataIndex: "generalInfo",
 			render: (text: string, record: any) => {
 				return (<span>{record.generalInfo.short || record.generalInfo.name}</span>); 
 			},
@@ -124,7 +122,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.clubColumn"),
 			sorter: (a: any, b: any) => a.clubName.localeCompare(b.clubName),
 			dataIndex: "clubName",
-			width: "10%",
 			render: (text: string, record: any) => {
 				return (<span>{text}</span>);
 			},
@@ -134,7 +131,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.positionColumn"),
 			sorter: (a: any, b: any) => a.positionId - b.positionId,
 			dataIndex: "positionId",
-			width: "10%",
 			render: (text: string, record: any) => {
 				const position = positionsList.find((item: any) => item.id === record.positionId);
 				return (<span>{position && position.name || ""}</span>);
@@ -145,7 +141,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.pointsColumn"),
 			sorter: (a: any, b: any) => a.points - b.points,
 			dataIndex: "total",
-			width: "10%",
 			render: (text: string, record: any) => {
 				return (<span>{record.total}</span>);
 			},
@@ -155,7 +150,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: statsList[state.filters.stat].value[0].label,
 			sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[0].value] - b[statsList[state.filters.stat].value[0].value],
 			dataIndex: statsList[state.filters.stat].value[0].value,
-			width: "10%",
 			render: (text: string, record: any) => {
 				return (<span>{record[statsList[state.filters.stat].value[0].value]}</span>);
 			},
@@ -165,7 +159,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: statsList[state.filters.stat].value[1].label,
 			sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[1].value] - b[statsList[state.filters.stat].value[1].value],
 			dataIndex: statsList[state.filters.stat].value[1].value,
-			width: "10%",
+			width: '10%',
 			render: (text: string, record: any) => {
 				return (<span>{record[statsList[state.filters.stat].value[1].value]}</span>);
 			},
@@ -175,9 +169,8 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.valueColumn"),
 			sorter: (a: any, b: any) => a.playerValue - b.playerValue,
 			dataIndex: "playerValue",
-			width: "10%",
 			render: (text: string, record: any) => {
-				return (<span>{record.playerValue}M</span>);
+				return (<span>€ {record.playerValue}M</span>);
 			},
 		},
 
@@ -227,7 +220,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					onChange={(event: any) =>
 						onFilterChange(event.target.name, event.target.value)
 					}
-					style={{ margin: 0 }}
 				/>
 			}
 			<SelectGroupStyle>
@@ -285,7 +277,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				locale={{ emptyText: t("general.playersListEmpty") }}
 				loading={statsLoading}
 				pagination={{showSizeChanger: false}}
-				// onChange={handleTableChange}
 				onRow={tableEventHandler}
 				rowKey="id"
 				rowClassName={(record: object, index: number) =>

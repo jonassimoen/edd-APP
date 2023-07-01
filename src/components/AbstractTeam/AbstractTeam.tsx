@@ -198,7 +198,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			}
 
 			setState({ ...state, starting, budget });
-			console.log(starting);
 		}
 
 		else if (benchSpotEmpty) {

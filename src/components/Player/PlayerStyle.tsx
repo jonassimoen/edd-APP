@@ -9,12 +9,12 @@ export const PlayerStyle = styled.div`
     height: 60px;
 
     @media ${mediaQueries.mobileM} {
-        width: 70px;
+        width: 85px;
         height: 55px;
     }
 
     @media ${mediaQueries.tablet} {
-        width: 85px;
+        width: 90px;
         height: 70px;
     }
 
@@ -54,6 +54,7 @@ export const Badge = styled.div`
 		overflow: hidden;
 		font-size: 12px;
 		line-height: 1.1;
+		padding: 5px;
 
 		@media ${mediaQueries.mobileM} {
 			font-size: 10px;
