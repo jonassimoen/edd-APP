@@ -98,7 +98,7 @@ export const Team = (props: TeamProps) => {
 										onRemove={onRemove}
 										showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
 										onSwap={onSwap}
-										isSwapAble={isSwapAble}
+										isSwapable={isSwapAble}
 										onCaptainSelect={onCaptainSelect}
 										onViceCaptainSelect={onViceCaptainSelect}
 										onPlaceholderClick={onPlaceholderClick}

@@ -41,25 +41,6 @@ export const Substitutes = (props: SubstitutesProps) => {
 		<SubstitutesStyle bgColor={props.bgColor}>
 			<div className="substitutes">
 				{props.selection.map((player: any, idx: number) => {
-					const sportProps: {
-                        shirtSoccer?: string,
-                        soccerJersey?: string,
-                        clubBadge?: string,
-                        portraitFace?: string,
-                        shirtFallback?: string,
-                        portraitFaceFallback?: string,
-                        club?: Club
-                    } = {};
-					if(PlayerType.SoccerShirt === props.playerType) {
-						sportProps.shirtSoccer = `${props.assetsCdn}/jersey/football/${player.clubId}.png`;
-						sportProps.shirtFallback = `${props.assetsCdn}/jersey/dummy.png`;
-					} 
-					if(PlayerType.SoccerPortrait === props.playerType) {
-						sportProps.soccerJersey = `${props.assetsCdn}/jerseys/club_${player.clubId}.png`;
-						sportProps.clubBadge = `${props.assetsCdn}/badges/club_${player.clubId}.png`;
-						sportProps.portraitFace = player.portraitUrl;
-						sportProps.portraitFaceFallback = `${props.assetsCdn}/players/dummy.png`;
-					}
 
 					let positionLabel = "";
 					if(props.showPositionNumber)  {
@@ -77,7 +58,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 							modalEnabled={props.modalEnabled}
 							showPlayerValue={props.showPlayerValue}
 							onRemove={props.onRemove}
-							isSwapAble={props.isSwapAble}
+							isSwapable={props.isSwapAble}
 							captainId={props.captainId}
 							viceCaptainId={props.viceCaptainId}
 							showCaptainBadge={props.showCaptainBadge}
@@ -89,7 +70,6 @@ export const Substitutes = (props: SubstitutesProps) => {
 							positionLabel={positionLabel}
 							onPlaceholderClick={props.onPlaceholderClick}
 							actionLessPlayerIds={props.actionsLessPlayerIds}
-							{...sportProps}
 						/>
 					</React.Fragment>;
 				})}

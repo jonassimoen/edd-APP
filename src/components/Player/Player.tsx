@@ -5,12 +5,13 @@ import { Badge, NoPlayer, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRight
 import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
-import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined } from "@ant-design/icons";
-import { CaptainButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined, UndoOutlined } from "@ant-design/icons";
+import { CaptainButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 
 const AddIcon = (props: any) => <IconPlus {...props} />;
 const DeleteIcon = (props: any) => <CloseCircleFilled {...props} style={{ color: "red" }} shape="circle" />;
-const SwapIcon = (props: any) => <ArrowDownOutlined {...props} />;
+const SwapIcon = (props: any) => <Icon component={SwapButtonSvg} {...props} />;
+const UndoIcon = (props: any) => <Icon component={RollBackSvg} {...props} />;
 const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
 const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {...props} />;
 
@@ -153,8 +154,15 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				player && isSwapable && onSwap && isSwapable(player) && swapPlayerId !== player.id && player.positionId !== 0 &&
-				<TopLeftAction className="delete" onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
+				<TopLeftAction onClick={(e: any) => onSwapHandler(e, player)} bgColor={theme.primaryContrast}>
 					<SwapIcon style={{ fontSize: "20px" }} />
+				</TopLeftAction>
+			}
+
+			{
+				player && onSwap && (swapPlayerId && swapPlayerId === player.id) &&
+				<TopLeftAction onClick={(e: any) => onSwapHandler(e, player)} bgColor={theme.primaryContrast}>
+					<UndoIcon style={{ fontSize: "20px" }} />
 				</TopLeftAction>
 			}
 

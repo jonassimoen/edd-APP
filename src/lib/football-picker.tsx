@@ -142,14 +142,12 @@ export const FootballPicker = (maxPositionsPicks: PositionsMinMax, positionsIds:
 		if (res[currentPlayerPositionName] && (res[currentPlayerPositionName].length < maxAllowedPlayersPerPositions[currentPlayerPositionName])) {
 			if (!checkOnly) {
 				pickAtPosition(currentPlayerPositionName, player.id);
-				console.log(`Picked player at position ${player.positionId}`);
 			}
 			return true;
 		} else {
 			const benchN = res.Bench.length;
 			if (benchN < maxPositionsPicks.Bench.max) {
 				if (!checkOnly) {
-					console.log(`Picked BENCH player at position ${player.positionId}`);
 					pickAtPosition("Bench", player.id);
 				}
 				return true;

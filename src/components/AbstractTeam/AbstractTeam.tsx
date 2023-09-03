@@ -133,6 +133,11 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		viceCaptainId?: number,
 		teamUser?: any,
 	) => {
+		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
+		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
+
+		state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
+		
 		setState({
 			...state,
 			starting,
@@ -425,7 +430,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 	const onPlayerSwap = (player: Player) => {
 		if (player && player.id === state.swapPlayerId) {
-			// const pickBackResult = state.validator.pick(player);
+			const pickBackResult = state.validator.pick(player);
 			setState({ ...state, swapPlayerId: null, swappedFrom: null, swapPlayer: null });
 		}
 		else if (state.swapPlayerId) {
@@ -453,7 +458,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 						.map((benchPlayer: any) => {
 							if (benchPlayer.id === previousSwapFromBench.id) {
 								return secondSwapFromBench;
-							} else if (benchPlayer === secondSwapFromBench.id) {
+							} else if (benchPlayer.id === secondSwapFromBench.id) {
 								return previousSwapFromBench;
 							} else {
 								return benchPlayer;
@@ -474,7 +479,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 			const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
-			// state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
+			state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
 
 			setState({
 				...state, starting, bench, swappedFrom: null, swapPlayerId: null, swapPlayer: null, captainId: captainId || state.captainId
@@ -484,7 +489,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const isLineupSwap = state.starting
 				.find((startingPlayer: any) => startingPlayer && player && startingPlayer.id === player.id);
 			if (isLineupSwap) {
-				// const removeResult = state.validator.remove(player);
+				const removeResult = state.validator.remove(player);
 			}
 			setState({ ...state, swapPlayerId: player.id, swapPlayer: player, swappedFrom: isLineupSwap ? "starting" : "bench" });
 		}
@@ -535,7 +540,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 				if (player && player.id) {
 					state.validator.remove(player);
-					const canPick = state.validator.canPick({ Player: { id: state.swapPlayerId, positionId: state.swapPlayer.positionId } }, true);
+					const canPick = state.validator.canPick({ id: state.swapPlayer.id, positionId: state.swapPlayer.positionId }, true);
 					state.validator.pick(player);
 
 					return canPick;
