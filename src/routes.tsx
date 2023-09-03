@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <Navigate to={{pathname: '/home'}} />,
+				element: <Navigate to={{pathname: "/home"}} />,
 			},
 			{
 				path: "/home",
@@ -90,23 +90,23 @@ export const router = createBrowserRouter([
 				element: <ProtectedRoute access={true} redirectPath='/home'><Admin redirectPath='/home' /></ProtectedRoute>,
 				children: [
 					{
-						path: 'players',
+						path: "players",
 						element: <PlayerManagement />
 					},
 					{
-						path: 'clubs',
+						path: "clubs",
 						element: <ClubManagement />
 					},
 					{
-						path: 'games',
+						path: "games",
 						element: <GameManagement />
 					},
 					{
-						path: 'weeks',
+						path: "weeks",
 						element: <WeekManagement />
 					},
 					{
-						path: 'games/events/:id',
+						path: "games/events/:id",
 						element: <GameStatsManagement />
 					}
 				]

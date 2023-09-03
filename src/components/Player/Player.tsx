@@ -1,41 +1,45 @@
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Badge, NoPlayer, PlayerBg, PlayerStyle, Points, TopLeftAction, Value } from "./PlayerStyle";
+import { Badge, NoPlayer, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRightAction, Value } from "./PlayerStyle";
 import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
-import { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined } from "@ant-design/icons";
+import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined } from "@ant-design/icons";
+import { CaptainButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 
 const AddIcon = (props: any) => <IconPlus {...props} />;
 const DeleteIcon = (props: any) => <CloseCircleFilled {...props} style={{ color: "red" }} shape="circle" />;
 const SwapIcon = (props: any) => <ArrowDownOutlined {...props} />;
+const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
+const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {...props} />;
 
 declare type PlayerState = {
-    // modalVisible: boolean
-    // shirtSoccer?: string
-    portraitFace?: string
+	// modalVisible: boolean
+	// shirtSoccer?: string
+	portraitFace?: string
 }
 
 declare type PlayerProps = {
-    player: Player
-    portraitFace?: string
-    avatarOnly?: boolean
-    badgeColor: string
-    badgeBgColor: string
-    pointsColor: string
-    positionIndex?: number
-    captainId: number
-    viceCaptainId: number
-    onPlaceholderClick?: any
-    actionLessPlayerIds: any[],
-	swapPlayerId?: number | null;
-	positionLabel?: string;
+	player: Player
+	portraitFace?: string
+	avatarOnly?: boolean
+	badgeColor: string
+	badgeBgColor: string
+	pointsColor: string
+	positionIndex?: number
+	captainId: number
+	viceCaptainId: number
+	onPlaceholderClick?: any
+	actionLessPlayerIds: any[]
+	swapPlayerId?: number | null
+	positionLabel?: string
+	showCaptainBadge?: boolean
 
-    isSwapable?: any,
+	isSwapable?: any
 
-    onRemove?: any,
-    onSwap?: any,
+	onRemove?: any
+	onSwap?: any
 }
 
 export const Player = (props: PlayerProps) => {
@@ -54,6 +58,7 @@ export const Player = (props: PlayerProps) => {
 		swapPlayerId,
 		positionLabel,
 		isSwapable,
+		showCaptainBadge,
 
 		onRemove,
 		onSwap,
@@ -81,12 +86,12 @@ export const Player = (props: PlayerProps) => {
 	const playerPositionColor = useMemo(() => getPlayerPositionHexColor(player, theme), [player]);
 	const playerName = useMemo(() =>
 		(player && player.id && player.short) ||
-        (player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
-        `${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`,
-	[player]);
+		(player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
+		`${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`,
+		[player]);
 
 	const hasStats = useMemo(() => player && player.stats && player.stats.length, [player]);
-	const hasActions = useMemo(() => player && player.id && (actionLessPlayerIds || []).indexOf(player.id) !== -1, [player]);
+	const hasActions = useMemo(() => player && player.id && (actionLessPlayerIds || []).indexOf(player.id) === -1, [player]);
 	const isCaptain = player && player.id && player.id === captainId;
 	const isViceCaptain = player && player.id && player.id === viceCaptainId;
 
@@ -103,7 +108,6 @@ export const Player = (props: PlayerProps) => {
 		onSwap(player);
 	};
 
-
 	const {
 		portraitFace,
 	} = state;
@@ -112,45 +116,59 @@ export const Player = (props: PlayerProps) => {
 		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}`}>
 			{
 				player && player.id &&
-                <PlayerBg src={portraitFace} />
+				<PlayerBg src={portraitFace} />
 			}
 
 			{
 				showPlayerName &&   // badgeBgColor of playerPositionColor // span: color: pointsColor
-                <Badge color={badgeColor} bgColor={playerPositionColor}>
-                	<span style={{ color: "white"}}>{playerName}</span>
-                </Badge>
-			}     
+				<Badge color={badgeColor} bgColor={playerPositionColor}>
+					<span style={{ color: "white" }}>{playerName}</span>
+				</Badge>
+			}
 
 			{
 				showPoints && hasStats && player.points !== null && player.points !== undefined &&
-                <Points color={"#000"} bgColor={isCaptain || isViceCaptain ? "#ffc422" : "#00fe82"}>{player.points}</Points>
+				<Points color={"#000"} bgColor={isCaptain || isViceCaptain ? "#ffc422" : "#00fe82"}>{player.points}</Points>
 			}
 
 			{
 				!player || (player && !player.id) &&
-                <NoPlayer onClick={onPlaceholderClick ? (e: any) => onPlaceholderClick(player) : () => { }}>
-                	<AddIcon style={{ fontSize: "2em", color: theme.primaryContrast, cursor: "pointer" }} />
-                </NoPlayer>
+				<NoPlayer onClick={onPlaceholderClick ? (e: any) => onPlaceholderClick(player) : () => { }}>
+					<AddIcon style={{ fontSize: "2em", color: theme.primaryContrast, cursor: "pointer" }} />
+				</NoPlayer>
 			}
 
 			{
 				player && hasActions && onRemove &&
-                <TopLeftAction className="delete" onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
-                	<DeleteIcon />
-                </TopLeftAction>
+				<TopLeftAction className="delete" onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
+					<DeleteIcon />
+				</TopLeftAction>
 			}
 
 			{
 				player && isSwapable && onSwap && isSwapable(player) && swapPlayerId !== player.id && player.positionId !== 0 &&
-                <TopLeftAction className="delete" onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
-                	<SwapIcon style={{fontSize: "20px"}} />
-                </TopLeftAction>
+				<TopLeftAction className="delete" onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
+					<SwapIcon style={{ fontSize: "20px" }} />
+				</TopLeftAction>
 			}
 
 			{
-				player && positionLabel && positionLabel.length && 
-                <span className="position-label">{positionLabel}</span>
+				player && isCaptain && showCaptainBadge &&
+				<TopRightAction bgColor={theme.primaryColor}>
+					<CaptainIcon style={{ fontSize: 18 }} />
+				</TopRightAction>
+			}
+
+			{
+				player && isViceCaptain && showCaptainBadge &&
+				<TopRightAction bgColor={theme.primaryColor}>
+					<ViceCaptainIcon style={{ fontSize: 18 }} />
+				</TopRightAction>
+			}
+
+			{
+				player && positionLabel && positionLabel.length &&
+				<span className="position-label">{positionLabel}</span>
 			}
 		</PlayerStyle>
 

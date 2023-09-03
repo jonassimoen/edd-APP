@@ -111,6 +111,7 @@ export const TopRightAction = styled.div`
 	position: absolute;
 	right: 10px;
 	width: 20px;
+	top: 0px;
 	height: 20px;
 	text-align: center;
 	cursor: pointer;

@@ -26,7 +26,7 @@ export const userSlice = createSlice({
 		},
 		setTeams: (state, action: PayloadAction<Team[]>) => {
 			state.teams = action.payload;
-		}
+		},
 	}
 });
 export const userReducer = userSlice.reducer;

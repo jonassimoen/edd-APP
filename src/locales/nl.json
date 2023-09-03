@@ -114,7 +114,8 @@
   "team": {
     "saveTeam": "Team opslaan",
     "players": "Spelers",
-    "remainingBudget": "Resterend budget"
+    "remainingBudget": "Resterend budget",
+    "newTeamNameInput": "Kies een teamnaam"
   },
   "players": {
     "noneFound": "Geen spelers gevonden"

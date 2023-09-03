@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FootballPicker } from "@/lib/football-picker";
 import { FootballMaxPositionsPicks, FootballPositionIds } from "@/lib/constants";
 import Decimal from "decimal.js";
 import { useAddTeamMutation } from "@/services/teamsApi";
+import { openErrorNotification } from "@/lib/helpers";
+import { t } from "i18next";
+import { useLazyGetTeamsQuery } from "@/services/usersApi";
 
 declare type AbstractTeamProps = {
 	matches?: any;
@@ -67,6 +70,7 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam] = useAddTeamMutation();
+	const [getTeams] = useLazyGetTeamsQuery();
 
 	const application = useSelector((state: StoreState.All) => state.application);
 
@@ -145,7 +149,12 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		});
 	};
 
+	useEffect(() => {
+		console.log("STATE",state);
+	}, [state]);
+
 	const pickPlayer = (player: Player) => {
+		console.log("picking player with id", player.id)
 		const nilPlayer: any = null;
 
 		const alreadyInTeam: Player = [].concat(state.initialStarting, state.initialBench).find((item: Player) => item && player && item.id === player.id);
@@ -157,9 +166,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 		const startingSpotEmpty = state.starting.find((p: Player) => (p && !p.id) && (p && p.positionId === player.positionId));
 		const benchSpotEmpty = state.bench.find((p: Player) => (p && !p.id) && (p && p.positionId === player.positionId));
-
-		console.log("Starting empty spot", startingSpotEmpty);
-		console.log("Bench empty spot", benchSpotEmpty);
 
 		// const pickingResult = state.validator.pick(player);
 		// if (pickingResult.result.Bench.includes(player.id)) {
@@ -190,14 +196,23 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 			const budget = parseFloat(new Decimal(state.budget.toFixed(2)).minus(pValue.toFixed(2)).toString());
 
+			const captains = {
+				captainId: state.captainId,
+				viceCaptainId: state.viceCaptainId
+			}
 			if (!state.captainId && player.positionId !== 0) {
-				setState({ ...state, captainId: player.id });
+				captains.captainId = player.id;
 			}
-			if (!state.viceCaptainId && player.positionId !== 0) {
-				setState({ ...state, viceCaptainId: player.id });
+			else if (!state.viceCaptainId && player.positionId !== 0) {
+				captains.viceCaptainId = player.id;
 			}
-
-			setState({ ...state, starting, budget });
+			setState({
+				...state,
+				starting,
+				budget,
+				captainId: captains.captainId,
+				viceCaptainId: captains.viceCaptainId,
+			});
 		}
 
 		else if (benchSpotEmpty) {
@@ -314,8 +329,8 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		setState({ ...state, viceCaptainId: playerId, captainId: (state.captainId === playerId ? undefined : state.captainId) });
 	};
 
-	const onTeamNameChange = (name: string) => {
-		setState({ ...state, teamName: name, teamNameChanged: true });
+	const onTeamNameChange = (e: any) => {
+		setState({ ...state, teamName: e.target.value, teamNameChanged: e.target.value !== state.initialTeamName });
 	};
 
 	const validateTeam = (showNotifications?: boolean) => {
@@ -360,14 +375,14 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			setState({ ...state });
 
 			// create function: /team/add
-			return Promise.resolve(addTeam({
+			return addTeam({
 				starting: starting.map((p: any) => p.id),
 				bench: bench.map((p: any) => p.id),
 				teamName: state.teamName,
-			})).then(() => setState({ ...state }));
+			}).then((a) => {console.log("hallo");getTeams();return a;});
 		} else {
 			return Promise.reject(
-				// notifications.show({ color: "orange", message: t("team.teamSaveFailed") })
+				openErrorNotification({title: t("team.teamSaveFailed") })
 			);
 		}
 	};

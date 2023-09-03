@@ -183,11 +183,11 @@ export const PlayerList = (props: PlayerListProps) => {
 								<span>
 									{record.short}
 								</span>
-								<p style={{float:'right', marginRight: "10px"}}>
+								<span style={{float:'right', marginRight: "10px"}}>
 									{record.star && <StarIcon style={{ marginRight: "2px" }} />}
 									{record.caps && <CaptainIcon style={{ marginRight: "2px" }} />}
 									{record.setPieces && <SetPiecesIcon style={{ marginRight: "2px" }} />}
-								</p>
+								</span>
 							</p>
 							<p>
 								<span>{club && club.short} {opponentInfo ? `vs ${opponentInfo.short}` : null} </span>

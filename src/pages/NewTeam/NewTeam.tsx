@@ -20,6 +20,9 @@ import { useAppSelector } from "@/reducers";
 import { Grid, Tag } from "antd";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { NewGameStats } from "@/components/Stats/NewGameStats";
+import { Input } from "@/components/UI/Input/Input";
+import { setTeams } from "@/features/userSlice";
+import { useLazyGetTeamsQuery } from "@/services/usersApi";
 const { useBreakpoint } = Grid;
 
 declare type NewTeamState = {
@@ -32,10 +35,11 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
 	const [getTeam, { data: teamData, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess }] = useLazyGetTeamQuery();
+	const [getTeams] = useLazyGetTeamsQuery();
 	// add team
 	// drop team
 
-	const user = useAppSelector((state) => state.userState.user);
+	const user = useAppSelector((state) => state.userState);
 
 	const [state, setState] = useState<NewTeamState>({
 		redirectToPayments: false,
@@ -60,7 +64,6 @@ const _NewTeam = (props: AbstractTeamType) => {
 		if (player && player.positionId) {
 			props.setActivePositionFilter(player.positionId);
 		}
-		console.log(props.activePositionFilter);
 		scroller.scrollTo("all-players", {
 			duration: 1000,
 			delay: 100,
@@ -75,7 +78,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 		}
 
 		props.onTeamSave()
-			.then(() => setState({ ...state, redirectToPayments: true }))
+			.then((result) =>{ console.log(result.data);setState({ ...state, hasPlayers: (result.data.players.length !== 0), redirectToPayments: true })})
 			.catch(() => { });
 	};
 
@@ -101,16 +104,24 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const team = user && user.teams && user.teams[0];
 
 	const screens = useBreakpoint();
+	console.log("hasplayers",hasPlayers)
 	return (
 		<NewTeamStyle>
 			{team && team.id && hasPlayers && <Navigate to={{ pathname: `/team/${team.id}` }} />}
-			{team && team.id && redirectToPayments && <Navigate to={{ pathname: `/team/${team.id}` }} />}
 
 			{players && clubs &&
 				<>
 					<Row>
 						<Col lg={12} md={24} sm={24} xs={24} className="left">
 							<Title level={2}>{t("general.footballLineup")}</Title>
+							<Input
+								onChange={props.onTeamNameChange}
+								style={{ maxWidth: '100%' }}
+								placeholder={t('team.newTeamNameInput')}
+								value={teamName}
+								maxLength={55}
+							/>
+
 							<NewGameStats
 								budget={budget}
 								totalPlayers={totalPlayersToPick}
@@ -159,7 +170,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 									loading={savingTeamPending}
 									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 									size="large">
-										<SaveOutlined />
+										<SaveOutlined style={{ marginRight: '10px' }} />
 										{t("team.saveTeam")}
 									</Button>
 								}
