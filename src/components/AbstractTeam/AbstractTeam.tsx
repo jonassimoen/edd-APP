@@ -149,12 +149,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		});
 	};
 
-	useEffect(() => {
-		console.log("STATE",state);
-	}, [state]);
-
 	const pickPlayer = (player: Player) => {
-		console.log("picking player with id", player.id)
 		const nilPlayer: any = null;
 
 		const alreadyInTeam: Player = [].concat(state.initialStarting, state.initialBench).find((item: Player) => item && player && item.id === player.id);
@@ -379,7 +374,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				starting: starting.map((p: any) => p.id),
 				bench: bench.map((p: any) => p.id),
 				teamName: state.teamName,
-			}).then((a) => {console.log("hallo");getTeams();return a;});
+			});
 		} else {
 			return Promise.reject(
 				openErrorNotification({title: t("team.teamSaveFailed") })

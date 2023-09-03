@@ -78,7 +78,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 		}
 
 		props.onTeamSave()
-			.then((result) =>{ console.log(result.data);setState({ ...state, hasPlayers: (result.data.players.length !== 0), redirectToPayments: true })})
+			.then((result) => setState({ ...state, hasPlayers: (result.data.players.length !== 0), redirectToPayments: true }))
 			.catch(() => { });
 	};
 
@@ -104,7 +104,6 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const team = user && user.teams && user.teams[0];
 
 	const screens = useBreakpoint();
-	console.log("hasplayers",hasPlayers)
 	return (
 		<NewTeamStyle>
 			{team && team.id && hasPlayers && <Navigate to={{ pathname: `/team/${team.id}` }} />}

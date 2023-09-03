@@ -193,7 +193,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			[name]: value,
 		});
 		setState({ ...state, filters });
-		console.log(filters);
 	};
 
 	const handleTableChange = (pagination: any, filters: any, sorter: any) => {

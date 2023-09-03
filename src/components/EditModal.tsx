@@ -43,7 +43,8 @@ export const EditModal = <T,>(props: React.PropsWithChildren<EditModalProps<T>>)
 						onCreate(obj);
 					})
 					.catch((err) => {
-						console.log("fout", err);
+						// todo: display notification
+						console.log("Error while editing:", err);
 					});
 			}}
 			onCancel={onCancel}

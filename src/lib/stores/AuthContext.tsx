@@ -41,30 +41,21 @@ export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children })
 
 	useEffect(() => {
 		if (secureLocalStorage.getItem("token")) {
-			console.log("found token");
 			if (!isFetchingProfile) {
-				console.log("FETCHING PROFILE");
 				getProfile().then(({ data }) => {
-					console.log("FETCHED PROFILE:", data);
-					console.log("STATE BEFORE FETCH PROFILE",userAuth);
 					setUserAuth({
 						...userAuth,
 						authenticated: data && data !== null,
 						user: data,
 					});
-					console.log("STATE AFTER FETCH PROFILE",userAuth);
 				});
 			}
 			if (!isFetchingTeams) {
-				console.log("FETCHING TEAMS");
 				getTeams().then(({ data }) => {
-					console.log("FETCHED TEAMS:", data);
-					console.log("STATE AFTER FETCH TEAMS",userAuth);
 					setUserAuth({
 						...userAuth,
 						teams: data.teams,
 					});
-					console.log("STATE BEFORE FETCH TEAMS",userAuth);
 				});
 			}
 		}
@@ -79,10 +70,8 @@ export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children })
 	// 			teams: teamsData.teams,
 	// 			authenticated: data && data !== null,
 	// 		});
-	// 		console.log("FOUND PROFILE + TEAMS")
 	// 	}
 	// }, [data, teamsData])
-	// // console.log("usercontext",user, "auth", authenticated);
 
 	return (
 		<AuthContext.Provider

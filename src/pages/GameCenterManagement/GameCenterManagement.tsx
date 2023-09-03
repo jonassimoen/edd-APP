@@ -201,7 +201,7 @@ export const GameCenterManagement = () => {
 			<EditModal
 				open={state.openSaveModal}
 				object={{ matchId: match?.id } as MatchEvent}
-				onCreate={() => { console.log(allEvents); createMatchEvents({ events: allEvents, matchId: +(id || 0) }); setState({ ...state, openSaveModal: false }); }}
+				onCreate={() => { createMatchEvents({ events: allEvents, matchId: +(id || 0) }); setState({ ...state, openSaveModal: false }); }}
 				// onCreate={(event: MatchEvent) => { createMatchEvents(event); setState({ ...state, openCreateModal: false }); }}
 				onCancel={() => setState({ ...state, openSaveModal: false })}
 				action='save'

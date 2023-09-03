@@ -114,7 +114,6 @@ export const Player = (props: PlayerProps) => {
 
 	const onBgLoadError = (event: any) => {
 		if(state.portraitFaceFallBack) {
-			console.log(state.portraitFace,"replaced with", state.portraitFaceFallBack)
 			setState({ ...state, portraitFace: state.portraitFaceFallBack,});
 		}
 	}

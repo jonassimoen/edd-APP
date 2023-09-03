@@ -18,14 +18,12 @@ export const LoginCallback = () => {
 
 	useEffect(() => {
 		if(userState.authenticated) {
-			console.log("user has been authenticated --> saved in localstorage");
 			secureLocalStorage.setItem("user", JSON.stringify(userState.user));
 		}
 	});
 
 	useEffect(() => {
 		if (access_token) {
-			console.log("token set");
 			secureLocalStorage.setItem("token", access_token as string);
 			getProfile();
 			getTeams();
@@ -33,23 +31,6 @@ export const LoginCallback = () => {
 			// setState({ ...state, redirectToHome: true, isFetching: false });
 		}
 	}, [access_token]);
-
-	console.log(userState);
-
-	useEffect(() => {
-		if(profileSuccess && teamSuccess) {
-			console.log("auth",userState.authenticated);
-			console.log("teams",userState.teams);
-			console.log("teamslength",userState.teams.length !== 0);
-
-
-			console.log("NEW", userState.authenticated && userState.teams.length === 0);
-			console.log("TEAMID", userState.authenticated && userState.teams && userState.teams.length !== 0);
-			console.log("HOME", !userState.authenticated);
-		}
-	});
-
-	
 
 	if (profileSuccess && teamSuccess) {
 		return (

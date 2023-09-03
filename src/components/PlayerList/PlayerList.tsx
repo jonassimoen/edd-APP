@@ -73,7 +73,6 @@ export const PlayerList = (props: PlayerListProps) => {
 		.concat(props.clubs.map((c: Club) => ({ id: c.id, name: <span>{c.name}</span> })));
 
 	useEffect(() => {
-		console.log("active position changed");
 		const filters = { ...state.filters, position: props.activePositionFilter };
 		setState({ ...state, filters });
 	}, [props.activePositionFilter]);

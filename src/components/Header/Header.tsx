@@ -41,8 +41,6 @@ export const Header = () => {
 		showTeams: false,
 	});
 
-	console.log(teams);
-
 	const { t, i18n } = useTranslation();
 	// const gameInProgress = !!matches.info.deadlineWeek;
 

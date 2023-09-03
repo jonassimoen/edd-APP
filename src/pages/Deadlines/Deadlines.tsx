@@ -48,7 +48,6 @@ export const Deadlines = (props: DeadlinesProps) => {
 		}
 	];
 
-	console.log(weeks);
 	return (
 		<React.Fragment>
 			<PageStyle>
@@ -64,7 +63,6 @@ export const Deadlines = (props: DeadlinesProps) => {
 								loading={weeksLoading}
 								pagination={false}
 								rowKey={(record: any) => `record-${record.id}`}
-								onRow={(week: any) => console.log(week)}
 								rowClassName={(record: any) => `cursor-pointer ${record && state.selectedWeek && record.weekId === state.selectedWeek.weekId ? "selected-item" : ""} ${record.id % 2 ? "ant-table-row--odd" : "ant-table-row--even"}`}
 							/>
 						</Block>

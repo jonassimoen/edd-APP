@@ -36,7 +36,8 @@ export const CreateModal = <T,>(props: React.PropsWithChildren<CreateModalProps<
 						onCreate(obj);
 					})
 					.catch((err) => {
-						console.log("fout", err);
+						// todo: display notification
+						console.log("Error while creating:", err);
 					});
 			}}
 			onCancel={onCancel}
