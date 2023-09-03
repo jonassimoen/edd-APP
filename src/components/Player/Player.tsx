@@ -40,6 +40,7 @@ declare type PlayerProps = {
 	showCaptainBadge?: boolean
 
 	isSwapable?: any
+	swappedFrom?: string|null
 
 	onRemove?: any
 	onSwap?: any
@@ -62,7 +63,7 @@ export const Player = (props: PlayerProps) => {
 		positionLabel,
 		isSwapable,
 		showCaptainBadge,
-
+		swappedFrom,
 		onRemove,
 		onSwap,
 	} = props;
@@ -89,6 +90,9 @@ export const Player = (props: PlayerProps) => {
 	];
 	const currentPositionLabel = gamePositionIdToLabels.find((item: any) => !!(item.id === positionIndex));
 	const playerPositionColor = useMemo(() => getPlayerPositionHexColor(player, theme), [player]);
+
+	const swappedAlreadyFromPlayerArea = useMemo(() => (onSwap && swapPlayerId && player && (swappedFrom === 'starting' && player.inStarting) && swapPlayerId !== player.id), [player, swappedFrom])
+	const hasInactiveOverlay = useMemo(() => swappedAlreadyFromPlayerArea || (swapPlayerId && !swappedAlreadyFromPlayerArea && isSwapable && !isSwapable(player)), [player, isSwapable]);
 	const playerName = useMemo(() =>
 		(player && player.id && player.short) ||
 		(player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
@@ -123,7 +127,7 @@ export const Player = (props: PlayerProps) => {
 		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}`}>
 			{
 				player && player.id &&
-				<PlayerBg src={state.portraitFace} onError={onBgLoadError} />
+				<PlayerBg src={state.portraitFace} onError={onBgLoadError} inactive={hasInactiveOverlay} />
 			}
 
 			{
@@ -147,7 +151,7 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				player && hasActions && onRemove &&
-				<TopLeftAction className="delete" onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
+				<TopLeftAction onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
 					<DeleteIcon />
 				</TopLeftAction>
 			}

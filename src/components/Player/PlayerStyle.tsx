@@ -33,6 +33,7 @@ export const PlayerBg = styled.img`
     position: relative;
     width: 50px;
     height: 50px;
+	opacity: ${(props: any) => props.inactive ? 0.4 : 1};
 ` as any;
 
 export const Badge = styled.div`
@@ -132,10 +133,8 @@ export const TopLeftAction = styled.div`
 	@media ${mediaQueries.mobileM} {
 		left: 0px;
 	}
-
-	&.delete {
-		top: 0px;
-	}
+	
+	top: 0px;
 ` as any;
 
 export const Points = styled.span`
