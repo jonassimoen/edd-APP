@@ -18,11 +18,13 @@ declare type PlayerState = {
 	// modalVisible: boolean
 	// shirtSoccer?: string
 	portraitFace?: string
+	portraitFaceFallBack?: string
 }
 
 declare type PlayerProps = {
 	player: Player
 	portraitFace?: string
+	portraitFaceFallBack?: string
 	avatarOnly?: boolean
 	badgeColor: string
 	badgeBgColor: string
@@ -64,13 +66,15 @@ export const Player = (props: PlayerProps) => {
 		onSwap,
 	} = props;
 	const [state, setState] = useState<PlayerState>({
-		portraitFace: props.portraitFace
+		portraitFace: props.portraitFace,
+		portraitFaceFallBack: props.portraitFaceFallBack
 	});
 
 	useEffect(() => {
 		setState({
 			...state,
 			portraitFace: `http://localhost:8080/static/${player.externalId}.png`,
+			portraitFaceFallBack: 'http://localhost:8080/static/dummy.png',	
 		});
 	}, [player]);
 
@@ -108,15 +112,18 @@ export const Player = (props: PlayerProps) => {
 		onSwap(player);
 	};
 
-	const {
-		portraitFace,
-	} = state;
+	const onBgLoadError = (event: any) => {
+		if(state.portraitFaceFallBack) {
+			console.log(state.portraitFace,"replaced with", state.portraitFaceFallBack)
+			setState({ ...state, portraitFace: state.portraitFaceFallBack,});
+		}
+	}
 
 	return (
 		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}`}>
 			{
 				player && player.id &&
-				<PlayerBg src={portraitFace} />
+				<PlayerBg src={state.portraitFace} onError={onBgLoadError} />
 			}
 
 			{

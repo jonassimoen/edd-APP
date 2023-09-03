@@ -75,38 +75,10 @@ export const Team = (props: TeamProps) => {
 	return (
 		<TeamStyle bg={bg} widthRatio={widthRatio} heightRatio={heightRatio} centerAligned={centerAligned}>
 			{selection ? selection.map((position: any, positionIdx: number) => {
-				const sportSpecificProps: {
-                    shirtCycling?: string,
-                    shirtSoccer?: string,
-                    soccerJersey?: string,
-                    clubBadge?: string,
-                    portraitFace?: string,
-                    shirtFallback?: string,
-                    portraitFaceFallBack?: string,
-                    club?: Club
-                } = {};
-
 				return (
 					<div className={"position"} key={`posIdx-${positionIdx}`}>
 						{
 							position.map((player: any, playerIdx: number) => {
-								const club = clubs.find((item: Club, idx: number) => player && item.id === player.clubId);
-								sportSpecificProps.club = club;
-								const soccerJersey = "/jerseys/club_1.png";
-								if(player) {
-									const soccerJersey = `/jerseys/club_${player.clubId}.png`;
-								}
-								if(PlayerType.SoccerShirt) {
-									sportSpecificProps.shirtSoccer = `${assetsCdn}/jerseys/football/${player.clubId}.png`;
-									sportSpecificProps.shirtFallback = `${assetsCdn}/jerseys/dummy.png`;
-								}
-								if (PlayerType.SoccerPortrait === playerType && player) {
-									sportSpecificProps.soccerJersey = `${assetsCdn}/jerseys/club_${player.clubId}.png`;
-									sportSpecificProps.clubBadge = `${assetsCdn}/badges/club_${player.clubId}.png`;
-									// sportSpecificProps.portraitFace = player.portraitUrl;
-									sportSpecificProps.portraitFace = `http://localhost:8080/static/${player.externalId}.png`;
-									sportSpecificProps.portraitFaceFallBack = `${assetsCdn}/players/dummy.png`;
-								}
 								return (
 									<Player
 										key={`player-${positionIdx}-${playerIdx}`}
@@ -133,8 +105,6 @@ export const Team = (props: TeamProps) => {
 										swapPlayerId={swapPlayerId}
 										actionLessPlayerIds={actionLessPlayerIds}
 										swappedFrom={swappedFrom}
-
-										{...sportSpecificProps}
 									/>
 								);
 							})
