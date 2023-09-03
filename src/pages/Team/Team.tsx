@@ -35,16 +35,16 @@ export const _Team = (props: AbstractTeamType) => {
 	}, [clubsSuccess, teamSuccess]);
 
 	const getTeamInfo = (weekId: number) => {
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId"];
 		const selectionProps: any[] = [];
 		if (teamSuccess && clubsSuccess) {
-			const starting = team.players.filter((p: Player) => p.selection?.starting === 0)
+			const starting = team.players.filter((p: Player) => p.selection?.starting === 1)
 				.map((p: Player) => {
 					const displayWeekMatches: any[] = []; // todo
 					return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 				});
 
-			const bench = team.players.filter((p: Player) => p.selection?.starting === 1)
+			const bench = team.players.filter((p: Player) => p.selection?.starting === 0)
 				.map((p: Player) => {
 					const displayWeekMatches: any[] = []; // todo
 					return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
