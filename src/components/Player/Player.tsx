@@ -1,7 +1,7 @@
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Badge, NoPlayer, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRightAction, Value } from "./PlayerStyle";
+import { Badge, NoPlayer, OpponentBadge, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRightAction, Value } from "./PlayerStyle";
 import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
@@ -44,6 +44,8 @@ declare type PlayerProps = {
 
 	onRemove?: any
 	onSwap?: any
+
+	className?: string
 }
 
 export const Player = (props: PlayerProps) => {
@@ -98,6 +100,20 @@ export const Player = (props: PlayerProps) => {
 		(player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
 		`${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`,
 		[player]);
+	const opponentInfo = useMemo(
+		() => {
+			if(player && player.upcomingMatches && player.upcomingMatches.length) {
+				const nextMatch = player.upcomingMatches[0];
+				return {
+					playing: nextMatch.homeId === player.clubId ? t('player.opponentHome') : t('player.opponentAway'),
+					opponentShort: nextMatch.homeId === player.clubId ? nextMatch.away.short : nextMatch.home.short,
+				}
+			} else {
+				return null;
+			}
+		}
+		, [player]
+	);
 
 	const hasStats = useMemo(() => player && player.stats && player.stats.length, [player]);
 	const hasActions = useMemo(() => player && player.id && (actionLessPlayerIds || []).indexOf(player.id) === -1, [player]);
@@ -124,7 +140,7 @@ export const Player = (props: PlayerProps) => {
 	}
 
 	return (
-		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}`}>
+		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}` && props.className}>
 			{
 				player && player.id &&
 				<PlayerBg src={state.portraitFace} onError={onBgLoadError} inactive={hasInactiveOverlay} />
@@ -140,6 +156,15 @@ export const Player = (props: PlayerProps) => {
 			{
 				showPoints && hasStats && player.points !== null && player.points !== undefined &&
 				<Points color={"#000"} bgColor={isCaptain || isViceCaptain ? "#ffc422" : "#00fe82"}>{player.points}</Points>
+			}
+
+			{
+				opponentInfo ?
+					<OpponentBadge color={'#000'} bgColor={'#fff'}>
+						<p style={{fontSize: '10px'}}>
+							{`${opponentInfo.opponentShort} (${opponentInfo.playing})`}
+						</p>
+					</OpponentBadge> : null
 			}
 
 			{

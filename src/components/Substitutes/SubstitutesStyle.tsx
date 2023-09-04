@@ -8,6 +8,7 @@ export const SubstitutesStyle = styled.div`
     align-items: center;
     justify-content: center;
     max-width: 975px;
+    padding-top: 2%;
     padding-bottom: 7%;
 	background: url('${(props: any) => props.bgColor}') center;
 
@@ -20,7 +21,7 @@ export const SubstitutesStyle = styled.div`
         width: 100%;
         justify-content: center;
 
-        .player {
+        &-player {
             margin: 10px;
         }
     }

@@ -47,6 +47,7 @@ type Player = {
 
     stats?: Statistic[]
     selection?: PlayerSelection
+    upcomingMatches: Match[]
 }
 
 type Statistic = {

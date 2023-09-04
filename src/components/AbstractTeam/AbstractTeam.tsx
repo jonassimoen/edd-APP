@@ -420,13 +420,11 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 	const onTeamSelectionsUpdate = (teamId: number, weekId: number) => {
 		const isValid = validateTeam(true);
-		console.log("TEAM ID", teamId);
 
 		if (isValid) {
 			const startingIds = state.starting.map((player: any) => player.id);
 			const benchIds = state.bench.map((player: any) => player.id);
 
-			// create function: POST /team/:id/selections
 			updateTeamSelections({
 				teamId,
 				starting: startingIds,

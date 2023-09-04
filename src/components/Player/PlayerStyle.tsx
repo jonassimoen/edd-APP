@@ -1,5 +1,6 @@
 import { mediaQueries } from "@/styles/media-queries";
 import styled from "@/styles/styled-components";
+import { theme } from "@/styles/theme";
 
 export const PlayerStyle = styled.div`
     position: relative;
@@ -24,6 +25,7 @@ export const PlayerStyle = styled.div`
         margin: 0 auto;
         text-align: center;
         color: white;
+		left: 40%;
     }
 
     margin: auto;
@@ -67,6 +69,24 @@ export const Badge = styled.div`
 			font-weight: bold;
 		}
     }
+` as any;
+
+export const OpponentBadge = styled.div`
+	position: absolute;
+	inset: 100% 0px 0px;
+	width: 100%;
+	height: 20px;
+	
+	background: ${theme.primaryContrast};
+	color: white;
+	padding: 3px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+	@media ${mediaQueries.tablet} {
+		overflow: hidden;
+	}
 ` as any;
 
 export const NoPlayer = styled.div`

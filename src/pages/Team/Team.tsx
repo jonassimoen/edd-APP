@@ -20,19 +20,22 @@ import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Calendar } from "@/components/Calendar/Calendar";
 import { Button } from "@/components/UI/Button/Button";
 import { useAppSelector } from "@/reducers";
+import { SaveOutlined } from "@ant-design/icons";
+import { useGetMatchesQuery } from "@/services/matchesApi";
 
 export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const user = useAppSelector((state) => state.userState.user);
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
 	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
+	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	// todo: fetch matches
 	const { t } = useTranslation();
 	const application = useSelector((state: StoreState.All) => state.application);
 
 	useEffect(() => {
 		getTeamInfo(0);
-	}, [clubsSuccess, teamSuccess]);
+	}, [clubsSuccess, teamSuccess, matchesSuccess]);
 
 	const getTeamInfo = (weekId: number) => {
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId"];
@@ -40,13 +43,17 @@ export const _Team = (props: AbstractTeamType) => {
 		if (teamSuccess && clubsSuccess) {
 			const starting = teamResult.players.filter((p: Player) => p.selection?.starting === 1)
 				.map((p: Player) => {
-					const displayWeekMatches: any[] = []; // todo
+					const displayWeekMatches: any[] = matches.filter(
+						(match: Match) => match.weekId === weekId && ([match.homeId, match.awayId].includes(p.clubId))
+					);
 					return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 				});
 
 			const bench = teamResult.players.filter((p: Player) => p.selection?.starting === 0)
 				.map((p: Player) => {
-					const displayWeekMatches: any[] = []; // todo
+					const displayWeekMatches: any[] = matches.filter(
+						(match: Match) => match.weekId === weekId && ([match.homeId, match.awayId].includes(p.clubId))
+					);
 					return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 				});
 
@@ -115,9 +122,12 @@ export const _Team = (props: AbstractTeamType) => {
 						playerPointsBgColor="#84FF00"
 					/>
 					<Button
-						type="primary"
-						onClick={(e:any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
-					>
+					onClick={(e:any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
+					type="primary"
+					disabled={teamLoading || clubsLoading}
+					style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+					size="large">
+						<SaveOutlined style={{ marginRight: '10px' }} />
 						{t("team.saveTeam")}
 					</Button>
 				</Col>

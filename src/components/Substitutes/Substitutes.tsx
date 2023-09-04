@@ -49,6 +49,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 
 					return <React.Fragment key={`substitute-${idx}`}>
 						<Player
+						 	className={"substitutes-player"}
 							pointsColor={props.playerPointsColor}
 							pointsBgColor={props.playerPointsBgColor}
 							badgeColor={props.playerBadgeColor}
