@@ -185,9 +185,9 @@ type MatchEvent = {
 //     awayId: string
 // }
 
-// type Info = {
-//     displayWeek: number
-//     deadlineWeek: number
-//     deadlineDate: string
-//     rosterEndWeek: number
-// }
+type DeadlineInfo = {
+    displayWeek: number
+    deadlineWeek: number
+    deadlineDate: string
+    endWeek: number
+}

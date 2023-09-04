@@ -1,6 +1,6 @@
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { groupBy, uniqBy } from "lodash";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TableStyle } from "@/components/PlayerList/PlayerListStyle";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
@@ -13,16 +13,16 @@ import { Select } from "../UI/Select/Select";
 import { Navigate } from "react-router-dom";
 
 type CalendarProps = {
-    weekId: number
-    showHeader?: boolean
-    size: number
+	weekId: number
+	showHeader?: boolean
+	size: number
 }
 
 type CalendarState = {
-    filters: any
-    navigateToMatchId: any
-    filtersActivated: boolean
-    weekId: number
+	filters: any
+	navigateToMatchId: any
+	filtersActivated: boolean
+	weekId: number
 }
 
 export const Calendar = (props: CalendarProps) => {
@@ -32,24 +32,27 @@ export const Calendar = (props: CalendarProps) => {
 		filters: {
 			month: -1
 		},
-		filtersActivated: true,
+		filtersActivated: false,
 		navigateToMatchId: null,
 		weekId: props.weekId
 	});
 
-	const matchWeekIds = useMemo(() => uniqBy(matches, match => match.weekId)
-		.map(match => ({ id: match.weekId, name: `${t("general.week")} ${match.weekId}` }))
-		.sort((a: any, b: any) => a.id - b.id), [matches]);
-	const visibleMatches = useMemo(() => matches && matches.filter((match: Match) => match.weekId === state.weekId), [matches]);
-	const matchesByDates = useMemo(() => groupBy(visibleMatches, (match: Match) => dayjs(match.date).format("DD/MM/YYYY")), [visibleMatches]);
-	const selectedWeekId = useMemo(() => matchWeekIds.find((item: any) => item.id === state.weekId), [state.weekId]);
-
-	const enableFilters = () => {
-		setState({ ...state, filtersActivated: true });
+	const onFilterChange = (name: string, value: string | number) => {
+		const filters: any = Object.assign({}, state.filters, { [name]: value });
+		setState({ ...state, filters })
 	};
 
+	const matchFilter = (match: Match, filters: any) => {
+		let show = true;
+		if (filters.month !== -1 && filters.month !== dayjs(match.date).month()) {
+			show = false;
+		}
+		return show;
+	}
+
 	const onCalendarWeekChanged = (weekId: number) => {
-		setState({ ...state, weekId });
+		console.log("weekId", weekId)
+		setState({ ...state, weekId: weekId });
 	};
 
 	const tableEventHandler = (match: any) => ({
@@ -61,6 +64,14 @@ export const Calendar = (props: CalendarProps) => {
 		}
 	});
 
+	const matchWeekIds = useMemo(() => uniqBy(matches, match => match.weekId)
+		.map(match => ({ id: match.weekId, name: `${t("general.week")} ${match.weekId}` }))
+		.sort((a: any, b: any) => a.id - b.id), [matches]);
+
+	const visibleMatches = useMemo(() => matches && matches.filter((match: Match) => match.weekId === state.weekId), [matches, state]);
+	const matchesByDates = useMemo(() => groupBy(visibleMatches, (match: Match) => dayjs(match.date).format("DD/MM/YYYY")), [visibleMatches]);
+	const selectedWeekId = useMemo(() => matchWeekIds.find((item: any) => item.id === state.weekId), [state.weekId]);
+
 	const columns = [
 		{
 			title: "Home",
@@ -68,7 +79,7 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "home",
 			width: "40%",
 			render: (homeId: any, record: any) => {
-				const clubBadge = "null";
+				const clubBadge = "http://localhost:8080/static/badges/dummy.jpg";
 
 				return <>
 					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
@@ -95,7 +106,7 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "away",
 			width: "40%",
 			render: (away: any, record: any) => {
-				const clubBadge = "null";
+				const clubBadge = "http://localhost:8080/static/badges/dummy.jpg";
 
 				return <>
 					<ClubBadgeBg src={clubBadge} />
@@ -112,16 +123,6 @@ export const Calendar = (props: CalendarProps) => {
 			}
 			<FiltersArea>
 				{
-					!state.filtersActivated ?
-						<Button
-							type="primary"
-							onClick={enableFilters}>
-                            Filter
-							<Icon type="right" />
-						</Button>
-						: null
-				}
-				{
 					state.filtersActivated && selectedWeekId && selectedWeekId.id ?
 						<Select
 							$block
@@ -137,7 +138,7 @@ export const Calendar = (props: CalendarProps) => {
 				Object.keys(matchesByDates).map((date: string, key: number) => {
 					return (
 						<div key={`gameday-${key + 1}`} className={`gameday day-${key + 1}`}>
-							<Title level={4}>{dayjs(date, "MM/DD/YYYY").format("dddd D MMMM")}</Title>
+							<Title level={4}>{dayjs(date, "DD/MM/YYYY").format("dddd D MMMM")}</Title>
 							<TableStyle
 								columns={columns}
 								dataSource={matchesByDates[date]}

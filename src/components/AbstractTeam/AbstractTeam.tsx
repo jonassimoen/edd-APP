@@ -7,6 +7,7 @@ import { useAddTeamMutation, useUpdateTeamSelectionMutation } from "@/services/t
 import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { t } from "i18next";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
+import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 
 declare type AbstractTeamProps = {
 	matches?: any;
@@ -70,7 +71,8 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam] = useAddTeamMutation();
-	const [updateTeamSelections, {isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult}] = useUpdateTeamSelectionMutation();
+	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
+	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
 
 	const application = useSelector((state: StoreState.All) => state.application);
@@ -138,7 +140,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
 		state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
-		
+
 		setState({
 			...state,
 			starting,
@@ -383,7 +385,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			});
 		} else {
 			return Promise.reject(
-				openErrorNotification({title: t("team.teamSaveFailed") })
+				openErrorNotification({ title: t("team.teamSaveFailed") })
 			);
 		}
 	};
@@ -430,7 +432,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				starting: startingIds,
 				bench: benchIds,
 				teamName: state.teamName,
-			}).unwrap().then((res) => openSuccessNotification({title: res.msg})).catch((err) => openErrorNotification({title: t(`team.updateSelection.failed`)}));
+			}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t(`team.updateSelection.failed`) }));
 		}
 	};
 

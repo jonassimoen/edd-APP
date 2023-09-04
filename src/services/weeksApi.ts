@@ -31,8 +31,17 @@ export const weeksApi = createApi({
 				body
 			}),
 			invalidatesTags: ["Week"]
-		})
+		}),
+
+		getDeadlineInfo: builder.query<{deadlineInfo: DeadlineInfo, weeks: Week[]}, void>({
+			query: () => "/deadline-info",
+			providesTags: (res, err, arg) =>
+				res
+					? [...res.weeks?.map(({ id }) => ({ type: "Week" as const, id })), "Week"]
+					: ["Week"]
+		}),
+
 	})
 });
 
-export const {useGetWeeksQuery, useUpdateWeekMutation, useCreateWeekMutation} = weeksApi;
+export const {useGetWeeksQuery, useUpdateWeekMutation, useCreateWeekMutation, useGetDeadlineInfoQuery} = weeksApi;
