@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { FootballPicker } from "@/lib/football-picker";
 import { FootballMaxPositionsPicks, FootballPositionIds } from "@/lib/constants";
 import Decimal from "decimal.js";
-import { useAddTeamMutation } from "@/services/teamsApi";
-import { openErrorNotification } from "@/lib/helpers";
+import { useAddTeamMutation, useUpdateTeamSelectionMutation } from "@/services/teamsApi";
+import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { t } from "i18next";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 
@@ -70,6 +70,7 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam] = useAddTeamMutation();
+	const [updateTeamSelections, {isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult}] = useUpdateTeamSelectionMutation();
 	const [getTeams] = useLazyGetTeamsQuery();
 
 	const application = useSelector((state: StoreState.All) => state.application);
@@ -419,12 +420,19 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 	const onTeamSelectionsUpdate = (teamId: number, weekId: number) => {
 		const isValid = validateTeam(true);
+		console.log("TEAM ID", teamId);
 
 		if (isValid) {
 			const startingIds = state.starting.map((player: any) => player.id);
 			const benchIds = state.bench.map((player: any) => player.id);
 
 			// create function: POST /team/:id/selections
+			updateTeamSelections({
+				teamId,
+				starting: startingIds,
+				bench: benchIds,
+				teamName: state.teamName,
+			}).unwrap().then((res) => openSuccessNotification({title: res.msg})).catch((err) => openErrorNotification({title: t(`team.updateSelection.failed`)}));
 		}
 	};
 

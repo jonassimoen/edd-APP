@@ -9,7 +9,7 @@ export const teamsApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/teams` }),
 	endpoints: (builder) => ({
 
-		getTeam: builder.query<Team, number>({
+		getTeam: builder.query<{team:Team, players:Player[]}, number>({
 			query: (teamId) => `${teamId}`,
 			providesTags: ["userTeams"],
 		}),
@@ -18,6 +18,15 @@ export const teamsApi = createApi({
 			invalidatesTags: ["userTeams"],
 			query: (data) => ({
 				url: "add",
+				method: "POST",
+				body: data
+			}),
+		}),
+
+		updateTeamSelection: builder.mutation<{msg: string}, {teamId:number, bench: number[], starting: number[], teamName: string}>({
+			invalidatesTags: ["userTeams"],
+			query: ({teamId, ...data}) => ({
+				url: `${teamId}/selections`,
 				method: "POST",
 				body: data
 			}),
@@ -34,4 +43,4 @@ export const teamsApi = createApi({
 	})
 });
 
-export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation } = teamsApi;
+export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation, useUpdateTeamSelectionMutation } = teamsApi;

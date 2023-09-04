@@ -25,7 +25,7 @@ export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const user = useAppSelector((state) => state.userState.user);
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
-	const { data: team, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
+	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
 	// todo: fetch matches
 	const { t } = useTranslation();
 	const application = useSelector((state: StoreState.All) => state.application);
@@ -38,29 +38,29 @@ export const _Team = (props: AbstractTeamType) => {
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId"];
 		const selectionProps: any[] = [];
 		if (teamSuccess && clubsSuccess) {
-			const starting = team.players.filter((p: Player) => p.selection?.starting === 1)
+			const starting = teamResult.players.filter((p: Player) => p.selection?.starting === 1)
 				.map((p: Player) => {
 					const displayWeekMatches: any[] = []; // todo
 					return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 				});
 
-			const bench = team.players.filter((p: Player) => p.selection?.starting === 0)
+			const bench = teamResult.players.filter((p: Player) => p.selection?.starting === 0)
 				.map((p: Player) => {
 					const displayWeekMatches: any[] = []; // todo
 					return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 				});
 
-			const teamName = team?.name;
-			const captainPlayer = team.players.find((p: Player) => p && p.selection && p.selection.captain === 1);
+			const teamName = teamResult.team.name;
+			const captainPlayer = teamResult.players.find((p: Player) => p && p.selection && p.selection.captain === 1);
 			const captainId = captainPlayer && captainPlayer.id;
 
-			const viceCaptainPlayer = team.players.find((p: Player) => p && p.selection && p.selection.captain === 2);
+			const viceCaptainPlayer = teamResult.players.find((p: Player) => p && p.selection && p.selection.captain === 2);
 			const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
-			const budget = team?.players.reduce((acc: any, player: Player) => acc - player.value, application.competition.budget);
+			const budget = teamResult.players.reduce((acc: any, player: Player) => acc - player.value, application.competition.budget);
 			const boosters = undefined; // todo
 
-			const isTeamOwner = !!(team.userId === user?.id);
+			const isTeamOwner = !!(teamResult.team.userId === user?.id);
 
 			props.initTeamState(starting, bench, teamName, budget, captainId, viceCaptainId, true);
 		}
@@ -116,7 +116,7 @@ export const _Team = (props: AbstractTeamType) => {
 					/>
 					<Button
 						type="primary"
-						onClick={(e:any) => props.onTeamSelectionsUpdate(team.id, props.visibleWeekId)}
+						onClick={(e:any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
 					>
 						{t("team.saveTeam")}
 					</Button>
