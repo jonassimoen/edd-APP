@@ -4,11 +4,10 @@ import React from "react";
 import { router } from "./routes";
 import { ConfigProvider } from "antd";
 import * as dayjs from "dayjs";
-import { AuthContextProvider } from "./lib/stores/AuthContext";
-import { theme } from "./styles/theme";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { Footer } from "./components/Footer/Footer";
 // import 'dayjs/locale/nl-BE'
 dayjs.locale("nl-BE");
 

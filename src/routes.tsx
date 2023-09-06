@@ -1,5 +1,5 @@
 
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Header } from "@/components/Header/Header";
 import { Login } from "@/pages/Login";
@@ -19,11 +19,22 @@ import { Rules } from "./pages/Rules/Rules";
 import { Profile } from "./pages/Profile/Profile";
 import { Deadlines } from "./pages/Deadlines/Deadlines";
 import { Stats } from "./pages/Stats/Stats";
+import { Footer } from "./components/Footer/Footer";
+
+const Layout = ({children}: any) => {
+	return (
+		<>
+		  <Header />
+		  {children}
+		  <Footer />
+		</>
+	);
+  }
 
 export const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Header />,
+		element: <Layout />,
 		children: [
 			{
 				path: "/",
