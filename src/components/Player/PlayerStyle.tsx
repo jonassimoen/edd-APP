@@ -21,7 +21,7 @@ export const PlayerStyle = styled.div`
 
     .position-label {
         position: absolute;
-        top: 100%;
+        top: 135%;
         margin: 0 auto;
         text-align: center;
         color: white;

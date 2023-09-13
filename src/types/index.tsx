@@ -44,6 +44,7 @@ type Player = {
     clubId: number
     inStarting?: boolean
     points: number
+    pointsOverview: boolean
 
     stats?: Statistic[]
     selection?: PlayerSelection
@@ -72,6 +73,7 @@ type Team = {
     players: Player[]
     name: string
     userId: number
+    weekId: number
 }
 
 type User = {

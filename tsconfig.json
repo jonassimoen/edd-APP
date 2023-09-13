@@ -11,6 +11,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "sourceMap": true,
     "isolatedModules": true,
     "strictNullChecks": false,
     "noEmit": true,

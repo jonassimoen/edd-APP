@@ -5,7 +5,7 @@ import { TableStyle } from "@/components/PlayerList/PlayerListStyle";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
 import "dayjs/locale/nl-be";
-import { ClubBadgeBg, ClubName, ContainerStyle, FiltersArea } from "./CalendarStyle";
+import { ClubBadgeBg, ClubDetails, ClubName, ContainerStyle, FiltersArea } from "./CalendarStyle";
 import { useTranslation } from "react-i18next";
 import Icon from "@ant-design/icons";
 import { Button } from "@/components/UI/Button/Button";
@@ -79,12 +79,12 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "home",
 			width: "40%",
 			render: (homeId: any, record: any) => {
-				const clubBadge = "http://localhost:8080/static/badges/dummy.jpg";
+				const clubBadge = `http://localhost:8080/static/badges/${record.home.externalId}.png`;
 
-				return <>
+				return <ClubDetails left>
 					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
 					<ClubBadgeBg src={clubBadge} />
-				</>;
+				</ClubDetails>;
 			}
 		},
 		{
@@ -96,7 +96,7 @@ export const Calendar = (props: CalendarProps) => {
 				const matchDate = dayjs(record.date);
 				const matchToStart = dayjs().isBefore(matchDate);
 				return <b className={`score ${matchToStart ? "scheduled" : "started"}`}>
-					{matchToStart ? dayjs(record.date).format("DD/MM HH:mm") : `${record.homeScore} - ${record.awayScore}`}
+					{matchToStart ? dayjs(record.date).format("HH:mm") : `${record.homeScore} - ${record.awayScore}`}
 				</b>;
 			}
 		},
@@ -105,13 +105,13 @@ export const Calendar = (props: CalendarProps) => {
 			key: "away",
 			dataIndex: "away",
 			width: "40%",
-			render: (away: any, record: any) => {
-				const clubBadge = "http://localhost:8080/static/badges/dummy.jpg";
+			render: (awayId: any, record: any) => {
+				const clubBadge = `http://localhost:8080/static/badges/${record.away.externalId}.png`;
 
-				return <>
+				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
 					<ClubName className="team-name" fullName={record.away.name} shortName={record.away.short}></ClubName>
-				</>;
+				</ClubDetails>;
 			}
 		}
 	];

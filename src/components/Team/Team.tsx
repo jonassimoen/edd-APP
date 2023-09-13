@@ -1,6 +1,7 @@
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
 import { TeamStyle } from "./TeamStyle";
+import { useEffect } from "react";
 
 export declare type TeamProps = {
     bg: string;
@@ -79,6 +80,7 @@ export const Team = (props: TeamProps) => {
 					<div className={"position"} key={`posIdx-${positionIdx}`}>
 						{
 							position.map((player: any, playerIdx: number) => {
+								const club = clubs.find((item: Club, index: number) => player && item.id === player.clubId);
 								return (
 									<Player
 										key={`player-${positionIdx}-${playerIdx}`}
@@ -105,6 +107,7 @@ export const Team = (props: TeamProps) => {
 										swapPlayerId={swapPlayerId}
 										actionLessPlayerIds={actionLessPlayerIds}
 										swappedFrom={swappedFrom}
+										club={club}
 									/>
 								);
 							})

@@ -1,10 +1,11 @@
 import { Form as CustomForm } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
+import config from "@/config";
 import { useGetMatchQuery, useGetMatchStatisticsQuery, useLazyImportMatchStatisticsQuery, useUpdateMatchStatisticsMutation } from "@/services/matchesApi";
 import { useGetPlayersQuery } from "@/services/playersApi";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Form } from "antd";
+import { Button, Checkbox, Form, Skeleton, Spin, Tooltip } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -13,11 +14,11 @@ const GameStatsHeaderTable = (props: { name?: string, score: number }) => {
 	return (
 		<Row style={{ fontWeight: 500 }}>
 			<Col span={6} $zeroPadding>{props.name} {props.score}</Col>
-			<Col span={1} $zeroPadding style={{ fontSize: "12px" }}>Goals</Col>
-			<Col span={1} $zeroPadding style={{ fontSize: "12px" }}>Goals</Col>
-			<Col span={1} $zeroPadding style={{ fontSize: "12px" }}>Goals</Col>
-			<Col span={1} $zeroPadding style={{ fontSize: "12px" }}>Goals</Col>
-			<Col span={1} $zeroPadding style={{ fontSize: "12px" }}>Goals</Col>
+			{config.STATISTICS.map(stat =>
+				<Tooltip placement="top" title={stat.full}>
+					<Col span={1} $zeroPadding style={{ fontSize: "12px" }}>{stat.short}</Col>
+				</Tooltip>
+			)}
 
 		</Row>
 	);
@@ -33,36 +34,18 @@ const GameStatsRowTable = (props: { idx: number, player: Player }) => {
 				<Form.Item style={{ marginBottom: 0 }} hidden name={[props.idx, "matchId"]}>
 					<InputNumber size={"small"} controls={false} style={{ width: "100%" }} />
 				</Form.Item>
-				{props.player.short}
+				{props.player.forename} <b>{props.player.surname}</b>
 			</Col>
-			<Col span={1} $zeroPadding>
-				<Form.Item style={{ marginBottom: 0 }}
-					name={[props.idx, "goals"]}
-				>
-					<InputNumber size={"small"} controls={false} style={{ width: "100%" }} />
-				</Form.Item>
-			</Col>
-			<Col span={1} $zeroPadding>
-				<Form.Item style={{ marginBottom: 0 }}
-					name={[props.idx, "assists"]}
-				>
-					<InputNumber size={"small"} controls={false} style={{ width: "100%" }} />
-				</Form.Item>
-			</Col>
-			<Col span={1} $zeroPadding>
-				<Form.Item style={{ marginBottom: 0 }}
-					name={[props.idx, "reds"]}
-				>
-					<InputNumber size={"small"} controls={false} style={{ width: "100%" }} />
-				</Form.Item>
-			</Col>
-			<Col span={1} $zeroPadding>
-				<Form.Item style={{ marginBottom: 0 }}
-					name={[props.idx, "yellows"]}
-				>
-					<InputNumber size={"small"} controls={false} style={{ width: "100%" }} />
-				</Form.Item>
-			</Col>
+			{config.STATISTICS.map(stat =>
+				<Col span={1} $zeroPadding>
+					<Form.Item style={{ marginBottom: 0 }}
+						name={[props.idx, stat.full]}
+					>
+						{stat.type==="number"?<InputNumber size={"small"} controls={false} style={{ width: "100%" }} />: <Checkbox style={{ width: "100%" }} />}
+					</Form.Item>
+				</Col>
+			)}
+
 		</Row>
 	);
 };
@@ -72,9 +55,9 @@ type GameStatsMangementProps = {
 };
 
 type GameStatsManagementState = {
-    allEvents: Statistic[],
-    homeScore: number,
-    awayScore: number,
+	allEvents: Statistic[],
+	homeScore: number,
+	awayScore: number,
 }
 
 export const GameStatsManagement = (props: GameStatsMangementProps) => {
@@ -92,7 +75,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const { data: match, isFetching: matchLoading, isError: matchError, isSuccess: matchSuccess } = useGetMatchQuery(+(id || 0));
 	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSucces } = useGetPlayersQuery();
 	const { data: stats } = useGetMatchStatisticsQuery(+(id || 0));
-	const [importMatchStatistics, { data: importedStats }] = useLazyImportMatchStatisticsQuery();
+	const [importMatchStatistics, { data: importedStats, isLoading: matchStatisticsImportLoading }] = useLazyImportMatchStatisticsQuery();
 
 	const matchPlayers = useMemo(() =>
 		players?.filter((p: Player) => (p.clubId === match?.home?.id) || (p.clubId === match?.away?.id))
@@ -126,7 +109,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	});
 
 	useEffect(() => {
-		console.log(importedStats && matchPlayers);
 		if (importedStats && matchPlayers) {
 			const allStats = matchPlayers?.map((p: Player) => {
 				const playerStat = importedStats?.find((s: Statistic) => s.playerId === p.externalId);
@@ -162,8 +144,9 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	//     onChangeStatistics(FilledStats);
 	// }, [FilledStats])
 
+
 	return (
-		<>
+		<Spin spinning={matchLoading || playersLoading || matchStatisticsImportLoading} delay={0}>
 			<Button
 				icon={<DownloadOutlined />}
 				onClick={() => importMatchStatistics(+(id || 0))}
@@ -181,24 +164,24 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 				<GameStatsHeaderTable name={match?.home?.name} score={state.homeScore} />
 				{homePlayers?.map((player: Player, index: number) =>
-					(
-						<GameStatsRowTable player={player} idx={index} key={`match-player-${player.id}`} />
-					))}
+				(
+					<GameStatsRowTable player={player} idx={index} key={`match-player-${player.id}`} />
+				))}
 
 				<GameStatsHeaderTable name={match?.away?.name} score={state.awayScore} />
 				{awayPlayers?.map((player: Player, index: number) =>
-					(
-						<GameStatsRowTable player={player} idx={(homePlayers?.length || 0) + index} key={`match-player-${player.id}`} />
-					))}
+				(
+					<GameStatsRowTable player={player} idx={(homePlayers?.length || 0) + index} key={`match-player-${player.id}`} />
+				))}
 
 			</CustomForm>
 			<Row justify="center" align="middle">
 				<Col span={24}>
 					<Button onClick={() => form.validateFields().then((obj: any) => updateMatchStats({ stats: Object.values(obj), matchId: +(id || 0) }))}>
-                        Opslaan
+						Opslaan
 					</Button>
 				</Col>
 			</Row>
-		</>
+		</Spin>
 	);
 };

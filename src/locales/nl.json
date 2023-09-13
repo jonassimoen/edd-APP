@@ -5,7 +5,8 @@
     "stats": "Statistieken",
     "rankings": "Klassement",
     "rules": "Regels",
-    "admin": "Adminpagina"
+    "admin": "Adminpagina",
+    "logout": "Uitloggen"
   },
   "home": {
     "title": "Welkom bij Fantasy Team, speel mee !",
@@ -24,14 +25,24 @@
     "footballAllBudget": "Onbeperkt budget",
     "footballAllPositions": "Alle posities",
     "footballAllClubs": "Alle landen",
-    "playersListSearchInputPlaceholder": "Zoek speler op naam"
+    "playersListSearchInputPlaceholder": "Zoek speler op naam",
+    "footballWeek": "Speeldag",
+    "week": "Week",
+    "points": "punten"
   },
   "player": {
     "midfielder": "Middenvelder",
     "goalkeeper": "Doelman",
     "defender": "Verdediger",
     "attacker": "Aanvaller",
-    "goalkeeperShort": "DM"
+    "goalkeeperShort": "DM",
+    "opponentHome": "T",
+    "opponentAway": "U",
+    "captainBadgeLabel": "Maak aanvoerder",
+    "viceCaptainBadgeLabel": "Maak vice-aanvoerder",
+    "swapBadgeLabel": "Wissel",
+    "undoBadgeLabel": "Annuleer",
+    "removeBadgeLabel": "Verwijder"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {
@@ -88,6 +99,13 @@
     },
     "import": {
       "confirmTitle": "Ben je zeker dat je wilt importeren?"
+    },
+    "game": {
+      "add": "Voeg nieuwe wedstrijd toe",
+      "import": "Importeer wedstrijden"
+    },
+    "week": {
+      "add": "Voeg matchweek toe"
     }
   },
   "modal": {
@@ -119,5 +137,12 @@
   },
   "players": {
     "noneFound": "Geen spelers gevonden"
+  },
+  "createBtn": "Maak aan",
+  "tabs": {
+    "points": "Punten",
+    "team": "Team",
+    "edit": "Wijzig",
+    "transfers": "Transfers"
   }
 }

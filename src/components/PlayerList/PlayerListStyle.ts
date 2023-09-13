@@ -112,7 +112,7 @@ export const TableStyle = styled(Table)`
             background-color: #FFF;
             > td {
                 border: none;
-                padding: 7.5px;
+                padding: 3.5px;
 
                 &:first-child {
                     padding: 2.5px 10px 0 15px;

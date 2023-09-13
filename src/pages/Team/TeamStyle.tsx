@@ -6,7 +6,7 @@ export const DeadlineBar = styled.div`
 	font-size: 18px;
 
 	p {
-		padding: 5px;
+		padding: 25px;
 
 		.deadline-date {
 			font-weight: bold;

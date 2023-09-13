@@ -56,13 +56,20 @@ table {
 }
 `;
 
+export const ClubDetails = styled.div`
+    display: flex;
+    padding: 5px;
+    justify-content: ${(props: any) => props.left ? "flex-end": "flex-start"};
+    align-items: center;
+`
+
 export const ClubBadgeBg = styled.img`
-	max-width: 35px;
+	max-width: 25px;
 	display: inline-block;
 	margin: 5px;
 ` as any;
 
-export const ClubName : any = styled.span`
+export const ClubName: any = styled.span`
 	&::after {
 		content: "${(props: any) => props.shortName}"; 
 	}	

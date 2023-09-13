@@ -5,12 +5,37 @@
     "stats": "Statistics",
     "rankings": "Ranking",
     "rules": "Rules",
-    "admin": "Adminpage"
+    "admin": "Adminpage",
+    "logout": "Log out"
   },
   "admin": {
-    "welcome": "Welcome, fantasy magician {{name}}!"
+    "welcome": "Welcome, fantasy magician {{name}}!",
+    "gamestatistic": {
+      "import": "Import statistics"
+    }
   },
   "players": {
     "noneFound": "No players found"
+  },
+  "management": {
+    "game": {
+      "import": "Import games",
+      "add": "Add game"
+    },
+    "week": {
+      "add": "Add gameweek"
+    }
+  },
+  "createBtn": "Create",
+  "createTitle": "Create",
+  "cancelBtn": "Cancel",
+  "player": {
+    "opponentHome": "H",
+    "opponentAway": "A"
+  },
+  "general": {
+    "footballWeek": "Matchday",
+    "week": "Week",
+    "points": "points"
   }
 }

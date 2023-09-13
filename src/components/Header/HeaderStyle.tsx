@@ -112,6 +112,66 @@ export const HeaderStyle = styled.header`
         padding-left: 0;
     }
 
+    .c-row {
+        position: relative;
+        overflow: auto;
+        padding: 1.5rem 1.5rem 0;
+        
+        @media ${mediaQueries.tablet} {
+            padding: 3rem 3rem 1.5rem;
+        }
+        
+        &--alpha {
+            background-color: #fff;
+        }
+
+        .ant-layout {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .o-list {
+            list-style: none;
+            padding-left: 0;
+        }
+    }
+
+    .c-nav-tabs {
+        display: flex;
+        flex-direction: column;
+        
+        @media ${mediaQueries.tablet} {
+            flex-direction: row;
+            margin: 0;
+        }
+
+        &__item {
+            padding: 0 1rem;
+
+            &.is-selected .c-nav-tabs__link {
+                color: #16002b;
+                border-color: #00FAFA;
+            }
+            
+        }
+
+        &__link {
+            display: block;
+            padding: 0.5rem 0;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: border-color .2s, color .2s;
+            color: #61566b;
+
+            &:hover {
+                color: #16002b;
+                border-color: #c9c5ce;
+            }
+        }
+    }
+
     .c-nav-mobile {
         
         @media ${mediaQueries.laptop} {

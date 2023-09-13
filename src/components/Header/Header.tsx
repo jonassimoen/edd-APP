@@ -1,7 +1,7 @@
 import { defaultUser, useAuth } from "@/lib/stores/AuthContext";
 import { useGetProfileQuery, useGetTeamsQuery } from "@/services/usersApi";
 import { useDisclosure } from "@mantine/hooks";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, redirect, useLocation, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { Hamburger, HeaderStyle } from "./HeaderStyle";
 import secureLocalStorage from "react-secure-storage";
 import { useAppSelector } from "@/reducers";
 import { logout } from "@/features/userSlice";
+import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -30,8 +31,7 @@ export const Header = () => {
 	const { authenticated, user } = useAppSelector((state) => state.userState);
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
-	// const { user, setUser, authenticated, setAuthenticated } = useAuth();
-	// const { user, teams, authenticated, logout } = useContext(UserContext);
+	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
 
 	const [state, setState] = useState({
@@ -48,6 +48,15 @@ export const Header = () => {
 	const allMenuItems: string[] = ["home", "stats", "rules", "rankings"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;
 	const isActive = (match: string) => location.pathname.indexOf(match) !== -1;
+	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId), [userTeam, deadlineInfo]);
+	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId), [userTeam, deadlineInfo]);
+
+	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
+		if (allMenuItems.indexOf(item) === -1) {
+			allMenuItems.splice(positionIndex, 0, item);
+		}
+	};
 
 	useEffect(() => {
 		if (teams) {
@@ -57,28 +66,45 @@ export const Header = () => {
 
 	if (user) {
 		allMenuItems.push("logout");
-	}
 
-	if (user && user.role === 7) {
-		allMenuItems.push("admin");
-	}
-	const openSubMenu = (ev: any) => {
-		setState({ ...state, menuToggled: !state.menuToggled });
-	};
-
-	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
-		if (allMenuItems.indexOf(item) === -1) {
-			allMenuItems.splice(positionIndex, 0, item);
+		if (user.role === 7) {
+			allMenuItems.push("admin");
 		}
-	};
+	}
 
-	if (authenticated && !userTeam) {
+	if (user && showPoints) {
+		insertToMenuAtPosition(1, "points");
+	} else if (authenticated && !userTeam) {
 		insertToMenuAtPosition(1, "new");
 	}
 
-	if (user && userTeam) {
-		insertToMenuAtPosition(2, "team");
+	if (user && userTeam && gameInProgress) {
+		if (showPoints) {
+			insertToMenuAtPosition(2, "team");
+		} else {
+			insertToMenuAtPosition(1, "team")
+		}
 	}
+
+	if (authenticated && userTeam && !showTransfers && gameInProgress) {
+		if (showTransfers) {
+			insertToMenuAtPosition(3, 'edit');
+		} else {
+			insertToMenuAtPosition(2, 'edit');
+		}
+	}
+
+	if (authenticated && showTransfers && gameInProgress) {
+		if (showTransfers) {
+			insertToMenuAtPosition(4, 'transfers');
+		} else {
+			insertToMenuAtPosition(3, 'transfers');
+		}
+	}
+
+	const openSubMenu = (ev: any) => {
+		setState({ ...state, menuToggled: !state.menuToggled });
+	};
 	const onLogout = (e: any) => {
 		secureLocalStorage.removeItem("token");
 		secureLocalStorage.removeItem("user");
@@ -132,13 +158,13 @@ export const Header = () => {
 										) || null
 										}
 										{(isVisible("rules") &&
-											<li className={`c-nav-main__item ${(isActive("rules")) ? "is-selected" : ""}`}>
+											<li className={`c-nav-main__item${(isActive("rules")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/rules">{t("menu.rules")}</Link>
 											</li>
 										) || null
 										}
 										{(isVisible("admin") &&
-											<li className={`c-nav-main__item ${(isActive("admin")) ? "is-selected" : ""}`}>
+											<li className={`c-nav-main__item${(isActive("admin")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/admin">{t("menu.admin")}</Link>
 											</li>
 										) || null
@@ -156,6 +182,32 @@ export const Header = () => {
 							</div>
 						</Layout>
 					</div>
+				</div>
+				<div className="c-row c-row--sm c-row--alpha" style={{ marginBottom: "15px" }}>
+					<Layout>
+						<ul className="o-list c-nav-tabs">
+							{(isVisible("points") &&
+								<li className={`c-nav-tabs__item ${(isActive("points")) ? "is-selected" : ""}`}>
+									<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("tabs.points")}</Link>
+								</li>
+							) || null}
+							{(isVisible("team") &&
+								<li className={`c-nav-tabs__item ${(isActive("team")) ? "is-selected" : ""}`}>
+									<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("tabs.team")}</Link>
+								</li>
+							) || null}
+							{(isVisible("edit") &&
+								<li className={`c-nav-tabs__item ${(isActive("edit")) ? "is-selected" : ""}`}>
+									<Link className="c-nav-tabs__link" to={`/edit/${userTeam.id}`}>{t("tabs.edit")}</Link>
+								</li>
+							) || null}
+							{(isVisible("transfers") &&
+								<li className={`c-nav-tabs__item ${(isActive("transfers")) ? "is-selected" : ""}`}>
+									<Link className="c-nav-tabs__link" to={`/transfers/${userTeam.id}`}>{t("tabs.transfers")}</Link>
+								</li>
+							) || null}
+						</ul>
+					</Layout>
 				</div>
 				<nav className="c-nav-mobile js-nav-mobile">
 					<div className="c-nav-mobile__main">

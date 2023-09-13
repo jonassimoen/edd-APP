@@ -9,7 +9,7 @@ export const SubstitutesStyle = styled.div`
     justify-content: center;
     max-width: 975px;
     padding-top: 2%;
-    padding-bottom: 7%;
+    padding-bottom: 9%;
 	background: url('${(props: any) => props.bgColor}') center;
 
 	@media ${mediaQueries.tablet} {

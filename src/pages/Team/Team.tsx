@@ -44,7 +44,7 @@ export const _Team = (props: AbstractTeamType) => {
 	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
 
 	const getTeamInfo = (weekId: number) => {
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId"];
 		const selectionProps: any[] = [];
 		const starting = teamResult.players.filter((p: Player) => p.selection?.starting === 1)
 			.map((p: Player) => {
@@ -105,10 +105,10 @@ export const _Team = (props: AbstractTeamType) => {
 							bg={teamBackground}
 							clubs={clubs || []}
 							centerAligned={true}
-							captainId={0} // todo
-							viceCaptainId={0} // todo
+							captainId={props.captainId}
+							viceCaptainId={props.viceCaptainId} 
 							modalEnabled={true}
-							selection={startingByPositions} // todo
+							selection={startingByPositions}
 							assetsCdn=""
 							playerType={PlayerType.SoccerShirt}
 							onCaptainSelect={props.onCaptainSelect}

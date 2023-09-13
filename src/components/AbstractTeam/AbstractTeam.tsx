@@ -72,7 +72,6 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam] = useAddTeamMutation();
 	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
-	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
 
 	const application = useSelector((state: StoreState.All) => state.application);
@@ -293,7 +292,9 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		}
 	};
 
+	useEffect(() => console.log("K:",state.captainId, "VK:",state.viceCaptainId),[state]);
 	const onCaptainSelect = (player: Player, captainFirstInList?: boolean) => {
+		console.log("captain selected:",player.id)
 		const playerId: number = player.id;
 		let playerIdx: number | null = null;
 
@@ -328,6 +329,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	};
 
 	const onViceCaptainSelect = (player: Player) => {
+		console.log("vice captain selected:",player.id)
 		const playerId: number = player.id;
 		setState({ ...state, viceCaptainId: playerId, captainId: (state.captainId === playerId ? undefined : state.captainId) });
 	};
@@ -623,6 +625,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const setActivePositionFilter = (positionId: number) => {
 		setState({ ...state, activePositionFilter: positionId });
 	};
+	useEffect(() => console.log("state in AT", state), [state])
 
 
 	return (

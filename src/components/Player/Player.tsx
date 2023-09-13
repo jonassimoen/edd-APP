@@ -7,6 +7,7 @@ import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
 import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined, UndoOutlined } from "@ant-design/icons";
 import { CaptainButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { PlayerModal } from "../PlayerModal/PlayerModal";
 
 const AddIcon = (props: any) => <IconPlus {...props} />;
 const DeleteIcon = (props: any) => <CloseCircleFilled {...props} style={{ color: "red" }} shape="circle" />;
@@ -16,7 +17,7 @@ const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props
 const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {...props} />;
 
 declare type PlayerState = {
-	// modalVisible: boolean
+	modalVisible: boolean
 	// shirtSoccer?: string
 	portraitFace?: string
 	portraitFaceFallBack?: string
@@ -38,12 +39,14 @@ declare type PlayerProps = {
 	swapPlayerId?: number | null
 	positionLabel?: string
 	showCaptainBadge?: boolean
-
+	club?: Club
 	isSwapable?: any
 	swappedFrom?: string|null
-
+	modalEnabled?: boolean
 	onRemove?: any
 	onSwap?: any
+	onCaptainSelect?: any
+	onViceCaptainSelect?: any
 
 	className?: string
 }
@@ -68,10 +71,13 @@ export const Player = (props: PlayerProps) => {
 		swappedFrom,
 		onRemove,
 		onSwap,
+		onCaptainSelect,
+		onViceCaptainSelect,
 	} = props;
 	const [state, setState] = useState<PlayerState>({
 		portraitFace: props.portraitFace,
-		portraitFaceFallBack: props.portraitFaceFallBack
+		portraitFaceFallBack: props.portraitFaceFallBack,
+		modalVisible: false,
 	});
 
 	useEffect(() => {
@@ -95,11 +101,14 @@ export const Player = (props: PlayerProps) => {
 
 	const swappedAlreadyFromPlayerArea = useMemo(() => (onSwap && swapPlayerId && player && (swappedFrom === 'starting' && player.inStarting) && swapPlayerId !== player.id), [player, swappedFrom])
 	const hasInactiveOverlay = useMemo(() => swappedAlreadyFromPlayerArea || (swapPlayerId && !swappedAlreadyFromPlayerArea && isSwapable && !isSwapable(player)), [player, isSwapable]);
+	const hasModal = !!props.modalEnabled;
+
 	const playerName = useMemo(() =>
 		(player && player.id && player.short) ||
 		(player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
 		`${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`,
 		[player]);
+		
 	const opponentInfo = useMemo(
 		() => {
 			if(player && player.upcomingMatches && player.upcomingMatches.length) {
@@ -117,8 +126,8 @@ export const Player = (props: PlayerProps) => {
 
 	const hasStats = useMemo(() => player && player.stats && player.stats.length, [player]);
 	const hasActions = useMemo(() => player && player.id && (actionLessPlayerIds || []).indexOf(player.id) === -1, [player]);
-	const isCaptain = player && player.id && player.id === captainId;
-	const isViceCaptain = player && player.id && player.id === viceCaptainId;
+	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
+	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
 
 	const showPoints = true;
 	const showPlayerName = !avatarOnly;
@@ -133,14 +142,25 @@ export const Player = (props: PlayerProps) => {
 		onSwap(player);
 	};
 
+	const onPlayerClick = (showModal?: boolean) => {
+		if (props.player && props.player.id && showModal) {
+			setState({ ...state, modalVisible: true });
+		}
+	};
+
+	const onCancel = (event: any) => {
+		event.stopPropagation();
+		setState({ ...state, modalVisible: false });
+	};
+
 	const onBgLoadError = (event: any) => {
 		if(state.portraitFaceFallBack) {
 			setState({ ...state, portraitFace: state.portraitFaceFallBack,});
 		}
-	}
+	};
 
 	return (
-		<PlayerStyle onClick={() => console.log("clicked on player")} className={`position_${player.positionId}` && props.className}>
+		<PlayerStyle onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} className={`position_${player.positionId}` && props.className}>
 			{
 				player && player.id &&
 				<PlayerBg src={state.portraitFace} onError={onBgLoadError} inactive={hasInactiveOverlay} />
@@ -212,6 +232,25 @@ export const Player = (props: PlayerProps) => {
 			{
 				player && positionLabel && positionLabel.length &&
 				<span className="position-label">{positionLabel}</span>
+			}
+
+			{
+				player && player.id && props.club && hasModal ?
+					<PlayerModal
+						visible={state.modalVisible}
+						onCancel={onCancel}
+						portraitFace={state.portraitFace}
+						portraitFaceFallback={state.portraitFaceFallBack}
+						player={player}
+						club={props.club}
+						swapPlayerId={swapPlayerId}
+						onCaptainSelect={onCaptainSelect}
+						onViceCaptainSelect={onViceCaptainSelect}
+						onRemove={onRemove}
+						isSwapAble={isSwapable}
+						onSwap={onSwap}
+					/> :
+					null
 			}
 		</PlayerStyle>
 

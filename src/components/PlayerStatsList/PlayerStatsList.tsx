@@ -277,7 +277,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				loading={statsLoading}
 				pagination={{showSizeChanger: false}}
 				onRow={tableEventHandler}
-				rowKey="id"
+				rowKey="playerId"
 				rowClassName={(record: object, index: number) =>
 					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"} ${props.onSelect ? "cursor-pointer" : ""}`
 				}
