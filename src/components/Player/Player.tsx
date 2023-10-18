@@ -85,8 +85,8 @@ export const Player = (props: PlayerProps) => {
 	useEffect(() => {
 		setState({
 			...state,
-			portraitFace: `http://localhost:8080/static/${player.externalId}.png`,
-			portraitFaceFallBack: 'http://localhost:8080/static/dummy.png',	
+			portraitFace: `${process.env.API_URL}/static/${player.externalId}.png`,
+			portraitFaceFallBack: '${process.env.API_URL}/static/dummy.png',	
 		});
 	}, [player]);
 

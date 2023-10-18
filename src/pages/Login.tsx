@@ -11,7 +11,7 @@ export const Login = () => {
 	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
 	const options = {
-		redirect_uri: "http://localhost:8080/api/user/oauth/google",
+		redirect_uri: "${process.env.API_URL}/api/user/oauth/google",
 		client_id: "464382338884-rd5pci4cfmpkiaki55g4d1c2bnaln88r.apps.googleusercontent.com",
 		access_type: "offline",
 		response_type: "code",
