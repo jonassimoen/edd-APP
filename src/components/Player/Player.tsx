@@ -8,6 +8,7 @@ import { PlayerType } from "@/types/PlayerTypes";
 import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined, UndoOutlined } from "@ant-design/icons";
 import { CaptainButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 import { PlayerModal } from "../PlayerModal/PlayerModal";
+import config from "@/config";
 
 const AddIcon = (props: any) => <IconPlus {...props} />;
 const DeleteIcon = (props: any) => <CloseCircleFilled {...props} style={{ color: "red" }} shape="circle" />;
@@ -85,8 +86,8 @@ export const Player = (props: PlayerProps) => {
 	useEffect(() => {
 		setState({
 			...state,
-			portraitFace: `${process.env.API_URL}/static/${player.externalId}.png`,
-			portraitFaceFallBack: '${process.env.API_URL}/static/dummy.png',	
+			portraitFace: `${config.API_URL}/static/${player.externalId}.png`,
+			portraitFaceFallBack: `${config.API_URL}/static/dummy.png`,	
 		});
 	}, [player]);
 

@@ -149,7 +149,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			width: '6rem',
 			render: (txt: number, rec: any, index: number) => {
 				const player = matchPlayers.find((v: Player) => v.externalId === txt);
-				const clubBadge = `${process.env.API_URL}/static/badges/${player.clubId === match.home.id ? match.home.externalId : match.away.externalId}.png`;
+				const clubBadge = `${config.API_URL}/static/badges/${player.clubId === match.home.id ? match.home.externalId : match.away.externalId}.png`;
 				++index;
 				return (
 					<ClubDetails>

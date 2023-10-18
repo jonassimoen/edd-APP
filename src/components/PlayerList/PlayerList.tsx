@@ -11,6 +11,7 @@ import { Select } from "../UI/Select/Select";
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
 import { Empty } from "antd";
+import config from "@/config";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainSvg} {...props} />;
 const SetPiecesIcon = (props: any) => <Icon component={SetPiecesSvg} {...props} />;
@@ -140,7 +141,7 @@ export const PlayerList = (props: PlayerListProps) => {
 					// sportSpecificProps.clubBadge = `${assetsCdn}/badges/club_${record.clubId}.png`;
 					// sportSpecificProps.portraitFace = record.portraitUrl;
 					// sportSpecificProps.portraitFaceFallBack = `${assetsCdn}/players/dummy.png`;
-					sportSpecificProps.portraitFace = `${process.env.API_URL}/static/${record.externalId}.png`;
+					sportSpecificProps.portraitFace = `${config.API_URL}/static/${record.externalId}.png`;
 				}
 
 				return (

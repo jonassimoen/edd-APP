@@ -1,5 +1,6 @@
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { PageStyle } from "@/components/UI/Layout/LayoutStyle";
+import config from "@/config";
 import { useAuth } from "@/lib/stores/AuthContext";
 import { useAppSelector } from "@/reducers";
 import { useContext, useMemo } from "react";
@@ -11,8 +12,8 @@ export const Login = () => {
 	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
 	const options = {
-		redirect_uri: `${process.env.API_URL}/api/user/oauth/google`,
-		client_id: "464382338884-rd5pci4cfmpkiaki55g4d1c2bnaln88r.apps.googleusercontent.com",
+		redirect_uri: `${config.API_URL}/api/user/oauth/google`,
+		client_id: config.GOOGLE_CLIENT_ID,
 		access_type: "offline",
 		response_type: "code",
 		prompt: "consent",

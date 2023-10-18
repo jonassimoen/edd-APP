@@ -11,6 +11,7 @@ import Icon from "@ant-design/icons";
 import { Button } from "@/components/UI/Button/Button";
 import { Select } from "../UI/Select/Select";
 import { Navigate } from "react-router-dom";
+import config from "@/config";
 
 type CalendarProps = {
 	weekId: number
@@ -79,7 +80,7 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "home",
 			width: "40%",
 			render: (homeId: any, record: any) => {
-				const clubBadge = `${process.env.API_URL}/static/badges/${record.home.externalId}.png`;
+				const clubBadge = `${config.API_URL}/static/badges/${record.home.externalId}.png`;
 
 				return <ClubDetails 
 				// left
@@ -108,7 +109,7 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "away",
 			width: "40%",
 			render: (awayId: any, record: any) => {
-				const clubBadge = `${process.env.API_URL}/static/badges/${record.away.externalId}.png`;
+				const clubBadge = `${config.API_URL}/static/badges/${record.away.externalId}.png`;
 
 				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
