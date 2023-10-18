@@ -153,7 +153,7 @@ export const PlayerList = (props: PlayerListProps) => {
 							badgeBgColor={"#fff"}
 							avatarOnly={true}
 							player={record}
-							type={props.playerType}
+							// type={props.playerType}
 							{...sportSpecificProps}
 						/>
 					</div>

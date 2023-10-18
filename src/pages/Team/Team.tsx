@@ -70,7 +70,7 @@ export const _Team = (props: AbstractTeamType) => {
 		const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
 		const budget = teamResult.players.reduce((acc: any, player: Player) => acc - player.value, application.competition.budget);
-		const boosters = undefined; // todo
+		// const boosters = undefined; // todo
 
 		const isTeamOwner = !!(teamResult.team.userId === user?.id);
 

@@ -40,5 +40,6 @@ declare type AbstractTeamType = {
     onTransfersReset: (teamId: number) => void,
     reloadUserTeams: () => void,
     teamUser?: any,
-    visibleWeekId: number | null,
+    savingTeamPending?: any,
+    // visibleWeekId: number | null,
 }

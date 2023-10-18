@@ -31,11 +31,12 @@ declare type PlayerProps = {
 	badgeColor: string
 	badgeBgColor: string
 	pointsColor: string
+	pointsBgColor: string
 	positionIndex?: number
-	captainId: number
-	viceCaptainId: number
+	captainId?: number
+	viceCaptainId?: number
 	onPlaceholderClick?: any
-	actionLessPlayerIds: any[]
+	actionLessPlayerIds?: any[]
 	swapPlayerId?: number | null
 	positionLabel?: string
 	showCaptainBadge?: boolean
@@ -59,6 +60,7 @@ export const Player = (props: PlayerProps) => {
 		badgeColor,
 		badgeBgColor,
 		pointsColor,
+		pointsBgColor,
 		positionIndex,
 		captainId,
 		viceCaptainId,

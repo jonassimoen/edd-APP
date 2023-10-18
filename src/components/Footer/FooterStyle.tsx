@@ -5,6 +5,8 @@ export const FooterStyle = styled.footer`
 margin-top: 40px;
 padding: 1rem 6.25rem;
 background-color: ${theme.primaryContrast};
+position: sticky; 
+bottom: 0;
 
 ul {
     list-style: none;

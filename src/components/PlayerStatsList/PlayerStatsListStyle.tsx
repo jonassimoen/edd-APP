@@ -63,6 +63,7 @@ export const TableStyle = styled(Table)`
 			padding-bottom: 10px;
 			border-radius: 0px !important;
 			padding: 7.5px;
+            white-space: nowrap;
 
 			&:last-child {
 				text-align: left;

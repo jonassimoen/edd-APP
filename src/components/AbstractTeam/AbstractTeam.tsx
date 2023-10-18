@@ -51,6 +51,7 @@ declare type AbstractTeamState = {
 	activePositionFilter: number
 	teamUser?: any
 	validator?: any
+	savingTeamPending?: any
 }
 
 function playersToValidatorFormat(players: any) {

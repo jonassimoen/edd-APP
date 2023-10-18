@@ -117,7 +117,9 @@ export const HeaderStyle = styled.header`
         overflow: auto;
         padding: 1.5rem 1.5rem 0;
         
+        display: none;
         @media ${mediaQueries.tablet} {
+            display: block;
             padding: 3rem 3rem 1.5rem;
         }
         

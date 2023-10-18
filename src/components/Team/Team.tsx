@@ -93,12 +93,12 @@ export const Team = (props: TeamProps) => {
 										captainId={captainId}
 										viceCaptainId={viceCaptainId}
 										player={player}
-										showPlayerStatsPoints={showPlayerStatsPoints}
-										showPlayerValue={showPlayerValue}
+										// showPlayerStatsPoints={showPlayerStatsPoints}
+										// showPlayerValue={showPlayerValue}
 										showCaptainBadge={showCaptainBadge}
-										type={playerType}
+										// type={playerType}
 										onRemove={onRemove}
-										showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
+										// showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
 										onSwap={onSwap}
 										isSwapable={isSwapAble}
 										onCaptainSelect={onCaptainSelect}

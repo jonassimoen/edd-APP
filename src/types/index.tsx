@@ -52,11 +52,34 @@ type Player = {
 }
 
 type Statistic = {
-    id: number
+    id?: number
     playerId: number
     matchId: number
+    minutesPlayed?: number
+    shots?: number
+    shotsOnTarget?: number
     goals?: number
-    redCard?: number
+    assists?: number
+    saves?: number
+    keyPasses?: number
+    passAccuracy?: number
+    tackles?: number
+    blocks?: number
+    interceptions?: number
+    dribblesAttempted?: number
+    dribblesSuccess?: number
+    dribblesPast?: number
+    foulsDrawn?: number
+    foulsCommited?: number
+    penaltyScored?: number
+    penaltyCommited?: number
+    penaltyMissed?: number
+    penaltyWon?: number
+    penaltySaved?: number
+    duelsWon?: number
+    duelsTotal?: number
+    yellow?: number
+    red?: number
 }
 
 type PlayerSelection = {

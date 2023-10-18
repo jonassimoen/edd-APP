@@ -91,7 +91,7 @@ export const openErrorNotification = (config: NotificationConfig) => {
 export const openSuccessNotification = (config: NotificationConfig) => {
 	toast.success(({ closeToast }) => (
 		<React.Fragment>
-			<b>{config.title}</b><br />
+			{config.icon} <b>{config.title}</b><br />
 			{config.message}
 		</React.Fragment>
 	));

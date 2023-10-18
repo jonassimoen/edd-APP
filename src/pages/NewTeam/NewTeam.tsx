@@ -56,7 +56,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 	useEffect(() => {
 		if (teamSuccess && teamData) {
 			setState({ ...state, hasPlayers: (teamData.players.length !== 0) });
-			props.setTeamName(teamData.name);
+			props.setTeamName(teamData.team.name);
 		}
 	}, [teamData]);
 

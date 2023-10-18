@@ -1,6 +1,6 @@
 import { defaultUser, useAuth } from "@/lib/stores/AuthContext";
 import { useGetProfileQuery, useGetTeamsQuery } from "@/services/usersApi";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -188,22 +188,22 @@ export const Header = () => {
 						<ul className="o-list c-nav-tabs">
 							{(isVisible("points") &&
 								<li className={`c-nav-tabs__item ${(isActive("points")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("tabs.points")}</Link>
+									<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("menu.points")}</Link>
 								</li>
 							) || null}
 							{(isVisible("team") &&
 								<li className={`c-nav-tabs__item ${(isActive("team")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("tabs.team")}</Link>
+									<Link className="c-nav-tabs__link" to={`/team/${userTeam.id}`}>{t("menu.team")}</Link>
 								</li>
 							) || null}
 							{(isVisible("edit") &&
 								<li className={`c-nav-tabs__item ${(isActive("edit")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/edit/${userTeam.id}`}>{t("tabs.edit")}</Link>
+									<Link className="c-nav-tabs__link" to={`/edit/${userTeam.id}`}>{t("menu.edit")}</Link>
 								</li>
 							) || null}
 							{(isVisible("transfers") &&
 								<li className={`c-nav-tabs__item ${(isActive("transfers")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/transfers/${userTeam.id}`}>{t("tabs.transfers")}</Link>
+									<Link className="c-nav-tabs__link" to={`/transfers/${userTeam.id}`}>{t("menu.transfers")}</Link>
 								</li>
 							) || null}
 						</ul>
