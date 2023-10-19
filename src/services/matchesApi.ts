@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const matchesApi = createApi({
 	reducerPath: "matchesApi",
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/matches` }),
+	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/matches`, credentials: "include" }),
 	tagTypes: ["Match", "MatchEvents", "MatchStatistics", "PlayerStats"],
 	endpoints: (builder) => ({
 

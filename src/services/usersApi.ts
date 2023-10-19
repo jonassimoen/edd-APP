@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const usersApi = createApi({
 	reducerPath: "usersApi",
 	tagTypes: ["userTeams"],
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/user/` }),
+	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/user/`, credentials: "include" }),
 	endpoints: (builder) => ({
 		getProfile: builder.query<User, void>({
 			query: () => "profile",

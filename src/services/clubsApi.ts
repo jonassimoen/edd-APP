@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const clubsApi = createApi({
 	reducerPath: "clubsApi",
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/clubs` }),
+	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/clubs`, credentials: "include" }),
 	tagTypes: ["Club"],
 	endpoints: (builder) => ({
 

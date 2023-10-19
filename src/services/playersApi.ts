@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const playersApi = createApi({
 	reducerPath: "playersApi",
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/players` }),
+	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/players`, credentials: "include" }),
 	tagTypes: ["Player"],
 	endpoints: (builder) => ({
 

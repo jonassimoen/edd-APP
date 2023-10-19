@@ -4,7 +4,7 @@ import config from "@/config";
 
 export const weeksApi = createApi({
 	reducerPath: "weeksApi",
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/weeks` }),
+	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/weeks`, credentials: "include" }),
 	tagTypes: ["Week"],
 	endpoints: (builder) => ({
 		getWeeks: builder.query<Week[], void>({
