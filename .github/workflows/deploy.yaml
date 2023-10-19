@@ -10,11 +10,14 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - name: use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: Run install
+        uses: borales/actions-yarn@v4
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          npm i
-          npm run build
+          cmd: install 
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # if needed
+      - name: Build production bundle
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build 
