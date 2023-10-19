@@ -11,10 +11,11 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
-      - name: use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          npm i
-          npm run build
+          node-version: 16
+      - run: npm install yarn -g
+      - name: Build React App
+        run: | 
+          yarn install
+          yarn build
