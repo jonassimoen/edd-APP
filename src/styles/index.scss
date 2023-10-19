@@ -25,6 +25,7 @@ html {
     font-family: UEFASupercup;
     font: 400 100%/1.5 UEFASupercup, Helvetica Neue, Helvetica, Arial, sans-serif !important;
     -webkit-overflow-scrolling: touch;
+    background-color: "#16002b";
 
     ::-webkit-scrollbar {
         width: 5px;
@@ -43,16 +44,11 @@ html {
     ::-webkit-scrollbar-thumb:hover {
         background: theme;
     }
-
-    background-color: #f2f0f4;
-    @media screen-md {
-        background-color: red !important;
-    }
 }
 
 body {
     padding: 0;
-    margin: 0;
+    margin: 0;    background-color: #f2f0f4;
 
     input:focus{
         outline: none;
