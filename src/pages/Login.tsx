@@ -12,7 +12,7 @@ export const Login = () => {
 	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
 	const options = {
-		redirect_uri: `${config.API_URL}/api/user/oauth/google`,
+		redirect_uri: `${config.API_URL}/user/oauth/google`,
 		client_id: config.GOOGLE_CLIENT_ID,
 		access_type: "offline",
 		response_type: "code",
