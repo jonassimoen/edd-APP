@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      NODE_OPTIONS: --max_old_space_size=1536
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
