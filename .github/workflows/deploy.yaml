@@ -16,8 +16,9 @@ jobs:
     steps:
       - name: Setup SSH
         run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo 'echo ${{secrets.SSH_PWD}}' > ~/.ssh/passphrase && chmod 700 ~/.ssh/passphrase
-
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm install yarn -g
