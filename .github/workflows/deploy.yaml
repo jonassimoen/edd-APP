@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SSH_PRIVATE_KEY: ${{secrets.SSH_KEY}}
-      SSH_PASSPHRASE: ${{secrets.SSH_KEY}}
       SERVER_IP: ${{secrets.SERVER_IP}}
       NODE_OPTIONS: --max-old-space-size=2048
     steps:
@@ -31,4 +30,4 @@ jobs:
           chmod 700 ~/.ssh
           ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-          scp -r build/* root@$SERVER_IP:/var/www/html/fantasy.simoen.tech/_work/edd-APP/edd-APP/build
+          scp -r build/* root@$SERVER_IP:/var/www/html/fantasy.simoen.tech/
