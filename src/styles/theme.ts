@@ -6,7 +6,7 @@ const theme =  {
 	positionMf: "#ffc333",
 	positionFw: "#fb6b5b",
 	secondaryColor: "#000",
-	fontFamily: "UEFASupercup, Helvetica Neue, Helvetica, Arial, sans-serif",
+	fontFamily: "UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif",
 };
 
 export {

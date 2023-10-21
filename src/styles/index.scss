@@ -19,11 +19,30 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: UEFAEuro;
+    src: url(/fonts/uefaeuro-bold.woff2);
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: UEFAEuro;
+    src: url(/fonts/uefaeuro-medium.woff2);
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: UEFAEuro;
+    src: url(/fonts/uefaeuro-book.woff2);
+    font-weight: 300;
+    font-display: swap;
+}
+
 $primaryColor: #16002b;
 
 html {
-    font-family: UEFASupercup;
-    font: 400 100%/1.5 UEFASupercup, Helvetica Neue, Helvetica, Arial, sans-serif !important;
     -webkit-overflow-scrolling: touch;
     background-color: "#16002b";
 

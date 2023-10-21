@@ -114,13 +114,12 @@ export const HeaderStyle = styled.header`
 
     .c-row {
         position: relative;
-        overflow: auto;
-        padding: 1.5rem 1.5rem 0;
-        
+        overflow: auto;        
         display: none;
+
         @media ${mediaQueries.tablet} {
             display: block;
-            padding: 3rem 3rem 1.5rem;
+            padding: 2rem 2rem 1rem;
         }
         
         &--alpha {
@@ -149,7 +148,7 @@ export const HeaderStyle = styled.header`
         }
 
         &__item {
-            padding: 0 1rem;
+            padding: 0 0.75rem;
 
             &.is-selected .c-nav-tabs__link {
                 color: #16002b;
