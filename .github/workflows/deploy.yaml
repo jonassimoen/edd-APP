@@ -14,6 +14,10 @@ jobs:
       SERVER_IP: ${{secrets.SERVER_IP}}
       NODE_OPTIONS: --max-old-space-size=2048
     steps:
+      - name: Setup SSH
+        run: |
+          echo 'echo ${{secrets.SSH_PWD}}' > ~/.ssh/passphrase && chmod 700 ~/.ssh/passphrase
+
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm install yarn -g
@@ -25,7 +29,7 @@ jobs:
         run: |
           which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y  )
           eval $(ssh-agent -s)
-          ssh-add <(echo "$SSH_PRIVATE_KEY" )
+          cat ${{secrets.SSH_KEY}} | tr -d '\r' | DISPLAY=None SSH_ASKPASS=~/.ssh/passphrase ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
