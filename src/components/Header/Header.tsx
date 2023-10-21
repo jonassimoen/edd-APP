@@ -183,32 +183,34 @@ export const Header = () => {
 						</Layout>
 					</div>
 				</div>
-				<div className="c-row c-row--sm c-row--alpha" style={{ marginBottom: "15px" }}>
-					<Layout>
-						<ul className="o-list c-nav-tabs">
-							{(isVisible("points") &&
-								<li className={`c-nav-tabs__item ${(isActive("points")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("menu.points")}</Link>
-								</li>
-							) || null}
-							{(isVisible("team") &&
-								<li className={`c-nav-tabs__item ${(isActive("team")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/team/${userTeam.id}`}>{t("menu.team")}</Link>
-								</li>
-							) || null}
-							{(isVisible("edit") &&
-								<li className={`c-nav-tabs__item ${(isActive("edit")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/edit/${userTeam.id}`}>{t("menu.edit")}</Link>
-								</li>
-							) || null}
-							{(isVisible("transfers") &&
-								<li className={`c-nav-tabs__item ${(isActive("transfers")) ? "is-selected" : ""}`}>
-									<Link className="c-nav-tabs__link" to={`/transfers/${userTeam.id}`}>{t("menu.transfers")}</Link>
-								</li>
-							) || null}
-						</ul>
-					</Layout>
-				</div>
+				{isVisible("team") &&
+					<div className="c-row c-row--sm c-row--alpha" style={{ marginBottom: "15px" }}>
+						<Layout>
+							<ul className="o-list c-nav-tabs">
+								{(isVisible("points") &&
+									<li className={`c-nav-tabs__item ${(isActive("points")) ? "is-selected" : ""}`}>
+										<Link className="c-nav-tabs__link" to={`/points/${userTeam.id}`}>{t("menu.points")}</Link>
+									</li>
+								) || null}
+								{(isVisible("team") &&
+									<li className={`c-nav-tabs__item ${(isActive("team")) ? "is-selected" : ""}`}>
+										<Link className="c-nav-tabs__link" to={`/team/${userTeam.id}`}>{t("menu.team")}</Link>
+									</li>
+								) || null}
+								{(isVisible("edit") &&
+									<li className={`c-nav-tabs__item ${(isActive("edit")) ? "is-selected" : ""}`}>
+										<Link className="c-nav-tabs__link" to={`/edit/${userTeam.id}`}>{t("menu.edit")}</Link>
+									</li>
+								) || null}
+								{(isVisible("transfers") &&
+									<li className={`c-nav-tabs__item ${(isActive("transfers")) ? "is-selected" : ""}`}>
+										<Link className="c-nav-tabs__link" to={`/transfers/${userTeam.id}`}>{t("menu.transfers")}</Link>
+									</li>
+								) || null}
+							</ul>
+						</Layout>
+					</div>
+				}
 				<nav className="c-nav-mobile js-nav-mobile">
 					<div className="c-nav-mobile__main">
 						<ul className="o-list c-nav-mobile__list">
