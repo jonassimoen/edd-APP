@@ -28,7 +28,7 @@ class App extends React.PureComponent<WithTranslation> {
 		return (
 			<ConfigProvider theme={{
 				token: {
-					fontFamily: "UEFASupercup",
+					fontFamily: "UEFAEuro",
 				}
 			}}>
 				<ToastContainer
