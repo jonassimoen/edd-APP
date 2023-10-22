@@ -111,7 +111,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	}, [matchPlayers, stats]);
 
 	useEffect(() => {
-		console.log(form.getFieldsValue());
 		if (importedStats && matchPlayers) {
 			const allStats = matchPlayers?.map((p: Player) => {
 				const playerStat = importedStats?.find((s: Statistic) => s.playerId === p.externalId);
@@ -128,7 +127,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			allStats.forEach((p, idx) => statsObj[idx] = p);
 			setState({ ...state, allEvents: statsObj });
 			form.setFieldsValue(allStats);
-			console.log(state.allEvents);
 		}
 	}, [importedStats]);
 

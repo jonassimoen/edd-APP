@@ -52,7 +52,6 @@ export const Calendar = (props: CalendarProps) => {
 	}
 
 	const onCalendarWeekChanged = (weekId: number) => {
-		console.log("weekId", weekId)
 		setState({ ...state, weekId: weekId });
 	};
 

@@ -79,8 +79,6 @@ export const PlayerModal = (props: PlayerModalProps) => {
         ),
         [props]);
 
-    console.log(actionColumnSize);
-
     return (
         <PlayerModalStyle
             title={player.short}
