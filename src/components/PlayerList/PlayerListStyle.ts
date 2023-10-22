@@ -114,10 +114,6 @@ export const TableStyle = styled(Table)`
                 border: none;
                 padding: 3.5px;
 
-                &:first-child {
-                    padding: 2.5px 10px 0 15px;
-                }
-
                 & p {
                     margin-top:0;
                 }

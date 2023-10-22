@@ -56,7 +56,7 @@ table {
 }
 `;
 
-export const ClubDetails = styled.div`
+export const ClubDetails = styled.div<{left?: boolean}>`
     display: flex;
     padding: 5px;
     justify-content: ${(props: any) => props.left ? "flex-end": "flex-start"};

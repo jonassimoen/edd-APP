@@ -81,9 +81,7 @@ export const Calendar = (props: CalendarProps) => {
 			render: (homeId: any, record: any) => {
 				const clubBadge = `${config.API_URL}/static/badges/${record.home.externalId}.png`;
 
-				return <ClubDetails 
-				// left
-				>
+				return <ClubDetails left>
 					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
 					<ClubBadgeBg src={clubBadge} />
 				</ClubDetails>;
