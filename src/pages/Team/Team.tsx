@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { PlayerType } from "@/types/PlayerTypes";
 import { theme } from "@/styles/theme";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useGetTeamQuery } from "@/services/teamsApi";
 import { pick } from "lodash";
 import { useSelector } from "react-redux";
@@ -26,6 +26,8 @@ import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { Block } from "@/components/Block/Block";
 import { DeadlineBar } from "./TeamStyle";
 import dayjs from "dayjs";
+import { Card } from "antd";
+import Meta from "antd/es/card/Meta";
 
 export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -44,6 +46,9 @@ export const _Team = (props: AbstractTeamType) => {
 	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
 
 	const getTeamInfo = (weekId: number) => {
+		if (!teamResult) {
+			return;
+		}
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId"];
 		const selectionProps: any[] = [];
 		const starting = teamResult.players.filter((p: Player) => p.selection?.starting === 1)
@@ -62,7 +67,7 @@ export const _Team = (props: AbstractTeamType) => {
 				return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 			});
 
-		const teamName = teamResult.team.name;
+		const teamName = teamResult.team?.name;
 		const captainPlayer = teamResult.players.find((p: Player) => p && p.selection && p.selection.captain === 1);
 		const captainId = captainPlayer && captainPlayer.id;
 
@@ -72,7 +77,7 @@ export const _Team = (props: AbstractTeamType) => {
 		const budget = teamResult.players.reduce((acc: any, player: Player) => acc - player.value, application.competition.budget);
 		// const boosters = undefined; // todo
 
-		const isTeamOwner = !!(teamResult.team.userId === user?.id);
+		const isTeamOwner = !!(teamResult.team?.userId === user?.id);
 
 		props.initTeamState(starting, bench, teamName, budget, captainId, viceCaptainId, true);
 	};
@@ -85,6 +90,11 @@ export const _Team = (props: AbstractTeamType) => {
 	return (
 		(clubs && teamResult && matches && deadlineInfo) && (
 			<React.Fragment>
+				{
+					(!teamResult.team &&
+						<Navigate to="/home" />
+					)
+				}
 				<Row>
 					{
 						(visibleWeekId && deadlineWeek && deadlineDate &&
@@ -106,7 +116,7 @@ export const _Team = (props: AbstractTeamType) => {
 							clubs={clubs || []}
 							centerAligned={true}
 							captainId={props.captainId}
-							viceCaptainId={props.viceCaptainId} 
+							viceCaptainId={props.viceCaptainId}
 							modalEnabled={true}
 							selection={startingByPositions}
 							assetsCdn=""

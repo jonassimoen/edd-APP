@@ -56,7 +56,7 @@ export const Home = (props: HomeProps) => {
 			<Row gutter={32}>
 				<Col xs={24} md={12}>
 					<CardStyle>
-						<Card
+							<Card
 							hoverable
 							style={{ minWidth: 240 }}
 							bordered={false}
