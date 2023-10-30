@@ -6,7 +6,10 @@
     "rankings": "Klassement",
     "rules": "Regels",
     "admin": "Adminpagina",
-    "logout": "Uitloggen"
+    "logout": "Uitloggen",
+    "points": "Punten",
+    "edit": "Wijzig team",
+    "transfers": "Transfers"
   },
   "home": {
     "title": "Welkom bij Fantasy Team, speel mee !",
@@ -139,10 +142,9 @@
     "noneFound": "Geen spelers gevonden"
   },
   "createBtn": "Maak aan",
-  "tabs": {
-    "points": "Punten",
-    "team": "Team",
-    "edit": "Wijzig",
-    "transfers": "Transfers"
+  "TransfersPage": {
+    "overviewTransfers": "Transfers",
+    "overviewPlayers": "Spelers",
+    "overviewBudget": "Budget"
   }
 }

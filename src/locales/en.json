@@ -6,7 +6,10 @@
     "rankings": "Ranking",
     "rules": "Rules",
     "admin": "Adminpage",
-    "logout": "Log out"
+    "logout": "Log out",
+    "edit": "Edit team",
+    "points": "Points",
+    "transfers": "Transfers"
   },
   "admin": {
     "welcome": "Welcome, fantasy magician {{name}}!",
