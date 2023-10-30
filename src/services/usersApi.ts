@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const usersApi = createApi({
 	reducerPath: "usersApi",
-	tagTypes: ["userTeams"],
+	tagTypes: ["userTeam"],
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/user/`, credentials: "include" }),
 	endpoints: (builder) => ({
 		getProfile: builder.query<User, void>({
@@ -19,7 +19,7 @@ export const usersApi = createApi({
 
 		getTeams: builder.query<{ teams: Team[], user: User }, void>({
 			query: () => "teams",
-			providesTags: ["userTeams"],
+			providesTags: ["userTeam"],
 			async onQueryStarted(args, { dispatch, queryFulfilled }) {
 				try {
 					const { data } = await queryFulfilled;

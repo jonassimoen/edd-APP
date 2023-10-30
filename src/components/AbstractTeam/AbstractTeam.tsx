@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { FootballPicker } from "@/lib/football-picker";
 import { FootballMaxPositionsPicks, FootballPositionIds } from "@/lib/constants";
 import Decimal from "decimal.js";
-import { useAddTeamMutation, useUpdateTeamSelectionMutation } from "@/services/teamsApi";
+import { useAddTeamMutation, useSubmitTransfersMutation, useUpdateTeamSelectionMutation } from "@/services/teamsApi";
 import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { t } from "i18next";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
+import { pick } from "lodash";
 
 declare type AbstractTeamProps = {
 	matches?: any;
@@ -52,6 +53,12 @@ declare type AbstractTeamState = {
 	teamUser?: any
 	validator?: any
 	savingTeamPending?: any
+	visibleWeekId: number | null
+	initializedExternally: boolean
+	boosters: Boosters
+	deadlineWeekTransfers: Transfer[],
+	draftTransfers: Transfer[],
+	pastTransfers: Transfer[],
 }
 
 function playersToValidatorFormat(players: any) {
@@ -73,7 +80,9 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam] = useAddTeamMutation();
 	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
+	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
+	const [submitTransfers, { isSuccess: submitTransfersSucces, data: submitTransfersResult }] = useSubmitTransfersMutation();
 
 	const application = useSelector((state: StoreState.All) => state.application);
 
@@ -92,6 +101,12 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		swapPlayerId: null,
 		swapPlayer: null,
 		swappedFrom: null,
+		visibleWeekId: deadlineInfoSuccess ? (options && options.mode === 'points' ? deadlineInfo.deadlineInfo.displayWeek : deadlineInfo.deadlineInfo.deadlineWeek) : 0,
+		boosters: {},
+
+		deadlineWeekTransfers: [],
+		draftTransfers: [],
+		pastTransfers: [],
 
 		initialStarting: getInitializedList(application.competition.lineupSize, true),
 		initialBench: getInitializedList(application.competition.benchSize),
@@ -99,6 +114,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 		teamUser: undefined,
 		activePositionFilter: -1,
+		initializedExternally: false,
 	});
 
 	const setStarting = (starting: any[]) => {
@@ -131,10 +147,18 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		starting: any[],
 		bench: any[],
 		teamName: string,
+		captainId: number,
 		budget: number,
-		captainId?: number,
+		leagues?: any[] | undefined,
+		visibleWeekId?: number | undefined,
+		teamPointsInfo?: any,
+		rawTransfers?: any[] | undefined,
+		deadlineWeekTransfers?: any[] | undefined,
+		pastTransfers?: any[] | undefined,
 		viceCaptainId?: number,
-		teamUser?: any,
+		boosters?: Boosters,
+		isTeamOwner?: boolean,
+		teamUser?: any
 	) => {
 		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
@@ -154,10 +178,16 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			initialBench: bench,
 			initialStarting: starting,
 			initialBudget: budget,
+			visibleWeekId: visibleWeekId | state.visibleWeekId,
+			initializedExternally: true,
+			boosters: boosters || {},
+			deadlineWeekTransfers: deadlineWeekTransfers || [],
+			draftTransfers: [],
+			pastTransfers: pastTransfers || [],
 		});
 	};
 
-	const pickPlayer = (player: Player) => {
+	const pickPlayer = (player: Player, taxForPicking?: boolean) => {
 		const nilPlayer: any = null;
 
 		const alreadyInTeam: Player = [].concat(state.initialStarting, state.initialBench).find((item: Player) => item && player && item.id === player.id);
@@ -257,7 +287,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		const captainId = state.captainId === player.id ? undefined : state.captainId;
 		const viceCaptainId = state.viceCaptainId === player.id ? undefined : state.captainId;
 
-		// const removeResult = state.validator.remove(player);
+		const removeResult = state.validator.remove(player);
 
 		setState({ ...state, starting: newStarting, budget, captainId, viceCaptainId });
 	};
@@ -276,7 +306,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			.plus(player.value.toFixed(2))
 			.toString());
 
-		// const removeResult = state.validator.remove(player);
+		const removeResult = state.validator.remove(player);
 
 		setState({ ...state, bench: newBench, budget });
 	};
@@ -503,7 +533,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		}
 	};
 
-	const isPickable = (player: Player) => {
+	const isPickable = (player: Player, taxForPicking?: boolean, isTransferPick?: boolean) => {
 		const notInStarting = !state.starting.find(startingPlayer => startingPlayer && startingPlayer.id && startingPlayer.id === player.id);
 		const notInBench = !state.bench.find(benchPlayer => benchPlayer && benchPlayer.id && benchPlayer.id === player.id);
 		const affordable = player.value <= state.budget;
@@ -568,27 +598,27 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const onTransferPlayerOut = (player: Player, extra?: boolean) => {
 		removePlayer(player);
 
-		// const draftTransfers = state.draftTransfers
-		// 	.concat([{
-		// 		inId: null,
-		// 		outId: player.id,
-		// 		outPlayer: player,
-		// 		extra,
-		// 		// weekId: matches.info.deadlineWeek
-		// 	}]);
-		// setState({ ...state, draftTransfers });
+		const draftTransfers = state.draftTransfers
+			.concat([{
+				inId: null,
+				outId: player.id,
+				outPlayer: player,
+				extra,
+				weekId: deadlineInfo.deadlineInfo.deadlineWeek
+			}]);
+		setState(previousState => ({ ...previousState, draftTransfers }));
 	};
 
 	const onTransferPlayerIn = (player: Player) => {
-		// const draftTransfers = ([] as Transfer[]).concat(state.draftTransfers);
-		// for (let tfIdx = 0; tfIdx < draftTransfers.length; tfIdx++) {
-		// 	if (!draftTransfers[tfIdx].inId && draftTransfers[tfIdx].outPlayer?.positionId === player.positionId) {
-		// 		draftTransfers[tfIdx].inId = player.id;
-		// 		draftTransfers[tfIdx].inPlayer = player;
-		// 		break;
-		// 	}
-		// }
-		// setState({ ...state, draftTransfers });
+		const draftTransfers = ([] as Transfer[]).concat(state.draftTransfers);
+		for (let tfIdx = 0; tfIdx < draftTransfers.length; tfIdx++) {
+			if (!draftTransfers[tfIdx].inId && draftTransfers[tfIdx].outPlayer?.positionId === player.positionId) {
+				draftTransfers[tfIdx].inId = player.id;
+				draftTransfers[tfIdx].inPlayer = player;
+				break;
+			}
+		}
+		setState(previousState => ({ ...previousState, draftTransfers }));
 	};
 
 	const onDraftTransfersClear = () => {
@@ -598,16 +628,18 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 		setState({
 			...state,
+			draftTransfers: [],
 			starting: state.initialStarting,
 			bench: state.initialBench,
 			budget: state.initialBudget
 		});
 	};
 	const onTransfersSubmit = (teamId: number) => {
-		// const transfers = state.draftTransfers
-		// 	.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
-		// return teamsActions.submitTransfers(teamId, transfers)
-		// TODO: POST team/transfers/:teamid
+        console.log("TRANSFERS SUBMITTED");
+		const transfers = state.draftTransfers
+			.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
+		
+		submitTransfers({teamId, transfers}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t(`team.transfers.failed`) }));
 	};
 
 	const onTransfersReset = (teamId: number) => {
@@ -668,6 +700,12 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			onTransfersReset={onTransfersReset}
 			reloadUserTeams={reloadUserTeams}
 			teamUser={state.teamUser}
+			visibleWeekId={state.visibleWeekId}
+			initializedExternally={state.initializedExternally}
+			boosters={state.boosters}
+			draftTransfers={state.draftTransfers}
+			deadlineWeekTransfers={state.deadlineWeekTransfers}
+			pastTransfers={state.pastTransfers}
 			{...props}
 
 		/>

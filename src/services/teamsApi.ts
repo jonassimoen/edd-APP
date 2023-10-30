@@ -5,17 +5,17 @@ import { url } from "inspector";
 
 export const teamsApi = createApi({
 	reducerPath: "teamsApi",
-	tagTypes: ["userTeams"],
+	tagTypes: ["userTeam"],
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/teams`, credentials: "include" }),
 	endpoints: (builder) => ({
 
-		getTeam: builder.query<{team:Team, players:Player[]}, number>({
+		getTeam: builder.query<{ team: Team, players: Player[], transfers: Transfer[] }, number>({
 			query: (teamId) => `${teamId}`,
-			providesTags: ["userTeams"],
+			providesTags: ["userTeam"],
 		}),
 
-		addTeam: builder.mutation<{team:Team}, object>({
-			invalidatesTags: ["userTeams"],
+		addTeam: builder.mutation<{ team: Team }, object>({
+			invalidatesTags: ["userTeam"],
 			query: (data) => ({
 				url: "add",
 				method: "POST",
@@ -23,13 +23,22 @@ export const teamsApi = createApi({
 			}),
 		}),
 
-		updateTeamSelection: builder.mutation<{msg: string}, {teamId:number, bench: number[], starting: number[], teamName: string}>({
-			invalidatesTags: ["userTeams"],
-			query: ({teamId, ...data}) => ({
+		updateTeamSelection: builder.mutation<{ msg: string }, { teamId: number, bench: number[], starting: number[], teamName: string }>({
+			invalidatesTags: ["userTeam"],
+			query: ({ teamId, ...data }) => ({
 				url: `${teamId}/selections`,
 				method: "POST",
 				body: data
 			}),
+		}),
+
+		submitTransfers: builder.mutation<{ msg: string, team: Team }, { teamId: number, transfers: Transfer[] }>({
+			invalidatesTags: ["userTeam"],
+			query: ({ teamId, ...data }) => ({
+				url: `${teamId}/transfers`,
+				method: "POST",
+				body: data,
+			})
 		}),
 
 		// updatePlayer: builder.mutation<Player, Partial<Player> & Pick<Player, 'id'>>({
@@ -43,4 +52,4 @@ export const teamsApi = createApi({
 	})
 });
 
-export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation, useUpdateTeamSelectionMutation } = teamsApi;
+export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation, useUpdateTeamSelectionMutation, useSubmitTransfersMutation } = teamsApi;

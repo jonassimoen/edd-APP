@@ -51,16 +51,16 @@ export const _Team = (props: AbstractTeamType) => {
 		}
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId"];
 		const selectionProps: any[] = [];
-		const starting = teamResult.players.filter((p: Player) => p.selection?.starting === 1)
-			.map((p: Player) => {
+		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
+			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
 					(match: Match) => match.weekId === weekId && ([match.homeId, match.awayId].includes(p.clubId))
 				);
 				return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 			});
 
-		const bench = teamResult.players.filter((p: Player) => p.selection?.starting === 0)
-			.map((p: Player) => {
+		const bench = teamResult.players.filter((p: any) => p.selection.starting === 0)
+			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
 					(match: Match) => match.weekId === weekId && ([match.homeId, match.awayId].includes(p.clubId))
 				);
@@ -68,10 +68,10 @@ export const _Team = (props: AbstractTeamType) => {
 			});
 
 		const teamName = teamResult.team?.name;
-		const captainPlayer = teamResult.players.find((p: Player) => p && p.selection && p.selection.captain === 1);
+		const captainPlayer = teamResult.players.find((p: any) => p && p.selection && p.selection.captain === 1);
 		const captainId = captainPlayer && captainPlayer.id;
 
-		const viceCaptainPlayer = teamResult.players.find((p: Player) => p && p.selection && p.selection.captain === 2);
+		const viceCaptainPlayer = teamResult.players.find((p: any) => p && p.selection && p.selection.captain === 2);
 		const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
 		const budget = teamResult.players.reduce((acc: any, player: Player) => acc - player.value, application.competition.budget);
@@ -79,7 +79,14 @@ export const _Team = (props: AbstractTeamType) => {
 
 		const isTeamOwner = !!(teamResult.team?.userId === user?.id);
 
-		props.initTeamState(starting, bench, teamName, budget, captainId, viceCaptainId, true);
+		const boosters = {
+			freeHit: teamResult.team.freeHit,
+			bank: teamResult.team.bank,
+			tripleCaptain: teamResult.team.tripleCaptain,
+			wildCard: teamResult.team.wildCard
+		};
+
+		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
 	};
 
 	const startingByPositions = useMemo(() => startingListToPositionsList(props.starting, application.competition.lineupPositionRows), [props.starting]);

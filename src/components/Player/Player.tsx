@@ -49,6 +49,9 @@ declare type PlayerProps = {
 	onSwap?: any
 	onCaptainSelect?: any
 	onViceCaptainSelect?: any
+	benchPlayer?: boolean
+	showPlayerValue?: boolean
+	showPlayerValueInsteadOfPoints?: boolean
 
 	className?: string
 }
@@ -76,6 +79,10 @@ export const Player = (props: PlayerProps) => {
 		onSwap,
 		onCaptainSelect,
 		onViceCaptainSelect,
+		showPlayerValueInsteadOfPoints,
+		showPlayerValue,
+		benchPlayer,
+		// showPlayerStatsPoints,
 	} = props;
 	const [state, setState] = useState<PlayerState>({
 		portraitFace: props.portraitFace,
@@ -132,7 +139,7 @@ export const Player = (props: PlayerProps) => {
 	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
 	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
 
-	const showPoints = true;
+	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints; //todo
 	const showPlayerName = !avatarOnly;
 
 	const onRemoveHandler = (e: any, player: Player) => {
@@ -189,7 +196,14 @@ export const Player = (props: PlayerProps) => {
 						</p>
 					</OpponentBadge> : null
 			}
-
+			{
+				(
+					player && showPlayerValue &&
+					<Value benchPlayer={benchPlayer}>
+						<span>{(player.value) ? `€${player.value}M` : null}</span>
+					</Value>
+				) || null
+			}
 			{
 				!player || (player && !player.id) &&
 				<NoPlayer onClick={onPlaceholderClick ? (e: any) => onPlaceholderClick(player) : () => { }}>
