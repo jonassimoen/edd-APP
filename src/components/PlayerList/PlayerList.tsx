@@ -34,6 +34,9 @@ declare type PlayerListProps = {
 	actionLabel?: string
 	isLoading?: boolean
 	playerType: PlayerType
+	matches?: any
+	deadlineWeek?: any;
+	playerTax?: number | undefined;
 }
 
 declare type PlayerListState = {

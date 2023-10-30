@@ -71,6 +71,37 @@ export const getPlayerPositionHexColor = (player: any, theme: any) => {
 	}
 };
 
+
+export const selectionPlayerSellValue = (player: any) => {
+    const current = Object.assign({}, player);
+    const currentValue = current.value;
+    const selectionValue = player.selection.value;
+    const diff = currentValue - selectionValue;
+    let playerSellValue = null;
+
+    if(selectionValue >= currentValue) {
+        playerSellValue = currentValue;
+    } else {
+        // const profit = roundDownDecimal()
+        const profit = diff / 2;
+        playerSellValue = selectionValue + profit;
+    }
+    return parseFloat((playerSellValue).toFixed(2));
+}
+
+export const roundNextHalf = (number: number) => {
+	const integerPart = Math.floor(number);
+	const decimalPart = number - integerPart;
+
+	if (decimalPart === 0) {
+		return integerPart;
+	} else if (decimalPart <= 0.5) {
+		return integerPart + 0.5;
+	} else {
+		return integerPart + 1;
+	}
+}
+
 export const firstLetterUppercased = (string: string) => {
 	return string.charAt(0).toUpperCase();
 };

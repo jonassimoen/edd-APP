@@ -107,7 +107,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
             </Row>
             <Row className="player-actions">
                 {
-                    onCaptainSelect ?
+                    props.onCaptainSelect ?
                         <Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
                             <div className="action" onClick={onCaptainSelect}>
                                 <CaptainIcon />
@@ -117,7 +117,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
                         null
                 }
                 {
-                    onViceCaptainSelect ?
+                    props.onViceCaptainSelect ?
                         <Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
                             <div className="action" onClick={onViceCaptainSelect}>
                                 <ViceCaptainIcon />
@@ -128,7 +128,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
                 }
 
                 {
-                    onSwap && isSwapAble && isSwapAble(player) && (player.id !== swapPlayerId) ?
+                    props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId) ?
                         <Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
                             <div className="action" onClick={onSwap}>
                                 <SwapIcon />
@@ -139,7 +139,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
                 }
 
                 {
-                    onSwap && (player.id === swapPlayerId) ?
+                    props.onSwap && (player.id === swapPlayerId) ?
                         <Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
                             <div className="action" onClick={onSwap}>
                                 <UndoIcon />

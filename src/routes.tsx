@@ -20,6 +20,7 @@ import { Profile } from "./pages/Profile/Profile";
 import { Deadlines } from "./pages/Deadlines/Deadlines";
 import { Stats } from "./pages/Stats/Stats";
 import { Footer } from "./components/Footer/Footer";
+import { TransfersPage } from "./pages/Transfers/Transfers";
 
 const Layout = ({children}: any) => {
 	return (
@@ -62,7 +63,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/transfers/:id", //todo
-				element: <ProtectedRoute access={true} redirectPath="/home"><Home /></ProtectedRoute>
+				element: <ProtectedRoute access={true} redirectPath="/home"><TransfersPage /></ProtectedRoute>
 			},
 			{
 				path: "/edit/:id", //todo

@@ -47,7 +47,7 @@ type Player = {
     pointsOverview: boolean
 
     stats?: Statistic[]
-    selection?: PlayerSelection
+    selections?: PlayerSelection[]
     upcomingMatches: Match[]
 }
 
@@ -97,6 +97,18 @@ type Team = {
     name: string
     userId: number
     weekId: number
+    budget: number
+    freeHit: number
+    bank: number
+    tripleCaptain: number
+    wildCard: number
+}
+
+type Boosters = {
+    freeHit?: number
+    bank?: number
+    tripleCaptain?: number
+    wildCard?: number
 }
 
 type User = {
@@ -180,19 +192,19 @@ type MatchEvent = {
 }
 
 
-// type Transfer = {
-//     id?: number
-//     datetime?: string
-//     weekId?: number
-//     inValue?: number
-//     outValue?: number
-//     inPlayer?: Player
-//     outPlayer?: Player
-//     extra?: boolean
-//     teamId?: number
-//     inId?: number | null
-//     outId?: number | null
-// }
+type Transfer = {
+    id?: number
+    datetime?: string
+    weekId?: number
+    inValue?: number
+    outValue?: number
+    inPlayer?: Player
+    outPlayer?: Player
+    extra?: boolean
+    teamId?: number
+    inId?: number | null
+    outId?: number | null
+}
 
 // type MatchState = {
 //     id: number
