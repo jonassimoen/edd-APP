@@ -39,5 +39,31 @@ export const StatsStyle = styled.div `
 			font-weight: bold;
 			margin: 0;
 		}
+
+		.team-name {
+			color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+            vertical-align: middle;
+		}
+	}
+`;
+
+export const MatchStatsStyle = styled.div `
+	display:flex;
+	justify-content: center;
+	background-color: ${theme.primaryContrast};
+	color: white;
+	font-size: 15px;
+
+	.team {
+		padding: 15px;
+	}
+
+	.score {
+		display:flex;
+		align-items: center;
 	}
 `;

@@ -156,7 +156,7 @@ export default {
 		},
 		{
 			full: "Man of the Match",
-			slug: "MOTM",
+			slug: "motm",
 			short: "MOTM",
 			type: "bool",
 		},

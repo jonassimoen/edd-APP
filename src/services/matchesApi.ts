@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const matchesApi = createApi({
 	reducerPath: "matchesApi",
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/matches`, credentials: "include" }),
-	tagTypes: ["Match", "MatchEvents", "MatchStatistics", "PlayerStats"],
+	tagTypes: ["Match", "MatchEvents", "MatchStatistics", "PlayerStats", "ImportedMatchStatistics"],
 	endpoints: (builder) => ({
 
 		getMatches: builder.query<Match[], void>({
@@ -93,11 +93,11 @@ export const matchesApi = createApi({
 					: ["MatchStatistics"],
 		}),
 
-		updateMatchStatistics: builder.mutation<Statistic[], { stats: Partial<Statistic>[], matchId: number }>({
-			query: ({ matchId, stats }) => ({
+		updateMatchStatistics: builder.mutation<Statistic[], { stats: Partial<Statistic>[], matchId: number, score: { home: number, away: number} }>({
+			query: ({ matchId, stats, score }) => ({
 				url: `${matchId}/stats`,
 				method: "PUT",
-				body: [...stats],
+				body: {stats, score},
 			}),
 			invalidatesTags: (res, err, arg) => [{ type: "MatchStatistics", id: arg.matchId }, { type: "Match", id: arg.matchId }, "PlayerStats"],
 		}),
@@ -115,8 +115,8 @@ export const matchesApi = createApi({
 			query: (matchId) => `${matchId}/stats/import`,
 			providesTags: (res, err, arg) =>
 				res
-					? [{ type: "MatchStatistics" as const, id: arg }, "MatchStatistics"]
-					: ["MatchStatistics"],
+					? [{ type: "ImportedMatchStatistics" as const, id: arg }, "ImportedMatchStatistics"]
+					: ["ImportedMatchStatistics"],
 		}),
 	})
 });
