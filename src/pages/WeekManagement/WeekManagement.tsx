@@ -3,19 +3,21 @@ import { Button } from "@/components/UI/Button/Button";
 import { FormItem } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { DatePicker, Table } from "antd";
+import { CheckOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
+import { Badge, DatePicker, Table, Tag } from "antd";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import locale from "antd/es/date-picker/locale/nl_BE";
 import { useCreateWeekMutation, useGetWeeksQuery, useUpdateWeekMutation } from "@/services/weeksApi";
+import { useGetMatchesQuery } from "@/services/matchesApi";
+import { statusToIconColor } from "@/lib/helpers";
 
 type WeekManagementState = {
-    openEditModal: boolean
-    openCreateModal: boolean
-    editObject?: boolean
+	openEditModal: boolean
+	openCreateModal: boolean
+	editObject?: boolean
 }
 
 export const WeekManagement = () => {
@@ -25,8 +27,21 @@ export const WeekManagement = () => {
 	});
 	const { t } = useTranslation();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSuccess } = useGetWeeksQuery();
+	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
 	const [updateWeek] = useUpdateWeekMutation();
 	const [createWeek] = useCreateWeekMutation();
+
+	const numberMatchesByStateByWeekId = useMemo(() => matches?.reduce((group: { [key: number]: { [key: string]: number } }, match: Match) => {
+		if (!group[match.weekId]) {
+			group[match.weekId] = {};
+		}
+		if (!group[match.weekId][match.status]) {
+			group[match.weekId][match.status] = 1;
+		} else {
+			group[match.weekId][match.status]++;
+		}
+		return group;
+	}, {}) || {}, [matches]);
 
 	const WeekForm = (
 		<Row>
@@ -86,26 +101,60 @@ export const WeekManagement = () => {
 						{
 							title: "Date",
 							dataIndex: "deadlineDate",
-							width: "70%",
+							width: "65%",
 							render: (date: Date, record: any) => {
 								return (
-									<p>{new Date(date).toLocaleString()}</p>
+									<p>{dayjs(date).format('DD/MM/YYYY HH:MM')}</p>
+								);
+							}
+						},
+						{
+							title: "Games",
+							dataIndex: "id",
+							width: "15%",
+							render: (id: number, record: any) => {
+
+								return (
+									<>
+										{numberMatchesByStateByWeekId[id] &&
+											Object.entries(numberMatchesByStateByWeekId[id]).map(([status, nr]: [string, number]) => {
+
+												const { color, icon } = statusToIconColor(status);
+												return (
+
+													<Badge count={nr}>
+														<Tag color={color} icon={icon}>{status}</Tag>
+													</Badge>
+												)
+											})
+
+										}
+									</>
 								);
 							}
 						},
 						{
 							dataIndex: "operation",
-							width: "20%",
-							align: "center",
+							width: "10%",
+							align: "left",
 							render: (_: any, record: any) => {
-								return (
+								const isReadyToProcess = matches?.filter((m: Match) => m.weekId === record.id).length === matches?.filter((m: Match) => m.status === "STATS_UPDATED").length;
+								return <>
 									<Button
-										icon={<EditOutlined />}
+										icon={< EditOutlined />}
 										onClick={() => setState({ ...state, openEditModal: true, editObject: record })}
 										shape="circle"
 										type="primary"
 									/>
-								);
+									{isReadyToProcess &&
+										<Button
+											icon={< CheckOutlined />}
+											onClick={() => console.log("Process whole week")}
+											shape="circle"
+											type="primary"
+										/>
+									}
+								</>;
 							}
 						}
 					]}

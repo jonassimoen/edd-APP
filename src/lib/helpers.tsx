@@ -3,6 +3,7 @@ import { FootballPositionIds } from "./constants";
 import { ReactNode } from "react";
 import React from "react";
 import { toast } from "react-toastify";
+import { UserOutlined, DownloadOutlined, SyncOutlined, CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 
 declare type RowToPos = {
 	rowNumber: number,
@@ -127,3 +128,23 @@ export const openSuccessNotification = (config: NotificationConfig) => {
 		</React.Fragment>
 	));
 };
+
+export const statusToIconColor = (status: string) => {
+	switch (status) {
+		case "PLAYED":
+			return { color: "purple", icon: <UserOutlined /> };
+			break;
+		case "STATS_IMPORTED":
+			return { color: "warning", icon: <DownloadOutlined /> };
+			break;
+		case "STATS_UPDATED":
+			return { color: "processing", icon: <SyncOutlined spin /> };
+			break;
+		case "VALIDATED":
+			return { color: "success", icon: <CheckCircleOutlined /> };
+			break;
+		default:
+			return { color: "error", icon: <ClockCircleOutlined /> };
+			break;
+	}
+}

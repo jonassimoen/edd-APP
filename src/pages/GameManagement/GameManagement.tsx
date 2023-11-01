@@ -1,33 +1,29 @@
-import { CreateModal } from "@/components/CreateModal";
 import { EditModal } from "@/components/EditModal";
 import { Button } from "@/components/UI/Button/Button";
-import { Checkbox } from "@/components/UI/Checkbox/Checkbox";
 import { FormItem } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Input } from "@/components/UI/Input/Input";
 import { Select } from "@/components/UI/Select/Select";
-import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
+import { openErrorNotification, openSuccessNotification, statusToIconColor } from "@/lib/helpers";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { useCreateMatchMutation, useGetMatchesQuery, useImportMatchesMutation, useUpdateMatchMutation } from "@/services/matchesApi";
 import { useGetWeeksQuery } from "@/services/weeksApi";
-import { CheckOutlined, CloseCircleOutlined, CloseOutlined, DownloadOutlined, EditOutlined, PlusOutlined, QuestionOutlined, SkinOutlined } from "@ant-design/icons";
-import { DatePicker, InputNumber, Modal, Table } from "antd";
+import { CloseOutlined, DownloadOutlined, EditOutlined, PlusOutlined, QuestionOutlined, SkinOutlined } from "@ant-design/icons";
+import { DatePicker, InputNumber, Modal, Table, Tag } from "antd";
 import locale from "antd/es/date-picker/locale/nl_BE";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
-import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 declare type GameManagementState = {
-    openEditModal: boolean
-    openCreateModal: boolean
-    openImportModal: boolean
-    editObject?: Match
-    selectedHomeId?: number
-    selectedAwayId?: number
+	openEditModal: boolean
+	openCreateModal: boolean
+	openImportModal: boolean
+	editObject?: Match
+	selectedHomeId?: number
+	selectedAwayId?: number
 }
 
 export const GameManagement = () => {
@@ -46,139 +42,139 @@ export const GameManagement = () => {
 	const { t } = useTranslation();
 
 	const ScoreMatchEdit =
-        <>
-        	<Row gutter={16}>
-        		<Col span={12}>
-        			<FormItem
-        				name={"homeScore"}
-        				label={"Home"}
-        				rules={([{
-        					required: true,
-        					message: t("property.match.homescore.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        		<Col span={12}>
-        			<FormItem
-        				name={"awayScore"}
-        				label={"Away"}
-        				rules={([{
-        					required: true,
-        					message: t("property.match.awayscore.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        </>;
+		<>
+			<Row gutter={16}>
+				<Col span={12}>
+					<FormItem
+						name={"homeScore"}
+						label={"Home"}
+						rules={([{
+							required: true,
+							message: t("property.match.homescore.required")
+						}])}
+					>
+						<Input />
+					</FormItem>
+				</Col>
+				<Col span={12}>
+					<FormItem
+						name={"awayScore"}
+						label={"Away"}
+						rules={([{
+							required: true,
+							message: t("property.match.awayscore.required")
+						}])}
+					>
+						<Input />
+					</FormItem>
+				</Col>
+			</Row>
+		</>;
 
 	const MatchCreateForm =
-        <>
-        	<Row gutter={16}>
-        		<Col span={12}>
-        			<FormItem
-        				name={"date"}
-        				label={"Date"}
-        				getValueProps={(i: string) => ({ value: dayjs(i) || dayjs("") })}
-        				rules={([{
-        					required: true,
-        					message: t("property.match.date.required")
-        				}])}
-        			>
-        				<DatePicker
-        					showTime={true}
-        					locale={locale}
-        					defaultPickerValue={dayjs()}
-        					allowClear={false}
-        					// format={["DD/MM/YYYY HH:mm", "YYYY-MM-DD\THH:mm:ss.SSS\Z"]}
-        				/>
-        			</FormItem>
-        		</Col>
-        		<Col span={12}>
-        			<FormItem
-        				name={"weekId"}
-        				label={"Week"}
-        				rules={([{
-        					required: true,
-        					message: t("property.match.week.required").toString()
-        				}])}
-        			>
-        				<Select
-        					keyProperty="id"
-        					textProperty="name"
-        					placeholder={"Week"}
-        					values={weeks || []}
-        					onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
-        				/>
-        			</FormItem>
-        		</Col>
-        	</Row>
-        	<Row gutter={16}>
-        		<Col span={12}>
-        			<FormItem
-        				name={"homeId"}
-        				label={"Home"}
-        				rules={([
-        					{
-        						required: true,
-        						message: t("property.match.home.required")
-        					},
-        					{
-        						message: t("property.match.differentClubs"),
-        						validator: (_: any, value: number) => {
-        							if (state.selectedAwayId !== value) {
-        								return Promise.resolve();
-        							} else {
-        								return Promise.reject("Same value for home and club");
-        							}
-        						}
-        					}
-        				])}
-        			>
-        				<Select
-        					keyProperty="id"
-        					textProperty="name"
-        					placeholder={"Home"}
-        					values={clubs || []}
-        					onChange={(value: number) => setState({ ...state, selectedHomeId: value })}
-        				/>
-        			</FormItem>
-        		</Col>
-        		<Col span={12}>
-        			<FormItem
-        				name={"awayId"}
-        				label={"Away"}
-        				rules={([
-        					{
-        						required: true,
-        						message: t("property.match.away.required")
-        					},
-        					{
-        						message: t("property.match.differentClubs"),
-        						validator: (_: any, value: number) => {
-        							if (state.selectedHomeId !== value) {
-        								return Promise.resolve();
-        							} else {
-        								return Promise.reject("Same value for home and club");
-        							}
-        						}
-        					}
-        				])}
-        			>
-        				<Select
-        					keyProperty="id"
-        					textProperty="name"
-        					placeholder={"Away"}
-        					values={clubs || []}
-        					onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
-        				/>
-        			</FormItem>
-        		</Col>
-        	</Row>
-        </>;
+		<>
+			<Row gutter={16}>
+				<Col span={12}>
+					<FormItem
+						name={"date"}
+						label={"Date"}
+						getValueProps={(i: string) => ({ value: dayjs(i) || dayjs("") })}
+						rules={([{
+							required: true,
+							message: t("property.match.date.required")
+						}])}
+					>
+						<DatePicker
+							showTime={true}
+							locale={locale}
+							defaultPickerValue={dayjs()}
+							allowClear={false}
+						// format={["DD/MM/YYYY HH:mm", "YYYY-MM-DD\THH:mm:ss.SSS\Z"]}
+						/>
+					</FormItem>
+				</Col>
+				<Col span={12}>
+					<FormItem
+						name={"weekId"}
+						label={"Week"}
+						rules={([{
+							required: true,
+							message: t("property.match.week.required").toString()
+						}])}
+					>
+						<Select
+							keyProperty="id"
+							textProperty="name"
+							placeholder={"Week"}
+							values={weeks || []}
+							onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
+						/>
+					</FormItem>
+				</Col>
+			</Row>
+			<Row gutter={16}>
+				<Col span={12}>
+					<FormItem
+						name={"homeId"}
+						label={"Home"}
+						rules={([
+							{
+								required: true,
+								message: t("property.match.home.required")
+							},
+							{
+								message: t("property.match.differentClubs"),
+								validator: (_: any, value: number) => {
+									if (state.selectedAwayId !== value) {
+										return Promise.resolve();
+									} else {
+										return Promise.reject("Same value for home and club");
+									}
+								}
+							}
+						])}
+					>
+						<Select
+							keyProperty="id"
+							textProperty="name"
+							placeholder={"Home"}
+							values={clubs || []}
+							onChange={(value: number) => setState({ ...state, selectedHomeId: value })}
+						/>
+					</FormItem>
+				</Col>
+				<Col span={12}>
+					<FormItem
+						name={"awayId"}
+						label={"Away"}
+						rules={([
+							{
+								required: true,
+								message: t("property.match.away.required")
+							},
+							{
+								message: t("property.match.differentClubs"),
+								validator: (_: any, value: number) => {
+									if (state.selectedHomeId !== value) {
+										return Promise.resolve();
+									} else {
+										return Promise.reject("Same value for home and club");
+									}
+								}
+							}
+						])}
+					>
+						<Select
+							keyProperty="id"
+							textProperty="name"
+							placeholder={"Away"}
+							values={clubs || []}
+							onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
+						/>
+					</FormItem>
+				</Col>
+			</Row>
+		</>;
 	return (
 		<>
 			<Row align='middle'>
@@ -215,7 +211,7 @@ export const GameManagement = () => {
 					size="small"
 					bordered
 					rowClassName={"ant-table-row"}
-					pagination={{ position: ["bottomCenter"], showSizeChanger: false}}
+					pagination={{ position: ["bottomCenter"], showSizeChanger: false }}
 					columns={[
 						{
 							title: "ID",
@@ -228,12 +224,33 @@ export const GameManagement = () => {
 							}
 						},
 						{
+							title: "Week",
+							dataIndex: "weekId",
+							width: "5%",
+							render: (weekId: number, record: any) => {
+								return (
+									<p>{weekId}</p>
+								)
+							}
+						},
+						{
 							title: "Date",
 							dataIndex: "date",
-							width: "25%",
+							width: "20%",
 							render: (date: Date, record: any) => {
 								return (
-									<p>{date.toLocaleString()}</p>
+									<p>{dayjs(date).format('DD/MM/YYYY HH:mm')}</p>
+								);
+							}
+						},
+						{
+							title: "Status",
+							dataIndex: "status",
+							width: "5%",
+							render: (status: string, record: any) => {
+								const { color, icon } = statusToIconColor(status);
+								return (
+									<Tag color={color} icon={icon}>{status}</Tag>
 								);
 							}
 						},
@@ -345,7 +362,7 @@ export const GameManagement = () => {
 				onCancel={() => setState({ ...state, openImportModal: false })}
 				cancelText={t("cancelBtn")}
 			>
-                Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan? Het importeren kan enkele seconden tot minuten duren!
+				Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan? Het importeren kan enkele seconden tot minuten duren!
 			</Modal >
 		</>
 	);

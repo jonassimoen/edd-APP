@@ -11,7 +11,7 @@ import { Alert, Button, Checkbox, Form, Skeleton, Spin, Table, Tooltip } from "a
 import React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TableStyle } from "./GameStatsManagementStyle";
 import { MatchStats } from "@/components/Stats/MatchStats";
 
@@ -61,15 +61,17 @@ type GameStatsMangementProps = {
 };
 
 type GameStatsManagementState = {
-	allEvents: { [n: number]: Statistic },
-	homeScore: number,
-	awayScore: number,
-	validStats: boolean,
+	allEvents: { [n: number]: Statistic }
+	homeScore: number
+	awayScore: number
+	validStats: boolean
+	isProcessing: boolean
 }
 
 export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const { id } = useParams();
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	const [updateMatchStats] = useUpdateMatchStatisticsMutation();
 
@@ -78,6 +80,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		homeScore: 0,
 		awayScore: 0,
 		validStats: true,
+		isProcessing: false,
 	});
 
 	const { data: match, isFetching: matchLoading, isError: matchError, isSuccess: matchSuccess } = useGetMatchQuery(+(id || 0));
@@ -127,8 +130,9 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			}) || [];
 			const statsObj: Record<number, Statistic> = {};
 			allStats.forEach((p, idx) => statsObj[idx] = p);
-			setState({ ...state, allEvents: statsObj });
 			form.setFieldsValue(allStats);
+			setState((state) => ({ ...state, allEvents: statsObj }));
+			onFieldsChange(allStats);
 		}
 	}, [importedStats]);
 
@@ -194,18 +198,16 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	}
 
 	const onFormSubmit = (form: any) => {
+		setState((state) => ({ ...state, isProcessing: true}));
 		form.validateFields()
 			.then((formObj: any) => Object.values(formObj).map((value: any, idx: any) => ({ ...value, playerId: matchPlayers[idx].id })))
 			.then((playerStats: any) => updateMatchStats({ matchId: +(id || 0), stats: playerStats, score: { home: state.homeScore, away: state.awayScore } }))
-		// .then((formObj: any) => Object.values(formObj))
-		// .then((playerStats: any,))
-
-		// updateMatchStats({ stats: Object.values(obj), matchId: +(id || 0) })
+			.then(() => navigate(`/admin/games`));
 	}
 	useEffect(() => console.log("state", state), [state]);
 
 	return (
-		<Spin spinning={matchLoading || playersLoading || matchStatisticsImportLoading} delay={0} style={{ padding: "2rem 0" }}>
+		<Spin spinning={matchLoading || playersLoading || matchStatisticsImportLoading || state.isProcessing} delay={0} style={{ padding: "2rem 0" }}>
 			<MatchStats matchId={+id} homeScore={state.homeScore} awayScore={state.awayScore} />
 			{
 				matchStatisticsImportSuccess ?

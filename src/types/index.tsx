@@ -175,7 +175,7 @@ type Match = {
     awayId?: number
     home?: Club
     away?: Club
-
+    status?: string
 }
 
 type MatchEvent = {
