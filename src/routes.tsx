@@ -11,7 +11,6 @@ import { Admin } from "./pages/Admin";
 import { PlayerManagement } from "./pages/PlayerManagement/PlayerManagement";
 import { ClubManagement } from "./pages/ClubManagement/ClubManagement";
 import { GameManagement } from "./pages/GameManagement/GameManagement";
-import { GameCenterManagement } from "./pages/GameCenterManagement/GameCenterManagement";
 import { GameStatsManagement } from "./pages/GameStatsManagement/GameStatsManagement";
 import { TeamPage } from "./pages/Team/Team";
 import { WeekManagement } from "./pages/WeekManagement/WeekManagement";
@@ -24,15 +23,15 @@ import { TransfersPage } from "./pages/Transfers/Transfers";
 import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
 
-const Layout = ({children}: any) => {
+const Layout = ({ children }: any) => {
 	return (
 		<>
-		  <Header />
-		  {children}
-		  <Footer />
+			<Header />
+			{children}
+			<Footer />
 		</>
 	);
-  }
+};
 
 export const router = createBrowserRouter([
 	{
@@ -41,7 +40,7 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <Navigate to={{pathname: "/home"}} />,
+				element: <Navigate to={{ pathname: "/home" }} />,
 			},
 			{
 				path: "/home",
