@@ -3,104 +3,112 @@ import { theme } from "@/styles/theme";
 import { Modal } from "antd";
 
 export const PlayerModalStyle = styled(Modal)
-`
+	`
+
 	.ant-modal-content {
 		border-radius: 0px;
-		// max-width: 375px;
-		background-color: #FFF;
-		color: #000;
-        padding: 0;
-        padding-bottom: 25px;
+		background-color: #fff;
+		padding: 0;
 
-		.ant-modal-close-x {
+		.ant-modal-close {
+			top: 0;
+			right: 0;
 			width: 30px;
 			height: 30px;
-			font-size: 20px;
-			color: 84FF00;
-			line-height: 30px;
-		}
-	
-		.ant-modal-header {
-			background-color: #FFF;
-			border: 0px;
-			border-radius: 0px;
-			padding: 15px 5px 5px 25px;
 
+			> .ant-modal-close-x {
+				// width: 30px;
+				// height: 30px;
+				font-size: 20px;
+				color: ${theme.primaryColor};
+				line-height: 30px;
+			}
+
+		}
+
+		.ant-modal-header {
 			.ant-modal-title {
-                text-transform: uppercase;
-				color: ${theme.primaryContrast};
-				p {
-					margin: 0px;
-				}
+				background-color: ${theme.primaryContrast};
+				padding: 5px 30px;
+				text-transform: uppercase;
+				color: #fff;
 			}
 		}
 
 		.ant-modal-body {
-			padding: 0;
-
-			p {
-				margin-bottom: 0;
-			}
+			padding: 24px;
 
 			.surname, .forename {
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				// max-width: 150px;
+				font-size: 18px;
 			}
 
-			.club a {
-				color: #000;
-			}
-
-			.points {
-				background-color: ${theme.primaryColor};
-				position: absolute;
-				right: 0;
-				top: 0px;
+			.action {
+				margin-top: 15px;
 				text-align: center;
-				padding: 10px;
+				cursor: pointer;
 
-				.value {
-                    font-size: 150%;
-                    font-weight: bold;
-				}
-
-				.label {
+				.anticon {
+					font-size: 30px;
+					margin: 10px;
 					display: block;
 				}
 			}
 
-			.player-info {
-				background-color: 84FF00;
-				margin: 0px 30px;  
-			}
-			.player-actions {
-				margin-top: 15px;
+			.player-header {
+				margin: 0px;
+				padding: 0px 25px;
 				display: flex;
-				align-content: center;
-				justify-content: flex-start;
-
-				.action {
-					margin-top: 15px;
-					text-align: center;
-					cursor: pointer;
-	
-					.anticon {
-						font-size: 30px;
-						margin: 5px;
-						display: block;
-					}
-				}
+				align-items: center;
+				font-size: 16px;
+				margin-bottom: 10px;
 			}
-		}
 
-		.ant-modal-footer {
-			display: none;
+			.player-body {
+				margin: 0;
+			}
+
+			.points {
+				background-color: ${theme.primaryColor};
+				color: ${theme.primaryContrast};
+				display: flex;
+				flex-direction: column;
+				text-align: center;
+				padding: 10px;
+				font-weight: bold;
+
+				.value {
+					font-size: 200%;
+				}
+
+				// .label {
+				// 	display: block;
+				// }
+			}
 		}
 	}
+`;
 
-	.player-avatar {
-		width: 65px;
+export const PointsOverviewTable = styled.table `
+	width: 100%;
+	border-collapse: collapse;
+
+	thead {
+		background: ${theme.primaryColor};
+		color: #000;
+		text-align: center;
+	}
+
+	tr {
+		th, td {
+			padding: 5px;
+			text-align: center;
+
+			&:nth-child(1) {
+				text-align: left;
+			}
+		}
 	}
 `;

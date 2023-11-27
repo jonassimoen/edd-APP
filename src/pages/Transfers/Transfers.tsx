@@ -150,7 +150,6 @@ const _Transfers = (props: AbstractTeamType) => {
     };
 
     const onTransferConfirmAccept = () => {
-        console.log("TRANSFERS ACCEPTED");
         props.onTransfersSubmit(+(id || 0));
         setState({ ...state, transferConfirmModalVisible: false });
     }

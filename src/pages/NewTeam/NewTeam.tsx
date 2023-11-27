@@ -79,6 +79,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 		props.onTeamSave()
 			.then((result) => setState({ ...state, hasPlayers: (result.data.players.length !== 0), redirectToPayments: true }))
+			.then(() => getTeams())
 			.catch(() => { });
 	};
 

@@ -55,6 +55,9 @@ type Statistic = {
     id?: number
     playerId: number
     matchId: number
+    points?: number
+    
+    starting?: boolean
     minutesPlayed?: number
     shots?: number
     shotsOnTarget?: number
@@ -162,6 +165,7 @@ type Club = {
     short: string
     styling: any
     externalId: number
+    players?: Player[]
 }
 
 type Match = {

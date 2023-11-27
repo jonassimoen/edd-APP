@@ -5,6 +5,12 @@ export default {
 		? JSON.parse(import.meta.env.VITE_COMPETITION_CONFIG) : {},
 	STATISTICS: [
 		{
+			full: "STARTING PLAYER",
+			slug: "starting",
+			short: "11",
+			type: "boolean"
+		},
+		{
 			full: "MINUTES PLAYED",
 			slug: "minutesPlayed",
 			short: "P",
@@ -47,9 +53,15 @@ export default {
 			type: "number",
 		},
 		{
-			full: "PASS ACCURACY",
-			slug: "passAccuracy",
-			short: "P%",
+			full: "PASSES ACCURATE",
+			slug: "accuratePasses",
+			short: "PA",
+			type: "number",
+		},
+		{
+			full: "PASSES TOTAL",
+			slug: "totalPasses",
+			short: "PT",
 			type: "number",
 		},
 		{

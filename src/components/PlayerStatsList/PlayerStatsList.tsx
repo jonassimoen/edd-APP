@@ -7,9 +7,6 @@ import { Select } from "../UI/Select/Select";
 import { useMemo, useState } from "react";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { useGetWeeksQuery } from "@/services/weeksApi";
-import { useGetPlayersQuery } from "@/services/playersApi";
-import React from "react";
-import { Table } from "antd";
 import { useGetPlayerStatsQuery } from "@/services/statisticsApi";
 
 type PlayerStatsListProps = {
@@ -77,7 +74,8 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		{ name: `${t("general.budgetFilterPrefix")} 5.5 ${t("general.budgetFilterSuffix")}`, value: 5.5 },
 		{ name: `${t("general.budgetFilterPrefix")} 5 ${t("general.budgetFilterSuffix")}`, value: 5 },
 		{ name: `${t("general.budgetFilterPrefix")} 4.5 ${t("general.budgetFilterSuffix")}`, value: 4.5 },
-		{ name: `${t("general.budgetFilterPrefix")} 4 ${t("general.budgetFilterSuffix")}`, value: 4 }
+		{ name: `${t("general.budgetFilterPrefix")} 4 ${t("general.budgetFilterSuffix")}`, value: 4 },
+		{ name: `${t("general.budgetFilterPrefix")} 1 ${t("general.budgetFilterSuffix")}`, value: 1 }
 	];
 
 	const positionsList = [
@@ -139,7 +137,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		{
 			key: "total",
 			title: t("stats.allPlayersTable.pointsColumn"),
-			sorter: (a: any, b: any) => a.points - b.points,
+			sorter: (a: any, b: any) => b.total - a.total,
 			dataIndex: "total",
 			render: (text: string, record: any) => {
 				return (<span>{record.total}</span>);
@@ -192,8 +190,18 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		const filters: any = Object.assign({}, state.filters, {
 			[name]: value,
 		});
+		console.log("filters",filters)
 		setState({ ...state, filters });
 	};
+
+	const playerFilter = (player: any) => {
+		let show = true;
+		show &&= !(state.filters.playerName.length && player.generalInfo.name.toLowerCase().indexOf(state.filters.playerName.toLowerCase()) === -1);
+		show &&= !(state.filters.playerValue !== -1 && state.filters.playerValue < player.playerValue);
+		show &&= !(state.filters.clubId !== -1 && state.filters.clubId !== player.clubId);
+		show &&= !(state.filters.positionId !== -1 && state.filters.positionId !== player.positionId);
+		return show;
+	}
 
 	const handleTableChange = (pagination: any, filters: any, sorter: any) => {
 		const newPagination = { ...state.pagination, page: pagination.current };
@@ -208,8 +216,10 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		showSizeChanger: false
 	};
 
+
 	return (
 		<ContainerStyle>
+			{stats?.filter(playerStat => playerFilter(playerStat)).length}
 			{
 				<Input
 					prefix={<SearchOutlined />}
@@ -251,10 +261,10 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				/>
 				<Select
 					$block
-					keyProperty="id"
+					keyProperty="value"
 					textProperty="name"
 					values={budgetsList}
-					onSelect={(value: any) => onFilterChange("playerValue", value)}
+					onSelect={(value: any) => {onFilterChange("playerValue", value); console.log("player value changed to", value)}}
 					placeholder={budgetsList[0].name}
 					style={{ marginRight: 0 }}
 				/>
@@ -271,7 +281,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			</SelectGroupStyle>
 			<TableStyle
 				columns={columns}
-				dataSource={stats}
+				dataSource={stats?.filter(playerStat => playerFilter(playerStat))}
 				showHeader={props.showHeader}
 				locale={{ emptyText: t("general.playersListEmpty") }}
 				loading={statsLoading}

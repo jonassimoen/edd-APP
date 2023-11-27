@@ -27,7 +27,7 @@ export declare type TeamProps = {
     assetsCdn: string;
     actionLessPlayerIds?: any[];
     showPlayerValue?: boolean;
-    showPlayerStatsPoints?: boolean;
+    replacePlayerPointsWithStatsPoints?: boolean;
     clubs: Club[];
     showPlayerValueInsteadOfPoints?: boolean;
     captainId?: number;
@@ -59,7 +59,7 @@ export const Team = (props: TeamProps) => {
 		assetsCdn, 
 		actionLessPlayerIds, 
 		showPlayerValue, 
-		showPlayerStatsPoints, 
+		replacePlayerPointsWithStatsPoints, 
 		showPlayerValueInsteadOfPoints, 
 		clubs, 
 		onCaptainSelect, 
@@ -93,7 +93,7 @@ export const Team = (props: TeamProps) => {
 										captainId={captainId}
 										viceCaptainId={viceCaptainId}
 										player={player}
-										// showPlayerStatsPoints={showPlayerStatsPoints}
+										replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
 										showPlayerValue={showPlayerValue}
 										showCaptainBadge={showCaptainBadge}
 										// type={playerType}

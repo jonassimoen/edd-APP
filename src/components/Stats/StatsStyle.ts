@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 export const StatsStyle = styled.div `
 	border-radius: 0;
-	padding-top: 10px;
-	padding-bottom: 10p;
+	margin: 10px auto;
 	background-color: ${theme.primaryContrast};
+	// background-color: white;
+	box-shadow: rgba(0,0,0,0.1) 0px 12px 27px 4px;
 
 	.stat-row {
 		&.no-border {
@@ -47,6 +48,40 @@ export const StatsStyle = styled.div `
             text-overflow: ellipsis;
             display: inline-block;
             vertical-align: middle;
+		}
+	}
+
+	.stat {
+		padding: 15px 10px;
+		border-bottom: 1px solid rgba(238,238,238,0.3);
+		color: white;
+		// color: ${theme.primaryContrast};
+
+		.label {
+			text-align: left;
+			font-size: 1.1em;
+		}
+
+		.points {
+			color: ${props => props.theme.primaryColor};
+			font-size: 1.1em;
+			text-align: right;
+		}
+
+		.has-transfers {
+			span {
+				border-bottom: 2px solid ${props => props.theme.primaryColor};
+				cursor: pointer;
+				padding: 0px 5px 0px 5px;
+			}
+		}
+
+		.green {
+			color: green;
+		}
+
+		.red {
+			color: red;
 		}
 	}
 `;

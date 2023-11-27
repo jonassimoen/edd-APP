@@ -21,6 +21,8 @@ import { Deadlines } from "./pages/Deadlines/Deadlines";
 import { Stats } from "./pages/Stats/Stats";
 import { Footer } from "./components/Footer/Footer";
 import { TransfersPage } from "./pages/Transfers/Transfers";
+import { PointsPage } from "./pages/Points/Points";
+import { MatchContainer } from "./pages/Match/Match";
 
 const Layout = ({children}: any) => {
 	return (
@@ -51,7 +53,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/points/:id", //todo
-				element: <ProtectedRoute access={true} redirectPath="/home"><Home /></ProtectedRoute>
+				element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
 			},
 			{
 				path: "/public/:id", //todo
@@ -83,7 +85,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/match/:id", //todo
-				element: <ProtectedRoute access={true} redirectPath="/home"><Home /></ProtectedRoute>
+				element: <ProtectedRoute access={true} redirectPath="/home"><MatchContainer /></ProtectedRoute>
 			},
 			{
 				path: "/rankings", //todo

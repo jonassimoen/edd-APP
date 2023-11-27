@@ -9,6 +9,7 @@ import { t } from "i18next";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { pick } from "lodash";
+import React from "react";
 
 declare type AbstractTeamProps = {
 	matches?: any;
@@ -56,9 +57,10 @@ declare type AbstractTeamState = {
 	visibleWeekId: number | null
 	initializedExternally: boolean
 	boosters: Boosters
-	deadlineWeekTransfers: Transfer[],
-	draftTransfers: Transfer[],
-	pastTransfers: Transfer[],
+	deadlineWeekTransfers: Transfer[]
+	draftTransfers: Transfer[]
+	pastTransfers: Transfer[]
+	teamPointsInfo: any
 }
 
 function playersToValidatorFormat(players: any) {
@@ -88,6 +90,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 	const [state, setState] = useState<AbstractTeamState>({
 		validator: FootballPicker(FootballMaxPositionsPicks, FootballPositionIds),
+		initializedExternally: false,
 
 		starting: getInitializedList(application.competition.lineupSize, true),
 		bench: getInitializedList(application.competition.benchSize),
@@ -103,6 +106,15 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		swappedFrom: null,
 		visibleWeekId: deadlineInfoSuccess ? (options && options.mode === 'points' ? deadlineInfo.deadlineInfo.displayWeek : deadlineInfo.deadlineInfo.deadlineWeek) : 0,
 		boosters: {},
+		teamPointsInfo: {
+			generalPoints: null,
+			generalRank: null,
+			visibleWeekPoints: null,
+			visibleWeekRank: null,
+			weekPointsConfirmed: false,
+			provisionalPoints: null,
+			weekWinnerPoints: null
+		},
 
 		deadlineWeekTransfers: [],
 		draftTransfers: [],
@@ -114,8 +126,11 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 		teamUser: undefined,
 		activePositionFilter: -1,
-		initializedExternally: false,
 	});
+
+	useEffect(() => {
+		setState((state: any) => ({ ...state, visibleWeekId: (options && options.mode === 'points' ? deadlineInfo?.deadlineInfo.displayWeek : deadlineInfo?.deadlineInfo.deadlineWeek) }));
+	}, [deadlineInfo])
 
 	const setStarting = (starting: any[]) => {
 		setState({ ...state, starting });
@@ -160,6 +175,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		isTeamOwner?: boolean,
 		teamUser?: any
 	) => {
+		console.log("INIT TEAM STATE")
 		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
@@ -178,12 +194,13 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			initialBench: bench,
 			initialStarting: starting,
 			initialBudget: budget,
-			visibleWeekId: visibleWeekId | state.visibleWeekId,
 			initializedExternally: true,
+			visibleWeekId: visibleWeekId | state.visibleWeekId,
 			boosters: boosters || {},
 			deadlineWeekTransfers: deadlineWeekTransfers || [],
 			draftTransfers: [],
 			pastTransfers: pastTransfers || [],
+			teamPointsInfo: teamPointsInfo || state.teamPointsInfo,
 		});
 	};
 
@@ -635,11 +652,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		});
 	};
 	const onTransfersSubmit = (teamId: number) => {
-        console.log("TRANSFERS SUBMITTED");
 		const transfers = state.draftTransfers
 			.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
-		
-		submitTransfers({teamId, transfers}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t(`team.transfers.failed`) }));
+
+		submitTransfers({ teamId, transfers }).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t(`team.transfers.failed`) }));
 	};
 
 	const onTransfersReset = (teamId: number) => {
@@ -658,57 +674,60 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 
 	return (
-		<Component
-			setStarting={setStarting}
-			setBench={setBench}
-			setBudget={setBudget}
-			setTeamName={setTeamName}
-			setCaptainId={setCaptainId}
-			setActivePositionFilter={setActivePositionFilter}
-			isPickAble={isPickable}
-			isSwapAble={isSwapable}
-			onTeamSave={onTeamSave}
-			onTeamReset={onTeamReset}
-			onTeamNameChange={onTeamNameChange}
-			onCaptainSelect={onCaptainSelect}
-			onViceCaptainSelect={onViceCaptainSelect}
-			removeBenchPlayer={removeBenchPlayer}
-			removeStartingPlayer={removeStartingPlayer}
-			removePlayer={removePlayer}
-			pickPlayer={pickPlayer}
-			activePositionFilter={state.activePositionFilter}
-			starting={state.starting}
-			bench={state.bench}
-			captainId={state.captainId}
-			viceCaptainId={state.viceCaptainId}
-			teamName={state.teamName}
-			budget={state.budget}
-			swapPlayerId={state.swapPlayerId}
-			swappedFrom={state.swappedFrom}
-			teamNameChanged={state.teamNameChanged}
-			initTeamState={initTeamState}
-			resetTeamName={resetTeamName}
-			onTeamNameUpdate={updateTeamName}
-			onTeamEdit={onTeamEdit}
-			onTeamSelectionsUpdate={onTeamSelectionsUpdate}
-			onPlayerSwap={onPlayerSwap}
-			loadAllMatches={loadAllMatches}
-			onTransferPlayerOut={onTransferPlayerOut}
-			onDraftTransfersClear={onDraftTransfersClear}
-			onTransferPlayerIn={onTransferPlayerIn}
-			onTransfersSubmit={onTransfersSubmit}
-			onTransfersReset={onTransfersReset}
-			reloadUserTeams={reloadUserTeams}
-			teamUser={state.teamUser}
-			visibleWeekId={state.visibleWeekId}
-			initializedExternally={state.initializedExternally}
-			boosters={state.boosters}
-			draftTransfers={state.draftTransfers}
-			deadlineWeekTransfers={state.deadlineWeekTransfers}
-			pastTransfers={state.pastTransfers}
-			{...props}
+		<React.Fragment>
+			{deadlineInfoSuccess ?
+				<Component
+					setStarting={setStarting}
+					setBench={setBench}
+					setBudget={setBudget}
+					setTeamName={setTeamName}
+					setCaptainId={setCaptainId}
+					setActivePositionFilter={setActivePositionFilter}
+					isPickAble={isPickable}
+					isSwapAble={isSwapable}
+					onTeamSave={onTeamSave}
+					onTeamReset={onTeamReset}
+					onTeamNameChange={onTeamNameChange}
+					onCaptainSelect={onCaptainSelect}
+					onViceCaptainSelect={onViceCaptainSelect}
+					removeBenchPlayer={removeBenchPlayer}
+					removeStartingPlayer={removeStartingPlayer}
+					removePlayer={removePlayer}
+					pickPlayer={pickPlayer}
+					activePositionFilter={state.activePositionFilter}
+					starting={state.starting}
+					bench={state.bench}
+					captainId={state.captainId}
+					viceCaptainId={state.viceCaptainId}
+					teamName={state.teamName}
+					budget={state.budget}
+					swapPlayerId={state.swapPlayerId}
+					swappedFrom={state.swappedFrom}
+					teamNameChanged={state.teamNameChanged}
+					initTeamState={initTeamState}
+					resetTeamName={resetTeamName}
+					onTeamNameUpdate={updateTeamName}
+					onTeamEdit={onTeamEdit}
+					onTeamSelectionsUpdate={onTeamSelectionsUpdate}
+					onPlayerSwap={onPlayerSwap}
+					loadAllMatches={loadAllMatches}
+					onTransferPlayerOut={onTransferPlayerOut}
+					onDraftTransfersClear={onDraftTransfersClear}
+					onTransferPlayerIn={onTransferPlayerIn}
+					onTransfersSubmit={onTransfersSubmit}
+					onTransfersReset={onTransfersReset}
+					reloadUserTeams={reloadUserTeams}
+					teamUser={state.teamUser}
+					initializedExternally={state.initializedExternally}
+					visibleWeekId={state.visibleWeekId}
+					boosters={state.boosters}
+					draftTransfers={state.draftTransfers}
+					deadlineWeekTransfers={state.deadlineWeekTransfers}
+					pastTransfers={state.pastTransfers}
+					teamPointsInfo={state.teamPointsInfo}
+					{...props}
 
-		/>
-
+				/> : null}
+		</React.Fragment>
 	);
 };

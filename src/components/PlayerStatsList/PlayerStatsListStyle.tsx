@@ -69,6 +69,10 @@ export const TableStyle = styled(Table)`
 				text-align: left;
 			}
 
+			&.ant-table-column-sort {
+				background: ${theme.primaryContrast};
+			}
+
 			&.ant-table-column-has-sorters:hover {
 				background: ${theme.primaryColor} !important;
 				color: ${theme.primaryContrast} !important;
@@ -80,6 +84,10 @@ export const TableStyle = styled(Table)`
 
 			.ant-table-column-sorter .ant-table-column-sorter-inner {
 				color: #bfbfbf;
+			}
+
+			.ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active {
+				color: ${theme.primaryColor};
 			}
 
 			&::before {

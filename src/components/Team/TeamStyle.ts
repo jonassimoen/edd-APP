@@ -13,7 +13,7 @@ export const TeamStyle = styled.div`
     flex: 1;
     max-width: 975px;
     height: ${(props: TeamProps) => (props.heightRatio / props.widthRatio) * 1.5 * 320}px; /*  Make mobile size higher */
-    background: url('${(props: any) => props.bg}') no-repeat center center/120% 100%;
+    background: url('${(props: any) => props.bg}') no-repeat center center / 120% 100%;
     border-radius: 0;
     margin: 75px auto;
 
@@ -53,7 +53,7 @@ export const TeamStyle = styled.div`
 
     @media ${mediaQueries.tablet} {
         max-width: 960px;
-        height: ${(props: TeamProps) => (props.heightRatio / props.widthRatio) * 730}px;
+        height: ${(props: TeamProps) => (props.heightRatio / props.widthRatio) * 630}px;
         background-size: 100% 100%;
     }
 ` as any;

@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import locale from "antd/es/date-picker/locale/nl_BE";
-import { useCreateWeekMutation, useGetWeeksQuery, useUpdateWeekMutation } from "@/services/weeksApi";
+import { useCreateWeekMutation, useGetWeeksQuery, useUpdateWeekMutation, useValidateWeekMutation } from "@/services/weeksApi";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { statusToIconColor } from "@/lib/helpers";
 
@@ -30,6 +30,7 @@ export const WeekManagement = () => {
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
 	const [updateWeek] = useUpdateWeekMutation();
 	const [createWeek] = useCreateWeekMutation();
+	const [validateWeek] = useValidateWeekMutation();
 
 	const numberMatchesByStateByWeekId = useMemo(() => matches?.reduce((group: { [key: number]: { [key: string]: number } }, match: Match) => {
 		if (!group[match.weekId]) {
@@ -99,12 +100,12 @@ export const WeekManagement = () => {
 							}
 						},
 						{
-							title: "Date",
+							title: "Deadline date",
 							dataIndex: "deadlineDate",
 							width: "65%",
 							render: (date: Date, record: any) => {
 								return (
-									<p>{dayjs(date).format('DD/MM/YYYY HH:MM')}</p>
+									<p>{dayjs(date).format('DD/MM/YYYY HH:mm')}</p>
 								);
 							}
 						},
@@ -122,7 +123,7 @@ export const WeekManagement = () => {
 												const { color, icon } = statusToIconColor(status);
 												return (
 
-													<Badge count={nr}>
+													<Badge count={nr} key={`match_${id}_${status}`}>
 														<Tag color={color} icon={icon}>{status}</Tag>
 													</Badge>
 												)
@@ -138,18 +139,21 @@ export const WeekManagement = () => {
 							width: "10%",
 							align: "left",
 							render: (_: any, record: any) => {
-								const isReadyToProcess = matches?.filter((m: Match) => m.weekId === record.id).length === matches?.filter((m: Match) => m.status === "STATS_UPDATED").length;
+								// console.log(`Week ${record.id}: ${matches?.filter((m: Match) => m.weekId === record.id).length} matches, ${matches?.filter((m: Match) => m.status === "STATS_UPDATED").length} updated stats`)
+								const isReadyToProcess = matches?.filter((m: Match) => m.weekId === record.id).reduce((statsUpdated: boolean, currentMatch: Match) => statsUpdated && currentMatch.status === "STATS_UPDATED", true);
 								return <>
-									<Button
-										icon={< EditOutlined />}
-										onClick={() => setState({ ...state, openEditModal: true, editObject: record })}
-										shape="circle"
-										type="primary"
-									/>
-									{isReadyToProcess &&
+									{!record.validated &&
+										<Button
+											icon={< EditOutlined />}
+											onClick={() => setState({ ...state, openEditModal: true, editObject: record })}
+											shape="circle"
+											type="primary"
+										/>
+									}
+									{isReadyToProcess && !record.validated &&
 										<Button
 											icon={< CheckOutlined />}
-											onClick={() => console.log("Process whole week")}
+											onClick={() => validateWeek({ id: record.id })}
 											shape="circle"
 											type="primary"
 										/>

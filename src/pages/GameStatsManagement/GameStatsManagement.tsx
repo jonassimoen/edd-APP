@@ -3,17 +3,18 @@ import { Form as CustomForm } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
 import config from "@/config";
-import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
+import { getPlayerPositionHexColor, openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { useGetMatchQuery, useGetMatchStatisticsQuery, useLazyImportMatchStatisticsQuery, useUpdateMatchStatisticsMutation } from "@/services/matchesApi";
 import { useGetPlayersQuery } from "@/services/playersApi";
 import { CheckOutlined, DownloadOutlined } from "@ant-design/icons";
-import { Alert, Button, Checkbox, Form, Skeleton, Spin, Table, Tooltip } from "antd";
+import { Alert, Button, Checkbox, Flex, Form, Skeleton, Space, Spin, Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableStyle } from "./GameStatsManagementStyle";
 import { MatchStats } from "@/components/Stats/MatchStats";
+import { theme } from "@/styles/theme";
 
 const GameStatsHeaderTable = (props: { name?: string, score: number, type: string }) => {
 	return (
@@ -72,6 +73,14 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const { id } = useParams();
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	
+    const PositionLabels: any = {
+        0: t('player.coachShort'),
+        1: t('player.goalkeeperShort'),
+        2: t('player.defenderShort'),
+        3: t('player.midfielderShort'),
+        4: t('player.attackerShort')
+    };
 
 	const [updateMatchStats] = useUpdateMatchStatisticsMutation();
 
@@ -88,10 +97,23 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const { data: stats } = useGetMatchStatisticsQuery(+(id || 0));
 	const [importMatchStatistics, { data: importedStats, isLoading: matchStatisticsImportLoading, isSuccess: matchStatisticsImportSuccess }] = useLazyImportMatchStatisticsQuery();
 
-	const matchPlayers = useMemo(() => players?.filter((p: Player) => (p.clubId === match?.home?.id)).concat(players?.filter((p: Player) => (p.clubId === match?.away?.id))), [match, players]);
+	const matchPlayers = useMemo(
+		() => players?.filter((p: Player) => (p.clubId === match?.home?.id)).sort((a: Player, b:Player) => a.positionId - b.positionId)
+			.concat(players?.filter((p: Player) => (p.clubId === match?.away?.id)).sort((a: Player, b:Player) => a.positionId - b.positionId))
+		, [match, players]);
 	const splitHomeAwayPlayers = useMemo(() => matchPlayers?.findIndex((p: Player) => p.clubId === match?.away?.id), [matchPlayers, match]);
 	const sortedEvents = useMemo(() => Object.values(state.allEvents)?.sort(
-		(s1: Statistic, s2: Statistic) => matchPlayers.find((v: Player) => v.id === s1.playerId)?.clubId - matchPlayers.find((v: Player) => v.id === s2.playerId)?.clubId
+		(s1: Statistic, s2: Statistic) => {
+			let p1 = matchPlayers.find((v: Player) => v.id === s1.playerId);
+			let p2 = matchPlayers.find((v: Player) => v.id === s2.playerId);
+			if(p1 && p2) {
+				if(p1.clubId == p2.clubId) {
+					return p1.positionId - p2.positionId;
+				} else {
+					match.homeId < match.awayId ? p1.clubId - p2.clubId : p2.clubId - p1.clubId;
+				}
+			}
+		}
 	), [state.allEvents]);
 
 	const [form] = Form.useForm();
@@ -153,14 +175,15 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			width: '6rem',
 			render: (txt: number, rec: any, index: number) => {
 				const player = matchPlayers.find((v: Player) => v.id === txt);
+				const playerPositionColor = getPlayerPositionHexColor(player, theme);
 				const clubBadge = `${config.API_URL}/static/badges/${player?.clubId === match.home.id ? match.home.externalId : match.away.externalId}.png`;
 				++index;
 				return (
-					<ClubDetails>
-						{txt}
-						<ClubBadgeBg src={clubBadge} />
-						<ClubName className="team-name" fullName={player?.surname} shortName={player?.short}></ClubName>
-					</ClubDetails>
+					<Flex justify={"space-between"}>
+						<ClubBadgeBg src={clubBadge}/>
+						<ClubName className="team-name" fullName={player?.short} shortName={player?.short}></ClubName>
+						<Tag color={playerPositionColor}>{PositionLabels[player.positionId]}</Tag>
+					</Flex>
 				)
 			}
 		},
@@ -198,13 +221,12 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	}
 
 	const onFormSubmit = (form: any) => {
-		setState((state) => ({ ...state, isProcessing: true}));
+		setState((state) => ({ ...state, isProcessing: true }));
 		form.validateFields()
 			.then((formObj: any) => Object.values(formObj).map((value: any, idx: any) => ({ ...value, playerId: matchPlayers[idx].id })))
 			.then((playerStats: any) => updateMatchStats({ matchId: +(id || 0), stats: playerStats, score: { home: state.homeScore, away: state.awayScore } }))
 			.then(() => navigate(`/admin/games`));
 	}
-	useEffect(() => console.log("state", state), [state]);
 
 	return (
 		<Spin spinning={matchLoading || playersLoading || matchStatisticsImportLoading || state.isProcessing} delay={0} style={{ padding: "2rem 0" }}>

@@ -47,4 +47,5 @@ declare type AbstractTeamType = {
     deadlineWeekTransfers: Transfer[] | null,
 	draftTransfers: Transfer[] | null,
 	pastTransfers: Transfer[] | null,
+    teamPointsInfo: any,
 }

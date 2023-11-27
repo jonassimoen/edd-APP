@@ -25,7 +25,7 @@ export const weeksApi = createApi({
 		}),
 
 		createWeek: builder.mutation<Week, Partial<Week>>({
-			query: ({...body}) => ({
+			query: ({ ...body }) => ({
 				url: "",
 				method: "POST",
 				body
@@ -33,7 +33,15 @@ export const weeksApi = createApi({
 			invalidatesTags: ["Week"]
 		}),
 
-		getDeadlineInfo: builder.query<{deadlineInfo: DeadlineInfo, weeks: Week[]}, void>({
+		validateWeek: builder.mutation<Week, Partial<Week> & Pick<Week, "id">>({
+			query: ({ id, ...body }) => ({
+				url: `${id}/validate`,
+				method: "POST",
+			}),
+			invalidatesTags: (res, err, arg) => [{ type: "Week", id: arg.id }],
+		}),
+
+		getDeadlineInfo: builder.query<{ deadlineInfo: DeadlineInfo, weeks: Week[] }, void>({
 			query: () => "/deadline-info",
 			providesTags: (res, err, arg) =>
 				res
@@ -44,4 +52,4 @@ export const weeksApi = createApi({
 	})
 });
 
-export const {useGetWeeksQuery, useUpdateWeekMutation, useCreateWeekMutation, useGetDeadlineInfoQuery} = weeksApi;
+export const { useGetWeeksQuery, useUpdateWeekMutation, useCreateWeekMutation, useGetDeadlineInfoQuery, useValidateWeekMutation } = weeksApi;

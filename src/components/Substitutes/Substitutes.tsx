@@ -5,56 +5,60 @@ import { Player } from "../Player/Player";
 import { useTranslation } from "react-i18next";
 
 type SubstitutesProps = {
-    title: string
-    bgColor?: string
-    selection: any[]
-    assetsCdn: string
-    playerType: PlayerType
-    onPlaceholderClick?: any
-    actionsLessPlayerIds?: any[]
+	title: string
+	bgImage?: string
+	selection: any[]
+	assetsCdn: string
+	playerType: PlayerType
+	onPlaceholderClick?: any
+	actionsLessPlayerIds?: any[]
+	clubs: Club[]
 
-    playerBadgeColor: string
-    playerBadgeBgColor: string
-    playerPointsColor: string
-    playerPointsBgColor: string
+	playerBadgeColor: string
+	playerBadgeBgColor: string
+	playerPointsColor: string
+	playerPointsBgColor: string
 
-    modalEnabled?: boolean
-    showPlayerValue?: boolean
-    showPlayerValueInsteadOfPoints?: boolean
-    showPositionNumber?: boolean
+	modalEnabled?: boolean
+	showPlayerValue?: boolean
+	showPlayerValueInsteadOfPoints?: boolean
+	showPositionNumber?: boolean
 
-    captainId?: number
-    viceCaptainId?: number
-    showCaptainBadge?: boolean
+	captainId?: number
+	viceCaptainId?: number
+	showCaptainBadge?: boolean
 
-    onRemove?: any
-    onSwap?: any
-    isSwapAble?: any
-    swapPlayerId?: number | null
-    swappedFrom?: string | null
+	onRemove?: any
+	onSwap?: any
+	isSwapAble?: any
+	swapPlayerId?: number | null
+	swappedFrom?: string | null
 }
 
 export const Substitutes = (props: SubstitutesProps) => {
-	const {t} = useTranslation();
+	const { t } = useTranslation();
 
+	console.log("bench",props.selection)
 	return (
-		<SubstitutesStyle bgColor={props.bgColor}>
+		<SubstitutesStyle bgImage={props.bgImage}>
 			<div className="substitutes">
 				{props.selection.map((player: any, idx: number) => {
 
 					let positionLabel = "";
-					if(props.showPositionNumber)  {
+					if (props.showPositionNumber) {
 						positionLabel = player && player.positionId == 1 ? t("player.goalkeeperShort") : idx.toString();
 					}
+					const club = props.clubs.find((item: Club, index: number) => player && item.id === player.clubId);
 
 					return <React.Fragment key={`substitute-${idx}`}>
 						<Player
-						 	className={"substitutes-player"}
+							className={"substitutes-player"}
 							pointsColor={props.playerPointsColor}
 							pointsBgColor={props.playerPointsBgColor}
 							badgeColor={props.playerBadgeColor}
 							badgeBgColor={player.playerBadgeBgColor}
 							player={player}
+							club={club}
 							// type={props.playerType}
 							modalEnabled={props.modalEnabled}
 							// showPlayerValue={props.showPlayerValue}
@@ -75,6 +79,9 @@ export const Substitutes = (props: SubstitutesProps) => {
 					</React.Fragment>;
 				})}
 			</div>
+			{props.showPositionNumber &&
+				<p className="title">{props.title}</p>
+			}
 		</SubstitutesStyle>
 	);
 };

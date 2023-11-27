@@ -216,7 +216,7 @@ export const Header = () => {
 						<ul className="o-list c-nav-mobile__list">
 							{((userTeam && isVisible("points")) &&
 								<li className={`c-nav-mobile__item ${isActive("points") ? "active" : ""}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/points">{t("menu.points")}</Link></li>) || null}
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/points/${userTeam.id}`}>{t("menu.points")}</Link></li>) || null}
 
 							{(userTeam && isVisible("team") &&
 								<li className={`c-nav-mobile__item ${isActive("team") ? "active" : ""}`}>
@@ -264,122 +264,9 @@ export const Header = () => {
 								<li className={`c-nav-mobile__item ${isActive("logout") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={onLogout} to="/home">{t("menu.logout")}</Link>
 								</li>) || null}
-
-							{/* </li>) || null} */}
-
 						</ul>
 					</div>
 				</nav>
-
-				{/* 
-			<Flex
-				className="header_inner"
-				justify={"space-between"}
-				align={"center"}
-				p="md"
-				mb="xl"
-				bg={"primaryContrast.0"}
-			>
-				<Group>
-					<Link to="/home">
-						<h1 className="logo" style={{ backgroundImage: "url('/logo_fantasy.svg')" }}>Fantasy team</h1>
-					</Link>
-				</Group>
-				<MediaQuery smallerThan="md" styles={{ display: "none" }}>
-					<Group spacing={"lg"} className="header_inner_nav">
-						{(userTeam &&
-							<Link className={`nav_item ${(isActive('team')) ? 'is-selected' : ' '}`} to={`/team/${userTeam.id}`}>
-								{t("menu.team")}
-							</Link>
-						)}
-						{(!userTeam && isVisible("new") &&
-							<Link className={`nav_item ${(isActive('new')) ? 'is-selected' : ' '}`} to={"/new"}>
-								{t("menu.newTeam")}
-							</Link>
-						)}
-						{(isVisible("stats") &&
-							<Link className={`nav_item ${(isActive('stats')) ? 'is-selected' : ' '}`} to={"/stats"}>
-								{t("menu.stats")}
-							</Link>
-						)}
-						{(isVisible("rankings") &&
-							<Link className={`nav_item ${(isActive('ranking')) ? 'is-selected' : ' '}`} to={"/rankings"}>
-								{t("menu.rankings")}
-							</Link>
-						)}
-						{(isVisible("rules") &&
-							<Link className={`nav_item ${(isActive('rules')) ? 'is-selected' : ' '}`} to={"/rules"}>
-								{t("menu.rules")}
-							</Link>
-						)}
-						{(isVisible("admin") &&
-							<Link className={`nav_item ${(isActive('admin')) ? 'is-selected' : ' '}`} to={"/admin"}>
-								{t("menu.admin")}
-							</Link>
-						)}
-					</Group>
-				</MediaQuery>
-				<MediaQuery largerThan="md" styles={{ display: "none" }}>
-					<Burger opened={opened} onClick={toggle} size="sm" color="white" />
-				</MediaQuery>
-
-				<Transition transition="slide-left" duration={200} mounted={opened}>
-					{styles => (
-						<Paper
-							className="header_mobile_inner"
-							style={{
-								...styles,
-								position: "absolute",
-								top: "4rem",
-								left: 0,
-								right: 0,
-								zIndex: 2,
-								height: '100vh',
-								textAlign: 'center',
-								fontSize: '16px'
-							}}
-							radius="none"
-							onClick={close}
-						>
-							<Stack justify="flex-start" align="stretch" spacing="none" className="header_mobile_inner_nav">
-
-								{(userTeam &&
-									<Link className={`nav_item ${(isActive('team')) ? 'is-selected' : ' '}`} to={`/team/${userTeam.id}`}>
-										{t("menu.team")}
-									</Link>
-								)}
-								{(!userTeam && isVisible("new") &&
-									<Link className={`nav_item ${(isActive('new')) ? 'is-selected' : ' '}`} to={"/new"}>
-										{t("menu.newTeam")}
-									</Link>
-								)}
-								{(isVisible("stats") &&
-									<Link className={`nav_item ${(isActive('stats')) ? 'is-selected' : ' '}`} to={"/stats"}>
-										{t("menu.stats")}
-									</Link>
-								)}
-								{(isVisible("rankings") &&
-									<Link className={`nav_item ${(isActive('ranking')) ? 'is-selected' : ' '}`} to={"/rankings"}>
-										{t("menu.rankings")}
-									</Link>
-								)}
-								{(isVisible("rules") &&
-									<Link className={`nav_item ${(isActive('rules')) ? 'is-selected' : ' '}`} to={"/rules"}>
-										{t("menu.rules")}
-									</Link>
-								)}
-								{(isVisible("admin") &&
-									<Link className={`nav_item ${(isActive('admin')) ? 'is-selected' : ' '}`} to={"/admin"}>
-										{t("menu.admin")}
-									</Link>
-								)}
-							</Stack>
-						</Paper>
-					)}
-				</Transition>
-			</Flex> */}
-
-				{/* </Layout> */}
 			</HeaderStyle >
 			<Layout>
 				<Outlet />

@@ -5,7 +5,7 @@ import { url } from "inspector";
 
 export const teamsApi = createApi({
 	reducerPath: "teamsApi",
-	tagTypes: ["userTeam"],
+	tagTypes: ["userTeam", "userTeamPoints"],
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/teams`, credentials: "include" }),
 	endpoints: (builder) => ({
 
@@ -41,6 +41,11 @@ export const teamsApi = createApi({
 			})
 		}),
 
+		getPoints: builder.query<{team:Team, players:Player[]}, {teamId: number, weekId: number}>({
+			query: ({teamId, weekId}) => `${teamId}/points/${weekId}`,
+			providesTags: ["userTeamPoints"],
+		}),
+
 		// updatePlayer: builder.mutation<Player, Partial<Player> & Pick<Player, 'id'>>({
 		// 	query: ({ id, ...put }) => ({
 		// 		url: `${id}`,
@@ -52,4 +57,4 @@ export const teamsApi = createApi({
 	})
 });
 
-export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation, useUpdateTeamSelectionMutation, useSubmitTransfersMutation } = teamsApi;
+export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation, useUpdateTeamSelectionMutation, useLazyGetPointsQuery, useSubmitTransfersMutation } = teamsApi;

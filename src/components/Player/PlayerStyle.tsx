@@ -15,7 +15,7 @@ export const PlayerStyle = styled.div`
     }
 
     @media ${mediaQueries.tablet} {
-        width: 90px;
+        width: 75px;
         height: 70px;
     }
 

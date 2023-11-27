@@ -35,6 +35,7 @@ declare type PlayerProps = {
 	pointsBgColor: string
 	positionIndex?: number
 	captainId?: number
+	captainHasPlayed?: boolean
 	viceCaptainId?: number
 	onPlaceholderClick?: any
 	actionLessPlayerIds?: any[]
@@ -52,6 +53,7 @@ declare type PlayerProps = {
 	benchPlayer?: boolean
 	showPlayerValue?: boolean
 	showPlayerValueInsteadOfPoints?: boolean
+	replacePlayerPointsWithStatsPoints?: boolean
 
 	className?: string
 }
@@ -68,6 +70,7 @@ export const Player = (props: PlayerProps) => {
 		positionIndex,
 		captainId,
 		viceCaptainId,
+		captainHasPlayed,
 		onPlaceholderClick,
 		actionLessPlayerIds,
 		swapPlayerId,
@@ -82,7 +85,7 @@ export const Player = (props: PlayerProps) => {
 		showPlayerValueInsteadOfPoints,
 		showPlayerValue,
 		benchPlayer,
-		// showPlayerStatsPoints,
+		replacePlayerPointsWithStatsPoints,
 	} = props;
 	const [state, setState] = useState<PlayerState>({
 		portraitFace: props.portraitFace,
@@ -134,13 +137,23 @@ export const Player = (props: PlayerProps) => {
 		, [player]
 	);
 
-	const hasStats = useMemo(() => player && player.stats && player.stats.length, [player]);
+	const hasStats = useMemo(() => player && player.stats && !!player.stats.length, [player]);
 	const hasActions = useMemo(() => player && player.id && (actionLessPlayerIds || []).indexOf(player.id) === -1, [player]);
 	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
 	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
 
-	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints; //todo
+	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints || replacePlayerPointsWithStatsPoints; 
 	const showPlayerName = !avatarOnly;
+
+	useEffect(() => {
+		if(player && replacePlayerPointsWithStatsPoints && hasStats) {
+			const statsPointsCurrentWeek = player.stats.reduce((acc: number, stat: any) => acc + stat.points, 0);
+			const captainOrViceCaptainPoints = isCaptain || (!captainHasPlayed && isViceCaptain);
+
+			const statsPointsCurrentWeekFactor = captainOrViceCaptainPoints ? 1.5 : 1;
+			player.points = statsPointsCurrentWeek * statsPointsCurrentWeekFactor;
+		}
+	}, [player, isCaptain, captainHasPlayed, isViceCaptain])
 
 	const onRemoveHandler = (e: any, player: Player) => {
 		e.stopPropagation();
@@ -168,6 +181,7 @@ export const Player = (props: PlayerProps) => {
 			setState({ ...state, portraitFace: state.portraitFaceFallBack,});
 		}
 	};
+	// console.log("speler", player.name, showPoints && hasStats && player.points !== null && player.points !== undefined && player.points)
 
 	return (
 		<PlayerStyle onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} className={`position_${player.positionId}` && props.className}>
@@ -184,8 +198,8 @@ export const Player = (props: PlayerProps) => {
 			}
 
 			{
-				showPoints && hasStats && player.points !== null && player.points !== undefined &&
-				<Points color={"#000"} bgColor={isCaptain || isViceCaptain ? "#ffc422" : "#00fe82"}>{player.points}</Points>
+				showPoints && hasStats && player.points !== null && player.points !== undefined && !!player.points &&
+				<Points color={"#000"} bgColor={isCaptain || isViceCaptain ? "#ffc422" : props.pointsBgColor}>{player.points}</Points>
 			}
 
 			{
@@ -250,7 +264,6 @@ export const Player = (props: PlayerProps) => {
 				player && positionLabel && positionLabel.length &&
 				<span className="position-label">{positionLabel}</span>
 			}
-
 			{
 				player && player.id && props.club && hasModal ?
 					<PlayerModal

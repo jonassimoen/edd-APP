@@ -41,7 +41,7 @@ export const _Team = (props: AbstractTeamType) => {
 
 	useEffect(() => {
 		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
-			getTeamInfo(visibleWeekId);
+			getTeamInfo(props.visibleWeekId);
 		}
 	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
 
@@ -92,7 +92,6 @@ export const _Team = (props: AbstractTeamType) => {
 	const startingByPositions = useMemo(() => startingListToPositionsList(props.starting, application.competition.lineupPositionRows), [props.starting]);
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
-	const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
 
 	return (
 		(clubs && teamResult && matches && deadlineInfo) && (
@@ -104,7 +103,7 @@ export const _Team = (props: AbstractTeamType) => {
 				}
 				<Row>
 					{
-						(visibleWeekId && deadlineWeek && deadlineDate &&
+						(props.visibleWeekId && deadlineWeek && deadlineDate &&
 							<Col lg={24} md={24} sm={24} xs={24}>
 								<Block>
 									<DeadlineBar>
@@ -142,8 +141,9 @@ export const _Team = (props: AbstractTeamType) => {
 						/>
 						<Substitutes
 							selection={props.bench || []}
-							title="Bank"
-							bgColor={benchBackground}
+							title={"De Bank"}
+							clubs={clubs}
+							bgImage={benchBackground}
 							modalEnabled={true}
 							showPositionNumber={true}
 							playerType={PlayerType.SoccerShirt}
@@ -158,7 +158,7 @@ export const _Team = (props: AbstractTeamType) => {
 							playerPointsBgColor="#84FF00"
 						/>
 						<Button
-							onClick={(e: any) => props.onTeamSelectionsUpdate(teamResult.team.id, visibleWeekId)}
+							onClick={(e: any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
 							type="primary"
 							disabled={teamLoading || clubsLoading}
 							style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
@@ -170,7 +170,7 @@ export const _Team = (props: AbstractTeamType) => {
 					<Col lg={12} md={12} sm={24} xs={24}>
 						<Title level={2}>{t("general.footballCalendar")}</Title>
 						<Calendar
-							weekId={visibleWeekId}
+							weekId={props.visibleWeekId}
 							showHeader={false}
 							size={30}
 						/>
