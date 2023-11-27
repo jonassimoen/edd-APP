@@ -19,15 +19,15 @@ const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {
 
 declare type PlayerState = {
 	modalVisible: boolean
-	// shirtSoccer?: string
-	portraitFace?: string
-	portraitFaceFallBack?: string
+	face?: string
+	faceFallback?: string
+	shirt?: string
+	shirtFallback?: string
 }
 
 declare type PlayerProps = {
 	player: Player
-	portraitFace?: string
-	portraitFaceFallBack?: string
+	type: PlayerType
 	avatarOnly?: boolean
 	badgeColor: string
 	badgeBgColor: string
@@ -44,7 +44,7 @@ declare type PlayerProps = {
 	showCaptainBadge?: boolean
 	club?: Club
 	isSwapable?: any
-	swappedFrom?: string|null
+	swappedFrom?: string | null
 	modalEnabled?: boolean
 	onRemove?: any
 	onSwap?: any
@@ -54,6 +54,11 @@ declare type PlayerProps = {
 	showPlayerValue?: boolean
 	showPlayerValueInsteadOfPoints?: boolean
 	replacePlayerPointsWithStatsPoints?: boolean
+
+	face?: string
+	faceFallback?: string
+	shirt?: string
+	shirtFallback?: string
 
 	className?: string
 }
@@ -86,20 +91,24 @@ export const Player = (props: PlayerProps) => {
 		showPlayerValue,
 		benchPlayer,
 		replacePlayerPointsWithStatsPoints,
+		type,
 	} = props;
+
 	const [state, setState] = useState<PlayerState>({
-		portraitFace: props.portraitFace,
-		portraitFaceFallBack: props.portraitFaceFallBack,
+		face: props.face,
+		faceFallback: props.faceFallback,
+		shirt: props.shirt,
+		shirtFallback: props.shirtFallback,
 		modalVisible: false,
 	});
 
-	useEffect(() => {
-		setState({
-			...state,
-			portraitFace: `${config.API_URL}/static/${player.externalId}.png`,
-			portraitFaceFallBack: `${config.API_URL}/static/dummy.png`,	
-		});
-	}, [player]);
+	useEffect(() => setState({
+		...state,
+		face: props.face,
+		faceFallback: props.faceFallback,
+		shirt: props.shirt,
+		shirtFallback: props.shirtFallback,
+	}), [props]);
 
 
 	const gamePositionIdToLabels = [
@@ -119,12 +128,12 @@ export const Player = (props: PlayerProps) => {
 	const playerName = useMemo(() =>
 		(player && player.id && player.short) ||
 		(player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
-		`${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`,
-	[player]);
-		
+		`${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`, [player]
+	);
+
 	const opponentInfo = useMemo(
 		() => {
-			if(player && player.upcomingMatches && player.upcomingMatches.length) {
+			if (player && player.upcomingMatches && player.upcomingMatches.length) {
 				const nextMatch = player.upcomingMatches[0];
 				return {
 					playing: nextMatch.homeId === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
@@ -142,11 +151,11 @@ export const Player = (props: PlayerProps) => {
 	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
 	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
 
-	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints || replacePlayerPointsWithStatsPoints; 
+	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints || replacePlayerPointsWithStatsPoints;
 	const showPlayerName = !avatarOnly;
 
 	useEffect(() => {
-		if(player && replacePlayerPointsWithStatsPoints && hasStats) {
+		if (player && replacePlayerPointsWithStatsPoints && hasStats) {
 			const statsPointsCurrentWeek = player.stats.reduce((acc: number, stat: any) => acc + stat.points, 0);
 			const captainOrViceCaptainPoints = isCaptain || (!captainHasPlayed && isViceCaptain);
 
@@ -177,17 +186,19 @@ export const Player = (props: PlayerProps) => {
 	};
 
 	const onBgLoadError = (event: any) => {
-		if(state.portraitFaceFallBack) {
-			setState({ ...state, portraitFace: state.portraitFaceFallBack,});
+		console.log("FAILED FETCHING", player.id);
+		if (state.faceFallback) {
+			setState({ ...state, face: state.faceFallback, });
 		}
 	};
 	// console.log("speler", player.name, showPoints && hasStats && player.points !== null && player.points !== undefined && player.points)
 
+	console.log("assetsCdn for Player", player.short, state.face);
 	return (
 		<PlayerStyle onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} className={`position_${player.positionId}` && props.className}>
 			{
 				player && player.id &&
-				<PlayerBg src={state.portraitFace} onError={onBgLoadError} inactive={hasInactiveOverlay} />
+				<PlayerBg src={state.face} onError={onBgLoadError} inactive={hasInactiveOverlay} />
 			}
 
 			{
@@ -205,7 +216,7 @@ export const Player = (props: PlayerProps) => {
 			{
 				opponentInfo ?
 					<OpponentBadge color={"#000"} bgColor={"#fff"}>
-						<p style={{fontSize: "10px"}}>
+						<p style={{ fontSize: "10px" }}>
 							{`${opponentInfo.opponentShort} (${opponentInfo.playing})`}
 						</p>
 					</OpponentBadge> : null
@@ -219,7 +230,7 @@ export const Player = (props: PlayerProps) => {
 				) || null
 			}
 			{
-				!player || (player && !player.id) &&		
+				!player || (player && !player.id) &&
 				// todo
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				<NoPlayer onClick={onPlaceholderClick ? (e: any) => onPlaceholderClick(player) : () => { }}>
@@ -271,8 +282,8 @@ export const Player = (props: PlayerProps) => {
 					<PlayerModal
 						visible={state.modalVisible}
 						onCancel={onCancel}
-						portraitFace={state.portraitFace}
-						portraitFaceFallback={state.portraitFaceFallBack}
+						portraitFace={state.face}
+						portraitFaceFallback={state.faceFallback}
 						player={player}
 						club={props.club}
 						swapPlayerId={swapPlayerId}

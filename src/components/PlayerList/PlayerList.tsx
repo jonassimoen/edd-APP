@@ -37,6 +37,7 @@ declare type PlayerListProps = {
 	matches?: any
 	deadlineWeek?: any;
 	playerTax?: number | undefined;
+	assetsCdn: string
 }
 
 declare type PlayerListState = {
@@ -45,12 +46,29 @@ declare type PlayerListState = {
 
 export const PlayerList = (props: PlayerListProps) => {
 	const { t } = useTranslation();
+
+	const { 
+		assetsCdn, 
+		activePositionFilter, 
+		setActivePositionFilter, 
+		onPick, 
+		clubs, 
+		hidePositions, 
+		isPickable, 
+		actionLabel,
+		playerType,
+		action,
+		data,
+		isLoading,
+		showHeader
+	} = props;
+
 	const [state, setState] = useState<PlayerListState>({
 		filters: {
 			search: "",
 			budget: -1,
 			club: -1,
-			position: props.activePositionFilter || -1
+			position: activePositionFilter || -1
 		}
 	});
 
@@ -74,20 +92,20 @@ export const PlayerList = (props: PlayerListProps) => {
 		id: -1,
 		name: <span className={"prefixed-label"}> <StarOutlined style={{ marginRight: 5 }} /> {t("general.footballAllClubs")} </span>
 	}]
-		.concat(props.clubs.map((c: Club) => ({ id: c.id, name: <span>{c.name}</span> })));
+		.concat(clubs.map((c: Club) => ({ id: c.id, name: <span>{c.name}</span> })));
 
 	useEffect(() => {
-		const filters = { ...state.filters, position: props.activePositionFilter };
+		const filters = { ...state.filters, position: activePositionFilter };
 		setState({ ...state, filters });
-	}, [props.activePositionFilter]);
+	}, [activePositionFilter]);
 
 	const onFilterChange = (name: string, value: string | number) => {
 		const filters: any = Object.assign({}, state.filters, {
 			[name]: value,
 		});
 
-		if (props.activePositionFilter && props.setActivePositionFilter && name === "position") {
-			props.setActivePositionFilter(value);
+		if (activePositionFilter && setActivePositionFilter && name === "position") {
+			setActivePositionFilter(value);
 		} else {
 			setState({ ...state, filters });
 		}
@@ -117,8 +135,8 @@ export const PlayerList = (props: PlayerListProps) => {
 	const onPickHandler = (e: any, record: any) => {
 		e.stopPropagation();
 
-		if (props.onPick) {
-			props.onPick(record);
+		if (onPick) {
+			onPick(record);
 		}
 	};
 
@@ -129,22 +147,19 @@ export const PlayerList = (props: PlayerListProps) => {
 			dataIndex: "avatar",
 			width: "15%",
 			render: (txt: string, record: any) => {
-				const sportSpecificProps: {
-					shirtSoccer?: string,
-					soccerJersey?: string,
-					clubBadge?: string,
-					portraitFace?: string,
+				const imgProps: {
+					shirt?: string,
+					face?: string,
+					faceFallback?: string,
 					shirtFallback?: string,
-					portraitFaceFallBack?: string,
-					club?: Club
 				} = {};
 
-				if (PlayerType.SoccerPortrait === props.playerType && record) {
-					// sportSpecificProps.soccerJersey = `${assetsCdn}/jerseys/club_${record.clubId}.png`;
-					// sportSpecificProps.clubBadge = `${assetsCdn}/badges/club_${record.clubId}.png`;
-					// sportSpecificProps.portraitFace = record.portraitUrl;
-					// sportSpecificProps.portraitFaceFallBack = `${assetsCdn}/players/dummy.png`;
-					sportSpecificProps.portraitFace = `${config.API_URL}/static/${record.externalId}.png`;
+				if (PlayerType.SoccerPortrait === playerType) {
+					imgProps.face = `${assetsCdn}/players/${record.id}.png`;
+					imgProps.faceFallback = `${assetsCdn}/players/dummy.png`;
+				} else if (PlayerType.SoccerShirt === playerType) {
+					imgProps.shirt = `${assetsCdn}/jerseys/${record.clubId}.png`;
+					imgProps.shirtFallback = `${assetsCdn}/jerseys/dummy.png`;
 				}
 
 				return (
@@ -157,8 +172,8 @@ export const PlayerList = (props: PlayerListProps) => {
 							badgeBgColor={"#fff"}
 							avatarOnly={true}
 							player={record}
-							// type={props.playerType}
-							{...sportSpecificProps}
+							type={playerType}
+							{...imgProps}
 						/>
 					</div>
 				);
@@ -170,7 +185,7 @@ export const PlayerList = (props: PlayerListProps) => {
 			dataIndex: "name",
 			width: "45%",
 			render: (txt: string, record: Player) => {
-				const club = props.clubs?.find(club => club.id === record.clubId);
+				const club = clubs?.find(club => club.id === record.clubId);
 				const position = positions.find(
 					position => position.id === record.positionId
 				);
@@ -186,16 +201,16 @@ export const PlayerList = (props: PlayerListProps) => {
 								<span>
 									{record.short}
 								</span>
-								<span style={{float:"right", marginRight: "10px"}}>
-									{record.star && <StarIcon style={{ marginRight: "2px" }} />}
-									{record.caps && <CaptainIcon style={{ marginRight: "2px" }} />}
-									{record.setPieces && <SetPiecesIcon style={{ marginRight: "2px" }} />}
+								<span style={{ float: "right", marginRight: "10px" }}>
+									{record.star ? <StarIcon style={{ marginRight: "2px" }} /> : null}
+									{record.caps ? <CaptainIcon style={{ marginRight: "2px" }} /> : null}
+									{record.setPieces ? <SetPiecesIcon style={{ marginRight: "2px" }} /> : null}
 								</span>
 							</p>
 							<p>
 								<span>{club && club.short} {opponentInfo ? `vs ${opponentInfo.short}` : null} </span>
 								<span className="player-position" style={{ color: positionColor }}>
-									{(!props.hidePositions && position && position.name) || null}
+									{(!hidePositions && position && position.name) || null}
 								</span>
 							</p>
 						</PlayerStyle>
@@ -208,7 +223,7 @@ export const PlayerList = (props: PlayerListProps) => {
 							<p className="mobile-name">{record.short}</p>
 							<p>
 								<span style={{ color: "#16002b" }}>{club && club.short}</span> <span className="player-position" style={{ color: positionColor }}>
-									{(!props.hidePositions && position && position.name) || null}
+									{(!hidePositions && position && position.name) || null}
 								</span>
 							</p>
 							<p className="icons">
@@ -240,7 +255,7 @@ export const PlayerList = (props: PlayerListProps) => {
 							</div>
 							<p style={{ fontSize: "0.8rem" }}>
 								<span style={{ color: "#16002b" }}>{club && club.short}</span> <span className="player-position" style={{ color: positionColor }}>
-									{(!props.hidePositions && position && position.name) || null}
+									{(!hidePositions && position && position.name) || null}
 								</span>
 							</p>
 						</PlayerStyle> */}
@@ -263,7 +278,7 @@ export const PlayerList = (props: PlayerListProps) => {
 		}
 	];
 
-	if (props.action) {
+	if (action) {
 		columns.push({
 			key: "action",
 			title: "Pick player",
@@ -271,14 +286,14 @@ export const PlayerList = (props: PlayerListProps) => {
 			width: "20%",
 			render: (text: string, record: any) => {
 				return (
-					(props.isPickable && props.isPickable(record) && (
+					(isPickable && isPickable(record) && (
 						<Button
 							type="primary"
 							onClick={(e: any) => onPickHandler(e, record)}
-							style={{ width: "100%", marginLeft:0 }}
+							style={{ width: "100%", marginLeft: 0 }}
 							size="small"
 						>
-							{props.actionLabel || t("general.pick")}
+							{actionLabel || t("general.pick")}
 						</Button>
 					)) || <span />
 				);
@@ -332,10 +347,10 @@ export const PlayerList = (props: PlayerListProps) => {
 				/>
 			</SelectGroupStyle>
 			<TableStyle
-				loading={props.isLoading}
-				showHeader={props.showHeader}
+				loading={isLoading}
+				showHeader={showHeader}
 				columns={columns}
-				dataSource={props.data.filter(player => playerFilter(player))}
+				dataSource={data.filter(player => playerFilter(player))}
 				rowKey="id"
 				rowClassName={(record: object, index: number) =>
 					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"}`

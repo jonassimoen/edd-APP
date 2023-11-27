@@ -125,8 +125,8 @@ export const _Team = (props: AbstractTeamType) => {
 							viceCaptainId={props.viceCaptainId}
 							modalEnabled={true}
 							selection={startingByPositions}
-							assetsCdn=""
-							playerType={PlayerType.SoccerShirt}
+							assetsCdn={application.competition.assetsCdn}
+							playerType={PlayerType.SoccerPortrait}
 							onCaptainSelect={props.onCaptainSelect}
 							onViceCaptainSelect={props.onViceCaptainSelect}
 							onSwap={props.onPlayerSwap}
@@ -146,7 +146,7 @@ export const _Team = (props: AbstractTeamType) => {
 							bgImage={benchBackground}
 							modalEnabled={true}
 							showPositionNumber={true}
-							playerType={PlayerType.SoccerShirt}
+							playerType={PlayerType.SoccerPortrait}
 							assetsCdn={application.competition.assetsCdn}
 							onSwap={props.onPlayerSwap}
 							isSwapAble={props.isSwapAble}

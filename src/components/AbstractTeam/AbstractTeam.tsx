@@ -480,6 +480,8 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				teamId,
 				starting: startingIds,
 				bench: benchIds,
+				captainId: state.captainId,
+				viceCaptainId: state.viceCaptainId,
 				teamName: state.teamName,
 			}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t("team.updateSelection.failed") }));
 		}

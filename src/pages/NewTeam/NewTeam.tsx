@@ -192,6 +192,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 									action={true}
 									isPickable={props.isPickAble}
 									onPick={props.pickPlayer}
+									assetsCdn={application.competition.assetsCdn}
 								/>
 							</Element>
 						</Col>

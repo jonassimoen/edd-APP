@@ -23,7 +23,7 @@ export const teamsApi = createApi({
 			}),
 		}),
 
-		updateTeamSelection: builder.mutation<{ msg: string }, { teamId: number, bench: number[], starting: number[], teamName: string }>({
+		updateTeamSelection: builder.mutation<{ msg: string }, { teamId: number, bench: number[], starting: number[], teamName: string, captainId: number, viceCaptainId: number }>({
 			invalidatesTags: ["userTeam"],
 			query: ({ teamId, ...data }) => ({
 				url: `${teamId}/selections`,

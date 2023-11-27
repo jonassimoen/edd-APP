@@ -76,11 +76,28 @@ export const Team = (props: TeamProps) => {
 	return (
 		<TeamStyle bg={bg} widthRatio={widthRatio} heightRatio={heightRatio} centerAligned={centerAligned}>
 			{selection ? selection.map((position: any, positionIdx: number) => {
+				const imgProps: {
+					shirt?: string,
+					face?: string,
+					faceFallback?: string,
+					shirtFallback?: string,
+				} = {};
+
 				return (
 					<div className={"position"} key={`posIdx-${positionIdx}`}>
 						{
 							position.map((player: any, playerIdx: number) => {
+								console.log("playerInTeamComp",player.id);
 								const club = clubs.find((item: Club, index: number) => player && item.id === player.clubId);
+								
+								if(PlayerType.SoccerPortrait === playerType) {
+									imgProps.face = `${assetsCdn}/players/${player.id}.png`;
+									imgProps.faceFallback = `${assetsCdn}/players/dummy.png`;
+								} else if(PlayerType.SoccerShirt === playerType) {
+									imgProps.shirt = `${assetsCdn}/jerseys/${player.clubId}.png`;
+									imgProps.shirtFallback = `${assetsCdn}/jerseys/dummy.png`;
+								}
+
 								return (
 									<Player
 										key={`player-${positionIdx}-${playerIdx}`}
@@ -96,7 +113,6 @@ export const Team = (props: TeamProps) => {
 										replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
 										showPlayerValue={showPlayerValue}
 										showCaptainBadge={showCaptainBadge}
-										// type={playerType}
 										onRemove={onRemove}
 										showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
 										onSwap={onSwap}
@@ -108,6 +124,8 @@ export const Team = (props: TeamProps) => {
 										actionLessPlayerIds={actionLessPlayerIds}
 										swappedFrom={swappedFrom}
 										club={club}
+										type={playerType}
+										{...imgProps}
 									/>
 								);
 							})

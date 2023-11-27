@@ -37,18 +37,31 @@ type SubstitutesProps = {
 
 export const Substitutes = (props: SubstitutesProps) => {
 	const { t } = useTranslation();
+	const { playerType, assetsCdn } = props;
 
-	console.log("bench",props.selection);
 	return (
 		<SubstitutesStyle bgImage={props.bgImage}>
 			<div className="substitutes">
 				{props.selection.map((player: any, idx: number) => {
+					const imgProps: {
+						shirt?: string,
+						face?: string,
+						faceFallback?: string,
+						shirtfallback?: string,
+					} = {};
 
 					let positionLabel = "";
 					if (props.showPositionNumber) {
 						positionLabel = player && player.positionId == 1 ? t("player.goalkeeperShort") : idx.toString();
 					}
 					const club = props.clubs.find((item: Club, index: number) => player && item.id === player.clubId);
+					if (PlayerType.SoccerPortrait === playerType) {
+						imgProps.face = `${assetsCdn}/players/${player.id}.png`;
+						imgProps.faceFallback = `${assetsCdn}/players/dummy.png`;
+					} else if (PlayerType.SoccerShirt === playerType) {
+						imgProps.shirt = `${assetsCdn}/jerseys/${player.clubId}.png`;
+						imgProps.faceFallback = `${assetsCdn}/jerseys/dummy.png`;
+					}
 
 					return <React.Fragment key={`substitute-${idx}`}>
 						<Player
@@ -59,7 +72,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 							badgeBgColor={player.playerBadgeBgColor}
 							player={player}
 							club={club}
-							// type={props.playerType}
+							type={props.playerType}
 							modalEnabled={props.modalEnabled}
 							// showPlayerValue={props.showPlayerValue}
 							onRemove={props.onRemove}
@@ -75,6 +88,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 							positionLabel={positionLabel}
 							onPlaceholderClick={props.onPlaceholderClick}
 							actionLessPlayerIds={props.actionsLessPlayerIds}
+							{...imgProps}
 						/>
 					</React.Fragment>;
 				})}

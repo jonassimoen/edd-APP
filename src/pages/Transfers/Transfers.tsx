@@ -59,7 +59,7 @@ const _Transfers = (props: AbstractTeamType) => {
 	useEffect(() => {
 		if (teamSuccess) {
 			const playerProps =
-								["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
+								["id", "externalId", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
 			const selectionProps: any[] = [];
 
 			const starting = teamResult.players
@@ -299,7 +299,7 @@ const _Transfers = (props: AbstractTeamType) => {
 																bg={teamBackground}
 																captainId={captainId}
 																selection={startingByPositions}
-																playerType={PlayerType.SoccerShirt}
+																playerType={PlayerType.SoccerPortrait}
 																playerBadgeColor="#000"
 																playerBadgeBgColor={theme.primaryColor}
 																modalEnabled={true}
@@ -312,7 +312,7 @@ const _Transfers = (props: AbstractTeamType) => {
 																actionLessPlayerIds={null}
 																playerPointsColor={"#000"}
 																playerPointsBgColor="#84FF00"
-																assetsCdn={""}
+																assetsCdn={application.competition.assetsCdn}
 															/>
 														</Block>
 													</Col>
@@ -328,12 +328,13 @@ const _Transfers = (props: AbstractTeamType) => {
 																	hidePositions={false}
 																	activePositionFilter={activePositionFilter}
 																	isPickable={(player: Player) => props.isPickAble(player, false, true)}
-																	playerType={PlayerType.SoccerShirt}
+																	playerType={PlayerType.SoccerPortrait}
 																	actionLabel={t("transferPage.transferButtonLabel")}
 																	data={players}
 																	playerTax={application.competition.transferTaxPercentage}
 																	onPick={onPlayerIn}
 																	action
+																	assetsCdn={application.competition.assetsCdn}
 																	showHeader={false}
 																	size={10}
 																/>
