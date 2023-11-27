@@ -119,6 +119,4 @@ export const Team = (props: TeamProps) => {
 			}
 		</TeamStyle>
 	);
-
-
 };

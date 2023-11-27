@@ -123,7 +123,7 @@ export const Header = () => {
 								<Link to="/"><h1 className="c-logo" style={{ backgroundImage: "url('/euro_DD_HOR.png')" }}>Fantasy League</h1></Link>
 								<nav className="c-nav-main js-nav" role="navigation">
 									<ul className="c-nav-main__list">
-										{(userTeam &&
+										{(userTeam && isVisible("team") && 
 											<li className={`c-nav_item ${(isActive("team")) ? "is-selected" : " "}`}>
 												<Link
 													className="c-nav-main__link"

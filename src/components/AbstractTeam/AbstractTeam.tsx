@@ -429,6 +429,8 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				starting: starting.map((p: any) => p.id),
 				bench: bench.map((p: any) => p.id),
 				teamName: state.teamName,
+				captainId: state.captainId,
+				viceCaptainId: state.viceCaptainId
 			});
 		} else {
 			return Promise.reject(
