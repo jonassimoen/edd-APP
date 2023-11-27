@@ -22,6 +22,7 @@ import { Footer } from "./components/Footer/Footer";
 import { TransfersPage } from "./pages/Transfers/Transfers";
 import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
+import { Welcome } from "./pages/Welcome/Welcome";
 
 const Layout = ({ children }: any) => {
 	return (
@@ -130,8 +131,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/login/callback",
-				element:
-					<LoginCallback />,
+				element: <LoginCallback />,
+			},
+			{
+				path: "/welcome",
+				element: <ProtectedRoute access={true} redirectPath="/home"><Welcome /></ProtectedRoute>,
 			},
 		]
 	}

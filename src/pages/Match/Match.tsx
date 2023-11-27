@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { MatchStyles } from "./MatchStyles";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Block } from "@/components/Block/Block";
-import Title from "antd/lib/typography/Title";
+import Title from "antd/es/typography/Title";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Team } from "@/components/Team/Team";
