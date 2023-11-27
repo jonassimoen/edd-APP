@@ -112,7 +112,7 @@ export const Player = (props: PlayerProps) => {
 	const currentPositionLabel = gamePositionIdToLabels.find((item: any) => !!(item.id === positionIndex));
 	const playerPositionColor = useMemo(() => getPlayerPositionHexColor(player, theme), [player]);
 
-	const swappedAlreadyFromPlayerArea = useMemo(() => (onSwap && swapPlayerId && player && (swappedFrom === 'starting' && player.inStarting) && swapPlayerId !== player.id), [player, swappedFrom])
+	const swappedAlreadyFromPlayerArea = useMemo(() => (onSwap && swapPlayerId && player && (swappedFrom === "starting" && player.inStarting) && swapPlayerId !== player.id), [player, swappedFrom]);
 	const hasInactiveOverlay = useMemo(() => swappedAlreadyFromPlayerArea || (swapPlayerId && !swappedAlreadyFromPlayerArea && isSwapable && !isSwapable(player)), [player, isSwapable]);
 	const hasModal = !!props.modalEnabled;
 
@@ -120,16 +120,16 @@ export const Player = (props: PlayerProps) => {
 		(player && player.id && player.short) ||
 		(player && player.id && `${player.surname} ${player.forename && firstLetterUppercased(player.forename)}.`) ||
 		`${currentPositionLabel ? currentPositionLabel.name : t("general.choosePlayer")}`,
-		[player]);
+	[player]);
 		
 	const opponentInfo = useMemo(
 		() => {
 			if(player && player.upcomingMatches && player.upcomingMatches.length) {
 				const nextMatch = player.upcomingMatches[0];
 				return {
-					playing: nextMatch.homeId === player.clubId ? t('player.opponentHome') : t('player.opponentAway'),
+					playing: nextMatch.homeId === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
 					opponentShort: nextMatch.homeId === player.clubId ? nextMatch.away.short : nextMatch.home.short,
-				}
+				};
 			} else {
 				return null;
 			}
@@ -153,7 +153,7 @@ export const Player = (props: PlayerProps) => {
 			const statsPointsCurrentWeekFactor = captainOrViceCaptainPoints ? 1.5 : 1;
 			player.points = statsPointsCurrentWeek * statsPointsCurrentWeekFactor;
 		}
-	}, [player, isCaptain, captainHasPlayed, isViceCaptain])
+	}, [player, isCaptain, captainHasPlayed, isViceCaptain]);
 
 	const onRemoveHandler = (e: any, player: Player) => {
 		e.stopPropagation();
@@ -204,8 +204,8 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				opponentInfo ?
-					<OpponentBadge color={'#000'} bgColor={'#fff'}>
-						<p style={{fontSize: '10px'}}>
+					<OpponentBadge color={"#000"} bgColor={"#fff"}>
+						<p style={{fontSize: "10px"}}>
 							{`${opponentInfo.opponentShort} (${opponentInfo.playing})`}
 						</p>
 					</OpponentBadge> : null
@@ -219,7 +219,9 @@ export const Player = (props: PlayerProps) => {
 				) || null
 			}
 			{
-				!player || (player && !player.id) &&
+				!player || (player && !player.id) &&		
+				// todo
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				<NoPlayer onClick={onPlaceholderClick ? (e: any) => onPlaceholderClick(player) : () => { }}>
 					<AddIcon style={{ fontSize: "2em", color: theme.primaryContrast, cursor: "pointer" }} />
 				</NoPlayer>

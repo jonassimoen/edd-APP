@@ -38,7 +38,7 @@ type SubstitutesProps = {
 export const Substitutes = (props: SubstitutesProps) => {
 	const { t } = useTranslation();
 
-	console.log("bench",props.selection)
+	console.log("bench",props.selection);
 	return (
 		<SubstitutesStyle bgImage={props.bgImage}>
 			<div className="substitutes">

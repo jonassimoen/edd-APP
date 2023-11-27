@@ -26,7 +26,7 @@ export const AuthContext = createContext<AuthContextType>({
 		user: defaultUser,
 		teams: []
 	},
-	setUserAuth: () => { }
+	setUserAuth: () => { /*todo*/}
 });
 
 export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children }) => {

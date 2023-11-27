@@ -8,7 +8,6 @@ import { useGetMatchQuery, useGetMatchStatisticsQuery, useLazyImportMatchStatist
 import { useGetPlayersQuery } from "@/services/playersApi";
 import { CheckOutlined, DownloadOutlined } from "@ant-design/icons";
 import { Alert, Button, Checkbox, Flex, Form, Skeleton, Space, Spin, Table, Tag, Tooltip } from "antd";
-import React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -59,6 +58,7 @@ const GameStatsRowTable = (props: { idx: number, player: Player }) => {
 
 
 type GameStatsMangementProps = {
+	//todo
 };
 
 type GameStatsManagementState = {
@@ -74,13 +74,13 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	
-    const PositionLabels: any = {
-        0: t('player.coachShort'),
-        1: t('player.goalkeeperShort'),
-        2: t('player.defenderShort'),
-        3: t('player.midfielderShort'),
-        4: t('player.attackerShort')
-    };
+	const PositionLabels: any = {
+		0: t("player.coachShort"),
+		1: t("player.goalkeeperShort"),
+		2: t("player.defenderShort"),
+		3: t("player.midfielderShort"),
+		4: t("player.attackerShort")
+	};
 
 	const [updateMatchStats] = useUpdateMatchStatisticsMutation();
 
@@ -104,8 +104,8 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const splitHomeAwayPlayers = useMemo(() => matchPlayers?.findIndex((p: Player) => p.clubId === match?.away?.id), [matchPlayers, match]);
 	const sortedEvents = useMemo(() => Object.values(state.allEvents)?.sort(
 		(s1: Statistic, s2: Statistic) => {
-			let p1 = matchPlayers.find((v: Player) => v.id === s1.playerId);
-			let p2 = matchPlayers.find((v: Player) => v.id === s2.playerId);
+			const p1 = matchPlayers.find((v: Player) => v.id === s1.playerId);
+			const p2 = matchPlayers.find((v: Player) => v.id === s2.playerId);
 			if(p1 && p2) {
 				if(p1.clubId == p2.clubId) {
 					return p1.positionId - p2.positionId;
@@ -117,6 +117,17 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	), [state.allEvents]);
 
 	const [form] = Form.useForm();
+
+	const onFieldsChange = (values: any) => {
+		const playersArray = Object.values(values);
+		const homePlayers = playersArray.slice(0, splitHomeAwayPlayers);
+		const awayPlayers = playersArray.slice(splitHomeAwayPlayers);
+		const homeScore = homePlayers.reduce((acc: number, value: any) => acc + (value.goals || 0), 0);
+		const awayScore = awayPlayers.reduce((acc: number, value: any) => acc + (value.goals || 0), 0);
+		const validStats = playersArray.reduce((acc: number, value: any) => acc + (value.motm || 0), 0) === 1;
+
+		setState((state) => ({ ...state, homeScore, awayScore, validStats }));
+	};
 
 	useEffect(() => {
 		if (stats && matchPlayers) {
@@ -164,15 +175,15 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 				title: "Matchdata is geïmporteerd.",
 				icon: <CheckOutlined />,
 				message: "Check de data grondig!"
-			})
+			});
 		}
 	}, [matchStatisticsImportSuccess]);
 
 	const columns = [
 		{
 			title: () => <>Speler</>,
-			dataIndex: 'playerId',
-			width: '6rem',
+			dataIndex: "playerId",
+			width: "6rem",
 			render: (txt: number, rec: any, index: number) => {
 				const player = matchPlayers.find((v: Player) => v.id === txt);
 				const playerPositionColor = getPlayerPositionHexColor(player, theme);
@@ -184,14 +195,14 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 						<ClubName className="team-name" fullName={player?.short} shortName={player?.short}></ClubName>
 						<Tag color={playerPositionColor}>{PositionLabels[player.positionId]}</Tag>
 					</Flex>
-				)
+				);
 			}
 		},
 	].concat(config.STATISTICS.map((stat: any) => ({
 		title: () => <Tooltip placement="top" title={stat.full} key={`${stat.type}-${stat.slug}`}>{stat.short}</Tooltip>,
 		dataIndex: stat.slug,
-		width: '1rem',
-		textAlign: 'center',
+		width: "1rem",
+		textAlign: "center",
 		render: (txt: any, rec: any, index: number) =>
 			<Form.Item style={{ marginBottom: 0, marginLeft: 0, marginRight: 0, textAlign: "center" }}
 				name={[index, stat.slug]}
@@ -209,24 +220,13 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			</Form.Item>
 	})));
 
-	const onFieldsChange = (values: any) => {
-		const playersArray = Object.values(values);
-		const homePlayers = playersArray.slice(0, splitHomeAwayPlayers);
-		const awayPlayers = playersArray.slice(splitHomeAwayPlayers);
-		const homeScore = homePlayers.reduce((acc: number, value: any) => acc + (value.goals || 0), 0);
-		const awayScore = awayPlayers.reduce((acc: number, value: any) => acc + (value.goals || 0), 0);
-		const validStats = playersArray.reduce((acc: number, value: any) => acc + (value.motm || 0), 0) === 1;
-
-		setState((state) => ({ ...state, homeScore, awayScore, validStats }));
-	}
-
 	const onFormSubmit = (form: any) => {
 		setState((state) => ({ ...state, isProcessing: true }));
 		form.validateFields()
 			.then((formObj: any) => Object.values(formObj).map((value: any, idx: any) => ({ ...value, playerId: matchPlayers[idx].id })))
 			.then((playerStats: any) => updateMatchStats({ matchId: +(id || 0), stats: playerStats, score: { home: state.homeScore, away: state.awayScore } }))
-			.then(() => navigate(`/admin/games`));
-	}
+			.then(() => navigate("/admin/games"));
+	};
 
 	return (
 		<Spin spinning={matchLoading || playersLoading || matchStatisticsImportLoading || state.isProcessing} delay={0} style={{ padding: "2rem 0" }}>

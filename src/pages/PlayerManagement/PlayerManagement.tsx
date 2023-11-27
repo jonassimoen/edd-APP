@@ -20,10 +20,10 @@ import { toast } from "react-toastify";
 import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 
 declare type PlayerManagementState = {
-    openEditModal: boolean
-    openCreateModal: boolean
-    openImportModal: boolean
-    editObject?: Player
+		openEditModal: boolean
+		openCreateModal: boolean
+		openImportModal: boolean
+		editObject?: Player
 }
 
 
@@ -56,164 +56,164 @@ export const PlayerManagement = () => {
 	];
 
 	const PlayerForm =
-        <>
-        	<Row gutter={16}>
-        		<Col span={12}>
-        			<FormItem
-        				name={"externalId"}
-        				label={t("property.player.externalId")}
-        				tooltip='Extern API id'
-        			>
-        				<InputNumber />
-        			</FormItem>
-        		</Col>
-        		<Col span={12}>
-        			<FormItem
-        				name={"value"}
-        				label={t("property.player.value")}
-        			>
-        				<InputNumber addonBefore="€" addonAfter="M" />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        	<Row gutter={16}>
-        		<Col span={12}>
-        			<FormItem
-        				name={"positionId"}
-        				label={t("property.player.position")}
-        			>
-        				<Select
-        					keyProperty="value"
-        					textProperty="label"
-        					placeholder={"Positie"}
-        					values={positionsName.map((name: string, idx: number) => ({ value: idx + 1, label: name }))}
-        				/>
-        			</FormItem>
-        		</Col>
-        		<Col span={12}>
-        			<FormItem
-        				name={"clubId"}
-        				label={"Club"}
-        			>
-        				<Select
-        					keyProperty="id"
-        					textProperty="name"
-        					placeholder={"Club"}
-        					values={clubs!}
-        				/>
-        			</FormItem>
+				<>
+					<Row gutter={16}>
+						<Col span={12}>
+							<FormItem
+								name={"externalId"}
+								label={t("property.player.externalId")}
+								tooltip='Extern API id'
+							>
+								<InputNumber />
+							</FormItem>
+						</Col>
+						<Col span={12}>
+							<FormItem
+								name={"value"}
+								label={t("property.player.value")}
+							>
+								<InputNumber addonBefore="€" addonAfter="M" />
+							</FormItem>
+						</Col>
+					</Row>
+					<Row gutter={16}>
+						<Col span={12}>
+							<FormItem
+								name={"positionId"}
+								label={t("property.player.position")}
+							>
+								<Select
+									keyProperty="value"
+									textProperty="label"
+									placeholder={"Positie"}
+									values={positionsName.map((name: string, idx: number) => ({ value: idx + 1, label: name }))}
+								/>
+							</FormItem>
+						</Col>
+						<Col span={12}>
+							<FormItem
+								name={"clubId"}
+								label={"Club"}
+							>
+								<Select
+									keyProperty="id"
+									textProperty="name"
+									placeholder={"Club"}
+									values={clubs!}
+								/>
+							</FormItem>
 
-        		</Col>
-        	</Row>
-        	<Row gutter={16}>
-        		<Col span={8}>
-        			<FormItem
-        				name={"forename"}
-        				label={"First name"}
-        				rules={([{
-        					required: true,
-        					message: t("property.player.forename.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        		<Col span={8}>
-        			<FormItem
-        				name={"surname"}
-        				label={"Last name"}
-        				rules={([{
-        					required: true,
-        					message: t("property.player.surname.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        		<Col span={8}>
-        			<FormItem
-        				name={"short"}
-        				label={"Short name"}
-        				rules={([{
-        					required: true,
-        					message: t("property.player.shortname.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        	<Row gutter={16}>
-        		<Col span={4}>
-        			<FormItem
-        				name={"captain"}
-        				label={"Captain"}
-        				valuePropName="checked"
-        			>
-        				<Checkbox style={{ padding: "auto" }} />
-        			</FormItem>
-        		</Col>
-        		<Col span={4}>
-        			<FormItem
-        				name={"star"}
-        				label={"Sterspeler"}
-        				valuePropName="checked"
-        			>
-        				<Checkbox />
-        			</FormItem>
-        		</Col>
-        		<Col span={4}>
-        			<FormItem
-        				name={"setPieces"}
-        				label={"Set Pieces"}
-        				valuePropName="checked"
-        			>
-        				<Checkbox />
-        			</FormItem>
-        		</Col>
-        		<Col span={4}>
-        			<FormItem
-        				name={"banned"}
-        				label={"Banned"}
-        				valuePropName="checked"
-        			>
-        				<Checkbox />
-        			</FormItem>
-        		</Col>
-        		<Col span={4}>
-        			<FormItem
-        				name={"form"}
-        				label={"In form"}
-        				valuePropName="checked"
-        			>
-        				<Checkbox />
-        			</FormItem>
-        		</Col>
-        		<Col span={4}>
-        			<FormItem
-        				name={"injury"}
-        				label={"Injury"}
-        				valuePropName="checked"
-        			>
-        				<Checkbox />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        	<Row gutter={16}>
-        		<Col span={24}>
-        			<FormItem
-        				name={"portraitUrl"}
-        				label={"Picture URL"}
-        				rules={([{
-        					required: true,
-        					message: t("property.player.portraitUrl.required").toString()
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        </>;
+						</Col>
+					</Row>
+					<Row gutter={16}>
+						<Col span={8}>
+							<FormItem
+								name={"forename"}
+								label={"First name"}
+								rules={([{
+									required: true,
+									message: t("property.player.forename.required")
+								}])}
+							>
+								<Input />
+							</FormItem>
+						</Col>
+						<Col span={8}>
+							<FormItem
+								name={"surname"}
+								label={"Last name"}
+								rules={([{
+									required: true,
+									message: t("property.player.surname.required")
+								}])}
+							>
+								<Input />
+							</FormItem>
+						</Col>
+						<Col span={8}>
+							<FormItem
+								name={"short"}
+								label={"Short name"}
+								rules={([{
+									required: true,
+									message: t("property.player.shortname.required")
+								}])}
+							>
+								<Input />
+							</FormItem>
+						</Col>
+					</Row>
+					<Row gutter={16}>
+						<Col span={4}>
+							<FormItem
+								name={"captain"}
+								label={"Captain"}
+								valuePropName="checked"
+							>
+								<Checkbox style={{ padding: "auto" }} />
+							</FormItem>
+						</Col>
+						<Col span={4}>
+							<FormItem
+								name={"star"}
+								label={"Sterspeler"}
+								valuePropName="checked"
+							>
+								<Checkbox />
+							</FormItem>
+						</Col>
+						<Col span={4}>
+							<FormItem
+								name={"setPieces"}
+								label={"Set Pieces"}
+								valuePropName="checked"
+							>
+								<Checkbox />
+							</FormItem>
+						</Col>
+						<Col span={4}>
+							<FormItem
+								name={"banned"}
+								label={"Banned"}
+								valuePropName="checked"
+							>
+								<Checkbox />
+							</FormItem>
+						</Col>
+						<Col span={4}>
+							<FormItem
+								name={"form"}
+								label={"In form"}
+								valuePropName="checked"
+							>
+								<Checkbox />
+							</FormItem>
+						</Col>
+						<Col span={4}>
+							<FormItem
+								name={"injury"}
+								label={"Injury"}
+								valuePropName="checked"
+							>
+								<Checkbox />
+							</FormItem>
+						</Col>
+					</Row>
+					<Row gutter={16}>
+						<Col span={24}>
+							<FormItem
+								name={"portraitUrl"}
+								label={"Picture URL"}
+								rules={([{
+									required: true,
+									message: t("property.player.portraitUrl.required").toString()
+								}])}
+							>
+								<Input />
+							</FormItem>
+						</Col>
+					</Row>
+				</>;
 
 
 
@@ -437,7 +437,7 @@ export const PlayerManagement = () => {
 				onCancel={() => setState({ ...state, openImportModal: false })}
 				cancelText={t("cancelBtn")}
 			>
-                Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan?
+								Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan?
 				<p><ExclamationCircleOutlined style={{ color: "red" }} /> Het importeren duurt min. 5 minuten!</p>
 			</Modal >
 		</>

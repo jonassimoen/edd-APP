@@ -86,7 +86,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const [getTeams] = useLazyGetTeamsQuery();
 	const [submitTransfers, { isSuccess: submitTransfersSucces, data: submitTransfersResult }] = useSubmitTransfersMutation();
 
-	const application = useSelector((state: StoreState.All) => state.application);
+	const application = useSelector((state: StoreState) => state.application);
 
 	const [state, setState] = useState<AbstractTeamState>({
 		validator: FootballPicker(FootballMaxPositionsPicks, FootballPositionIds),
@@ -104,7 +104,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		swapPlayerId: null,
 		swapPlayer: null,
 		swappedFrom: null,
-		visibleWeekId: deadlineInfoSuccess ? (options && options.mode === 'points' ? deadlineInfo.deadlineInfo.displayWeek : deadlineInfo.deadlineInfo.deadlineWeek) : 0,
+		visibleWeekId: deadlineInfoSuccess ? (options && options.mode === "points" ? deadlineInfo.deadlineInfo.displayWeek : deadlineInfo.deadlineInfo.deadlineWeek) : 0,
 		boosters: {},
 		teamPointsInfo: {
 			generalPoints: null,
@@ -129,8 +129,8 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	});
 
 	useEffect(() => {
-		setState((state: any) => ({ ...state, visibleWeekId: (options && options.mode === 'points' ? deadlineInfo?.deadlineInfo.displayWeek : deadlineInfo?.deadlineInfo.deadlineWeek) }));
-	}, [deadlineInfo])
+		setState((state: any) => ({ ...state, visibleWeekId: (options && options.mode === "points" ? deadlineInfo?.deadlineInfo.displayWeek : deadlineInfo?.deadlineInfo.deadlineWeek) }));
+	}, [deadlineInfo]);
 
 	const setStarting = (starting: any[]) => {
 		setState({ ...state, starting });
@@ -175,7 +175,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		isTeamOwner?: boolean,
 		teamUser?: any
 	) => {
-		console.log("INIT TEAM STATE")
+		console.log("INIT TEAM STATE");
 		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
@@ -249,7 +249,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const captains = {
 				captainId: state.captainId,
 				viceCaptainId: state.viceCaptainId
-			}
+			};
 			if (!state.captainId && player.positionId !== 0) {
 				captains.captainId = player.id;
 			}
@@ -479,7 +479,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				starting: startingIds,
 				bench: benchIds,
 				teamName: state.teamName,
-			}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t(`team.updateSelection.failed`) }));
+			}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t("team.updateSelection.failed") }));
 		}
 	};
 
@@ -655,7 +655,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		const transfers = state.draftTransfers
 			.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
 
-		submitTransfers({ teamId, transfers }).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t(`team.transfers.failed`) }));
+		submitTransfers({ teamId, transfers }).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t("team.transfers.failed") }));
 	};
 
 	const onTransfersReset = (teamId: number) => {

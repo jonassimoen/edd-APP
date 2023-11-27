@@ -80,7 +80,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 		props.onTeamSave()
 			.then((result) => setState({ ...state, hasPlayers: (result.data.players.length !== 0), redirectToPayments: true }))
 			.then(() => getTeams())
-			.catch(() => { });
+			.catch(() => {/*todo*/ });
 	};
 
 	const onTeamReset = (team: any) => {
@@ -89,10 +89,10 @@ const _NewTeam = (props: AbstractTeamType) => {
 		}
 		props.onTeamReset(team)
 			.then(() => setState({ ...state, redirectToPayments: true }))
-			.catch(() => { });
+			.catch(() => {/*todo*/ });
 	};
 
-	const application = useSelector((state: StoreState.All) => state.application);
+	const application = useSelector((state: StoreState) => state.application);
 	// matches from props/state
 	const { starting, bench, captainId, viceCaptainId, teamName, budget, savingTeamPending, activePositionFilter } = props;
 	const { redirectToPayments, hasPlayers } = state;
@@ -116,8 +116,8 @@ const _NewTeam = (props: AbstractTeamType) => {
 							<Title level={2}>{t("general.footballLineup")}</Title>
 							<Input
 								onChange={props.onTeamNameChange}
-								style={{ maxWidth: '100%' }}
-								placeholder={t('team.newTeamNameInput')}
+								style={{ maxWidth: "100%" }}
+								placeholder={t("team.newTeamNameInput")}
 								value={teamName}
 								maxLength={55}
 							/>
@@ -170,9 +170,9 @@ const _NewTeam = (props: AbstractTeamType) => {
 									loading={savingTeamPending}
 									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 									size="large">
-										<SaveOutlined style={{ marginRight: '10px' }} />
-										{t("team.saveTeam")}
-									</Button>
+									<SaveOutlined style={{ marginRight: "10px" }} />
+									{t("team.saveTeam")}
+								</Button>
 								}
 							</Row>
 						</Col>

@@ -45,7 +45,7 @@ export const weeksApi = createApi({
 			query: () => "/deadline-info",
 			providesTags: (res, err, arg) =>
 				res
-					? [...res.weeks?.map(({ id }) => ({ type: "Week" as const, id })), "Week"]
+					? [...res.weeks!.map(({ id }) => ({ type: "Week" as const, id })), "Week"]
 					: ["Week"]
 		}),
 

@@ -60,10 +60,10 @@ function AddButtonSvg() {
 			<filter x="-32.0%" y="-32.0%" width="164.0%" height="180.0%" filterUnits="objectBoundingBox" id="filter-2">
 				<feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
 				<feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-				<feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.24 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+				<feColorMatrix values="0 0 0 0 0	 0 0 0 0 0	 0 0 0 0 0	0 0 0 0.24 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
 				<feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
 				<feGaussianBlur stdDeviation="2" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
-				<feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.12 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+				<feColorMatrix values="0 0 0 0 0	 0 0 0 0 0	 0 0 0 0 0	0 0 0 0.12 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
 				<feMerge>
 					<feMergeNode in="shadowMatrixOuter1"></feMergeNode>
 					<feMergeNode in="shadowMatrixOuter2"></feMergeNode>
@@ -170,7 +170,7 @@ function ConfirmedSvg() {
 			<g id="Icon/Confirmed">
 				<g id="Group">
 					<rect id="Rectangle" fill="#53DD6C" x="0" y="0" width="20" height="20"></rect>
-					<polyline id="Line-2" stroke="#FFFFFF"  strokeLinecap="square" points="4 9.5 8.5 14 16.5 6"></polyline>
+					<polyline id="Line-2" stroke="#FFFFFF" strokeLinecap="square" points="4 9.5 8.5 14 16.5 6"></polyline>
 				</g>
 			</g>
 		</g>
@@ -259,28 +259,28 @@ function BenchSvg() {
 				<g id="Bench" transform="translate(0.000000, 5.000000)">
 					<path d="M9,39 L101,39 L101,40 C101,40.5522847 100.552285,41 100,41 L10,41 C9.44771525,41 9,40.5522847 9,40 L9,39 L9,39 Z" id="Rectangle" fill="#A0A0A0"></path>
 					<g id="Group-9" transform="translate(89.000000, 0.000000)" stroke="#A0A0A0">
-						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line"  strokeLinecap="square"></line>
-						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle"  fill="#6D7278"></path>
-						<rect id="Rectangle"  fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
-						<rect id="Rectangle"  fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
+						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line" strokeLinecap="square"></line>
+						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle" fill="#6D7278"></path>
+						<rect id="Rectangle" fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
+						<rect id="Rectangle" fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
 					</g>
 					<g id="Group-9" stroke="#A0A0A0">
-						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line"  strokeLinecap="square"></line>
-						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle"  fill="#6D7278"></path>
-						<rect id="Rectangle"  fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
-						<rect id="Rectangle"  fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
+						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line" strokeLinecap="square"></line>
+						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle" fill="#6D7278"></path>
+						<rect id="Rectangle" fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
+						<rect id="Rectangle" fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
 					</g>
 					<g id="Group-9" transform="translate(29.666667, 0.000000)" stroke="#A0A0A0">
-						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line"  strokeLinecap="square"></line>
-						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle"  fill="#6D7278"></path>
-						<rect id="Rectangle"  fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
-						<rect id="Rectangle"  fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
+						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line" strokeLinecap="square"></line>
+						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle" fill="#6D7278"></path>
+						<rect id="Rectangle" fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
+						<rect id="Rectangle" fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
 					</g>
 					<g id="Group-9" transform="translate(59.333333, 0.000000)" stroke="#A0A0A0">
-						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line"  strokeLinecap="square"></line>
-						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle"  fill="#6D7278"></path>
-						<rect id="Rectangle"  fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
-						<rect id="Rectangle"  fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
+						<line x1="10.5" y1="30.4" x2="10.5" y2="38" id="Line" strokeLinecap="square"></line>
+						<path d="M10.5,0.75 C12.7781746,0.75 14.8406746,1.6734127 16.3336309,3.16636906 C17.8265873,4.65932541 18.75,6.72182541 18.75,9 L18.75,9 L18.75,23.57 L2.25,23.57 L2.25,9 C2.25,6.72182541 3.1734127,4.65932541 4.66636906,3.16636906 C6.15932541,1.6734127 8.22182541,0.75 10.5,0.75 Z" id="Rectangle" fill="#6D7278"></path>
+						<rect id="Rectangle" fill="#6D7278" x="0.75" y="23.55" width="19.5" height="6.1" rx="3"></rect>
+						<rect id="Rectangle" fill="#6D7278" x="6.75" y="5.31" width="7.5" height="3.06" rx="1.53"></rect>
 					</g>
 				</g>
 			</g>
@@ -302,15 +302,15 @@ function DaySvg() {
 }
 
 function PowerSubSvg() {
-	 return <svg height="1em" viewBox="0 0 96 86">
-	 <g id="Page-1" stroke="none" fill="none">
-		 <g id="noun_strong_1830768" fill="#000000">
-			 <g id="Group">
-				 <path d="M50.6,60.6 C49,57.7 49,54.2 50.7,51.3 C40.6,44.2 31.1,49.6 26.6,52.6 C25.9,53.1 24.9,52.4 25.1,51.6 C25.8,48.5 27.1,43.1 28.5,37.9 C30.6,30.2 34.6,19.9 38.7,19.5 C44.2,19 47.7,17.6 51.4,17.6 C55.9,17.6 58.2,16.1 58.2,14 C58.2,11.9 56.3,12.3 55.1,11.7 C54.4,11.3 57.8,8.6 58.9,6.2 C60,3.8 52,1 47.1,0.2 C42.3,-0.6 40.3,1.9 38.7,4.1 C37.2,6.2 30.7,14.9 19.5,25.7 C11.2,33.8 4.2,48.7 1.2,55.9 C-0.1,59 0.2,62.5 2,65.2 C11.2,78.7 40.7,80 51,77.9 C53.5,79.3 57.2,80.5 61.3,81 L62.3,65.5 L58.9,65.5 C55.4,65.4 52.3,63.6 50.6,60.6 Z" id="Path"></path>
-				 <path d="M92.3,44 L82.3,44 L83.7,20.8 C83.9,17.4 79.5,16 77.7,18.9 L56.1,54.3 C54.8,56.5 56.3,59.2 58.9,59.2 L68.9,59.2 L67.5,82.4 C67.3,85.8 71.7,87.2 73.5,84.3 L95,48.9 C96.3,46.7 94.8,44 92.3,44 Z" id="Path"></path>
-			 </g>
-		 </g>
-	 </g>
+	return <svg height="1em" viewBox="0 0 96 86">
+		<g id="Page-1" stroke="none" fill="none">
+			<g id="noun_strong_1830768" fill="#000000">
+				<g id="Group">
+					<path d="M50.6,60.6 C49,57.7 49,54.2 50.7,51.3 C40.6,44.2 31.1,49.6 26.6,52.6 C25.9,53.1 24.9,52.4 25.1,51.6 C25.8,48.5 27.1,43.1 28.5,37.9 C30.6,30.2 34.6,19.9 38.7,19.5 C44.2,19 47.7,17.6 51.4,17.6 C55.9,17.6 58.2,16.1 58.2,14 C58.2,11.9 56.3,12.3 55.1,11.7 C54.4,11.3 57.8,8.6 58.9,6.2 C60,3.8 52,1 47.1,0.2 C42.3,-0.6 40.3,1.9 38.7,4.1 C37.2,6.2 30.7,14.9 19.5,25.7 C11.2,33.8 4.2,48.7 1.2,55.9 C-0.1,59 0.2,62.5 2,65.2 C11.2,78.7 40.7,80 51,77.9 C53.5,79.3 57.2,80.5 61.3,81 L62.3,65.5 L58.9,65.5 C55.4,65.4 52.3,63.6 50.6,60.6 Z" id="Path"></path>
+					<path d="M92.3,44 L82.3,44 L83.7,20.8 C83.9,17.4 79.5,16 77.7,18.9 L56.1,54.3 C54.8,56.5 56.3,59.2 58.9,59.2 L68.9,59.2 L67.5,82.4 C67.3,85.8 71.7,87.2 73.5,84.3 L95,48.9 C96.3,46.7 94.8,44 92.3,44 Z" id="Path"></path>
+				</g>
+			</g>
+		</g>
 	</svg>;
 }
 
@@ -333,7 +333,7 @@ function SetPiecesSvg() {
 			</g>
 		</g>
 	</svg>;
-} 
+}
 function StarSvg() {
 	return <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
 		<g id="Icon-/-Player-/-Star" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -422,4 +422,5 @@ export {
 	GreenSvg,
 	OrangeSvg,
 	RedSvg,
-	UserSvg};
+	UserSvg
+};

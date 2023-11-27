@@ -74,21 +74,21 @@ export const getPlayerPositionHexColor = (player: any, theme: any) => {
 
 
 export const selectionPlayerSellValue = (player: any) => {
-    const current = Object.assign({}, player);
-    const currentValue = current.value;
-    const selectionValue = player.selection.value;
-    const diff = currentValue - selectionValue;
-    let playerSellValue = null;
+	const current = Object.assign({}, player);
+	const currentValue = current.value;
+	const selectionValue = player.selection.value;
+	const diff = currentValue - selectionValue;
+	let playerSellValue = null;
 
-    if(selectionValue >= currentValue) {
-        playerSellValue = currentValue;
-    } else {
-        // const profit = roundDownDecimal()
-        const profit = diff / 2;
-        playerSellValue = selectionValue + profit;
-    }
-    return parseFloat((playerSellValue).toFixed(2));
-}
+	if(selectionValue >= currentValue) {
+		playerSellValue = currentValue;
+	} else {
+		// const profit = roundDownDecimal()
+		const profit = diff / 2;
+		playerSellValue = selectionValue + profit;
+	}
+	return parseFloat((playerSellValue).toFixed(2));
+};
 
 export const roundNextHalf = (number: number) => {
 	const integerPart = Math.floor(number);
@@ -101,7 +101,7 @@ export const roundNextHalf = (number: number) => {
 	} else {
 		return integerPart + 1;
 	}
-}
+};
 
 export const firstLetterUppercased = (string: string) => {
 	return string.charAt(0).toUpperCase();
@@ -131,20 +131,20 @@ export const openSuccessNotification = (config: NotificationConfig) => {
 
 export const statusToIconColor = (status: string) => {
 	switch (status) {
-		case "PLAYED":
-			return { color: "purple", icon: <UserOutlined /> };
-			break;
-		case "STATS_IMPORTED":
-			return { color: "warning", icon: <DownloadOutlined /> };
-			break;
-		case "STATS_UPDATED":
-			return { color: "processing", icon: <SyncOutlined spin /> };
-			break;
-		case "VALIDATED":
-			return { color: "success", icon: <CheckCircleOutlined /> };
-			break;
-		default:
-			return { color: "error", icon: <ClockCircleOutlined /> };
-			break;
+	case "PLAYED":
+		return { color: "purple", icon: <UserOutlined /> };
+		break;
+	case "STATS_IMPORTED":
+		return { color: "warning", icon: <DownloadOutlined /> };
+		break;
+	case "STATS_UPDATED":
+		return { color: "processing", icon: <SyncOutlined spin /> };
+		break;
+	case "VALIDATED":
+		return { color: "success", icon: <CheckCircleOutlined /> };
+		break;
+	default:
+		return { color: "error", icon: <ClockCircleOutlined /> };
+		break;
 	}
-}
+};

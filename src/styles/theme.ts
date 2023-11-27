@@ -1,4 +1,4 @@
-const theme =  {
+const theme =	{
 	primaryColor: "#00FAFA",
 	primaryContrast: "#16002b",
 	positionGk: "#4ab969",

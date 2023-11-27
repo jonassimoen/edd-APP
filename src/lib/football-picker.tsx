@@ -121,10 +121,6 @@ export const FootballPicker = (maxPositionsPicks: PositionsMinMax, positionsIds:
 		};
 	};
 
-	const canPick = (player: Player, ignoreBench: boolean) => {
-		return checkAndPick(player, true, ignoreBench);
-	};
-
 	const checkAndPick = (player: Player, checkOnly = false, ignoreBench = false) => {
 		const positionsToCheck = ["Defender", "Midfielder", "Forward"];
 		const maxAllowedPlayersPerPositions = getMaxAllowedForPositions(positionsToCheck);
@@ -155,6 +151,10 @@ export const FootballPicker = (maxPositionsPicks: PositionsMinMax, positionsIds:
 				return false;
 			}
 		}
+	};
+
+	const canPick = (player: Player, ignoreBench: boolean) => {
+		return checkAndPick(player, true, ignoreBench);
 	};
 
 	const isValid = () => {

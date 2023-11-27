@@ -8,11 +8,11 @@ type FooterProps = {
 }
 
 export const Footer = (props: FooterProps) => {
-    return (
-        <FooterStyle>
-            <ul>
-                <li><Link to="home"><MessageOutlined /></Link></li>
-            </ul>
-        </FooterStyle>
-    );
-}
+	return (
+		<FooterStyle>
+			<ul>
+				<li><Link to="home"><MessageOutlined /></Link></li>
+			</ul>
+		</FooterStyle>
+	);
+};

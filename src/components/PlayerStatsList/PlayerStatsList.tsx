@@ -157,7 +157,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: statsList[state.filters.stat].value[1].label,
 			sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[1].value] - b[statsList[state.filters.stat].value[1].value],
 			dataIndex: statsList[state.filters.stat].value[1].value,
-			width: '10%',
+			width: "10%",
 			render: (text: string, record: any) => {
 				return (<span>{record[statsList[state.filters.stat].value[1].value]}</span>);
 			},
@@ -175,7 +175,9 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	];
 
 	const tableEventHandler = useMemo(() => {
-		let tableEventHandler: any = () => { };
+		// todo
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		let tableEventHandler: any = () => { }; 
 		if (props.onSelect) {
 			tableEventHandler = (player: any) => ({
 				onClick: (event: any) => {
@@ -190,7 +192,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		const filters: any = Object.assign({}, state.filters, {
 			[name]: value,
 		});
-		console.log("filters",filters)
+		console.log("filters",filters);
 		setState({ ...state, filters });
 	};
 
@@ -201,7 +203,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		show &&= !(state.filters.clubId !== -1 && state.filters.clubId !== player.clubId);
 		show &&= !(state.filters.positionId !== -1 && state.filters.positionId !== player.positionId);
 		return show;
-	}
+	};
 
 	const handleTableChange = (pagination: any, filters: any, sorter: any) => {
 		const newPagination = { ...state.pagination, page: pagination.current };
@@ -264,7 +266,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					keyProperty="value"
 					textProperty="name"
 					values={budgetsList}
-					onSelect={(value: any) => {onFilterChange("playerValue", value); console.log("player value changed to", value)}}
+					onSelect={(value: any) => {onFilterChange("playerValue", value); console.log("player value changed to", value);}}
 					placeholder={budgetsList[0].name}
 					style={{ marginRight: 0 }}
 				/>

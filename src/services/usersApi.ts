@@ -13,7 +13,9 @@ export const usersApi = createApi({
 				try {
 					const { data } = await queryFulfilled;
 					dispatch(setUser(data));
-				} catch(err) {}
+				} catch(err) {
+					console.error(err);
+				}
 			}
 		}),
 
@@ -24,7 +26,9 @@ export const usersApi = createApi({
 				try {
 					const { data } = await queryFulfilled;
 					dispatch(setTeams(data.teams));
-				} catch(err) {}
+				} catch(err) {
+					console.error(err);
+				}
 			}
 		}),
 	})

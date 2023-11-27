@@ -15,8 +15,8 @@ export const TableStyle = styled(Table)`
 			padding-bottom: 10px;
 			border-radius: 0px !important;
 			padding: 7.5px;
-            white-space: nowrap;
-            text-align: center;
+						white-space: nowrap;
+						text-align: center;
 
 			&:last-child {
 				text-align: center;
@@ -28,7 +28,7 @@ export const TableStyle = styled(Table)`
 			}
 
 			&.ant-table-column-has-actions {
-                background-clip: initial;
+								background-clip: initial;
 			}
 
 			.ant-table-column-sorter .ant-table-column-sorter-inner {

@@ -17,7 +17,7 @@ export const Profile = () => {
 				<Col xl={12} md={16} sm={24}>
 					<Title level={2}>Uw gegevens</Title>
 					<p>Op onze servers wordt de data van je Google-account gebruikt. <br />
-                        Hierdoor is het niet mogelijk om hier je gegevens aan te passen, dat moet via Google gebeuren.</p>
+												Hierdoor is het niet mogelijk om hier je gegevens aan te passen, dat moet via Google gebeuren.</p>
 
 					<Title level={5}>Opgeslagen gegevens:</Title>
 					<TableStyle

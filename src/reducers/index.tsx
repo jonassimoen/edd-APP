@@ -10,7 +10,6 @@ import { userReducer } from "@/features/userSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { playerStatsApi } from "@/services/statisticsApi";
-import { rtkQueryNotification } from "./rtkQueryErrorNotification";
 
 const reducer = combineReducers({
 	[usersApi.reducerPath]: usersApi.reducer,
@@ -47,7 +46,6 @@ export const store = configureStore({
 		matchesApi.middleware,
 		weeksApi.middleware,
 		playerStatsApi.middleware,
-		// rtkQueryNotification,
 	]
 });
 

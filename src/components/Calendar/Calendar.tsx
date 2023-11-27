@@ -40,7 +40,7 @@ export const Calendar = (props: CalendarProps) => {
 
 	const onFilterChange = (name: string, value: string | number) => {
 		const filters: any = Object.assign({}, state.filters, { [name]: value });
-		setState({ ...state, filters })
+		setState({ ...state, filters });
 	};
 
 	const matchFilter = (match: Match, filters: any) => {
@@ -49,7 +49,7 @@ export const Calendar = (props: CalendarProps) => {
 			show = false;
 		}
 		return show;
-	}
+	};
 
 	const onCalendarWeekChanged = (weekId: number) => {
 		setState({ ...state, weekId: weekId });

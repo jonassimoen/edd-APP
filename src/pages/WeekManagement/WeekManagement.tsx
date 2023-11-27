@@ -105,7 +105,7 @@ export const WeekManagement = () => {
 							width: "65%",
 							render: (date: Date, record: any) => {
 								return (
-									<p>{dayjs(date).format('DD/MM/YYYY HH:mm')}</p>
+									<p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>
 								);
 							}
 						},
@@ -126,7 +126,7 @@ export const WeekManagement = () => {
 													<Badge count={nr} key={`match_${id}_${status}`}>
 														<Tag color={color} icon={icon}>{status}</Tag>
 													</Badge>
-												)
+												);
 											})
 
 										}

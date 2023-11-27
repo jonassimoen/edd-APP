@@ -1,5 +1,5 @@
-import { theme } from '@/styles/theme';
-import styled from 'styled-components';
+import { theme } from "@/styles/theme";
+import styled from "styled-components";
 
 export const StatsStyle = styled.div `
 	border-radius: 0;

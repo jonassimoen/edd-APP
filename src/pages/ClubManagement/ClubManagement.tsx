@@ -15,10 +15,10 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 declare type ClubManagementState = {
-    openEditModal: boolean
-    openCreateModal: boolean
-    openImportModal: boolean
-    editObject?: Club
+	openEditModal: boolean
+	openCreateModal: boolean
+	openImportModal: boolean
+	editObject?: Club
 }
 
 export const ClubManagement = () => {
@@ -35,45 +35,45 @@ export const ClubManagement = () => {
 	const { t } = useTranslation();
 
 	const ClubForm =
-        <>
-        	<Row gutter={16}>
-        		<Col span={8}>
-        			<FormItem
-        				name={"externalId"}
-        				label={"Extern ID"}
-        				tooltip='Extern API id'
-        			>
-        				<InputNumber />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        	<Row gutter={16}>
-        		<Col span={12}>
-        			<FormItem
-        				name={"name"}
-        				label={"Name"}
-        				rules={([{
-        					required: true,
-        					message: t("property.club.name.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        		<Col span={12}>
-        			<FormItem
-        				name={"short"}
-        				label={"Short name"}
-        				rules={([{
-        					required: true,
-        					message: t("property.club.short.required")
-        				}])}
-        			>
-        				<Input />
-        			</FormItem>
-        		</Col>
-        	</Row>
-        </>;
+		<>
+			<Row gutter={16}>
+				<Col span={8}>
+					<FormItem
+						name={"externalId"}
+						label={"Extern ID"}
+						tooltip='Extern API id'
+					>
+						<InputNumber />
+					</FormItem>
+				</Col>
+			</Row>
+			<Row gutter={16}>
+				<Col span={12}>
+					<FormItem
+						name={"name"}
+						label={"Name"}
+						rules={([{
+							required: true,
+							message: t("property.club.name.required")
+						}])}
+					>
+						<Input />
+					</FormItem>
+				</Col>
+				<Col span={12}>
+					<FormItem
+						name={"short"}
+						label={"Short name"}
+						rules={([{
+							required: true,
+							message: t("property.club.short.required")
+						}])}
+					>
+						<Input />
+					</FormItem>
+				</Col>
+			</Row>
+		</>;
 	return (
 		<>
 			<Row align='middle'>
@@ -94,7 +94,7 @@ export const ClubManagement = () => {
 					rowKey={"id"}
 					size="small"
 					rowClassName={"ant-table-row"}
-					pagination={{ position: ["bottomCenter"], showSizeChanger: false}}
+					pagination={{ position: ["bottomCenter"], showSizeChanger: false }}
 					columns={[
 						{
 							title: "ID",
@@ -170,9 +170,9 @@ export const ClubManagement = () => {
 			<EditModal
 				object={state.editObject!}
 				open={state.openEditModal}
-				onCreate={(club: Club) => { 
+				onCreate={(club: Club) => {
 					updateClub(club);
-					setState({ ...state, openEditModal: false }); 
+					setState({ ...state, openEditModal: false });
 				}}
 				onCancel={() => setState({ ...state, openEditModal: false })}
 				type='club'
@@ -190,9 +190,9 @@ export const ClubManagement = () => {
 			<EditModal
 				object={{} as Club}
 				open={state.openCreateModal}
-				onCreate={(club: Club) => { 
+				onCreate={(club: Club) => {
 					createClub(club);
-					setState({ ...state, openCreateModal: false }); 
+					setState({ ...state, openCreateModal: false });
 				}}
 				onCancel={() => setState({ ...state, openCreateModal: false })}
 				type='club'
@@ -205,7 +205,7 @@ export const ClubManagement = () => {
 			<Modal
 				title={t("management.import.confirmTitle")}
 				open={state.openImportModal}
-				onOk={() => { 
+				onOk={() => {
 					toast.loading(t("admin.importing.loading"), { toastId: "loading-importing-clubs" });
 					importClubs().then(() => {
 						toast.dismiss("loading-importing-clubs");
@@ -218,7 +218,7 @@ export const ClubManagement = () => {
 				onCancel={() => setState({ ...state, openImportModal: false })}
 				cancelText={t("cancelBtn")}
 			>
-                Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan? Het importeren kan enkele seconden tot minuten duren!
+				Het importeren is een <b>zeer kostbare</b> operatie. Zeker dat je wilt doorgaan? Het importeren kan enkele seconden tot minuten duren!
 			</Modal >
 		</>
 	);

@@ -82,23 +82,23 @@ export const Header = () => {
 		if (showPoints) {
 			insertToMenuAtPosition(2, "team");
 		} else {
-			insertToMenuAtPosition(1, "team")
+			insertToMenuAtPosition(1, "team");
 		}
 	}
 
 	if (authenticated && userTeam && !showTransfers && gameInProgress) {
 		if (showTransfers) {
-			insertToMenuAtPosition(3, 'edit');
+			insertToMenuAtPosition(3, "edit");
 		} else {
-			insertToMenuAtPosition(2, 'edit');
+			insertToMenuAtPosition(2, "edit");
 		}
 	}
 
 	if (authenticated && showTransfers && gameInProgress) {
 		if (showTransfers) {
-			insertToMenuAtPosition(4, 'transfers');
+			insertToMenuAtPosition(4, "transfers");
 		} else {
-			insertToMenuAtPosition(3, 'transfers');
+			insertToMenuAtPosition(3, "transfers");
 		}
 	}
 

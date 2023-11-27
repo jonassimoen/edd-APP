@@ -1,88 +1,88 @@
 @font-face {
-    font-family: UEFASupercup;
-    src: url(/fonts/UEFASupercup-Bold.ttf) format('truetype');
-    font-weight: 500;
-    font-display: swap;
+		font-family: UEFASupercup;
+		src: url(/fonts/UEFASupercup-Bold.ttf) format('truetype');
+		font-weight: 500;
+		font-display: swap;
 }
 
 @font-face {
-    font-family: UEFASupercup;
-    src: url(/fonts/UEFASupercup-Regular.ttf) format('truetype');
-    font-weight: 400;
-    font-display: swap;
+		font-family: UEFASupercup;
+		src: url(/fonts/UEFASupercup-Regular.ttf) format('truetype');
+		font-weight: 400;
+		font-display: swap;
 }
 
 @font-face {
-    font-family: UEFASupercup;
-    src: url(/fonts/UEFASupercup-Light.ttf) format('truetype');
-    font-weight: 300;
-    font-display: swap;
+		font-family: UEFASupercup;
+		src: url(/fonts/UEFASupercup-Light.ttf) format('truetype');
+		font-weight: 300;
+		font-display: swap;
 }
 
 @font-face {
-    font-family: UEFAEuro;
-    src: url(/fonts/uefaeuro-bold.woff2) format('woff2');
-    src: url(/fonts/uefaeuro-bold.ttf) format('truetype');
-    font-weight: 500;
-    font-display: swap;
+		font-family: UEFAEuro;
+		src: url(/fonts/uefaeuro-bold.woff2) format('woff2');
+		src: url(/fonts/uefaeuro-bold.ttf) format('truetype');
+		font-weight: 500;
+		font-display: swap;
 }
 
 @font-face {
-    font-family: UEFAEuro;
-    src: url(/fonts/uefaeuro-medium.woff2) format('woff2');
-    src: url(/fonts/uefaeuro-medium.ttf) format('truetype');
-    font-weight: 400;
-    font-display: swap;
+		font-family: UEFAEuro;
+		src: url(/fonts/uefaeuro-medium.woff2) format('woff2');
+		src: url(/fonts/uefaeuro-medium.ttf) format('truetype');
+		font-weight: 400;
+		font-display: swap;
 }
 
 @font-face {
-    font-family: UEFAEuro;
-    src: url(/fonts/uefaeuro-book.woff2) format('woff2');
-    src: url(/fonts/uefaeuro-book.ttf) format('truetype');
-    font-weight: 300;
-    font-display: swap;
+		font-family: UEFAEuro;
+		src: url(/fonts/uefaeuro-book.woff2) format('woff2');
+		src: url(/fonts/uefaeuro-book.ttf) format('truetype');
+		font-weight: 300;
+		font-display: swap;
 }
 
 $primaryColor: #16002b;
 
 html {
-    font-family:  UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
-    -webkit-overflow-scrolling: touch;
-    background-color: "#16002b";
+		font-family:	UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
+		-webkit-overflow-scrolling: touch;
+		background-color: "#16002b";
 
-    ::-webkit-scrollbar {
-        width: 5px;
-        height: 0;
-    }
+		::-webkit-scrollbar {
+				width: 5px;
+				height: 0;
+		}
 
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
+		::-webkit-scrollbar-track {
+				background: #f1f1f1;
+		}
 
-    ::-webkit-scrollbar-thumb {
-        background: $primaryColor;
-        border-radius: 50px;
-    }
+		::-webkit-scrollbar-thumb {
+				background: $primaryColor;
+				border-radius: 50px;
+		}
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: theme;
-    }
+		::-webkit-scrollbar-thumb:hover {
+				background: theme;
+		}
 }
 
 body {
-    padding: 0;
-    margin: 0;    background-color: #f2f0f4;
+		padding: 0;
+		margin: 0;		background-color: #f2f0f4;
 
-    input:focus{
-        outline: none;
-    }
+		input:focus{
+				outline: none;
+		}
 }
 
 p {
-    margin:0;
-    padding:0;
+		margin:0;
+		padding:0;
 }
 
 .is-hidden {
-    display: none !important;
+		display: none !important;
 }

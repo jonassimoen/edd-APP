@@ -37,13 +37,7 @@ export const _Team = (props: AbstractTeamType) => {
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
 	const { t } = useTranslation();
-	const application = useSelector((state: StoreState.All) => state.application);
-
-	useEffect(() => {
-		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
-			getTeamInfo(props.visibleWeekId);
-		}
-	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
+	const application = useSelector((state: StoreState) => state.application);
 
 	const getTeamInfo = (weekId: number) => {
 		if (!teamResult) {
@@ -88,6 +82,12 @@ export const _Team = (props: AbstractTeamType) => {
 
 		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
 	};
+	
+	useEffect(() => {
+		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
+			getTeamInfo(props.visibleWeekId);
+		}
+	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
 
 	const startingByPositions = useMemo(() => startingListToPositionsList(props.starting, application.competition.lineupPositionRows), [props.starting]);
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
@@ -107,7 +107,7 @@ export const _Team = (props: AbstractTeamType) => {
 							<Col lg={24} md={24} sm={24} xs={24}>
 								<Block>
 									<DeadlineBar>
-										<p>{`${t('general.footballWeek')} ${deadlineWeek} deadline:`} <span className="deadline-date">{dayjs(deadlineDate).format('dddd DD MMMM HH:mm')}</span></p>
+										<p>{`${t("general.footballWeek")} ${deadlineWeek} deadline:`} <span className="deadline-date">{dayjs(deadlineDate).format("dddd DD MMMM HH:mm")}</span></p>
 									</DeadlineBar>
 								</Block>
 							</Col>)
@@ -163,7 +163,7 @@ export const _Team = (props: AbstractTeamType) => {
 							disabled={teamLoading || clubsLoading}
 							style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 							size="large">
-							<SaveOutlined style={{ marginRight: '10px' }} />
+							<SaveOutlined style={{ marginRight: "10px" }} />
 							{t("team.saveTeam")}
 						</Button>
 					</Col>

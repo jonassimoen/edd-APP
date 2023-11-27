@@ -26,267 +26,266 @@ import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import benchBackground from "./../../assets/img/fpl-bench-bg.svg";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
-    const { id } = useParams();
-    const user = useAppSelector((state) => state.userState.user);
-    const [state, setState] = useState({});
-    const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
-    const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
-    const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
-    const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
-    const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
-    const [getPointsTeam] = useLazyGetPointsQuery();
-    const { t } = useTranslation();
-    const application = useSelector((state: StoreState.All) => state.application);
-    const location = useLocation();
+	const { id } = useParams();
+	const user = useAppSelector((state) => state.userState.user);
+	const [state, setState] = useState({});
+	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
+	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
+	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
+	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
+	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
+	const [getPointsTeam] = useLazyGetPointsQuery();
+	const { t } = useTranslation();
+	const application = useSelector((state: StoreState) => state.application);
+	const location = useLocation();
 
 
-    const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
-    const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
-    const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
+	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
+	const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
 
-    useEffect(() => {
-        if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
-            getTeamInfo(visibleWeekId);
-        }
-    }, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
+	const parsePlayerPointsValue = (value: string) => {
+		try {
+			return JSON.parse(value);
+		} catch (error) {
+			return {};
+		}
+	};
 
-
-    const parsePlayerPointsValue = (value: string) => {
-        try {
-            return JSON.parse(value);
-        } catch (error) {
-            return {};
-        }
-    };
-
-    const getTeamInfo = (weekId: number) => {
-        if (!teamResult) {
-            return;
-        }
-        const pointsWeekId = deadlineInfo.deadlineInfo.deadlineWeek === weekId ? weekId - 1 : weekId;
-        const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "stats"];
-        const selectionProps: any[] = ['points'];
-        Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: pointsWeekId })])
-            .then(([result]: any[]) => {
-                console.log(pointsWeekId)
-                result = result.data;
-                const pointsConfirmation: any[] = [];
-                const weekStat = result.weekStat.find((stat: any) => stat.weekId === pointsWeekId);
-                const weekConfirmation = pointsConfirmation.find((item: any) => item.weekId === pointsWeekId);
-                const weekPointsConfirmed = weekConfirmation && weekConfirmation.confirmed;
-                const provisionalPoints = result.players
-                    .filter((player: any) => player.selections[0].starting === 1)
-                    .reduce((acc: number, player: any) => {
-                        const stats = player && player.stats ? player.stats : [];
-                        const statsTotalPoints = stats
-                            .reduce((statsAcc: number, item: any) => statsAcc + item.points, 0);
-                        const points = player.selections[0].captain ? statsTotalPoints * 2 : statsTotalPoints;
-                        return acc + points;
-                    }, 0);
+	const getTeamInfo = (weekId: number) => {
+		if (!teamResult) {
+			return;
+		}
+		const pointsWeekId = deadlineInfo.deadlineInfo.deadlineWeek === weekId ? weekId - 1 : weekId;
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "stats"];
+		const selectionProps: any[] = ["points"];
+		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: pointsWeekId })])
+			.then(([result]: any[]) => {
+				console.log(pointsWeekId);
+				result = result.data;
+				const pointsConfirmation: any[] = [];
+				const weekStat = result.weekStat.find((stat: any) => stat.weekId === pointsWeekId);
+				const weekConfirmation = pointsConfirmation.find((item: any) => item.weekId === pointsWeekId);
+				const weekPointsConfirmed = weekConfirmation && weekConfirmation.confirmed;
+				const provisionalPoints = result.players
+					.filter((player: any) => player.selections[0].starting === 1)
+					.reduce((acc: number, player: any) => {
+						const stats = player && player.stats ? player.stats : [];
+						const statsTotalPoints = stats
+							.reduce((statsAcc: number, item: any) => statsAcc + item.points, 0);
+						const points = player.selections[0].captain ? statsTotalPoints * 2 : statsTotalPoints;
+						return acc + points;
+					}, 0);
 
 
-                const teamPointsInfo = {
-                    generalPoints: result.team.points !== null ? result.team.points : '-',
-                    generalRank: result.team.rank !== null ? result.team.rank : '-',
-                    visibleWeekPoints: (weekStat && weekStat.points) || '-',
-                    visibleWeekRank: (weekStat && weekStat.rank) || '-',
-                    weekWinnerPoints: result.weekWinner && result.weekWinner.points !== null ? result.weekWinner.points : '-',
-                    weekPointsConfirmed: !!weekPointsConfirmed,
-                    provisionalPoints: provisionalPoints,
-                    totalTransfers: result.transfers.length,
-                    transfers: result.transfers.map((transfer: any) => {
-                        const outPlayer = players.find((item: any) => item.id === transfer.outId);
-                        const inPlayer = players.find((item: any) => item.id === transfer.inId);
-                        return { ...transfer, outPlayer, inPlayer };
-                    }),
-                    weekAveragePoints: result.weekAveragePoints !== null ? parseFloat(result.weekAveragePoints).toFixed(2) : '-'
-                };
+				const teamPointsInfo = {
+					generalPoints: result.team.points !== null ? result.team.points : "-",
+					generalRank: result.team.rank !== null ? result.team.rank : "-",
+					visibleWeekPoints: (weekStat && weekStat.points) || "-",
+					visibleWeekRank: (weekStat && weekStat.rank) || "-",
+					weekWinnerPoints: result.weekWinner && result.weekWinner.points !== null ? result.weekWinner.points : "-",
+					weekPointsConfirmed: !!weekPointsConfirmed,
+					provisionalPoints: provisionalPoints,
+					totalTransfers: result.transfers.length,
+					transfers: result.transfers.map((transfer: any) => {
+						const outPlayer = players.find((item: any) => item.id === transfer.outId);
+						const inPlayer = players.find((item: any) => item.id === transfer.inId);
+						return { ...transfer, outPlayer, inPlayer };
+					}),
+					weekAveragePoints: result.weekAveragePoints !== null ? parseFloat(result.weekAveragePoints).toFixed(2) : "-"
+				};
 
-                const startedThisWeek = { started: result.team.weekId <= pointsWeekId, weekId: result.team.weekId };
+				const startedThisWeek = { started: result.team.weekId <= pointsWeekId, weekId: result.team.weekId };
 
-                const starting = result.players
-                    .filter((player: any) => player.selections[0].starting === 1)
-                    .map((player: any) => {
-                        const playerStats = player.stats && player.stats[0];
-                        const pointsOverview = playerStats;
-                        const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
-                        return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selection, selectionProps)));
-                    });
-                const bench = result.players
-                    .filter((player: any) => player.selections[0].starting === 0)
-                    .map((player: any) => {
-                        const playerStats = player.stats && player.stats[0];
-                        const pointsOverview = playerStats;
-                        const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
-                        return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selection, selectionProps)));
-                    }).sort((first: any, second: any) => {
-                        return (first.positionId === 1) ? -1 : 0;
-                    });
-                const teamName = result.team?.name;
-                const teamUser = result.user;
+				const starting = result.players
+					.filter((player: any) => player.selections[0].starting === 1)
+					.map((player: any) => {
+						const playerStats = player.stats && player.stats[0];
+						const pointsOverview = playerStats;
+						const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
+						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selection, selectionProps)));
+					});
+				const bench = result.players
+					.filter((player: any) => player.selections[0].starting === 0)
+					.map((player: any) => {
+						const playerStats = player.stats && player.stats[0];
+						const pointsOverview = playerStats;
+						const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
+						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selection, selectionProps)));
+					}).sort((first: any, second: any) => {
+						return (first.positionId === 1) ? -1 : 0;
+					});
+				const teamName = result.team?.name;
+				const teamUser = result.user;
 
-                const captainPlayer = result.players.find((player: any) => player.selections[0].captain === 1);
-                const captainId = captainPlayer && captainPlayer.id;
+				const captainPlayer = result.players.find((player: any) => player.selections[0].captain === 1);
+				const captainId = captainPlayer && captainPlayer.id;
 
-                const viceCaptainPlayer = result.players.find((player: any) => player.selections[0].captain === 2);
-                const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
+				const viceCaptainPlayer = result.players.find((player: any) => player.selections[0].captain === 2);
+				const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
-                const budget = result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
+				const budget = result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
 
-                const boosters = {
-                    freeHit: result.team.freeHit,
-                    bank: result.team.bank,
-                    tripleCaptain: result.team.tripleCaptain,
-                    wildCard: result.team.wildCard
-                };
+				const boosters = {
+					freeHit: result.team.freeHit,
+					bank: result.team.bank,
+					tripleCaptain: result.team.tripleCaptain,
+					wildCard: result.team.wildCard
+				};
 
-                const isTeamOwner = !!(result.team.userId === user.id);
+				const isTeamOwner = !!(result.team.userId === user.id);
 
-                props.loadAllMatches();
+				props.loadAllMatches();
 
-                props.initTeamState(starting, bench, teamName, captainId, budget, undefined, pointsWeekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
-            })
-            .catch(err => {
-                console.log(err)
-                setState({ notFound: true });
-            });
-    };
+				props.initTeamState(starting, bench, teamName, captainId, budget, undefined, pointsWeekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
+			})
+			.catch(err => {
+				console.log(err);
+				setState({ notFound: true });
+			});
+	};
 
-    const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo } = props;
+	useEffect(() => {
+		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
+			getTeamInfo(visibleWeekId);
+		}
+	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
 
-    // TODO --
-    // const boosterWeekStatus: BoostersWeekStatus = {
-    //     // bank: boosters.bank === visibleWeekId,
-    //     // tripleCaptain: boosters.tripleCaptain === visibleWeekId,
-    //     // freeHit: boosters.freeHit === visibleWeekId,
-    //     // wildCard: boosters.wildCard === visibleWeekId
-    // };
-    const boosterWeekStatus: any = {
-        bank: false,
-        tripleCaptain: false,
-        freeHit: false,
-        wildCard: false
-    };
+	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo } = props;
 
-    const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);
-    const captainBench = useMemo(() => bench.find(player => player && player.id === captainId), [bench, captainId]);
-    // todo: check variable
-    const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.time) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
+	// TODO --
+	// const boosterWeekStatus: BoostersWeekStatus = {
+	//		 // bank: boosters.bank === visibleWeekId,
+	//		 // tripleCaptain: boosters.tripleCaptain === visibleWeekId,
+	//		 // freeHit: boosters.freeHit === visibleWeekId,
+	//		 // wildCard: boosters.wildCard === visibleWeekId
+	// };
+	const boosterWeekStatus: any = {
+		bank: false,
+		tripleCaptain: false,
+		freeHit: false,
+		wildCard: false
+	};
 
-    const startingByPositions = startingListToPositionsList(starting, application.competition.lineupPositionRows);
-    const isPowerSubEnabled = false;
-    const isPublicRoute = location.pathname.includes('public');
+	const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);
+	const captainBench = useMemo(() => bench.find(player => player && player.id === captainId), [bench, captainId]);
+	// todo: check variable
+	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.time) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
 
-    return (
-        clubsSuccess && playersSuccess && matchesSuccess && teamSuccess && deadlineInfoSuccess &&
-        <React.Fragment>
-            {
-                (initializedExternally && visibleWeekId &&
-                    <Row style={{ margin: 0 }}>
-                        <Col md={24}>
-                            {/* TODO: MATCHDAYSELECTOR */}
-                            <Block>
-                                Week {visibleWeekId}
-                            </Block>
-                        </Col>
-                    </Row>)
-                || null
-            }
-            {
-                (initializedExternally &&
-                    <Row style={{ margin: 0 }}>
-                        <Col lg={12} md={12} sm={24} xs={24}>
-                            <Block style={{ marginTop: '10px' }}>
-                                {
-                                    <Title level={2}>{t('pointsPage.statsBlockTitle')} {isPublicRoute ? `"${teamName}"` : ''}</Title>
-                                }
-                                {/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
-                                <PointsStats
-                                    visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
-                                    isPublic={isPublicRoute}
-                                    weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
-                                    weekAveragePoints={teamPointsInfo.weekAveragePoints}
-                                />
-                            </Block>
-                            <Block style={{ marginTop: '10px' }}>
-                                <Title level={2}>{t('general.footballLineup')}</Title>
-                                <Team widthRatio={15}
-                                    heightRatio={10}
-                                    clubs={clubs}
-                                    captainId={captainId}
-                                    captainHasPlayed={captainHasPlayed}
-                                    viceCaptainId={viceCaptainId}
-                                    centerAligned={true}
-                                    selection={startingByPositions}
-                                    assetsCdn={application.competition.assetsCdn}
-                                    onSwap={props.onPlayerSwap}
-                                    isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
-                                    swapPlayerId={props.swapPlayerId}
-                                    swappedFrom={props.swappedFrom}
-                                    // boosterWeekStatus={boosterWeekStatus}
-                                    replacePlayerPointsWithStatsPoints={true}
-                                    showCaptainBadge={true}
-                                    modalEnabled={true}
-                                    playerBadgeColor="#fff"
-                                    playerBadgeBgColor={theme.primaryColor}
-                                    playerPointsColor={"#fff"}
-                                    playerPointsBgColor="#84FF00"
-                                    bg={teamBackground}
-                                    playerType={PlayerType.SoccerShirt} />
-                                <Substitutes
-                                    selection={bench}
-                                    title={"De bank"}
-                                    clubs={clubs}
-                                    assetsCdn={application.competition.assetsCdn}
-                                    playerType={PlayerType.SoccerShirt}
-                                    playerBadgeColor={"#000"}
-                                    playerBadgeBgColor={theme.primaryColor}
-                                    playerPointsColor={"#000"}
-                                    playerPointsBgColor={"#84FF000"}
-                                    captainId={captainId}
-                                    viceCaptainId={viceCaptainId}
-                                    showCaptainBadge={true}
-                                    modalEnabled={true}
+	const startingByPositions = startingListToPositionsList(starting, application.competition.lineupPositionRows);
+	const isPowerSubEnabled = false;
+	const isPublicRoute = location.pathname.includes("public");
 
-                                    onSwap={props.onPlayerSwap}
-                                    swapPlayerId={props.swapPlayerId}
-                                    swappedFrom={props.swappedFrom}
-                                    isSwapAble={false} // todo: implement powersub
-                                />
-                            </Block>
-                        </Col>
-                        <Col lg={12} md={12} sm={24} xs={24}>
-                            {
-                                <Block style={{ marginTop: '10px' }}>
-                                    <Title level={2}>{t('pointsPage.overviewBlockTitle')}</Title>
-                                    <Stats
-                                        visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
-                                        visibleWeekRank={teamPointsInfo.visibleWeekRank}
-                                        transfers={teamPointsInfo.transfers}
-                                        generalPoints={teamPointsInfo.generalPoints}
-                                        generalRank={teamPointsInfo.generalRank}
-                                        weekId={visibleWeekId}
-                                    />
-                                </Block>
-                            }
-                            {
-                                matches && matches.length && visibleWeekId ?
-                                    <Block style={{ marginTop: '10px' }}>
-                                        <Title level={2}>{t('general.footballCalendar')}</Title>
-                                        <Calendar
-                                            size={30}
-                                            weekId={visibleWeekId}
-                                            showHeader={false}
-                                        />
-                                    </Block>
-                                    : null
-                            }
-                        </Col>
-                    </Row>
-                )
-            }
-        </React.Fragment >
-    );
+	return (
+		clubsSuccess && playersSuccess && matchesSuccess && teamSuccess && deadlineInfoSuccess &&
+				<React.Fragment>
+					{
+						(initializedExternally && visibleWeekId &&
+										<Row style={{ margin: 0 }}>
+											<Col md={24}>
+												{/* TODO: MATCHDAYSELECTOR */}
+												<Block>
+																Week {visibleWeekId}
+												</Block>
+											</Col>
+										</Row>)
+								|| null
+					}
+					{
+						(initializedExternally &&
+										<Row style={{ margin: 0 }}>
+											<Col lg={12} md={12} sm={24} xs={24}>
+												<Block style={{ marginTop: "10px" }}>
+													{
+														<Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title>
+													}
+													{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
+													<PointsStats
+														visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
+														isPublic={isPublicRoute}
+														weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
+														weekAveragePoints={teamPointsInfo.weekAveragePoints}
+													/>
+												</Block>
+												<Block style={{ marginTop: "10px" }}>
+													<Title level={2}>{t("general.footballLineup")}</Title>
+													<Team widthRatio={15}
+														heightRatio={10}
+														clubs={clubs}
+														captainId={captainId}
+														captainHasPlayed={captainHasPlayed}
+														viceCaptainId={viceCaptainId}
+														centerAligned={true}
+														selection={startingByPositions}
+														assetsCdn={application.competition.assetsCdn}
+														onSwap={props.onPlayerSwap}
+														isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
+														swapPlayerId={props.swapPlayerId}
+														swappedFrom={props.swappedFrom}
+														// boosterWeekStatus={boosterWeekStatus}
+														replacePlayerPointsWithStatsPoints={true}
+														showCaptainBadge={true}
+														modalEnabled={true}
+														playerBadgeColor="#fff"
+														playerBadgeBgColor={theme.primaryColor}
+														playerPointsColor={"#fff"}
+														playerPointsBgColor="#84FF00"
+														bg={teamBackground}
+														playerType={PlayerType.SoccerShirt} />
+													<Substitutes
+														selection={bench}
+														title={"De bank"}
+														clubs={clubs}
+														assetsCdn={application.competition.assetsCdn}
+														playerType={PlayerType.SoccerShirt}
+														playerBadgeColor={"#000"}
+														playerBadgeBgColor={theme.primaryColor}
+														playerPointsColor={"#000"}
+														playerPointsBgColor={"#84FF000"}
+														captainId={captainId}
+														viceCaptainId={viceCaptainId}
+														showCaptainBadge={true}
+														modalEnabled={true}
+
+														onSwap={props.onPlayerSwap}
+														swapPlayerId={props.swapPlayerId}
+														swappedFrom={props.swappedFrom}
+														isSwapAble={false} // todo: implement powersub
+													/>
+												</Block>
+											</Col>
+											<Col lg={12} md={12} sm={24} xs={24}>
+												{
+													<Block style={{ marginTop: "10px" }}>
+														<Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title>
+														<Stats
+															visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
+															visibleWeekRank={teamPointsInfo.visibleWeekRank}
+															transfers={teamPointsInfo.transfers}
+															generalPoints={teamPointsInfo.generalPoints}
+															generalRank={teamPointsInfo.generalRank}
+															weekId={visibleWeekId}
+														/>
+													</Block>
+												}
+												{
+													matches && matches.length && visibleWeekId ?
+														<Block style={{ marginTop: "10px" }}>
+															<Title level={2}>{t("general.footballCalendar")}</Title>
+															<Calendar
+																size={30}
+																weekId={visibleWeekId}
+																showHeader={false}
+															/>
+														</Block>
+														: null
+												}
+											</Col>
+										</Row>
+						)
+					}
+				</React.Fragment >
+	);
 };
 
 export const PointsPage = () => AbstractTeam(_TeamPoints, {});

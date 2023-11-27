@@ -61,7 +61,7 @@ export const ClubDetails = styled.div<{left?: boolean}>`
     padding: 5px;
     justify-content: ${(props: any) => props.left ? "flex-end": "flex-start"};
     align-items: center;
-`
+`;
 
 export const ClubBadgeBg = styled.img`
 	max-width: 25px;

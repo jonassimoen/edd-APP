@@ -2,9 +2,7 @@ import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
 import { Modal } from "antd";
 
-export const PlayerModalStyle = styled(Modal)
-	`
-
+export const PlayerModalStyle = styled(Modal)`
 	.ant-modal-content {
 		border-radius: 0px;
 		background-color: #fff;
@@ -91,7 +89,7 @@ export const PlayerModalStyle = styled(Modal)
 	}
 `;
 
-export const PointsOverviewTable = styled.table `
+export const PointsOverviewTable = styled.table`
 	width: 100%;
 	border-collapse: collapse;
 

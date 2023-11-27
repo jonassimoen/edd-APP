@@ -230,7 +230,7 @@ export const GameManagement = () => {
 							render: (weekId: number, record: any) => {
 								return (
 									<p>{weekId}</p>
-								)
+								);
 							}
 						},
 						{
@@ -239,7 +239,7 @@ export const GameManagement = () => {
 							width: "20%",
 							render: (date: Date, record: any) => {
 								return (
-									<p>{dayjs(date).format('DD/MM/YYYY HH:mm')}</p>
+									<p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>
 								);
 							}
 						},
