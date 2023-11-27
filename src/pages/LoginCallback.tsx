@@ -15,9 +15,10 @@ export const LoginCallback = () => {
 	const [getProfile, { isLoading: profileLoading, isSuccess: profileSuccess }] = useLazyGetProfileQuery();
 	const [getTeams, { isLoading: teamLoading, isSuccess: teamSuccess }] = useLazyGetTeamsQuery();
 	const access_token = useMemo(() => params.get("token"), [params]);
+	const redirectToWelcome = useMemo(() => params.get("welcomeRedirect"), [params]);
 
 	useEffect(() => {
-		if(userState.authenticated) {
+		if (userState.authenticated) {
 			secureLocalStorage.setItem("user", JSON.stringify(userState.user));
 		}
 	});
@@ -35,19 +36,13 @@ export const LoginCallback = () => {
 	if (profileSuccess && teamSuccess) {
 		return (
 			<>
-				{/* <p>AUTH: {userState.authenticated?"true":"false"}</p>
-				<p>teams l: {userState.teams.length}</p>
-				
-				{userState.authenticated && userState.teams && userState.teams.length !== 0 && "TEAMMM"}
+				{userState.authenticated && redirectToWelcome && <Navigate to={{ pathname: "/welcome" }} />}
 
-				{userState.authenticated && userState.teams.length === 0 && "NEW"}
+				{userState.authenticated && !redirectToWelcome && userState.teams && userState.teams.length !== 0 && <Navigate to={{ pathname: `/team/${userState.teams[0].id}` }} />}
 
-				{!userState.authenticated && "HOME"} */}
-				{userState.authenticated && userState.teams && userState.teams.length !== 0 && <Navigate to={{ pathname: `/team/${userState.teams[0].id}` }} />}
+				{userState.authenticated && !redirectToWelcome && userState.teams.length === 0 && <Navigate to={{ pathname: "/new" }} />}
 
-				{userState.authenticated && userState.teams.length === 0 && <Navigate to={{ pathname: "/new" }} />}
-
-				{!userState.authenticated && <Navigate to={{ pathname: "/home" }} />}
+				{!userState.authenticated && !redirectToWelcome && <Navigate to={{ pathname: "/home" }} />}
 			</>
 		);
 	} else {

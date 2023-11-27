@@ -1,180 +1,182 @@
 {
-	"menu": {
-		"newTeam": "Nieuw team",
-		"team": "Mijn team",
-		"stats": "Statistieken",
-		"rankings": "Klassement",
-		"rules": "Regels",
-		"admin": "Adminpagina",
-		"logout": "Uitloggen",
-		"points": "Punten",
-		"edit": "Wijzig team",
-		"transfers": "Transfers"
-	},
-	"home": {
-		"title": "Welkom bij Fantasy Team, speel mee !",
-		"welcome": "Koekoek!",
-		"playBtn": "Log in en speel mee",
-		"howDoesItWork": "Hoe werkt het?"
-	},
-	"general": {
-		"footballLineup": "Opstelling",
-		"footballAllPlayers": "Spelers",
-		"pick": "Kies",
-		"choosePlayer": "Kies speler",
-		"footballCalendar": "Wedstrijden",
-		"budgetFilterPrefix": "Max. €",
-		"budgetFilterSuffix": "miljoen",
-		"footballAllBudget": "Onbeperkt budget",
-		"footballAllPositions": "Alle posities",
-		"footballAllClubs": "Alle landen",
-		"playersListSearchInputPlaceholder": "Zoek speler op naam",
-		"footballWeek": "Speeldag",
-		"week": "Week",
-		"points": "punten"
-	},
-	"player": {
-		"midfielder": "Middenvelder",
-		"goalkeeper": "Doelman",
-		"defender": "Verdediger",
-		"attacker": "Aanvaller",
-		"goalkeeperShort": "DM",
-		"opponentHome": "T",
-		"opponentAway": "U",
-		"captainBadgeLabel": "Maak aanvoerder",
-		"viceCaptainBadgeLabel": "Maak vice-aanvoerder",
-		"swapBadgeLabel": "Wissel",
-		"undoBadgeLabel": "Annuleer",
-		"removeBadgeLabel": "Verwijder",
-		"modal": {
-			"actionColumnName": "Actie",
-			"quantityColumnName": "Aantal",
-			"pointsColumnName": "Punten"
-		},
-		"assistsLabel": "Assists",
-		"goalsLabel": "Goals",
-		"defenderShort": "VER",
-		"midfielderShort": "MID",
-		"attackerShort": "AAN",
-		"playedMoreThan60MinLabel": "Meer dan 60 minuten gespeeld",
-		"playedUpTo60MinLabel": "Tot 60 minuten gespeeld"
-	},
-	"propertyRequired": "Vul alsjeblieft deze eigenschap in",
-	"property": {
-		"club": {
-			"name": {
-				"required": "Clubnaam verplicht"
-			},
-			"short": {
-				"required": "Korte clubnaam verplicht"
-			}
-		},
-		"player": {
-			"forename": {
-				"required": "Voornaam speler verplicht"
-			},
-			"surname": {
-				"required": "Achternaam speler verplicht"
-			},
-			"shortname": {
-				"required": "Korte naam speler verplicht"
-			},
-			"externalId": "Extern ID",
-			"position": "Positie",
-			"value": "Waarde",
-			"portraitUrl": {
-				"required": "Portret afbeelding vereist"
-			}
-		}
-	},
-	"form": {
-		"positionId": {
-			"tooltip": ""
-		}
-	},
-	"editBtn": "Wijzig",
-	"cancelBtn": "Annuleer",
-	"editTitle": "Wijzigen",
-	"clubTitle": "club",
-	"playerTitle": "speler",
-	"admin": {
-		"welcome": "Welkom, fantasy magiër {{name}}!",
-		"importing": {
-			"loading": "Bezig met importeren..."
-		}
-	},
-	"management": {
-		"player": {
-			"add": "Maak nieuwe speler aan",
-			"import": "Importeer spelers"
-		},
-		"club": {
-			"import": "Importeer clubs",
-			"add": "Nieuwe club"
-		},
-		"import": {
-			"confirmTitle": "Ben je zeker dat je wilt importeren?"
-		},
-		"game": {
-			"add": "Voeg nieuwe wedstrijd toe",
-			"import": "Importeer wedstrijden"
-		},
-		"week": {
-			"add": "Voeg matchweek toe"
-		}
-	},
-	"modal": {
-		"create": "Creëer",
-		"edit": "Wijzig"
-	},
-	"createTitle": "Nieuwe",
-	"profile": {
-		"mail": "E-mailadres",
-		"firstname": "Voornaam",
-		"lastname": "Achternaam"
-	},
-	"stats": {
-		"allPlayersTable": {
-			"playerColumn": "Speler",
-			"clubColumn": "Club",
-			"positionColumn": "Positie",
-			"pointsColumn": "Punten",
-			"valueColumn": "Waarde"
-		},
-		"goalsColumnForAllPlayersTable": "Doelpunten",
-		"assistsColumnForAllPlayersTable": "Assists"
-	},
-	"team": {
-		"saveTeam": "Team opslaan",
-		"players": "Spelers",
-		"remainingBudget": "Resterend budget",
-		"newTeamNameInput": "Kies een teamnaam",
-		"transferOut": "Uit",
-		"transferIn": "In"
-	},
-	"players": {
-		"noneFound": "Geen spelers gevonden"
-	},
-	"createBtn": "Maak aan",
-	"TransfersPage": {
-		"overviewTransfers": "Transfers",
-		"overviewPlayers": "Spelers",
-		"overviewBudget": "Budget"
-	},
-	"pointsPage": {
-		"weekStatusTitle": "Speeldagstatus",
-		"weekStatusConfirmed": "Bevestigd",
-		"weekStatusNotConfirmed": "Onbevestigd",
-		"overviewWeekPoints": "Punten speeldag",
-		"overviewWeekRank": "Rangschikking speeldag",
-		"overviewGeneralPoints": "Punten algemeen",
-		"overviewGeneralRank": "Rangschikking algemeen",
-		"overviewWeekTotalTransfers": "Transfers speeldag",
-		"averagePoints": "gemiddeld",
-		"publicTeamPoints": "punten",
-		"yourPoints": "jouw punten",
-		"weekWinnerPoints": "winnaar",
-		"statsBlockTitle": "Statistieken",
-		"overviewBlockTitle": "Overzicht"
-	}
+  "menu": {
+    "newTeam": "Nieuw team",
+    "team": "Mijn team",
+    "stats": "Statistieken",
+    "rankings": "Klassement",
+    "rules": "Regels",
+    "admin": "Adminpagina",
+    "logout": "Uitloggen",
+    "points": "Punten",
+    "edit": "Wijzig team",
+    "transfers": "Transfers"
+  },
+  "home": {
+    "title": "Welkom bij Fantasy Team, speel mee !",
+    "welcome": "Koekoek!",
+    "playBtn": "Log in en speel mee",
+    "howDoesItWork": "Hoe werkt het?"
+  },
+  "general": {
+    "footballLineup": "Opstelling",
+    "footballAllPlayers": "Spelers",
+    "pick": "Kies",
+    "choosePlayer": "Kies speler",
+    "footballCalendar": "Wedstrijden",
+    "budgetFilterPrefix": "Max. €",
+    "budgetFilterSuffix": "miljoen",
+    "footballAllBudget": "Onbeperkt budget",
+    "footballAllPositions": "Alle posities",
+    "footballAllClubs": "Alle landen",
+    "playersListSearchInputPlaceholder": "Zoek speler op naam",
+    "footballWeek": "Speeldag",
+    "week": "Week",
+    "points": "punten"
+  },
+  "player": {
+    "midfielder": "Middenvelder",
+    "goalkeeper": "Doelman",
+    "defender": "Verdediger",
+    "attacker": "Aanvaller",
+    "goalkeeperShort": "DM",
+    "opponentHome": "T",
+    "opponentAway": "U",
+    "captainBadgeLabel": "Maak aanvoerder",
+    "viceCaptainBadgeLabel": "Maak vice-aanvoerder",
+    "swapBadgeLabel": "Wissel",
+    "undoBadgeLabel": "Annuleer",
+    "removeBadgeLabel": "Verwijder",
+    "modal": {
+      "actionColumnName": "Actie",
+      "quantityColumnName": "Aantal",
+      "pointsColumnName": "Punten"
+    },
+    "assistsLabel": "Assists",
+    "goalsLabel": "Goals",
+    "defenderShort": "VER",
+    "midfielderShort": "MID",
+    "attackerShort": "AAN",
+    "playedMoreThan60MinLabel": "Meer dan 60 minuten gespeeld",
+    "playedUpTo60MinLabel": "Tot 60 minuten gespeeld"
+  },
+  "propertyRequired": "Vul alsjeblieft deze eigenschap in",
+  "property": {
+    "club": {
+      "name": {
+        "required": "Clubnaam verplicht"
+      },
+      "short": {
+        "required": "Korte clubnaam verplicht"
+      }
+    },
+    "player": {
+      "forename": {
+        "required": "Voornaam speler verplicht"
+      },
+      "surname": {
+        "required": "Achternaam speler verplicht"
+      },
+      "shortname": {
+        "required": "Korte naam speler verplicht"
+      },
+      "externalId": "Extern ID",
+      "position": "Positie",
+      "value": "Waarde",
+      "portraitUrl": {
+        "required": "Portret afbeelding vereist"
+      }
+    }
+  },
+  "form": {
+    "positionId": {
+      "tooltip": ""
+    }
+  },
+  "editBtn": "Wijzig",
+  "cancelBtn": "Annuleer",
+  "editTitle": "Wijzigen",
+  "clubTitle": "club",
+  "playerTitle": "speler",
+  "admin": {
+    "welcome": "Welkom, fantasy magiër {{name}}!",
+    "importing": {
+      "loading": "Bezig met importeren..."
+    }
+  },
+  "management": {
+    "player": {
+      "add": "Maak nieuwe speler aan",
+      "import": "Importeer spelers"
+    },
+    "club": {
+      "import": "Importeer clubs",
+      "add": "Nieuwe club"
+    },
+    "import": {
+      "confirmTitle": "Ben je zeker dat je wilt importeren?"
+    },
+    "game": {
+      "add": "Voeg nieuwe wedstrijd toe",
+      "import": "Importeer wedstrijden"
+    },
+    "week": {
+      "add": "Voeg matchweek toe"
+    }
+  },
+  "modal": {
+    "create": "Creëer",
+    "edit": "Wijzig"
+  },
+  "createTitle": "Nieuwe",
+  "profile": {
+    "mail": "E-mailadres",
+    "firstname": "Voornaam",
+    "lastname": "Achternaam",
+    "view": "Bekijk mijn gegevens"
+  },
+  "stats": {
+    "allPlayersTable": {
+      "playerColumn": "Speler",
+      "clubColumn": "Club",
+      "positionColumn": "Positie",
+      "pointsColumn": "Punten",
+      "valueColumn": "Waarde"
+    },
+    "goalsColumnForAllPlayersTable": "Doelpunten",
+    "assistsColumnForAllPlayersTable": "Assists"
+  },
+  "team": {
+    "saveTeam": "Team opslaan",
+    "players": "Spelers",
+    "remainingBudget": "Resterend budget",
+    "newTeamNameInput": "Kies een teamnaam",
+    "transferOut": "Uit",
+    "transferIn": "In",
+    "newTeam": "Maak een nieuw team"
+  },
+  "players": {
+    "noneFound": "Geen spelers gevonden"
+  },
+  "createBtn": "Maak aan",
+  "TransfersPage": {
+    "overviewTransfers": "Transfers",
+    "overviewPlayers": "Spelers",
+    "overviewBudget": "Budget"
+  },
+  "pointsPage": {
+    "weekStatusTitle": "Speeldagstatus",
+    "weekStatusConfirmed": "Bevestigd",
+    "weekStatusNotConfirmed": "Onbevestigd",
+    "overviewWeekPoints": "Punten speeldag",
+    "overviewWeekRank": "Rangschikking speeldag",
+    "overviewGeneralPoints": "Punten algemeen",
+    "overviewGeneralRank": "Rangschikking algemeen",
+    "overviewWeekTotalTransfers": "Transfers speeldag",
+    "averagePoints": "gemiddeld",
+    "publicTeamPoints": "punten",
+    "yourPoints": "jouw punten",
+    "weekWinnerPoints": "winnaar",
+    "statsBlockTitle": "Statistieken",
+    "overviewBlockTitle": "Overzicht"
+  }
 }
