@@ -205,14 +205,16 @@ export const ClubManagement = () => {
 			<Modal
 				title={t("management.import.confirmTitle")}
 				open={state.openImportModal}
-				onOk={() => {
+				onOk={async () => {
 					toast.loading(t("admin.importing.loading"), { toastId: "loading-importing-clubs" });
-					importClubs().then(() => {
+					try {
+						const data = await importClubs().unwrap();
 						toast.dismiss("loading-importing-clubs");
-						openSuccessNotification({ title: "Import successfull", message: `${imports.count} clubs imported` });
-					}).catch(() => {
+						openSuccessNotification({ title: "Import successfull", message: `${data.count} clubs imported` });
+					} catch(err) {
+						toast.dismiss("loading-importing-clubs");
 						openErrorNotification({ title: "Importing clubs failed" });
-					});
+					}
 					setState({ ...state, openImportModal: false });
 				}}
 				onCancel={() => setState({ ...state, openImportModal: false })}
