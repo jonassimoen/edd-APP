@@ -2,7 +2,6 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Header } from "@/components/Header/Header";
-import { Login } from "@/pages/Login";
 import { LoginCallback } from "./pages/LoginCallback";
 import secureLocalStorage from "react-secure-storage";
 import { Home } from "./pages/Home/Home";
