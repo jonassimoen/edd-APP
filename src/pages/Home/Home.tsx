@@ -11,6 +11,7 @@ import { useAppSelector } from "@/reducers";
 import Title from "antd/es/typography/Title";
 import Meta from "antd/es/card/Meta";
 import { Card } from "antd";
+import config from "@/config";
 
 export declare type HomeProps = {
 	// onLogOut?: () => void
@@ -20,10 +21,21 @@ export const Home = (props: HomeProps) => {
 	const authenticated = useAppSelector((state) => state.userState.authenticated);
 	const teams: any[] = [];
 	const { t } = useTranslation();
-	// const deadlineDate = props.matches && props.matches.info && props.matches.
-	// const redirectToMyTeams = props.match.path === '/' && props.user && props.user.authenticated
 	const redirectToMyTeams = true;
 	const team = teams && teams[0];
+
+	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+	const options = {
+		redirect_uri: `${config.API_URL}/user/oauth/google`,
+		client_id: config.GOOGLE_CLIENT_ID,
+		access_type: "offline",
+		response_type: "code",
+		prompt: "consent",
+		scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"].join(
+			" "
+		),
+	};
+	const qs = new URLSearchParams(options);
 
 	return (
 		<HomeStyle>
@@ -38,7 +50,7 @@ export const Home = (props: HomeProps) => {
 							<p>{t("home.welcome")}</p>
 						</Col>
 						<Col md={12} lg={12} sm={24} xs={24}>
-							<Link to="/login">
+							<Link to={`${rootUrl}?${qs.toString()}`}>
 								<Button className="playNow">
 									{t("home.playBtn")}
 								</Button>

@@ -96,10 +96,6 @@ export const router = createBrowserRouter([
 				element: <ProtectedRoute access={true} redirectPath="/home"><Rules /></ProtectedRoute>
 			},
 			{
-				path: "/login",
-				element: <Login />,
-			},
-			{
 				path: "/admin",
 				element: <ProtectedRoute access={true} redirectPath='/home'><Admin redirectPath='/home' /></ProtectedRoute>,
 				children: [
