@@ -1,9 +1,8 @@
 
-import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Header } from "@/components/Header/Header";
 import { LoginCallback } from "./pages/LoginCallback";
-import secureLocalStorage from "react-secure-storage";
 import { Home } from "./pages/Home/Home";
 import { NewTeam } from "./pages/NewTeam/NewTeam";
 import { Admin } from "./pages/Admin";
@@ -22,6 +21,7 @@ import { TransfersPage } from "./pages/Transfers/Transfers";
 import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
 import { Welcome } from "./pages/Welcome/Welcome";
+import { PageManagement } from "./pages/PageManagement/PageManagement";
 
 const Layout = ({ children }: any) => {
 	return (
@@ -98,6 +98,10 @@ export const router = createBrowserRouter([
 				path: "/admin",
 				element: <ProtectedRoute access={true} redirectPath='/home'><Admin redirectPath='/home' /></ProtectedRoute>,
 				children: [
+					{
+						path: "pages",
+						element: <PageManagement />
+					},
 					{
 						path: "players",
 						element: <PlayerManagement />
