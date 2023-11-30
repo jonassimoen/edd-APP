@@ -104,12 +104,15 @@ export const TableStyle = styled(Table)`
     }
 
 	.avatar-container {
-		margin-bottom: -15px;
+		margin-bottom: -10px;
 	}
 
     .ant-table-tbody {
         .ant-table-row {
             background-color: #FFF;
+            > td:first-child {
+                padding: 0px 10px 0px 15px;
+            }
             > td {
                 border: none;
                 padding: 3.5px;

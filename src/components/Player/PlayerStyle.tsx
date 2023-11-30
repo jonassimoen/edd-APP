@@ -6,11 +6,11 @@ export const PlayerStyle = styled.div`
     position: relative;
     cursor: pointer;
     text-align: ${(props: any) => !props.player ? "center" : "inherit"};
-    width: 100px;
-    height: 60px;
+    width: 70px;
+    height: 50px;
 
     @media ${mediaQueries.mobileM} {
-        width: 85px;
+        width: 60px;
         height: 55px;
     }
 
@@ -21,7 +21,7 @@ export const PlayerStyle = styled.div`
 
     .position-label {
         position: absolute;
-        top: 135%;
+        top: 100%;
         margin: 0 auto;
         text-align: center;
         color: white;
@@ -32,10 +32,18 @@ export const PlayerStyle = styled.div`
 ` as any;
 
 export const PlayerBg = styled.img`
-    position: relative;
-    width: 50px;
-    height: 50px;
+    position: absolute;
+	max-width: 55%;
 	opacity: ${(props: any) => props.inactive ? 0.4 : 1};
+	margin: 0 auto;
+    inset: 5% 0px 25%;
+    background-size: 100%;
+    background-position-x: 50%;
+	background-image: url("${(props: any) => props.src}");
+
+	@media ${mediaQueries.mobileM} {
+		max-width: 65%;
+	}
 ` as any;
 
 export const Badge = styled.div`
