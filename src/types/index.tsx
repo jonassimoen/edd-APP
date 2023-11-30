@@ -129,7 +129,7 @@ type Week = {
 }
 
 type Page = {
-	translations: PageTranslation[]
+	translation: PageTranslation[]
 	id: number
 	slug: string
 	competitionFeed: string
@@ -139,11 +139,11 @@ type Page = {
 }
 
 type PageTranslation = {
-	id: number
-	languageCode: string
+	id?: number
+	langCode: string
 	body: string
-	title: any
-	pageId: number
+	title?: any
+	pageId?: number
 }
 
 type ApplicationState = {

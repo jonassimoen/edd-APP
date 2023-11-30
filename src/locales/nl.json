@@ -85,6 +85,13 @@
       "portraitUrl": {
         "required": "Portret afbeelding vereist"
       }
+    },
+    "page": {
+      "translation": {
+        "langCode": "Taalcode",
+        "body": "Tekst"
+      },
+      "slug": "Afkorting"
     }
   },
   "form": {
@@ -121,6 +128,13 @@
     },
     "week": {
       "add": "Voeg matchweek toe"
+    },
+    "page": {
+      "add": "Voeg pagina toe",
+      "translation": {
+        "add": "Voeg vertaling toe"
+      },
+      "remove": "Verwijder"
     }
   },
   "modal": {
@@ -178,5 +192,6 @@
     "weekWinnerPoints": "winnaar",
     "statsBlockTitle": "Statistieken",
     "overviewBlockTitle": "Overzicht"
-  }
+  },
+  "pageTitle": "Pagina"
 }

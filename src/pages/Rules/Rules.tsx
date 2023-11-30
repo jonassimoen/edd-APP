@@ -18,9 +18,10 @@ export const Rules = () => {
 	});
 
 	useEffect(() => {
-		const body = page && page[0] && page[0].translations && page[0].translations[0] && page[0].translations[0].body;
+		const body = page && page[0] && page[0].translation && page[0].translation[0] && page[0].translation[0].body;
 		setState({ ...state, text: body || "" });
-	})
+	}, [page]);
+
 	return (
 		<RulesStyles>
 			<Row>
