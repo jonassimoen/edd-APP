@@ -7,6 +7,7 @@ declare type MatchStatsProps = {
     matchId: number
     homeScore: number
     awayScore: number
+	assetsCdn: string
 }
 
 export const MatchStats = (props: MatchStatsProps) => {
@@ -35,13 +36,13 @@ export const MatchStats = (props: MatchStatsProps) => {
 		<MatchStatsStyle>
 			<ClubDetails className="team" left>
 				<ClubName className="team-name" fullName={data?.home.name} short={data?.home.short} />
-				<ClubBadgeBg src={`${config.API_URL}/static/badges/${data?.home.externalId}.png`} />
+				<ClubBadgeBg src={`${props.assetsCdn}/badges/${data?.home.id}.png`} />
 			</ClubDetails>
 			<div className="score">
 				<b>{`${props.homeScore} - ${props.awayScore}`}</b>
 			</div>
 			<ClubDetails className="team">
-				<ClubBadgeBg src={`${config.API_URL}/static/badges/${data?.away.externalId}.png`} />
+				<ClubBadgeBg src={`${props.assetsCdn}/badges/${data?.away.id}.png`} />
 				<ClubName className="team-name" fullName={data?.away.name} short={data?.away.short} />
 			</ClubDetails>
 		</MatchStatsStyle>

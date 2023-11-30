@@ -17,6 +17,7 @@ type CalendarProps = {
 	weekId: number
 	showHeader?: boolean
 	size: number
+	assetsCdn: string
 }
 
 type CalendarState = {
@@ -79,7 +80,7 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "home",
 			width: "40%",
 			render: (homeId: any, record: any) => {
-				const clubBadge = `${config.API_URL}/static/badges/${record.home.externalId}.png`;
+				const clubBadge = `${props.assetsCdn}/badges/${record.home.id}.png`;
 
 				return <ClubDetails left>
 					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
@@ -106,7 +107,7 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "away",
 			width: "40%",
 			render: (awayId: any, record: any) => {
-				const clubBadge = `${config.API_URL}/static/badges/${record.away.externalId}.png`;
+				const clubBadge = `${props.assetsCdn}/badges/${record.away.id}.png`;
 
 				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />

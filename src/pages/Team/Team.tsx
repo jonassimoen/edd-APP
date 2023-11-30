@@ -82,7 +82,7 @@ export const _Team = (props: AbstractTeamType) => {
 
 		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
 	};
-	
+
 	useEffect(() => {
 		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
 			getTeamInfo(props.visibleWeekId);
@@ -170,6 +170,7 @@ export const _Team = (props: AbstractTeamType) => {
 					<Col lg={12} md={12} sm={24} xs={24}>
 						<Title level={2}>{t("general.footballCalendar")}</Title>
 						<Calendar
+							assetsCdn={application.competition.assetsCdn}
 							weekId={props.visibleWeekId}
 							showHeader={false}
 							size={30}

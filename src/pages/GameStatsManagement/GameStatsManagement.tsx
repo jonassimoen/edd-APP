@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TableStyle } from "./GameStatsManagementStyle";
 import { MatchStats } from "@/components/Stats/MatchStats";
 import { theme } from "@/styles/theme";
+import { useSelector } from "react-redux";
 
 const GameStatsHeaderTable = (props: { name?: string, score: number, type: string }) => {
 	return (
@@ -72,7 +73,9 @@ type GameStatsManagementState = {
 export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const { id } = useParams();
 	const { t } = useTranslation();
-	const navigate = useNavigate();
+	const navigate = useNavigate();	
+	const application = useSelector((state: StoreState) => state.application);
+	const assetsCdn = application.competition.assetsCdn;
 	
 	const PositionLabels: any = {
 		0: t("player.coachShort"),
@@ -187,7 +190,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			render: (txt: number, rec: any, index: number) => {
 				const player = matchPlayers.find((v: Player) => v.id === txt);
 				const playerPositionColor = getPlayerPositionHexColor(player, theme);
-				const clubBadge = `${config.API_URL}/static/badges/${player?.clubId === match.home.id ? match.home.externalId : match.away.externalId}.png`;
+				const clubBadge = `${assetsCdn}/badges/${player?.clubId === match.home.id ? match.home.id : match.away.id}.png`;
 				++index;
 				return (
 					<Flex justify={"space-between"}>
@@ -230,7 +233,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	return (
 		<Spin spinning={matchLoading || playersLoading || matchStatisticsImportLoading || state.isProcessing} delay={0} style={{ padding: "2rem 0" }}>
-			<MatchStats matchId={+id} homeScore={state.homeScore} awayScore={state.awayScore} />
+			<MatchStats matchId={+id} homeScore={state.homeScore} awayScore={state.awayScore} assetsCdn={assetsCdn}/>
 			{
 				matchStatisticsImportSuccess ?
 					<Alert

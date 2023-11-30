@@ -178,113 +178,114 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	return (
 		clubsSuccess && playersSuccess && matchesSuccess && teamSuccess && deadlineInfoSuccess &&
-				<React.Fragment>
-					{
-						(initializedExternally && visibleWeekId &&
-										<Row style={{ margin: 0 }}>
-											<Col md={24}>
-												{/* TODO: MATCHDAYSELECTOR */}
-												<Block>
-																Week {visibleWeekId}
-												</Block>
-											</Col>
-										</Row>)
-								|| null
-					}
-					{
-						(initializedExternally &&
-										<Row style={{ margin: 0 }}>
-											<Col lg={12} md={12} sm={24} xs={24}>
-												<Block style={{ marginTop: "10px" }}>
-													{
-														<Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title>
-													}
-													{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
-													<PointsStats
-														visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
-														isPublic={isPublicRoute}
-														weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
-														weekAveragePoints={teamPointsInfo.weekAveragePoints}
-													/>
-												</Block>
-												<Block style={{ marginTop: "10px" }}>
-													<Title level={2}>{t("general.footballLineup")}</Title>
-													<Team widthRatio={15}
-														heightRatio={10}
-														clubs={clubs}
-														captainId={captainId}
-														captainHasPlayed={captainHasPlayed}
-														viceCaptainId={viceCaptainId}
-														centerAligned={true}
-														selection={startingByPositions}
-														assetsCdn={application.competition.assetsCdn}
-														onSwap={props.onPlayerSwap}
-														isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
-														swapPlayerId={props.swapPlayerId}
-														swappedFrom={props.swappedFrom}
-														// boosterWeekStatus={boosterWeekStatus}
-														replacePlayerPointsWithStatsPoints={true}
-														showCaptainBadge={true}
-														modalEnabled={true}
-														playerBadgeColor="#fff"
-														playerBadgeBgColor={theme.primaryColor}
-														playerPointsColor={"#fff"}
-														playerPointsBgColor="#84FF00"
-														bg={teamBackground}
-														playerType={PlayerType.SoccerShirt} />
-													<Substitutes
-														selection={bench}
-														title={"De bank"}
-														clubs={clubs}
-														assetsCdn={application.competition.assetsCdn}
-														playerType={PlayerType.SoccerShirt}
-														playerBadgeColor={"#000"}
-														playerBadgeBgColor={theme.primaryColor}
-														playerPointsColor={"#000"}
-														playerPointsBgColor={"#84FF000"}
-														captainId={captainId}
-														viceCaptainId={viceCaptainId}
-														showCaptainBadge={true}
-														modalEnabled={true}
+		<React.Fragment>
+			{
+				(initializedExternally && visibleWeekId &&
+					<Row style={{ margin: 0 }}>
+						<Col md={24}>
+							{/* TODO: MATCHDAYSELECTOR */}
+							<Block>
+								Week {visibleWeekId}
+							</Block>
+						</Col>
+					</Row>)
+				|| null
+			}
+			{
+				(initializedExternally &&
+					<Row style={{ margin: 0 }}>
+						<Col lg={12} md={12} sm={24} xs={24}>
+							<Block style={{ marginTop: "10px" }}>
+								{
+									<Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title>
+								}
+								{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
+								<PointsStats
+									visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
+									isPublic={isPublicRoute}
+									weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
+									weekAveragePoints={teamPointsInfo.weekAveragePoints}
+								/>
+							</Block>
+							<Block style={{ marginTop: "10px" }}>
+								<Title level={2}>{t("general.footballLineup")}</Title>
+								<Team widthRatio={15}
+									heightRatio={10}
+									clubs={clubs}
+									captainId={captainId}
+									captainHasPlayed={captainHasPlayed}
+									viceCaptainId={viceCaptainId}
+									centerAligned={true}
+									selection={startingByPositions}
+									assetsCdn={application.competition.assetsCdn}
+									onSwap={props.onPlayerSwap}
+									isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
+									swapPlayerId={props.swapPlayerId}
+									swappedFrom={props.swappedFrom}
+									// boosterWeekStatus={boosterWeekStatus}
+									replacePlayerPointsWithStatsPoints={true}
+									showCaptainBadge={true}
+									modalEnabled={true}
+									playerBadgeColor="#fff"
+									playerBadgeBgColor={theme.primaryColor}
+									playerPointsColor={"#fff"}
+									playerPointsBgColor="#84FF00"
+									bg={teamBackground}
+									playerType={PlayerType.SoccerShirt} />
+								<Substitutes
+									selection={bench}
+									title={"De bank"}
+									clubs={clubs}
+									assetsCdn={application.competition.assetsCdn}
+									playerType={PlayerType.SoccerShirt}
+									playerBadgeColor={"#000"}
+									playerBadgeBgColor={theme.primaryColor}
+									playerPointsColor={"#000"}
+									playerPointsBgColor={"#84FF000"}
+									captainId={captainId}
+									viceCaptainId={viceCaptainId}
+									showCaptainBadge={true}
+									modalEnabled={true}
 
-														onSwap={props.onPlayerSwap}
-														swapPlayerId={props.swapPlayerId}
-														swappedFrom={props.swappedFrom}
-														isSwapAble={false} // todo: implement powersub
-													/>
-												</Block>
-											</Col>
-											<Col lg={12} md={12} sm={24} xs={24}>
-												{
-													<Block style={{ marginTop: "10px" }}>
-														<Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title>
-														<Stats
-															visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
-															visibleWeekRank={teamPointsInfo.visibleWeekRank}
-															transfers={teamPointsInfo.transfers}
-															generalPoints={teamPointsInfo.generalPoints}
-															generalRank={teamPointsInfo.generalRank}
-															weekId={visibleWeekId}
-														/>
-													</Block>
-												}
-												{
-													matches && matches.length && visibleWeekId ?
-														<Block style={{ marginTop: "10px" }}>
-															<Title level={2}>{t("general.footballCalendar")}</Title>
-															<Calendar
-																size={30}
-																weekId={visibleWeekId}
-																showHeader={false}
-															/>
-														</Block>
-														: null
-												}
-											</Col>
-										</Row>
-						)
-					}
-				</React.Fragment >
+									onSwap={props.onPlayerSwap}
+									swapPlayerId={props.swapPlayerId}
+									swappedFrom={props.swappedFrom}
+									isSwapAble={false} // todo: implement powersub
+								/>
+							</Block>
+						</Col>
+						<Col lg={12} md={12} sm={24} xs={24}>
+							{
+								<Block style={{ marginTop: "10px" }}>
+									<Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title>
+									<Stats
+										visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
+										visibleWeekRank={teamPointsInfo.visibleWeekRank}
+										transfers={teamPointsInfo.transfers}
+										generalPoints={teamPointsInfo.generalPoints}
+										generalRank={teamPointsInfo.generalRank}
+										weekId={visibleWeekId}
+									/>
+								</Block>
+							}
+							{
+								matches && matches.length && visibleWeekId ?
+									<Block style={{ marginTop: "10px" }}>
+										<Title level={2}>{t("general.footballCalendar")}</Title>
+										<Calendar
+											assetsCdn={application.competition.assetsCdn}
+											size={30}
+											weekId={visibleWeekId}
+											showHeader={false}
+										/>
+									</Block>
+									: null
+							}
+						</Col>
+					</Row>
+				)
+			}
+		</React.Fragment >
 	);
 };
 
