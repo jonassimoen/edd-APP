@@ -128,11 +128,23 @@ type Week = {
 	deadlineDate: Date
 }
 
-// type Players = {
-//		 isFetching: boolean
-//		 loaded: boolean
-//		 data: string
-// }
+type Page = {
+	translations: PageTranslation[]
+	id: number
+	slug: string
+	competitionFeed: string
+	thumbnail: any
+	created: string
+	modified: string
+}
+
+type PageTranslation = {
+	id: number
+	languageCode: string
+	body: string
+	title: any
+	pageId: number
+}
 
 type ApplicationState = {
 	competition: Competition

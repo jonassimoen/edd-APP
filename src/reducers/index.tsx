@@ -10,6 +10,7 @@ import { userReducer } from "@/features/userSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { playerStatsApi } from "@/services/statisticsApi";
+import { pagesApi } from "@/services/pagesApi";
 
 const reducer = combineReducers({
 	[usersApi.reducerPath]: usersApi.reducer,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
 	[matchesApi.reducerPath]: matchesApi.reducer,
 	[weeksApi.reducerPath]: weeksApi.reducer,
 	[playerStatsApi.reducerPath]: playerStatsApi.reducer,
+	[pagesApi.reducerPath]: pagesApi.reducer,
 	application: applicationReducer,
 	userState: userReducer,
 });
@@ -46,6 +48,7 @@ export const store = configureStore({
 		matchesApi.middleware,
 		weeksApi.middleware,
 		playerStatsApi.middleware,
+		pagesApi.middleware,
 	]
 });
 
