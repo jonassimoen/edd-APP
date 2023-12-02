@@ -231,13 +231,13 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									playerPointsColor={"#fff"}
 									playerPointsBgColor="#84FF00"
 									bg={teamBackground}
-									playerType={PlayerType.SoccerShirt} />
+									playerType={PlayerType.SoccerPortrait} />
 								<Substitutes
 									selection={bench}
 									title={"De bank"}
 									clubs={clubs}
 									assetsCdn={application.competition.assetsCdn}
-									playerType={PlayerType.SoccerShirt}
+									playerType={PlayerType.SoccerPortrait}
 									playerBadgeColor={"#000"}
 									playerBadgeBgColor={theme.primaryColor}
 									playerPointsColor={"#000"}
