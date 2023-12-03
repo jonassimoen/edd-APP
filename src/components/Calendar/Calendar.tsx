@@ -39,6 +39,8 @@ export const Calendar = (props: CalendarProps) => {
 		weekId: props.weekId
 	});
 
+	useEffect(() => setState({...state, weekId: props.weekId}), [props]);
+
 	const onFilterChange = (name: string, value: string | number) => {
 		const filters: any = Object.assign({}, state.filters, { [name]: value });
 		setState({ ...state, filters });

@@ -23,6 +23,7 @@ import { Calendar } from "@/components/Calendar/Calendar";
 import { Stats } from "@/components/Stats/Stats";
 import { PointsStats } from "@/components/PointsStats/PointsStats";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
+import { MatchdaySelector } from "@/components/MatchdaySelector/MatchdaySelector";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -38,11 +39,15 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const application = useSelector((state: StoreState) => state.application);
 	const location = useLocation();
 
+	const {
+		visibleWeekId,
+	} = props;
 
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
-	const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
+	// const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
 	const currentWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.weeks.find((week: Week) => week.id === visibleWeekId), [visibleWeekId, deadlineInfo]);
+
 
 	const parsePlayerPointsValue = (value: string) => {
 		try {
@@ -146,10 +151,11 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	};
 
 	useEffect(() => {
+		console.log("EFFECT, visibleweekid", visibleWeekId);
 		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
 			getTeamInfo(visibleWeekId);
 		}
-	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
+	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess, visibleWeekId]);
 
 	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo } = props;
 
@@ -183,10 +189,14 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				(initializedExternally && visibleWeekId &&
 					<Row style={{ margin: 0 }}>
 						<Col md={24}>
-							{/* TODO: MATCHDAYSELECTOR */}
-							<Block>
-								Week {visibleWeekId}
-							</Block>
+							<MatchdaySelector
+								day={visibleWeekId}
+								max={deadlineWeek ? deadlineWeek : visibleWeekId}
+								min={1}
+								name={""}
+								onPrev={(e: any) => props.onDayChange(false)}
+								onNext={(e: any) => props.onDayChange(true)}
+							/>
 						</Col>
 					</Row>)
 				|| null
@@ -291,4 +301,4 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	);
 };
 
-export const PointsPage = () => AbstractTeam(_TeamPoints, {});
+export const PointsPage = () => AbstractTeam(_TeamPoints, {}, { mode: "points" });

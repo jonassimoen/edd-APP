@@ -487,6 +487,21 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		}
 	};
 
+	const onDayChange = (directionNext: boolean) => {
+		if (directionNext) {
+			const upcomingWeekExists = deadlineInfo.weeks.find((week: Week) => !!(state.visibleWeekId && (week.id > state.visibleWeekId)));
+			if (upcomingWeekExists && state.visibleWeekId) {
+				setState({ ...state, visibleWeekId: state.visibleWeekId + 1 });
+			}
+		} else {
+			const previousWeekExists = deadlineInfo.weeks.find((week: Week) => !!(state.visibleWeekId && (week.id < state.visibleWeekId)));
+			
+			if (previousWeekExists && state.visibleWeekId) {
+				setState({ ...state, visibleWeekId: state.visibleWeekId - 1 });
+			}
+		}
+	};
+
 	const onPlayerSwap = (player: Player) => {
 		if (player && player.id === state.swapPlayerId) {
 			const pickBackResult = state.validator.pick(player);
@@ -721,6 +736,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 					onTransfersSubmit={onTransfersSubmit}
 					onTransfersReset={onTransfersReset}
 					reloadUserTeams={reloadUserTeams}
+					onDayChange={onDayChange}
 					teamUser={state.teamUser}
 					initializedExternally={state.initializedExternally}
 					visibleWeekId={state.visibleWeekId}
