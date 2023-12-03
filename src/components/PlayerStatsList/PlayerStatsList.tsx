@@ -148,7 +148,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.playerColumn"),
 			sorter: (a: any, b: any) => a.generalInfo.short.localeCompare(b.generalInfo.short),
 			dataIndex: "generalInfo",
-			fixed: "left",
 			render: (text: string, record: any) => {
 				return (<span>{record.generalInfo.short || record.generalInfo.name}</span>);
 			},
@@ -268,7 +267,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 
 	return (
 		<ContainerStyle>
-			{stats?.filter(playerStat => playerFilter(playerStat)).length}
 			{
 				<Input
 					prefix={<SearchOutlined />}

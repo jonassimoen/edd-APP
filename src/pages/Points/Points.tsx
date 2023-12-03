@@ -236,10 +236,10 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									replacePlayerPointsWithStatsPoints={true}
 									showCaptainBadge={true}
 									modalEnabled={true}
-									playerBadgeColor="#fff"
-									playerBadgeBgColor={theme.primaryColor}
-									playerPointsColor={"#fff"}
-									playerPointsBgColor="#84FF00"
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
+									playerPointsColor={"#000"}
+									playerPointsBgColor={theme.primaryColor}
 									bg={teamBackground}
 									playerType={PlayerType.SoccerPortrait} />
 								<Substitutes
@@ -248,10 +248,10 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									clubs={clubs}
 									assetsCdn={application.competition.assetsCdn}
 									playerType={PlayerType.SoccerPortrait}
-									playerBadgeColor={"#000"}
-									playerBadgeBgColor={theme.primaryColor}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
 									playerPointsColor={"#000"}
-									playerPointsBgColor={"#84FF00"}
+									playerPointsBgColor={theme.primaryColor}
 									captainId={captainId}
 									viceCaptainId={viceCaptainId}
 									showCaptainBadge={true}

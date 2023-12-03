@@ -134,10 +134,10 @@ export const _Team = (props: AbstractTeamType) => {
 							isSwapAble={props.isSwapAble}
 							swapPlayerId={props.swapPlayerId}
 							swappedFrom={props.swappedFrom}
-							playerBadgeColor={theme.primaryColor}
+							playerBadgeColor={"#fff"}
+							playerBadgeBgColor={theme.primaryContrast}
+							playerPointsColor={"#000"}
 							playerPointsBgColor={theme.primaryColor}
-							playerPointsColor="#000"
-							playerBadgeBgColor="#84FF00"
 						/>
 						<Substitutes
 							selection={props.bench || []}
@@ -152,10 +152,10 @@ export const _Team = (props: AbstractTeamType) => {
 							isSwapAble={props.isSwapAble}
 							swapPlayerId={props.swapPlayerId}
 							swappedFrom={props.swappedFrom}
-							playerBadgeColor={theme.primaryColor}
-							playerBadgeBgColor={theme.primaryColor}
-							playerPointsColor="#000"
-							playerPointsBgColor="#84FF00"
+							playerBadgeColor={"#fff"}
+							playerBadgeBgColor={theme.primaryContrast}
+							playerPointsColor={"#000"}
+							playerPointsBgColor={theme.primaryColor}
 						/>
 						<Button
 							onClick={(e: any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}

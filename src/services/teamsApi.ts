@@ -63,7 +63,7 @@ export const teamsApi = createApi({
 
 export const { 
 	useGetTeamQuery, 
-	useLazyGetTeamQuery, 
+	useLazyGetTeamQuery,
 	useAddTeamMutation, 
 	useUpdateTeamSelectionMutation, 
 	useLazyGetPointsQuery, 

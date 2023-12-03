@@ -106,7 +106,6 @@ const _Transfers = (props: AbstractTeamType) => {
 			const budget = teamResult.team.budget !== null ?
 				teamResult.team.budget : getPlayersValueWithTransfers(teamResult.players);
 
-
 			const boosters = {
 				freeHit: teamResult.team.freeHit,
 				bank: teamResult.team.bank,
@@ -224,6 +223,7 @@ const _Transfers = (props: AbstractTeamType) => {
 	return (
 		(clubs && teamResult && matches && players && deadlineInfo) && (
 			<React.Fragment>
+				{application.competition.officialStartWeek}
 				{(notTeamOwner || state.notFound) &&
 										<Navigate to={"/home"} />
 				}

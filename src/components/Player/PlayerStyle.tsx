@@ -85,7 +85,7 @@ export const OpponentBadge = styled.div`
 	width: 100%;
 	height: 20px;
 	
-	background: ${theme.primaryContrast};
+	background: ${(props: any) => props.bgColor};
 	color: white;
 	padding: 3px;
 	overflow: hidden;
@@ -114,7 +114,7 @@ export const Value = styled.div`
 	justify-content: center;
 	align-items: center;
 	background: #00FAFA;
-	color: #16002b;
+	color: ${(props: any) => props.color};
 
 	h4 {
 		font-family: Aeonik,"Helvetica Neue",Helvetica,Arial,sans-serif;

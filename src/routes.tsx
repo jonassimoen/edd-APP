@@ -23,6 +23,7 @@ import { MatchContainer } from "./pages/Match/Match";
 import { Welcome } from "./pages/Welcome/Welcome";
 import { PageManagement } from "./pages/PageManagement/PageManagement";
 import { Rankings } from "./pages/Rankings/Rankings";
+import { EditTeam } from "./pages/EditTeam/EditTeam";
 
 const Layout = ({ children }: any) => {
 	return (
@@ -69,7 +70,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/edit/:id",
-				element: <ProtectedRoute access={true} redirectPath="/home"><TransfersPage /></ProtectedRoute>
+				element: <ProtectedRoute access={true} redirectPath="/home"><EditTeam /></ProtectedRoute>
 			},
 			{
 				path: "/profile",

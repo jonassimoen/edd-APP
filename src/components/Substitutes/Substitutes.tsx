@@ -71,7 +71,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 							pointsColor={props.playerPointsColor}
 							pointsBgColor={props.playerPointsBgColor}
 							badgeColor={props.playerBadgeColor}
-							badgeBgColor={player.playerBadgeBgColor}
+							badgeBgColor={props.playerBadgeBgColor}
 							player={player}
 							club={club}
 							type={props.playerType}

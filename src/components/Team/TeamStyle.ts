@@ -57,3 +57,16 @@ export const TeamStyle = styled.div`
         background-size: 100% 100%;
     }
 ` as any;
+
+export const SaveLineupButton = styled.div`
+	text-align: center;
+	margin: 10px 0px;
+
+	@media ${mediaQueries.tabletL} {
+		text-align: right;
+	}
+
+	.ant-btn {
+		width: 100%;
+	}
+`;
