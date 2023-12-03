@@ -34,6 +34,7 @@ type SubstitutesProps = {
 	isSwapAble?: any
 	swapPlayerId?: number | null
 	swappedFrom?: string | null
+	motmId?: number
 }
 
 export const Substitutes = (props: SubstitutesProps) => {
@@ -89,6 +90,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 							positionLabel={positionLabel}
 							onPlaceholderClick={props.onPlaceholderClick}
 							actionLessPlayerIds={props.actionsLessPlayerIds}
+							motm={props.motmId===player.id}
 							{...imgProps}
 						/>
 					</React.Fragment>;

@@ -61,6 +61,7 @@ declare type PlayerProps = {
 	shirtFallback?: string
 
 	className?: string
+	motm?: boolean
 }
 
 export const Player = (props: PlayerProps) => {
@@ -92,6 +93,7 @@ export const Player = (props: PlayerProps) => {
 		benchPlayer,
 		replacePlayerPointsWithStatsPoints,
 		type,
+		motm,
 	} = props;
 
 	const [state, setState] = useState<PlayerState>({
@@ -203,7 +205,7 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				showPlayerName &&   // badgeBgColor of playerPositionColor // span: color: pointsColor
-				<Badge color={badgeColor} bgColor={playerPositionColor}>
+				<Badge color={badgeColor} bgColor={motm ? "#c4a747" : theme.primaryContrast}>
 					<span style={{ color: "white" }}>{playerName}</span>
 				</Badge>
 			}

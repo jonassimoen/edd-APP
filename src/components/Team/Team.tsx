@@ -36,6 +36,7 @@ export declare type TeamProps = {
     // boosterWeekStatus?: BoostersWeekStatus;
     viceCaptainId?: number;
     centerAligned?: boolean | undefined;
+	motmId?: number
     // t: i18next.TFunction;
 };
 
@@ -70,7 +71,8 @@ export const Team = (props: TeamProps) => {
 		captainHasPlayed, 
 		viceCaptainId, 
 		showCaptainBadge, 
-		onViceCaptainSelect 
+		onViceCaptainSelect,
+		motmId,
 	} = props;
 
 	return (
@@ -125,6 +127,7 @@ export const Team = (props: TeamProps) => {
 										swappedFrom={swappedFrom}
 										club={club}
 										type={playerType}
+										motm={motmId===player.id}
 										{...imgProps}
 									/>
 								);

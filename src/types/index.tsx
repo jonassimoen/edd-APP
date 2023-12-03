@@ -81,6 +81,7 @@ type Statistic = {
 	duelsTotal?: number
 	yellow?: number
 	red?: number
+	motm?: boolean
 }
 
 type PlayerSelection = {

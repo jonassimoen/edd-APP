@@ -20,7 +20,7 @@ import { Substitutes } from "@/components/Substitutes/Substitutes";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 
 const playerProps =
-		["id", "name", "short", "positionId", "clubId", "injury", "form", "forename", "surname", "points", "pointsOverview", "stats", "portraitUrl"];
+	["id", "name", "short", "positionId", "clubId", "injury", "form", "forename", "surname", "points", "pointsOverview", "stats", "portraitUrl"];
 
 
 const calculatePointsByPlayerStats = (players: Player[]) => {
@@ -62,89 +62,93 @@ const _MatchContainer = (props: AbstractTeamType) => {
 	const homeTotalPoints = useMemo(() => match && match.home && calculatePointsByPlayerStats(match.home.players), [match]);
 	const awayTotalPoints = useMemo(() => match && match.away && calculatePointsByPlayerStats(match.away.players), [match]);
 
+	const motmId = useMemo(() => [].concat(homeStartingPlayers, homeBenchPlayers, awayStartingPlayers, awayBenchPlayers).find((p: Player) => p?.stats[0].motm)?.id, [homeStartingPlayers, homeBenchPlayers, awayStartingPlayers, awayBenchPlayers]);
+
 	return (
 		<Spin spinning={matchLoading || clubsLoading} delay={0} style={{ padding: "2rem 0" }}>
 			{match && clubs &&
-								<MatchStyles>
-									<Row>
-										<Col md={12} sm={24} xs={24} className="left">
-											<Block>
-												<Title level={2}>
-													{match!.home!.name}
-												</Title>
-												<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints} {t("general.points")}</span>
-												<Team
-													widthRatio={15}
-													heightRatio={10}
-													clubs={clubs}
-													bg={teamBackground}
-													assetsCdn={application.competition.assetsCdn}
-													replacePlayerPointsWithStatsPoints={true}
-													selection={homeStartingPlayersByPositions}
-													centerAligned={true}
-													playerType={PlayerType.SoccerPortrait}
-													playerBadgeColor={"#fff"}
-													modalEnabled={true}
-													captainId={undefined}
-													playerBadgeBgColor={theme.primaryColor}
-													playerPointsColor={"#fff"}
-													playerPointsBgColor={theme.primaryColor}
-												/>
-												<Substitutes
-													selection={homeBenchPlayers.sort((a: any, b: any) => a.positionId - b.positionId)}
-													clubs={clubs}
-													title="De bank"
-													bgImage={"#F4F8FF"}
-													playerType={PlayerType.SoccerPortrait}
-													modalEnabled={true}
-													assetsCdn={application.competition.assetsCdn}
-													playerBadgeColor={"#000"}
-													playerBadgeBgColor={theme.primaryColor}
-													playerPointsColor={"#000"}
-													playerPointsBgColor={theme.primaryColor}
-												/>
-											</Block>
-										</Col>
-										<Col md={12} sm={24} xs={24} className="right">
-											<Block>
-												<Title level={2}>
-													{match!.away!.name}
-												</Title>
-												<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints} {t("general.points")}</span>
-												<Team
-													widthRatio={15}
-													heightRatio={10}
-													clubs={clubs}
-													bg={teamBackground}
-													assetsCdn={application.competition.assetsCdn}
-													replacePlayerPointsWithStatsPoints={true}
-													selection={awayStartingPlayersByPositions}
-													centerAligned={true}
-													playerType={PlayerType.SoccerPortrait}
-													playerBadgeColor={"#fff"}
-													modalEnabled={true}
-													captainId={undefined}
-													playerBadgeBgColor={theme.primaryColor}
-													playerPointsColor={"#fff"}
-													playerPointsBgColor={theme.primaryColor}
-												/>
-												<Substitutes
-													selection={awayBenchPlayers.sort((a: any, b: any) => a.positionId - b.positionId)}
-													clubs={clubs}
-													title="De bank"
-													bgImage={"#F4F8FF"}
-													playerType={PlayerType.SoccerPortrait}
-													modalEnabled={true}
-													assetsCdn={application.competition.assetsCdn}
-													playerBadgeColor={"#000"}
-													playerBadgeBgColor={theme.primaryColor}
-													playerPointsColor={"#000"}
-													playerPointsBgColor={theme.primaryColor}
-												/>
-											</Block>
-										</Col>
-									</Row>
-								</MatchStyles>
+				<MatchStyles>
+					<Row>
+						<Col md={12} sm={24} xs={24} className="left">
+							<Block>
+								<Title level={2}>
+									{match!.home!.name}
+								</Title>
+								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints} {t("general.points")}</span>
+								<Team
+									widthRatio={15}
+									heightRatio={10}
+									clubs={clubs}
+									bg={teamBackground}
+									assetsCdn={application.competition.assetsCdn}
+									replacePlayerPointsWithStatsPoints={true}
+									selection={homeStartingPlayersByPositions}
+									centerAligned={true}
+									playerType={PlayerType.SoccerPortrait}
+									playerBadgeColor={"#fff"}
+									modalEnabled={true}
+									captainId={undefined}
+									playerBadgeBgColor={theme.primaryColor}
+									playerPointsColor={"#fff"}
+									playerPointsBgColor={theme.primaryColor}
+									motmId={motmId}
+								/>
+								<Substitutes
+									selection={homeBenchPlayers.sort((a: any, b: any) => a.positionId - b.positionId)}
+									clubs={clubs}
+									title="De bank"
+									bgImage={"#F4F8FF"}
+									playerType={PlayerType.SoccerPortrait}
+									modalEnabled={true}
+									assetsCdn={application.competition.assetsCdn}
+									playerBadgeColor={"#000"}
+									playerBadgeBgColor={theme.primaryColor}
+									playerPointsColor={"#000"}
+									playerPointsBgColor={theme.primaryColor}
+									motmId={motmId}
+								/>
+							</Block>
+						</Col>
+						<Col md={12} sm={24} xs={24} className="right">
+							<Block>
+								<Title level={2}>
+									{match!.away!.name}
+								</Title>
+								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints} {t("general.points")}</span>
+								<Team
+									widthRatio={15}
+									heightRatio={10}
+									clubs={clubs}
+									bg={teamBackground}
+									assetsCdn={application.competition.assetsCdn}
+									replacePlayerPointsWithStatsPoints={true}
+									selection={awayStartingPlayersByPositions}
+									centerAligned={true}
+									playerType={PlayerType.SoccerPortrait}
+									playerBadgeColor={"#fff"}
+									modalEnabled={true}
+									captainId={undefined}
+									playerBadgeBgColor={theme.primaryColor}
+									playerPointsColor={"#fff"}
+									playerPointsBgColor={theme.primaryColor}
+								/>
+								<Substitutes
+									selection={awayBenchPlayers.sort((a: any, b: any) => a.positionId - b.positionId)}
+									clubs={clubs}
+									title="De bank"
+									bgImage={"#F4F8FF"}
+									playerType={PlayerType.SoccerPortrait}
+									modalEnabled={true}
+									assetsCdn={application.competition.assetsCdn}
+									playerBadgeColor={"#000"}
+									playerBadgeBgColor={theme.primaryColor}
+									playerPointsColor={"#000"}
+									playerPointsBgColor={theme.primaryColor}
+								/>
+							</Block>
+						</Col>
+					</Row>
+				</MatchStyles>
 			}
 		</Spin>
 	);
