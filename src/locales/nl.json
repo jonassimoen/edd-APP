@@ -159,7 +159,15 @@
     "goalsColumnForAllPlayersTable": "Doelpunten",
     "assistsColumnForAllPlayersTable": "Assists",
     "shotsAccuracyColumnForAllPlayersTable": "Shoten accuraatheid",
-    "passAccuracyColumnForAllPlayersTable": "Pass accuraatheid"
+    "passAccuracyColumnForAllPlayersTable": "Pass accuraatheid",
+    "tacklesColumnForAllPlayersTable": "Tackles",
+    "blocksColumnForAllPlayersTable": "Blocks",
+    "interceptionsColumnForAllPlayersTable": "Intercepties",
+    "againstColumnForAllPlayersTable": "Tegendoelpunten",
+    "cleanColumnForAllPlayersTable": "Geen tegendoelpunten",
+    "dribbleAccuracyColumnForAllPlayersTable": "Percentage succesvolle dribbels",
+    "timePlayedColumnForAllPlayersTable": "Minuten gespeeld",
+    "matchPlayedColumnForAllPlayersTable": "Matches gespeeld"
   },
   "team": {
     "saveTeam": "Team opslaan",
@@ -201,5 +209,11 @@
     "rankingsTablePointsColumnName": "Punten",
     "rankingsTitle": "Rangschikking",
     "rankingsNotAvailableYet": "Ranking niet beschikbaar"
+  },
+  "transfersPage": {
+    "transfersBlockTitle": "Transfers"
+  },
+  "transferPage": {
+    "noTransfersTableMessage": "Geen transfers"
   }
 }
