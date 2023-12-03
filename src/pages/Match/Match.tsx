@@ -82,7 +82,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 													replacePlayerPointsWithStatsPoints={true}
 													selection={homeStartingPlayersByPositions}
 													centerAligned={true}
-													playerType={PlayerType.SoccerShirt}
+													playerType={PlayerType.SoccerPortrait}
 													playerBadgeColor={"#fff"}
 													modalEnabled={true}
 													captainId={undefined}
@@ -95,7 +95,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 													clubs={clubs}
 													title="De bank"
 													bgImage={"#F4F8FF"}
-													playerType={PlayerType.SoccerShirt}
+													playerType={PlayerType.SoccerPortrait}
 													modalEnabled={true}
 													assetsCdn={application.competition.assetsCdn}
 													playerBadgeColor={"#000"}
@@ -120,7 +120,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 													replacePlayerPointsWithStatsPoints={true}
 													selection={awayStartingPlayersByPositions}
 													centerAligned={true}
-													playerType={PlayerType.SoccerShirt}
+													playerType={PlayerType.SoccerPortrait}
 													playerBadgeColor={"#fff"}
 													modalEnabled={true}
 													captainId={undefined}
@@ -133,7 +133,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 													clubs={clubs}
 													title="De bank"
 													bgImage={"#F4F8FF"}
-													playerType={PlayerType.SoccerShirt}
+													playerType={PlayerType.SoccerPortrait}
 													modalEnabled={true}
 													assetsCdn={application.competition.assetsCdn}
 													playerBadgeColor={"#000"}
