@@ -23,6 +23,7 @@ type SubstitutesProps = {
 	showPlayerValue?: boolean
 	showPlayerValueInsteadOfPoints?: boolean
 	showPositionNumber?: boolean
+	replacePlayerPointsWithStatsPoints?: boolean
 
 	captainId?: number
 	viceCaptainId?: number
@@ -74,13 +75,13 @@ export const Substitutes = (props: SubstitutesProps) => {
 							club={club}
 							type={props.playerType}
 							modalEnabled={props.modalEnabled}
-							// showPlayerValue={props.showPlayerValue}
+							replacePlayerPointsWithStatsPoints={props.replacePlayerPointsWithStatsPoints}
 							onRemove={props.onRemove}
 							isSwapable={props.isSwapAble}
 							captainId={props.captainId}
 							viceCaptainId={props.viceCaptainId}
 							showCaptainBadge={props.showCaptainBadge}
-							// showPlayerValueInsteadOfPoints={props.showPlayerValueInsteadOfPoints}
+							showPlayerValueInsteadOfPoints={props.showPlayerValueInsteadOfPoints}
 							onSwap={props.onSwap}
 							swapPlayerId={props.swapPlayerId}
 							swappedFrom={props.swappedFrom}

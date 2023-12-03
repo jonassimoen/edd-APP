@@ -126,6 +126,7 @@ type User = {
 type Week = {
 	id: number
 	deadlineDate: Date
+	validated: boolean
 }
 
 type Page = {

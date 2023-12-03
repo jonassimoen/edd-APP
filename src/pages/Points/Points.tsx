@@ -23,7 +23,6 @@ import { Calendar } from "@/components/Calendar/Calendar";
 import { Stats } from "@/components/Stats/Stats";
 import { PointsStats } from "@/components/PointsStats/PointsStats";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
-import benchBackground from "./../../assets/img/fpl-bench-bg.svg";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -43,6 +42,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
 	const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
+	const currentWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.weeks.find((week: Week) => week.id === visibleWeekId), [visibleWeekId, deadlineInfo]);
 
 	const parsePlayerPointsValue = (value: string) => {
 		try {
@@ -241,11 +241,12 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									playerBadgeColor={"#000"}
 									playerBadgeBgColor={theme.primaryColor}
 									playerPointsColor={"#000"}
-									playerPointsBgColor={"#84FF000"}
+									playerPointsBgColor={"#84FF00"}
 									captainId={captainId}
 									viceCaptainId={viceCaptainId}
 									showCaptainBadge={true}
 									modalEnabled={true}
+									replacePlayerPointsWithStatsPoints={true}
 
 									onSwap={props.onPlayerSwap}
 									swapPlayerId={props.swapPlayerId}
@@ -265,6 +266,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 										generalPoints={teamPointsInfo.generalPoints}
 										generalRank={teamPointsInfo.generalRank}
 										weekId={visibleWeekId}
+										weekPointsConfirmed={currentWeek.validated}
 									/>
 								</Block>
 							}

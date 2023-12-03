@@ -3,7 +3,7 @@ import { Button } from "@/components/UI/Button/Button";
 import { FormItem } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
-import { CheckOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
+import Icon, { CheckOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Badge, DatePicker, Table, Tag } from "antd";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
@@ -13,6 +13,11 @@ import locale from "antd/es/date-picker/locale/nl_BE";
 import { useCreateWeekMutation, useGetWeeksQuery, useUpdateWeekMutation, useValidateWeekMutation } from "@/services/weeksApi";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { statusToIconColor } from "@/lib/helpers";
+import React from "react";
+import { ConfirmedSvg, UnConfirmedSvg } from "@/styles/custom-icons";
+
+const ConfirmedIcon = (props: any) => <Icon component={ConfirmedSvg} {...props} />;
+const UnConfirmedIcon = (props: any) => <Icon component={UnConfirmedSvg} {...props} />;
 
 type WeekManagementState = {
 	openEditModal: boolean
@@ -106,6 +111,23 @@ export const WeekManagement = () => {
 							render: (date: Date, record: any) => {
 								return (
 									<p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>
+								);
+							}
+						},
+						{
+							title: "Status",
+							dataIndex: "validated",
+							width: "15%",
+							render: (validated: boolean, record: any) => {
+								return (
+									<React.Fragment>
+										{
+											validated ?
+												<ConfirmedIcon />
+												:
+												<UnConfirmedIcon />
+										}
+									</React.Fragment>
 								);
 							}
 						},
