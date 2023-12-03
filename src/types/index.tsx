@@ -104,6 +104,8 @@ type Team = {
 	bank: number
 	tripleCaptain: number
 	wildCard: number
+	rank: number
+	points: number
 }
 
 type Boosters = {

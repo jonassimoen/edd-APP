@@ -90,16 +90,30 @@ export const tablePagination = `
 `;
 
 export const TableStyle = styled(Table)`
+    .ant-table-container table>thead>tr:first-child {
+        >*:first-child {
+            border-start-start-radius: 0px;
+        }
+        >*:last-child {
+            border-start-end-radius: 0px;
+        }
+    }
+
     .ant-table {
         color: #000;
     }
 
     .ant-table-thead {
-        th {
+        >tr>th {
             padding-top: 10px;
             padding-bottom: 10px;
-            background: ${props => props.theme.primaryContrast};
-            color: ${props => props.theme.primaryColor};
+            background: ${theme.primaryContrast};
+            color: ${theme.primaryColor};
+			padding: 5px;
+
+			&::before {
+				display: none;
+			}
         }
     }
 

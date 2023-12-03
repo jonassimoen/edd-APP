@@ -22,6 +22,7 @@ import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
 import { Welcome } from "./pages/Welcome/Welcome";
 import { PageManagement } from "./pages/PageManagement/PageManagement";
+import { Rankings } from "./pages/Rankings/Rankings";
 
 const Layout = ({ children }: any) => {
 	return (
@@ -51,7 +52,7 @@ export const router = createBrowserRouter([
 				element: <ProtectedRoute access={true} redirectPath="/home"><NewTeam /></ProtectedRoute>
 			},
 			{
-				path: "/points/:id", //todo
+				path: "/points/:id", 
 				element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
 			},
 			{
@@ -63,12 +64,12 @@ export const router = createBrowserRouter([
 				element: <ProtectedRoute access={true} redirectPath="/home"><TeamPage /></ProtectedRoute>
 			},
 			{
-				path: "/transfers/:id", //todo
+				path: "/transfers/:id", 
 				element: <ProtectedRoute access={true} redirectPath="/home"><TransfersPage /></ProtectedRoute>
 			},
 			{
-				path: "/edit/:id", //todo
-				element: <ProtectedRoute access={true} redirectPath="/home"><Home /></ProtectedRoute>
+				path: "/edit/:id",
+				element: <ProtectedRoute access={true} redirectPath="/home"><TransfersPage /></ProtectedRoute>
 			},
 			{
 				path: "/profile",
@@ -79,19 +80,19 @@ export const router = createBrowserRouter([
 				element: <ProtectedRoute access={true} redirectPath="/home"><Deadlines /></ProtectedRoute>
 			},
 			{
-				path: "/stats", //todo
+				path: "/stats",
 				element: <ProtectedRoute access={true} redirectPath="/home"><Stats /></ProtectedRoute>
 			},
 			{
-				path: "/match/:id", //todo
+				path: "/match/:id", 
 				element: <ProtectedRoute access={true} redirectPath="/home"><MatchContainer /></ProtectedRoute>
 			},
 			{
-				path: "/rankings", //todo
-				element: <ProtectedRoute access={true} redirectPath="/home"><Home /></ProtectedRoute>
+				path: "/rankings",
+				element: <ProtectedRoute access={true} redirectPath="/home"><Rankings /></ProtectedRoute>
 			},
 			{
-				path: "/rules", //todo
+				path: "/rules", 
 				element: <ProtectedRoute access={true} redirectPath="/home"><Rules /></ProtectedRoute>
 			},
 			{

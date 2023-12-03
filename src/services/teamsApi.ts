@@ -46,6 +46,10 @@ export const teamsApi = createApi({
 			providesTags: ["userTeamPoints"],
 		}),
 
+		getTeamRankings: builder.query<{team: Team, user: User}, void>({
+			query: () => "/rankings"
+		}) 
+
 		// updatePlayer: builder.mutation<Player, Partial<Player> & Pick<Player, 'id'>>({
 		// 	query: ({ id, ...put }) => ({
 		// 		url: `${id}`,
@@ -57,4 +61,12 @@ export const teamsApi = createApi({
 	})
 });
 
-export const { useGetTeamQuery, useLazyGetTeamQuery, useAddTeamMutation, useUpdateTeamSelectionMutation, useLazyGetPointsQuery, useSubmitTransfersMutation } = teamsApi;
+export const { 
+	useGetTeamQuery, 
+	useLazyGetTeamQuery, 
+	useAddTeamMutation, 
+	useUpdateTeamSelectionMutation, 
+	useLazyGetPointsQuery, 
+	useSubmitTransfersMutation,
+	useGetTeamRankingsQuery
+} = teamsApi;

@@ -157,7 +157,9 @@
       "valueColumn": "Waarde"
     },
     "goalsColumnForAllPlayersTable": "Doelpunten",
-    "assistsColumnForAllPlayersTable": "Assists"
+    "assistsColumnForAllPlayersTable": "Assists",
+    "shotsAccuracyColumnForAllPlayersTable": "Shoten accuraatheid",
+    "passAccuracyColumnForAllPlayersTable": "Pass accuraatheid"
   },
   "team": {
     "saveTeam": "Team opslaan",
@@ -193,5 +195,11 @@
     "statsBlockTitle": "Statistieken",
     "overviewBlockTitle": "Overzicht"
   },
-  "pageTitle": "Pagina"
+  "pageTitle": "Pagina",
+  "rankingsPage": {
+    "rankingsTableTeamColumnName": "Team",
+    "rankingsTablePointsColumnName": "Punten",
+    "rankingsTitle": "Rangschikking",
+    "rankingsNotAvailableYet": "Ranking niet beschikbaar"
+  }
 }

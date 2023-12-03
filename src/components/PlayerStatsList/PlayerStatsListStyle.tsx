@@ -59,8 +59,6 @@ export const TableStyle = styled(Table)`
 		>tr>th {
 			background-color: ${theme.primaryContrast};
 			color: ${theme.primaryColor};
-			padding-top: 10px;
-			padding-bottom: 10px;
 			border-radius: 0px !important;
 			padding: 7.5px;
             white-space: nowrap;
