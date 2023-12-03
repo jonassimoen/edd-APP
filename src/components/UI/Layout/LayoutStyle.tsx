@@ -13,7 +13,7 @@ export const LayoutStyle = styled(Layout)`
 		background: transparent;
 		margin: 0 auto;
 		width: 100%;
-		@media (min-width: 992px) {
+		@media ${mediaQueries.laptop} {
 			width: 80%;
 		}
 		
