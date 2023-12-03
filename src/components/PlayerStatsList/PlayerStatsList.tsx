@@ -10,15 +10,15 @@ import { useGetWeeksQuery } from "@/services/weeksApi";
 import { useGetPlayerStatsQuery } from "@/services/statisticsApi";
 
 type PlayerStatsListProps = {
-    size: number
-    showHeader?: boolean
-    onSelect?: any
+	size: number
+	showHeader?: boolean
+	onSelect?: any
 }
 
 type PlayerStatsListState = {
-    filters: any
-    pagination: any
-    sorter: string
+	filters: any
+	pagination: any
+	sorter: string
 }
 
 export const PlayerStatsList = (props: PlayerStatsListProps) => {
@@ -88,11 +88,48 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	];
 
 	const statsList = [
-		{ id: 0, name: <span className={"prefixed-label"}> {t("stats.attackingStats")} </span>, value: [{ value: "statGoals", label: t("stats.goalsColumnForAllPlayersTable") }, { value: "statAssists", label: t("stats.assistsColumnForAllPlayersTable") }] },
-		{ id: 1, name: `${t("stats.defendingStats")}`, value: [{ value: "statConceeded", label: t("stats.againstColumnForAllPlayersTable") }, { value: "statCleanSheet", label: t("stats.cleanColumnForAllPlayersTable") }] },
-		{ id: 2, name: `${t("stats.cardStats")}`, value: [{ value: "statYellow", label: t("stats.yellowColumnForAllPlayersTable") }, { value: "statRed", label: t("stats.redColumnForAllPlayersTable") }] },
-		{ id: 3, name: `${t("stats.playStats")}`, value: [{ value: "statTimePlayed", label: t("stats.timePlayedColumnForAllPlayersTable") }, { value: "statMatchPlayed", label: t("stats.matchPlayedColumnForAllPlayersTable") }] },
-		{ id: 4, name: `${t("stats.userStats")}`, value: [{ value: "statTimePlayed", label: t("stats.timePlayedColumnForAllPlayersTable") }, { value: "statMatchPlayed", label: t("stats.matchPlayedColumnForAllPlayersTable") }] },//points per min //selection %// pickorder//
+		{
+			id: 0,
+			name: <span className={"prefixed-label"}> {t("stats.attackingStats")} </span>,
+			value: [
+				{ value: "statGoals", label: t("stats.goalsColumnForAllPlayersTable") },
+				{ value: "statAssists", label: t("stats.assistsColumnForAllPlayersTable") },
+				{ value: "statShotsAccuracy", label: t("stats.shotsAccuracyColumnForAllPlayersTable") },
+				{ value: "statPassAccuracy", label: t("stats.passAccuracyColumnForAllPlayersTable") }
+			]
+		},
+		{
+			id: 1,
+			name: `${t("stats.defendingStats")}`,
+			value: [
+				{ value: "statConceeded", label: t("stats.againstColumnForAllPlayersTable") },
+				{ value: "statCleanSheet", label: t("stats.cleanColumnForAllPlayersTable") }
+			]
+		},
+		{
+			id: 2,
+			name: `${t("stats.cardStats")}`,
+			value: [
+				{ value: "statYellow", label: t("stats.yellowColumnForAllPlayersTable") },
+				{ value: "statRed", label: t("stats.redColumnForAllPlayersTable") }
+			]
+		},
+		{
+			id: 3,
+			name: `${t("stats.playStats")}`,
+			value: [
+				{ value: "statTimePlayed", label: t("stats.timePlayedColumnForAllPlayersTable") },
+				{ value: "statMatchPlayed", label: t("stats.matchPlayedColumnForAllPlayersTable") }
+			]
+		},
+		{
+			id: 4,
+			name: `${t("stats.userStats")}`,
+			value: [
+				{ value: "statTimePlayed", label: t("stats.timePlayedColumnForAllPlayersTable") },
+				{ value: "statMatchPlayed", label: t("stats.matchPlayedColumnForAllPlayersTable") }
+			]
+		},//points per min //selection %// pickorder//
 	];
 
 	const columns: any[] = [
@@ -111,12 +148,13 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.playerColumn"),
 			sorter: (a: any, b: any) => a.generalInfo.short.localeCompare(b.generalInfo.short),
 			dataIndex: "generalInfo",
+			fixed: "left",
 			render: (text: string, record: any) => {
-				return (<span>{record.generalInfo.short || record.generalInfo.name}</span>); 
+				return (<span>{record.generalInfo.short || record.generalInfo.name}</span>);
 			},
 		},
 		{   // todo: change to clubName + sorter with compare
-			key: "clubName", 
+			key: "clubName",
 			title: t("stats.allPlayersTable.clubColumn"),
 			sorter: (a: any, b: any) => a.clubName.localeCompare(b.clubName),
 			dataIndex: "clubName",
@@ -143,25 +181,34 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				return (<span>{record.total}</span>);
 			},
 		},
-		{
-			key: statsList[state.filters.stat].value[0].value,
-			title: statsList[state.filters.stat].value[0].label,
-			sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[0].value] - b[statsList[state.filters.stat].value[0].value],
-			dataIndex: statsList[state.filters.stat].value[0].value,
+		...statsList[state.filters.stat].value.map((stat: any) => ({
+			key: stat.value,
+			title: stat.label,
+			sorter: (a: any, b: any) => a[stat.value] - b[stat.value],
+			dataIndex: stat.value,
 			render: (text: string, record: any) => {
-				return (<span>{record[statsList[state.filters.stat].value[0].value]}</span>);
+				return (<span>{record[stat.value]}</span>);
 			},
-		},
-		{
-			key: statsList[state.filters.stat].value[1].value,
-			title: statsList[state.filters.stat].value[1].label,
-			sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[1].value] - b[statsList[state.filters.stat].value[1].value],
-			dataIndex: statsList[state.filters.stat].value[1].value,
-			width: "10%",
-			render: (text: string, record: any) => {
-				return (<span>{record[statsList[state.filters.stat].value[1].value]}</span>);
-			},
-		},
+		})),
+		// {
+		// 	key: statsList[state.filters.stat].value[0].value,
+		// 	title: statsList[state.filters.stat].value[0].label,
+		// 	sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[0].value] - b[statsList[state.filters.stat].value[0].value],
+		// 	dataIndex: statsList[state.filters.stat].value[0].value,
+		// 	render: (text: string, record: any) => {
+		// 		return (<span>{record[statsList[state.filters.stat].value[0].value]}</span>);
+		// 	},
+		// },
+		// {
+		// 	key: statsList[state.filters.stat].value[1].value,
+		// 	title: statsList[state.filters.stat].value[1].label,
+		// 	sorter: (a: any, b: any) => a[statsList[state.filters.stat].value[1].value] - b[statsList[state.filters.stat].value[1].value],
+		// 	dataIndex: statsList[state.filters.stat].value[1].value,
+		// 	width: "10%",
+		// 	render: (text: string, record: any) => {
+		// 		return (<span>{record[statsList[state.filters.stat].value[1].value]}</span>);
+		// 	},
+		// },
 		{
 			key: "playerValue",
 			title: t("stats.allPlayersTable.valueColumn"),
@@ -177,7 +224,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	const tableEventHandler = useMemo(() => {
 		// todo
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		let tableEventHandler: any = () => { }; 
+		let tableEventHandler: any = () => { };
 		if (props.onSelect) {
 			tableEventHandler = (player: any) => ({
 				onClick: (event: any) => {
@@ -192,7 +239,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		const filters: any = Object.assign({}, state.filters, {
 			[name]: value,
 		});
-		console.log("filters",filters);
+		console.log("filters", filters);
 		setState({ ...state, filters });
 	};
 
@@ -266,7 +313,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					keyProperty="value"
 					textProperty="name"
 					values={budgetsList}
-					onSelect={(value: any) => {onFilterChange("playerValue", value); console.log("player value changed to", value);}}
+					onSelect={(value: any) => { onFilterChange("playerValue", value); console.log("player value changed to", value); }}
 					placeholder={budgetsList[0].name}
 					style={{ marginRight: 0 }}
 				/>
@@ -287,7 +334,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				showHeader={props.showHeader}
 				locale={{ emptyText: t("general.playersListEmpty") }}
 				loading={statsLoading}
-				pagination={{showSizeChanger: false}}
+				pagination={{ showSizeChanger: false }}
 				onRow={tableEventHandler}
 				rowKey="playerId"
 				rowClassName={(record: object, index: number) =>
