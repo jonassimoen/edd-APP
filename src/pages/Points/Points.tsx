@@ -189,15 +189,17 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 			{
 				(initializedExternally && visibleWeekId &&
 					<Row style={{ margin: 0 }}>
-						<Col md={24}>
-							<MatchdaySelector
-								day={visibleWeekId}
-								max={deadlineWeek ? deadlineWeek : visibleWeekId}
-								min={1}
-								name={""}
-								onPrev={(e: any) => props.onDayChange(false)}
-								onNext={(e: any) => props.onDayChange(true)}
-							/>
+						<Col md={24} sm={24} xs={24}>
+							<Block>
+								<MatchdaySelector
+									day={visibleWeekId}
+									max={deadlineWeek ? deadlineWeek : visibleWeekId}
+									min={1}
+									name={""}
+									onPrev={(e: any) => props.onDayChange(false)}
+									onNext={(e: any) => props.onDayChange(true)}
+								/>
+							</Block>
 						</Col>
 					</Row>)
 				|| null

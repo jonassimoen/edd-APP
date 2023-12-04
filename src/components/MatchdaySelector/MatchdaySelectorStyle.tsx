@@ -9,6 +9,7 @@ export const MatchdaySelectorStyle = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	color: black;
 `;
 
 export const ButtonStyle = styled.a`
