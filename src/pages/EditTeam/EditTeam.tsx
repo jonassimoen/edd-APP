@@ -25,6 +25,7 @@ import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { useGetPlayersQuery } from "@/services/playersApi";
 import { Button } from "@/components/UI/Button/Button";
+import { Alert } from "@/components/UI/Alert/Alert";
 
 const _EditTeam = (props: AbstractTeamType) => {
 	const { user, teams } = useAppSelector((state) => state.userState);
@@ -188,6 +189,13 @@ const _EditTeam = (props: AbstractTeamType) => {
 									{t("team.saveTeam")}
 								</Button>)
 							}
+							<Alert
+								message="Tips"
+								description="Selecteer 15 spelers"
+								type="info"
+								showIcon
+								style={{margin: "10px auto"}}
+							/>
 						</Block>
 					</Col>
 					<Col md={12} sm={12} xs={24} className="right">

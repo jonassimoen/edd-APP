@@ -88,7 +88,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					generalRank: result.team.rank !== null ? result.team.rank : "-",
 					visibleWeekPoints: (weekStat && weekStat.points) || "-",
 					visibleWeekRank: (weekStat && weekStat.rank) || "-",
-					weekWinnerPoints: result.weekWinner && result.weekWinner.points !== null ? result.weekWinner.points : "-",
+					weekWinnerPoints: (weekStat && weekStat.winner) || "-",
 					weekPointsConfirmed: !!weekPointsConfirmed,
 					provisionalPoints: provisionalPoints,
 					totalTransfers: result.transfers.length,
@@ -97,7 +97,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const inPlayer = players.find((item: any) => item.id === transfer.inId);
 						return { ...transfer, outPlayer, inPlayer };
 					}),
-					weekAveragePoints: result.weekAveragePoints !== null ? parseFloat(result.weekAveragePoints).toFixed(2) : "-"
+					weekAveragePoints: (weekStat && weekStat.average) || "-"
 				};
 
 				const startedThisWeek = { started: result.team.weekId <= pointsWeekId, weekId: result.team.weekId };

@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/public/:id", //todo
-				element: <ProtectedRoute access={true} redirectPath="/home"><Home /></ProtectedRoute>
+				element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
 			},
 			{
 				path: "/team/:id",
