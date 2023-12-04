@@ -193,9 +193,7 @@ export const Player = (props: PlayerProps) => {
 			setState({ ...state, face: state.faceFallback, });
 		}
 	};
-	// console.log("speler", player.name, showPoints && hasStats && player.points !== null && player.points !== undefined && player.points)
-
-	console.log("assetsCdn for Player", player.short, state.face);
+	
 	return (
 		<PlayerStyle onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} className={`position_${player.positionId}` && props.className}>
 			{

@@ -83,7 +83,8 @@ export const OpponentBadge = styled.div`
 	position: absolute;
 	inset: 100% 0px 0px;
 	width: 100%;
-	height: 20px;
+	font-size: 10px;
+	height: 15px;
 	
 	background: ${(props: any) => props.bgColor};
 	color: white;
@@ -109,6 +110,7 @@ export const Value = styled.div`
     right:0;
 	width: 100%;
 	height: 20px;
+	font-size: 13px;
 
 	display: flex;
 	justify-content: center;
