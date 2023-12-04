@@ -1,4 +1,5 @@
 import styled from "@/styles/styled-components";
+import backIcon from "../../assets/img/back.png";
 
 export const MatchdaySelectorStyle = styled.div`
 	text-align: center;
@@ -17,7 +18,7 @@ export const ButtonStyle = styled.a`
 	width: 50px;
 	height: 50px;
 	cursor: pointer;
-	background: url(/src/assets/img/back.png) center center / 20px 20px no-repeat rgb(255,255,255);
+	background: url('${backIcon}') center center / 20px 20px no-repeat rgb(255,255,255);
 	border-radius: 50%;
 	margin: 0 0 0 5px;
     &.disabled {
