@@ -72,7 +72,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 						<Col md={12} sm={24} xs={24} className="left">
 							<Block>
 								<Title level={2}>
-									{match!.home!.name}
+									{match?.home?.name}
 								</Title>
 								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints} {t("general.points")}</span>
 								<Team
@@ -112,7 +112,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 						<Col md={12} sm={24} xs={24} className="right">
 							<Block>
 								<Title level={2}>
-									{match!.away!.name}
+									{match?.away?.name}
 								</Title>
 								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints} {t("general.points")}</span>
 								<Team

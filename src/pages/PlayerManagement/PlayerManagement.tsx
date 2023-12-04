@@ -101,7 +101,7 @@ export const PlayerManagement = () => {
 							keyProperty="id"
 							textProperty="name"
 							placeholder={"Club"}
-							values={clubs!}
+							values={clubs}
 						/>
 					</FormItem>
 

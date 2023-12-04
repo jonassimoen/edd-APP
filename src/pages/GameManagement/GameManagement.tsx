@@ -321,7 +321,7 @@ export const GameManagement = () => {
 				open={state.openEditModal}
 				onCreate={(match: Match) => { updateMatch(match); setState({ ...state, openEditModal: false }); }}
 				onCancel={() => setState({ ...state, openEditModal: false })}
-				object={state.editObject!}
+				object={state.editObject}
 				type='match'
 				action='edit'
 			>

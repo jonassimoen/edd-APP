@@ -168,7 +168,7 @@ export const ClubManagement = () => {
 				/>
 			)}
 			<EditModal
-				object={state.editObject!}
+				object={state.editObject}
 				open={state.openEditModal}
 				onCreate={(club: Club) => {
 					updateClub(club);
