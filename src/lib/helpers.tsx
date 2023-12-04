@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import React from "react";
 import { toast } from "react-toastify";
 import { UserOutlined, DownloadOutlined, SyncOutlined, CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { TFunction } from "i18next";
 
 declare type RowToPos = {
 	rowNumber: number,
@@ -80,7 +81,7 @@ export const selectionPlayerSellValue = (player: any) => {
 	const diff = currentValue - selectionValue;
 	let playerSellValue = null;
 
-	if(selectionValue >= currentValue) {
+	if (selectionValue >= currentValue) {
 		playerSellValue = currentValue;
 	} else {
 		// const profit = roundDownDecimal()
@@ -147,4 +148,81 @@ export const statusToIconColor = (status: string) => {
 		return { color: "error", icon: <ClockCircleOutlined /> };
 		break;
 	}
+};
+
+const PlayerActionsPoints: any = {
+	yellow: { 1: -1, 2: -1, 3: -1, 4: -1 },
+	red: { 1: -3, 2: -3, 3: -3, 4: -3 },
+	ownGoal: { 1: -2, 2: -2, 3: -2, 4: -2 },
+	playedUpTo60Min: { 1: 1, 2: 1, 3: 1, 4: 1 },
+	playedMoreThan60Min: { 1: 2, 2: 2, 3: 2, 4: 2 },
+	drawMatch: { 1: 0, 2: 0, 3: 0, 4: 0 },
+	assists: { 1: 3, 2: 3, 3: 3, 4: 3 },
+	goals: { 1: 6, 2: 6, 3: 5, 4: 4 },
+	penaltyMissed: { 1: -5, 2: -2, 3: -2, 4: -2 },
+	penaltySaved: { 1: 5, 2: 15, 3: 15, 4: 15 },
+	stoppedPenalty: { 1: 5, 2: 0, 3: 0, 4: 0 },
+	cleanSheet: { 1: 4, 2: 4, 3: 1, 4: 0 },
+	goalTaken: { 1: -1, 2: -1, 3: 0, 4: 0 },
+	savesPerTwo: { 1: 1, 2: 0, 3: 0, 4: 0 },
+	motm: { 1: 5, 2: 5, 3: 5, 4: 5 },
+	bonus: {}
+};
+
+export const getPointsOverviewList = (player: any, t: TFunction<"translation", undefined, "translation">) => {
+	const pointsOverview: any = [];
+	Object.keys(PlayerActionsPoints)
+		.map((actionName: string) => {
+			const actionPoints = PlayerActionsPoints[actionName][player.positionId];
+			switch (actionName) {
+			case "playedUpTo60Min": {
+				const playedUpTo60Min = player.pointsOverview && player.pointsOverview.minutesPlayed && player.pointsOverview.minutesPlayed < 60;
+
+				if (playedUpTo60Min) {
+					pointsOverview.push({ action: t("player.playedUpTo60MinLabel"), quantity: 1, points: actionPoints });
+				}
+				break;
+			}
+			case "playedMoreThan60Min": {
+				const playedMoreThan60Min = player.pointsOverview && player.pointsOverview.minutesPlayed && player.pointsOverview.minutesPlayed >= 60;
+
+				if (playedMoreThan60Min) {
+					pointsOverview.push({ action: t("player.playedMoreThan60MinLabel"), quantity: 1, points: actionPoints });
+				}
+				break;
+			}
+			case "savesPerTwo": {
+				const saves = player.pointsOverview && player.pointsOverview.saves;
+				const savesPerTwo = Math.floor(saves / 2);
+
+				if (savesPerTwo) {
+					pointsOverview.push({ action: t("player.savedPerTwoLabel"), quantity: saves, points: savesPerTwo * actionPoints });
+				}
+				break;
+			}
+			case "assists": {
+				const assists = player.pointsOverview && player.pointsOverview.assists || 0;
+				if (assists) {
+					pointsOverview.push({ action: t("player.assistsLabel"), quantity: assists, points: assists * actionPoints });
+				}
+				break;
+			}
+
+			case "goals": {
+				const goals = player.pointsOverview && player.pointsOverview.goals || 0;
+				if (goals) {
+					pointsOverview.push({ action: t("player.goalsLabel"), quantity: goals, points: goals * actionPoints });
+				}
+				break;
+			}
+
+			default: {
+				const amount = player.pointsOverview && player.pointsOverview[actionName] || 0;
+				if (amount) {
+					pointsOverview.push({ action: t(`player.${actionName}Label`), quantity: amount, points: amount * actionPoints });
+				}
+			}
+			}
+		});
+	return pointsOverview;
 };

@@ -51,13 +51,19 @@
       "quantityColumnName": "Aantal",
       "pointsColumnName": "Punten"
     },
-    "assistsLabel": "Assists",
-    "goalsLabel": "Goals",
+    "assistsLabel": "Assist",
+    "goalsLabel": "Doelpunt",
     "defenderShort": "VER",
     "midfielderShort": "MID",
     "attackerShort": "AAN",
     "playedMoreThan60MinLabel": "Meer dan 60 minuten gespeeld",
-    "playedUpTo60MinLabel": "Tot 60 minuten gespeeld"
+    "playedUpTo60MinLabel": "Tot 60 minuten gespeeld",
+    "savedPerTwoLabel": "Saves per 2",
+    "penaltyMissedLabel": "Penalty gemist",
+    "penaltySavedLabel": "Penalty gered",
+    "motmLabel": "Man of the match",
+    "yellowLabel": "Gele kaart",
+    "redLabel": "Rode kaart"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {

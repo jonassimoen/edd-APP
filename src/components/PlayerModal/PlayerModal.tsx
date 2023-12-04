@@ -3,7 +3,7 @@ import { PlayerModalStyle, PointsOverviewTable } from "./PlayerModalStyle";
 import { Col } from "../UI/Grid/Grid";
 import { PlayerStyle } from "../PlayerList/PlayerListStyle";
 import { PlayerBg } from "../Player/PlayerStyle";
-import { getPlayerPositionHexColor } from "@/lib/helpers";
+import { getPlayerPositionHexColor, getPointsOverviewList } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
@@ -17,36 +17,19 @@ const SwapIcon = (props: any) => <Icon component={SwapButtonSvg} {...props} />;
 const UndoIcon = (props: any) => <Icon component={RollBackSvg} {...props} />;
 
 type PlayerModalProps = {
-    player: Player
-    club: Club
-    visible: boolean
-    onCancel: any
-    portraitFace?: string
-    portraitFaceFallback?: string
-    onCaptainSelect?: any
-    onViceCaptainSelect?: any
-    onRemove?: any
-    isSwapAble?: any
-    onSwap?: any
-    swapPlayerId?: number | null
+	player: Player
+	club: Club
+	visible: boolean
+	onCancel: any
+	portraitFace?: string
+	portraitFaceFallback?: string
+	onCaptainSelect?: any
+	onViceCaptainSelect?: any
+	onRemove?: any
+	isSwapAble?: any
+	onSwap?: any
+	swapPlayerId?: number | null
 }
-
-const PlayerActionsPoints: any = {
-	yellowCard: { 1: -1, 2: -1, 3: -1, 4: -1 },
-	redCard: { 1: -3, 2: -3, 3: -3, 4: -3 },
-	ownGoal: { 1: -2, 2: -2, 3: -2, 4: -2 },
-	playedUpTo60Min: { 1: 1, 2: 1, 3: 1, 4: 1 },
-	playedMoreThan60Min: { 1: 2, 2: 2, 3: 2, 4: 2 },
-	drawMatch: { 1: 0, 2: 0, 3: 0, 4: 0 },
-	assists: { 1: 3, 2: 3, 3: 3, 4: 3 },
-	goals: { 1: 6, 2: 6, 3: 5, 4: 4 },
-	missedPenalty: { 1: -2, 2: -2, 3: -2, 4: -2 },
-	stoppedPenalty: { 1: 5, 2: 0, 3: 0, 4: 0 },
-	cleanSheet: { 1: 4, 2: 4, 3: 1, 4: 0 },
-	goalTaken: { 1: -1, 2: -1, 3: 0, 4: 0 },
-	savesPerTwo: { 1: 1, 2: 0, 3: 0, 4: 0 },
-	bonus: {}
-};
 
 export const PlayerModal = (props: PlayerModalProps) => {
 	const { t } = useTranslation();
@@ -88,66 +71,13 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		props.onCancel(event);
 	};
 
-	const getPointsOverviewList = (player: any) => {
-		const pointsOverview: any = [];
-		Object.keys(PlayerActionsPoints)
-			.map((actionName: string) => {
-				const actionPoints = PlayerActionsPoints[actionName][player.positionId];
-				switch (actionName) {
-				case "playedUpTo60Min": {
-					const playedUpTo60Min = player.pointsOverview && player.pointsOverview.minutesPlayed && player.pointsOverview.minutesPlayed < 60;
-
-					if (playedUpTo60Min) {
-						pointsOverview.push({ action: t("player.playedUpTo60MinLabel"), quantity: 1, points: actionPoints });
-					}
-					break;
-				}
-				case "playedMoreThan60Min": {
-					const playedMoreThan60Min = player.pointsOverview && player.pointsOverview.minutesPlayed && player.pointsOverview.minutesPlayed >= 60;
-
-					if (playedMoreThan60Min) {
-						pointsOverview.push({ action: t("player.playedMoreThan60MinLabel"), quantity: 1, points: actionPoints });
-					}
-					break;
-				}
-				case "savesPerTwo": {
-					const saves = player.pointsOverview && player.pointsOverview.saves;
-					const savesPerTwo = Math.floor(saves / 2);
-
-					if (savesPerTwo) {
-						pointsOverview.push({ action: t("player.savedPerTwoLabel"), quantity: saves, points: savesPerTwo * actionPoints });
-					}
-					break;
-				}
-				case "assists": {
-					const assists = player.pointsOverview && player.pointsOverview.assists || 0;
-					if (assists) {
-						pointsOverview.push({ action: t("player.assistsLabel"), quantity: assists, points: assists * actionPoints });
-					}
-					break;
-				}
-
-				case "goals": {
-					const goals = player.pointsOverview && player.pointsOverview.goals || 0;
-					if (goals) {
-						pointsOverview.push({ action: t("player.goalsLabel"), quantity: goals, points: goals * actionPoints });
-					}
-					break;
-				}
-
-				}
-			});
-		return pointsOverview;
-	};
-
-
 	const showPointsOverview = useMemo(() => player && player.points, [player]);
-	const pointsOverview = useMemo(() => showPointsOverview ? getPointsOverviewList(player) : [], [player]);
+	const pointsOverview = useMemo(() => showPointsOverview ? getPointsOverviewList(player, t) : [], [player]);
 	console.log(player.short, pointsOverview);
 
 	const actionColumnSize = useMemo(
 		() => Math.floor(24 / (+!!onCaptainSelect + +!!onViceCaptainSelect + +(!!onSwap && (player.id !== swapPlayerId))
-            + +(!!onSwap && (player.id === swapPlayerId)) + +!!props.onRemove)
+			+ +(!!onSwap && (player.id === swapPlayerId)) + +!!props.onRemove)
 		),
 		[props]);
 
