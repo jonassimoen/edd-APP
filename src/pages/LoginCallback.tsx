@@ -15,7 +15,7 @@ export const LoginCallback = () => {
 	const [getProfile, { isLoading: profileLoading, isSuccess: profileSuccess }] = useLazyGetProfileQuery();
 	const [getTeams, { isLoading: teamLoading, isSuccess: teamSuccess }] = useLazyGetTeamsQuery();
 	const access_token = useMemo(() => params.get("token"), [params]);
-	const redirectToWelcome = useMemo(() => params.get("welcomeRedirect"), [params]);
+	const redirectToWelcome = useMemo(() => params.get("welcomeRedirect") === "true", [params]);
 
 	useEffect(() => {
 		if (userState.authenticated) {
