@@ -5,6 +5,8 @@ import React from "react";
 import { toast } from "react-toastify";
 import { UserOutlined, DownloadOutlined, SyncOutlined, CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { TFunction } from "i18next";
+import dayjs from "dayjs";
+import { LiveIcon } from "@/components/UI/AnimatedIcon/AnimatedIcon";
 
 declare type RowToPos = {
 	rowNumber: number,
@@ -225,4 +227,26 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 			}
 		});
 	return pointsOverview;
+};
+
+export const calendarLiveScoreComponent = (match: Match) => {
+	const matchDate = dayjs(match.date);
+	let text = null;
+	let icon = null;
+	let className = "";
+	if(dayjs().isBefore(matchDate)) {
+		text = matchDate.format("HH:mm");
+	} else {
+		if(dayjs().isBefore(matchDate.add(2, "hour"))) {
+			className = "live";
+			text = "live";
+			icon = <LiveIcon />;
+		} else {
+			className = match.status.toLowerCase().replace("_","");
+			text = `${match.awayScore} - ${match.homeScore}`;
+		}
+	}
+
+	
+	return <b className={`score ${className}`}>{icon?icon:null} {text}</b>;
 };

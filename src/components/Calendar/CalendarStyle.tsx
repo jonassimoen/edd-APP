@@ -49,22 +49,28 @@ table {
         }
 
         .score {
-            &.started {
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            
+            &.created, &.played, &.statsimported {
+                color:gray;
             }
         }
     }
 }
 `;
 
-export const ClubDetails = styled.div<{left?: boolean}>`
+export const ClubDetails = styled.div`
     display: flex;
+    flex-direction: column;
     padding: 5px;
-    justify-content: ${(props: any) => props.left ? "flex-end": "flex-start"};
+    justify-content: center;
     align-items: center;
 `;
 
 export const ClubBadgeBg = styled.img`
-	max-width: 25px;
+	max-width: 50px;
 	display: inline-block;
 	margin: 5px;
 ` as any;

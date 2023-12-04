@@ -24,6 +24,7 @@ import { Stats } from "@/components/Stats/Stats";
 import { PointsStats } from "@/components/PointsStats/PointsStats";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { MatchdaySelector } from "@/components/MatchdaySelector/MatchdaySelector";
+import { Spin } from "antd";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -183,8 +184,8 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const isPublicRoute = location.pathname.includes("public");
 
 	return (
-		clubsSuccess && playersSuccess && matchesSuccess && teamSuccess && deadlineInfoSuccess &&
-		<React.Fragment>
+		// clubsSuccess && playersSuccess && matchesSuccess && teamSuccess && deadlineInfoSuccess &&
+		<Spin spinning={clubsLoading || playersLoading || teamLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{
 				(initializedExternally && visibleWeekId &&
 					<Row style={{ margin: 0 }}>
@@ -297,7 +298,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					</Row>
 				)
 			}
-		</React.Fragment >
+		</Spin >
 	);
 };
 

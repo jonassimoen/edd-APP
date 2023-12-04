@@ -12,6 +12,8 @@ import { Button } from "@/components/UI/Button/Button";
 import { Select } from "../UI/Select/Select";
 import { Navigate } from "react-router-dom";
 import config from "@/config";
+import { LiveIcon } from "../UI/AnimatedIcon/AnimatedIcon";
+import { calendarLiveScoreComponent } from "@/lib/helpers";
 
 type CalendarProps = {
 	weekId: number
@@ -39,7 +41,7 @@ export const Calendar = (props: CalendarProps) => {
 		weekId: props.weekId
 	});
 
-	useEffect(() => setState({...state, weekId: props.weekId}), [props]);
+	useEffect(() => setState({ ...state, weekId: props.weekId }), [props]);
 
 	const onFilterChange = (name: string, value: string | number) => {
 		const filters: any = Object.assign({}, state.filters, { [name]: value });
@@ -84,9 +86,9 @@ export const Calendar = (props: CalendarProps) => {
 			render: (homeId: any, record: any) => {
 				const clubBadge = `${props.assetsCdn}/badges/${record.home.id}.png`;
 
-				return <ClubDetails left>
-					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
+				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
+					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
 				</ClubDetails>;
 			}
 		},
@@ -96,11 +98,13 @@ export const Calendar = (props: CalendarProps) => {
 			dateIndex: "date",
 			width: "20%",
 			render: (txt: any, record: any) => {
-				const matchDate = dayjs(record.date);
-				const matchToStart = dayjs().isBefore(matchDate);
-				return <b className={`score ${matchToStart ? "scheduled" : "started"}`}>
-					{matchToStart ? dayjs(record.date).format("HH:mm") : `${record.homeScore} - ${record.awayScore}`}
-				</b>;
+				// const matchDate = dayjs(record.date);
+				// const matchToStart = dayjs().isBefore(matchDate);
+				// return <b className={`score ${matchToStart ? "scheduled" : "started"}`}>
+				// 	<LiveIcon />
+				// 	{matchToStart ? dayjs(record.date).format("HH:mm") : `${record.homeScore} - ${record.awayScore}`}
+				// </b>;
+				return calendarLiveScoreComponent(record);
 			}
 		},
 		{
