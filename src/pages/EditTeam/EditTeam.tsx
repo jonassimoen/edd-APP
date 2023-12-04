@@ -201,7 +201,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 					<Col md={12} sm={12} xs={24} className="right">
 						<Block>
 							<Title level={2}>{t("general.footballAllPlayers")}</Title>
-							<Element name="all-player">
+							<Element name="all-players">
 								<PlayerList
 									data={players}
 									clubs={clubs}
