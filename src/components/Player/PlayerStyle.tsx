@@ -10,13 +10,13 @@ export const PlayerStyle = styled.div`
     height: 50px;
 
     @media ${mediaQueries.mobileM} {
-        width: 60px;
-        height: 55px;
+        width: 70px;
+        height: 65px;
     }
 
     @media ${mediaQueries.tablet} {
-        width: 75px;
-        height: 70px;
+        width: 80px;
+        height: 75px;
     }
 
     .position-label {
