@@ -18,7 +18,7 @@ export const SelectStyle = styled(Select)`
 
     &.ant-select-focused {
         .ant-select-selector {
-            border-color: #00FAFA !important;
+            border-color: ${theme.primaryColor} !important;
             outline: 0;
         }
     }
@@ -27,7 +27,7 @@ export const SelectStyle = styled(Select)`
         border-radius: 0px;
         
         &:hover {
-            border-color: #00FAFA !important;
+            border-color: ${theme.primaryColor} !important;
         }
 
         .ant-select-selection-placeholder {
@@ -36,7 +36,7 @@ export const SelectStyle = styled(Select)`
     }
 
     .ant-select:hover {
-        border-color: #00FAFA !important;
+        border-color: ${theme.primaryColor} !important;
     }
 
 ` as any;

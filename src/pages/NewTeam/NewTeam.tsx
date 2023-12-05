@@ -23,6 +23,7 @@ import { NewGameStats } from "@/components/Stats/NewGameStats";
 import { Input } from "@/components/UI/Input/Input";
 import { setTeams } from "@/features/userSlice";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
+import { theme } from "@/styles/theme";
 const { useBreakpoint } = Grid;
 
 declare type NewTeamState = {
@@ -141,7 +142,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 								playerType={PlayerType.SoccerPortrait}
 								captainId={captainId}
 								viceCaptainId={viceCaptainId}
-								playerBadgeBgColor={"#16002b"}
+								playerBadgeBgColor={theme.primaryContrast}
 								onPlaceholderClick={onPlaceHolderClick}
 								showPlayerValueInsteadOfPoints={true}
 								onCaptainSelect={props.onCaptainSelect}

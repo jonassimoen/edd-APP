@@ -43,12 +43,12 @@
 		font-display: swap;
 }
 
-$primaryColor: #16002b;
+$primaryColor: #000d40;
 
 html {
 		font-family:	UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
 		-webkit-overflow-scrolling: touch;
-		background-color: "#16002b";
+		background-color: $primaryColor;
 
 		::-webkit-scrollbar {
 				width: 5px;

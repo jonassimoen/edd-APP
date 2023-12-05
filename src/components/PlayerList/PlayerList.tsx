@@ -214,51 +214,6 @@ export const PlayerList = (props: PlayerListProps) => {
 								</span>
 							</p>
 						</PlayerStyle>
-						{/* <PlayerStyle
-							type="mobile"
-							clubColor={"#81FFBC"}
-							position={record.positionId}
-						>
-							MOBILE
-							<p className="mobile-name">{record.short}</p>
-							<p>
-								<span style={{ color: "#16002b" }}>{club && club.short}</span> <span className="player-position" style={{ color: positionColor }}>
-									{(!hidePositions && position && position.name) || null}
-								</span>
-							</p>
-							<p className="icons">
-								{(record.squadStatus === "First team") && <GreenIcon style={{ marginRight: "2px" }} />}
-								{(record.squadStatus === "Rotation") && <OrangeIcon style={{ marginRight: "2px" }} />}
-								{(record.squadStatus === "Backup") && <RedIcon style={{ marginRight: "2px" }} />}
-
-								{(record.star === 1) && <StarIcon style={{ marginRight: "2px" }} />}
-								{(record.captain === 1) && <CaptainIcon style={{ marginRight: "2px" }} />}
-								{(record.setPieces === 1) && <SetPiecesIcon style={{ marginRight: "2px" }} />}
-							</p>
-						</PlayerStyle>
-						<PlayerStyle
-							type="desktop"
-							clubColor={"#81FFBC"}
-							position={record.positionId}
-						>
-							<div className="name">
-								<span> {record.short}</span>
-								<div className="icons">
-									{(record.squadStatus === "First team") && <GreenIcon style={{ marginRight: "2px" }} />}
-									{(record.squadStatus === "Rotation") && <OrangeIcon style={{ marginRight: "2px" }} />}
-									{(record.squadStatus === "Backup") && <RedIcon style={{ marginRight: "2px" }} />}
-
-									{(record.star === 1) && <StarIcon style={{ marginRight: "2px" }} />}
-									{(record.captain === 1) && <CaptainIcon style={{ marginRight: "2px" }} />}
-									{(record.setPieces === 1) && <SetPiecesIcon style={{ marginRight: "2px" }} />}
-								</div>
-							</div>
-							<p style={{ fontSize: "0.8rem" }}>
-								<span style={{ color: "#16002b" }}>{club && club.short}</span> <span className="player-position" style={{ color: positionColor }}>
-									{(!hidePositions && position && position.name) || null}
-								</span>
-							</p>
-						</PlayerStyle> */}
 					</>
 				);
 			}

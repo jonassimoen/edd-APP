@@ -36,7 +36,7 @@ export const HeaderStyle = styled.header`
         position: sticky;
         top: 0;
         z-index: 4;
-        background-color: #16002b;
+        background-color: ${theme.primaryContrast};
         border-bottom: 5px solid #2b1640;
 
         &__nav {
@@ -53,7 +53,7 @@ export const HeaderStyle = styled.header`
                 align-items: center;
                 justify-content: space-between;
                 height: 5rem;
-                background-color: #16002b;
+                background-color: ${theme.primaryContrast};
                 
                 .c-logo {
                     display: inline-block;
@@ -151,8 +151,8 @@ export const HeaderStyle = styled.header`
             padding: 0 0.75rem;
 
             &.is-selected .c-nav-tabs__link {
-                color: #16002b;
-                border-color: #00FAFA;
+                color: ${theme.primaryContrast};
+                border-color: ${theme.primaryColor};
             }
             
         }
@@ -167,7 +167,7 @@ export const HeaderStyle = styled.header`
             color: #61566b;
 
             &:hover {
-                color: #16002b;
+                color: ${theme.primaryContrast};
                 border-color: #c9c5ce;
             }
         }
@@ -187,7 +187,7 @@ export const HeaderStyle = styled.header`
         right: 0;
         bottom: 0;
         padding: 6rem 1.5rem 4rem;
-        background: #16002b;
+        background: ${theme.primaryContrast};
         -webkit-clip-path: inset(0 0 100% 0);
         clip-path: inset(0 0 100% 0);
         -webkit-transition: -webkit-clip-path .5s cubic-bezier(0, .5, 0, 1);
@@ -231,7 +231,7 @@ export const HeaderStyle = styled.header`
     .is-selected {
     & .c-nav-main__link {
         color: #fff;
-        border-bottom-color: #00FAFA !important;
+        border-bottom-color: ${theme.primaryColor} !important;
     }
 ` as any;
 

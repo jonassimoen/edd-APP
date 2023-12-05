@@ -11,6 +11,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useAppSelector } from "@/reducers";
 import { logout } from "@/features/userSlice";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
+import { theme } from "@/styles/theme";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -177,7 +178,7 @@ export const Header = () => {
 										}
 									</ul>
 								</nav>
-								<Hamburger><a className="c-nav-trigger" onClick={openSubMenu}><span className="is-hidden">Menu</span><span className="c-nav-trigger__top" style={{ backgroundColor: "#00FAFA" }}></span><span className="c-nav-trigger__middle" style={{ backgroundColor: "#00FAFA" }}></span><span className="c-nav-trigger__bottom" style={{ backgroundColor: "#00FAFA" }}></span></a></Hamburger>
+								<Hamburger><a className="c-nav-trigger" onClick={openSubMenu}><span className="is-hidden">Menu</span><span className="c-nav-trigger__top" style={{ backgroundColor: theme.primaryColor }}></span><span className="c-nav-trigger__middle" style={{ backgroundColor: theme.primaryColor }}></span><span className="c-nav-trigger__bottom" style={{ backgroundColor: theme.primaryColor }}></span></a></Hamburger>
 
 							</div>
 						</Layout>

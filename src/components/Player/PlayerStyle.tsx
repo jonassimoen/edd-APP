@@ -115,7 +115,7 @@ export const Value = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #00FAFA;
+	background: ${theme.primaryColor};
 	color: ${(props: any) => props.color};
 
 	h4 {

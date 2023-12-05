@@ -6,7 +6,7 @@ export const HomeStyle = styled.div`
     .login {
         margin: 20px auto;
         padding: 40px 20px;
-        background: #16002b;
+        background: ${theme.primaryContrast};
         color: #FFF;
 
         h2 {

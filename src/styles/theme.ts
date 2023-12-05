@@ -1,6 +1,6 @@
 const theme =	{
-	primaryColor: "#00FAFA",
-	primaryContrast: "#16002b",
+	primaryColor: "#143cdb",
+	primaryContrast: "#000d40",
 	positionGk: "#4ab969",
 	positionDf: "#2cb3c7",
 	positionMf: "#ffc333",
