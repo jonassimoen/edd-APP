@@ -90,11 +90,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/rankings",
-				element: <ProtectedRoute access={true} redirectPath="/home"><Rankings /></ProtectedRoute>
+				element: <Rankings />
 			},
 			{
 				path: "/rules", 
-				element: <ProtectedRoute access={true} redirectPath="/home"><Rules /></ProtectedRoute>
+				element: <Rules />,
 			},
 			{
 				path: "/admin",
