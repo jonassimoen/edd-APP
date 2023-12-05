@@ -57,8 +57,8 @@ export const HeaderStyle = styled.header`
                 
                 .c-logo {
                     display: inline-block;
-                    width: 7rem;
-                    height: 3rem;
+                    width: 12rem;
+                    height: 4.5rem;
                     margin: auto;
                     background-repeat: no-repeat;
                     background-position: 50%;
