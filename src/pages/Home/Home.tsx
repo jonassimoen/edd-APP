@@ -74,14 +74,13 @@ export const Home = (props: HomeProps) => {
 							bordered={false}
 							cover={
 								<img
-									alt="doe iets"
+									alt={t("general.home.step1.title")}
 									src="/img/stap1_wk22.jpg"
 								/>
 							}
 						>
 							<Meta
-								title="STAP 1"
-								description="Stap 1 uilteg blablablaabfdfbaldfb"
+								description={t("general.home.step1.description")}
 							/>
 						</Card>
 					</CardStyle>
@@ -94,14 +93,13 @@ export const Home = (props: HomeProps) => {
 							bordered={false}
 							cover={
 								<img
-									alt="doe iets"
+									alt={t("general.home.step2.title")}
 									src="/img/stap2_wk22.jpg"
 								/>
 							}
 						>
 							<Meta
-								title="STAP 2"
-								description="Stap 2 uilteg blablablaabfdfbaldfb"
+								description={t("general.home.step2.description")}
 							/>
 						</Card>
 					</CardStyle>
@@ -116,14 +114,13 @@ export const Home = (props: HomeProps) => {
 							bordered={false}
 							cover={
 								<img
-									alt="doe iets"
+									alt={t("general.home.step3.title")}
 									src="/img/stap3_wk22.jpg"
 								/>
 							}
 						>
 							<Meta
-								title="STAP 3"
-								description="Stap 3 uilteg blablablaabfdfbaldfb"
+								description={t("general.home.step3.description")}
 							/>
 						</Card>
 					</CardStyle>
@@ -136,45 +133,18 @@ export const Home = (props: HomeProps) => {
 							bordered={false}
 							cover={
 								<img
-									alt="doe iets"
+									alt={t("general.home.step4.title")}
 									src="/img/stap4_wk22.jpg"
 								/>
 							}
 						>
 							<Meta
-								title="STAP 4"
-								description="Stap 4 uilteg blablablaabfdfbaldfb"
+								description={t("general.home.step4.description")}
 							/>
 						</Card>
 					</CardStyle>
 				</Col>
 			</Row>
-
-			{/* {
-				!authenticated ?
-					<Paper
-						py="lg"
-						px="xl"
-						my={20}
-						mx={"auto"}
-						bg="primaryContrast.0"
-					>
-						<Group position="apart">
-							<Stack>
-								<Title order={2} color="primaryColor.0  "> {t("home.title")}</Title>
-								<Text color="white" size="lg">{t("home.welcome")}</Text>
-							</Stack>
-							<Link to="/login">
-								<Button color="primaryColor.0" size="xl" fullWidth>
-									<Text color="primaryContrast.0">{t("home.playBtn")}</Text>
-								</Button>
-							</Link>
-						</Group>
-					</Paper>
-					:
-					null
-			} */}
-			info
 		</HomeStyle>
 	);
 };
