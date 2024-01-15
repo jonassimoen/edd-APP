@@ -88,7 +88,7 @@ export const Calendar = (props: CalendarProps) => {
 
 				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
-					<ClubName className="team-name" fullName={record.home.name} shortName={record.home.short}></ClubName>
+					<ClubName className="team-name" fullName={record.home.name || t("general.team.tobedetermined")} shortName={record.home.short || t("general.team.tbd")}></ClubName>
 				</ClubDetails>;
 			}
 		},
@@ -98,12 +98,6 @@ export const Calendar = (props: CalendarProps) => {
 			dateIndex: "date",
 			width: "20%",
 			render: (txt: any, record: any) => {
-				// const matchDate = dayjs(record.date);
-				// const matchToStart = dayjs().isBefore(matchDate);
-				// return <b className={`score ${matchToStart ? "scheduled" : "started"}`}>
-				// 	<LiveIcon />
-				// 	{matchToStart ? dayjs(record.date).format("HH:mm") : `${record.homeScore} - ${record.awayScore}`}
-				// </b>;
 				return calendarLiveScoreComponent(record);
 			}
 		},
@@ -117,7 +111,7 @@ export const Calendar = (props: CalendarProps) => {
 
 				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
-					<ClubName className="team-name" fullName={record.away.name} shortName={record.away.short}></ClubName>
+					<ClubName className="team-name" fullName={record.away.name || t("general.team.tobedetermined")} shortName={record.away.short || t("general.team.tbd")}></ClubName>
 				</ClubDetails>;
 			}
 		}

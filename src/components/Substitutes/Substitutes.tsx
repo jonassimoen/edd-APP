@@ -44,7 +44,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 	return (
 		<SubstitutesStyle bgImage={props.bgImage}>
 			<div className="substitutes">
-				{props.selection.map((player: any, idx: number) => {
+				{props.selection?.map((player: any, idx: number) => {
 					const imgProps: {
 						shirt?: string,
 						face?: string,

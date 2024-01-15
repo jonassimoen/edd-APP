@@ -119,13 +119,9 @@ export const GameManagement = () => {
 						label={"Home"}
 						rules={([
 							{
-								required: true,
-								message: t("property.match.home.required")
-							},
-							{
 								message: t("property.match.differentClubs"),
 								validator: (_: any, value: number) => {
-									if (state.selectedAwayId !== value) {
+									if (!state.selectedAwayId || state.selectedAwayId !== value) {
 										return Promise.resolve();
 									} else {
 										return Promise.reject("Same value for home and club");
@@ -149,13 +145,9 @@ export const GameManagement = () => {
 						label={"Away"}
 						rules={([
 							{
-								required: true,
-								message: t("property.match.away.required")
-							},
-							{
 								message: t("property.match.differentClubs"),
 								validator: (_: any, value: number) => {
-									if (state.selectedHomeId !== value) {
+									if (!state.selectedHomeId || state.selectedHomeId !== value) {
 										return Promise.resolve();
 									} else {
 										return Promise.reject("Same value for home and club");
@@ -296,7 +288,7 @@ export const GameManagement = () => {
 							width: "10%",
 							align: "center",
 							render: (_: any, record: any) => {
-								if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now()) {
+								if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now() && record.homeId && record.awayId) {
 									return (<Link to={`events/${record.id}`}>
 										<Button
 											icon={<SkinOutlined />}

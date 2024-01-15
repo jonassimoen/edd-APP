@@ -50,7 +50,11 @@
         "description": "Selecteer 15 EK-spelers. Stel per speeldag je best mogelijke elftal op met spelers die in vorm zijn en veel punten kunnen scoren. Zorg ervoor dat je voldoende wisselmogelijkheden hebt, om je 15 spelers optimaal te kunnen benutten."
       }
     },
-    "rules": "Spelregels"
+    "rules": "Spelregels",
+    "team": {
+      "tobedetermined": "Nog te bepalen",
+      "tbd": "N.t.b."
+    }
   },
   "player": {
     "midfielder": "Middenvelder",

@@ -1,44 +1,48 @@
 {
-	"menu": {
-		"newTeam": "New team",
-		"team": "My team",
-		"stats": "Statistics",
-		"rankings": "Ranking",
-		"rules": "Rules",
-		"admin": "Adminpage",
-		"logout": "Log out",
-		"edit": "Edit team",
-		"points": "Points",
-		"transfers": "Transfers"
-	},
-	"admin": {
-		"welcome": "Welcome, fantasy magician {{name}}!",
-		"gamestatistic": {
-			"import": "Import statistics"
-		}
-	},
-	"players": {
-		"noneFound": "No players found"
-	},
-	"management": {
-		"game": {
-			"import": "Import games",
-			"add": "Add game"
-		},
-		"week": {
-			"add": "Add gameweek"
-		}
-	},
-	"createBtn": "Create",
-	"createTitle": "Create",
-	"cancelBtn": "Cancel",
-	"player": {
-		"opponentHome": "H",
-		"opponentAway": "A"
-	},
-	"general": {
-		"footballWeek": "Matchday",
-		"week": "Week",
-		"points": "points"
-	}
+  "menu": {
+    "newTeam": "New team",
+    "team": "My team",
+    "stats": "Statistics",
+    "rankings": "Ranking",
+    "rules": "Rules",
+    "admin": "Adminpage",
+    "logout": "Log out",
+    "edit": "Edit team",
+    "points": "Points",
+    "transfers": "Transfers"
+  },
+  "admin": {
+    "welcome": "Welcome, fantasy magician {{name}}!",
+    "gamestatistic": {
+      "import": "Import statistics"
+    }
+  },
+  "players": {
+    "noneFound": "No players found"
+  },
+  "management": {
+    "game": {
+      "import": "Import games",
+      "add": "Add game"
+    },
+    "week": {
+      "add": "Add gameweek"
+    }
+  },
+  "createBtn": "Create",
+  "createTitle": "Create",
+  "cancelBtn": "Cancel",
+  "player": {
+    "opponentHome": "H",
+    "opponentAway": "A"
+  },
+  "general": {
+    "footballWeek": "Matchday",
+    "week": "Week",
+    "points": "points",
+    "team": {
+      "tobedetermined": "To be determined",
+      "tbd": "T.B.D."
+    }
+  }
 }
