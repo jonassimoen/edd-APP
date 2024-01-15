@@ -349,14 +349,17 @@ export const GameManagement = () => {
 			<Modal
 				title={t("management.import.confirmTitle")}
 				open={state.openImportModal}
-				onOk={() => {
+				onOk={async () => {
 					toast.loading(t("admin.importing.loading"), { toastId: "loading-importing-games" });
-					importMatches().then(() => {
+					try {
+						const data = await importMatches().unwrap();
 						toast.dismiss("loading-importing-games");
-						openSuccessNotification({ title: "Import successfull", message: `${imports.count} games imported` });
-					}).catch(() => {
+						openSuccessNotification({ title: "Import successfull", message: `${data.count} games imported` });
+					} catch(err) {
+						toast.dismiss("loading-importing-games");
 						openErrorNotification({ title: "Importing games failed" });
-					});
+						console.log(err);
+					}
 					setState({ ...state, openImportModal: false });
 				}}
 				onCancel={() => setState({ ...state, openImportModal: false })}

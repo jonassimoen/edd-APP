@@ -37,10 +37,10 @@ export const playersApi = createApi({
 			invalidatesTags: ["Player"]
 		}),
 
-		importPlayers: builder.mutation<{count: number}, void>({
-			query: () => ({
-				url: "import",
-				method: "POST",
+		importPlayers: builder.mutation<{count: number}, string>({
+			query: (type: string) => ({
+				url: `import/${type}`,
+				method: "GET",
 			}),
 			invalidatesTags: ["Player"]
 		})

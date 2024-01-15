@@ -433,9 +433,9 @@ export const PlayerManagement = () => {
 				onOk={async () => {
 					toast.loading(t("admin.importing.loading"), { toastId: "loading-importing-players" });
 					try {
-						const data = await importPlayers().unwrap();
+						const data = await importPlayers("club").unwrap();
 						toast.dismiss("loading-importing-players");
-						openSuccessNotification({ title: "Import successfull", message: `${data.count} players imported` });
+						openSuccessNotification({ title: "Import successfully started", message: "Soon all players will be available!" });
 					} catch (err) {
 						toast.dismiss("loading-importing-players");
 						openErrorNotification({ title: "Importing players failed" });
