@@ -40,7 +40,7 @@ export const clubsApi = createApi({
 		importClubs: builder.mutation<{count: number}, void>({
 			query: () => ({
 				url: "import",
-				method: "POST",
+				method: "GET",
 			}),
 			invalidatesTags: ["Club"]
 		})

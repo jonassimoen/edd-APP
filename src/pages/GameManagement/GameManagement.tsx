@@ -119,13 +119,9 @@ export const GameManagement = () => {
 						label={"Home"}
 						rules={([
 							{
-								required: true,
-								message: t("property.match.home.required")
-							},
-							{
 								message: t("property.match.differentClubs"),
 								validator: (_: any, value: number) => {
-									if (state.selectedAwayId !== value) {
+									if (!state.selectedAwayId || state.selectedAwayId !== value) {
 										return Promise.resolve();
 									} else {
 										return Promise.reject("Same value for home and club");
@@ -149,13 +145,9 @@ export const GameManagement = () => {
 						label={"Away"}
 						rules={([
 							{
-								required: true,
-								message: t("property.match.away.required")
-							},
-							{
 								message: t("property.match.differentClubs"),
 								validator: (_: any, value: number) => {
-									if (state.selectedHomeId !== value) {
+									if (!state.selectedHomeId || state.selectedHomeId !== value) {
 										return Promise.resolve();
 									} else {
 										return Promise.reject("Same value for home and club");
@@ -296,7 +288,7 @@ export const GameManagement = () => {
 							width: "10%",
 							align: "center",
 							render: (_: any, record: any) => {
-								if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now()) {
+								if (new Date(record.date).getTime() + 90 * 60 * 1000 < Date.now() && record.homeId && record.awayId) {
 									return (<Link to={`events/${record.id}`}>
 										<Button
 											icon={<SkinOutlined />}
@@ -349,14 +341,17 @@ export const GameManagement = () => {
 			<Modal
 				title={t("management.import.confirmTitle")}
 				open={state.openImportModal}
-				onOk={() => {
+				onOk={async () => {
 					toast.loading(t("admin.importing.loading"), { toastId: "loading-importing-games" });
-					importMatches().then(() => {
+					try {
+						const data = await importMatches().unwrap();
 						toast.dismiss("loading-importing-games");
-						openSuccessNotification({ title: "Import successfull", message: `${imports.count} games imported` });
-					}).catch(() => {
+						openSuccessNotification({ title: "Import successfull", message: `${data.count} games imported` });
+					} catch(err) {
+						toast.dismiss("loading-importing-games");
 						openErrorNotification({ title: "Importing games failed" });
-					});
+						console.log(err);
+					}
 					setState({ ...state, openImportModal: false });
 				}}
 				onCancel={() => setState({ ...state, openImportModal: false })}

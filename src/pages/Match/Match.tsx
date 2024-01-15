@@ -1,7 +1,7 @@
 import { AbstractTeam } from "@/components/AbstractTeam/AbstractTeam";
 import { useGetMatchQuery } from "@/services/matchesApi";
 import { Spin } from "antd";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { MatchStyles } from "./MatchStyles";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Block } from "@/components/Block/Block";
@@ -72,9 +72,9 @@ const _MatchContainer = (props: AbstractTeamType) => {
 						<Col md={12} sm={24} xs={24} className="left">
 							<Block>
 								<Title level={2}>
-									{match?.home?.name}
+									{match?.home?.name || t("general.team.tobedetermined")}
 								</Title>
-								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints} {t("general.points")}</span>
+								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints || 0} {t("general.points")}</span>
 								<Team
 									widthRatio={15}
 									heightRatio={10}
@@ -94,7 +94,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									motmId={motmId}
 								/>
 								<Substitutes
-									selection={homeBenchPlayers.sort((a: any, b: any) => a.positionId - b.positionId)}
+									selection={homeBenchPlayers?.sort((a: any, b: any) => a.positionId - b.positionId)}
 									clubs={clubs}
 									title="De bank"
 									bgImage={"#F4F8FF"}
@@ -112,9 +112,9 @@ const _MatchContainer = (props: AbstractTeamType) => {
 						<Col md={12} sm={24} xs={24} className="right">
 							<Block>
 								<Title level={2}>
-									{match?.away?.name}
+									{match?.away?.name || t("general.team.tobedetermined")}
 								</Title>
-								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints} {t("general.points")}</span>
+								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints || 0} {t("general.points")}</span>
 								<Team
 									widthRatio={15}
 									heightRatio={10}
@@ -133,7 +133,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									playerPointsBgColor={theme.primaryColor}
 								/>
 								<Substitutes
-									selection={awayBenchPlayers.sort((a: any, b: any) => a.positionId - b.positionId)}
+									selection={awayBenchPlayers?.sort((a: any, b: any) => a.positionId - b.positionId)}
 									clubs={clubs}
 									title="De bank"
 									bgImage={"#F4F8FF"}
