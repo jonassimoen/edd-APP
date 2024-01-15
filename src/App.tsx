@@ -11,9 +11,11 @@ import { Footer } from "./components/Footer/Footer";
 
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
+dayjs.extend(customParseFormat);
 dayjs.locale("nl-BE");
 
 class App extends React.PureComponent<WithTranslation> {
