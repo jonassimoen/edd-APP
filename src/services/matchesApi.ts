@@ -40,7 +40,7 @@ export const matchesApi = createApi({
 		importMatches: builder.mutation<{ count: number }, void>({
 			query: () => ({
 				url: "import",
-				method: "POST",
+				method: "GET",
 			}),
 			invalidatesTags: ["Match"]
 		}),

@@ -7,7 +7,7 @@ import { useAppSelector } from "@/reducers";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { useGetTeamQuery, useLazyGetPointsQuery } from "@/services/teamsApi";
-import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
+import { useGetDeadlineInfoQuery, useGetWeeksQuery } from "@/services/weeksApi";
 import { theme } from "@/styles/theme";
 import Title from "antd/es/typography/Title";
 import { pick } from "lodash";
@@ -35,6 +35,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
+	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
 	const [getPointsTeam] = useLazyGetPointsQuery();
 	const { t } = useTranslation();
 	const application = useSelector((state: StoreState) => state.application);
@@ -195,7 +196,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									day={visibleWeekId}
 									max={deadlineWeek ? deadlineWeek : visibleWeekId}
 									min={1}
-									name={""}
+									name={t(`general.weeks.${weeks.find((week: Week) => week.id === visibleWeekId)?.name}`)}
 									onPrev={(e: any) => props.onDayChange(false)}
 									onNext={(e: any) => props.onDayChange(true)}
 								/>

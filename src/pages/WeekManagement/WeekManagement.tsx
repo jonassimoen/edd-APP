@@ -15,6 +15,7 @@ import { useGetMatchesQuery } from "@/services/matchesApi";
 import { statusToIconColor } from "@/lib/helpers";
 import React from "react";
 import { ConfirmedSvg, UnConfirmedSvg } from "@/styles/custom-icons";
+import { Input } from "@/components/UI/Input/Input";
 
 const ConfirmedIcon = (props: any) => <Icon component={ConfirmedSvg} {...props} />;
 const UnConfirmedIcon = (props: any) => <Icon component={UnConfirmedSvg} {...props} />;
@@ -49,17 +50,27 @@ export const WeekManagement = () => {
 		return group;
 	}, {}) || {}, [matches]);
 
-	const WeekForm = (
+	const WeekForm = (<>
 		<Row>
-			<Col span={12}>
+			<Col span={6}>
 				<FormItem
 					name={"id"}
-					label={"Week ID"}
+					label={"ID"}
 				>
-					<InputNumber />
+					<Input type="number" />
 				</FormItem>
 			</Col>
-			<Col span={12}>
+			<Col span={18}>
+				<FormItem
+					name={"name"}
+					label={"Naam"}
+				>
+					<Input />
+				</FormItem>
+			</Col>
+		</Row>
+		<Row>
+			<Col span={24}>
 				<FormItem
 					name={"deadlineDate"}
 					label={"Deadline date"}
@@ -72,7 +83,7 @@ export const WeekManagement = () => {
 						allowClear={false} />
 				</FormItem>
 			</Col>
-		</Row>
+		</Row></>
 	);
 
 	return (
@@ -107,10 +118,20 @@ export const WeekManagement = () => {
 						{
 							title: "Deadline date",
 							dataIndex: "deadlineDate",
-							width: "65%",
+							width: "30%",
 							render: (date: Date, record: any) => {
 								return (
 									<p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>
+								);
+							}
+						},
+						{
+							title: "Naam",
+							dataIndex: "name",
+							width: "35%",
+							render: (name: string, record: any) => {
+								return (
+									<p>{t(`general.weeks.${name}`)}</p>
 								);
 							}
 						},

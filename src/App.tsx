@@ -10,8 +10,10 @@ import { ToastContainer } from "react-toastify";
 import { Footer } from "./components/Footer/Footer";
 
 import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
 
 dayjs.extend(weekday);
+dayjs.extend(localeData);
 dayjs.locale("nl-BE");
 
 class App extends React.PureComponent<WithTranslation> {
