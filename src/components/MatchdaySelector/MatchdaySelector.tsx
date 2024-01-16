@@ -13,7 +13,7 @@ type MatchdaySelectorProps = {
 export const MatchdaySelector = (props: MatchdaySelectorProps) => {
 	const [t] = useTranslation();
 	const previousDisabled = props.min && props.day === props.min;
-	const nextDisabled = props.max && props.day === props.max - 1;
+	const nextDisabled = props.max && props.day === props.max;
 
 	return (
 		<MatchdaySelectorStyle>
