@@ -290,7 +290,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			</CustomForm>
 			<Row justify="center" align="middle">
 				<Col span={24}>
-					<Button disabled={!state.validStats} onClick={() => onFormSubmit(form)}>
+					<Button onClick={() => onFormSubmit(form)}>
 						Opslaan
 					</Button>
 				</Col>
