@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContainerStyle, PlayerStyle, SelectGroupStyle, TableStyle } from "./PlayerListStyle";
 import Icon, { EuroOutlined, SearchOutlined, StarOutlined, TagsOutlined } from "@ant-design/icons";
-import { CaptainSvg, FootballSvg, GreenSvg, OrangeSvg, RedSvg, SetPiecesSvg, StarSvg } from "@/styles/custom-icons";
+import { CaptainSvg, FootballShoeSvg, FootballSvg, GreenSvg, OrangeSvg, PlusSvg, RacketSvg, RedSvg, SetPiecesSvg, StarSvg, StarterSvg } from "@/styles/custom-icons";
 import { getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { Input } from "@/components/UI/Input/Input";
@@ -10,15 +10,14 @@ import { Button } from "../UI/Button/Button";
 import { Select } from "../UI/Select/Select";
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
-import { Empty } from "antd";
+import { Empty, Tooltip } from "antd";
 import config from "@/config";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainSvg} {...props} />;
 const SetPiecesIcon = (props: any) => <Icon component={SetPiecesSvg} {...props} />;
 const StarIcon = (props: any) => <Icon component={StarSvg} {...props} />;
-const GreenIcon = (props: any) => <Icon component={GreenSvg} {...props} />;
-const OrangeIcon = (props: any) => <Icon component={OrangeSvg} {...props} />;
-const RedIcon = (props: any) => <Icon component={RedSvg} {...props} />;
+const InForm = (props: any) => <Icon component={RacketSvg} {...props} />;
+const Injury = (props: any) => <Icon component={PlusSvg} {...props} />;
 
 declare type PlayerListProps = {
 	data: Player[]
@@ -202,9 +201,11 @@ export const PlayerList = (props: PlayerListProps) => {
 									{record.short}
 								</span>
 								<span style={{ float: "right", marginRight: "10px" }}>
-									{record.star ? <StarIcon style={{ marginRight: "2px" }} /> : null}
-									{record.caps ? <CaptainIcon style={{ marginRight: "2px" }} /> : null}
-									{record.setPieces ? <SetPiecesIcon style={{ marginRight: "2px" }} /> : null}
+									{record.star ?  <Tooltip title="Sterspeler"><span><StarIcon style={{ marginRight: "2px" }} /></span></Tooltip> : null}
+									{record.captain ? <Tooltip title="Kapitein"><span><CaptainIcon style={{ marginRight: "2px" }} /></span></Tooltip> : null}
+									{record.form ? <Tooltip title="In vorm"><span><InForm style={{ marginRight: "2px" }} /></span></Tooltip> : null}
+									{record.injury ? <Tooltip title="Geblesseerd"><span><Injury style={{ marginRight: "2px" }} /></span></Tooltip> : null}
+									{record.setPieces ? <Tooltip title="Standaardsituaties expert"><span><SetPiecesIcon style={{ marginRight: "2px" }} /></span></Tooltip> : null}
 								</span>
 							</p>
 							<p>
