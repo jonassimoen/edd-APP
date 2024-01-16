@@ -71,10 +71,6 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		props.onCancel(event);
 	};
 
-	const showPointsOverview = useMemo(() => player && player.points, [player]);
-	const pointsOverview = useMemo(() => showPointsOverview ? getPointsOverviewList(player, t) : [], [player]);
-	console.log(player.short, pointsOverview);
-
 	const actionColumnSize = useMemo(
 		() => Math.floor(24 / (+!!onCaptainSelect + +!!onViceCaptainSelect + +(!!onSwap && (player.id !== swapPlayerId))
 			+ +(!!onSwap && (player.id === swapPlayerId)) + +!!props.onRemove)
@@ -101,7 +97,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 
 				</Col>
 				{
-					showPointsOverview ?
+					player && player.points ?
 						<Col md={6} sm={6} xs={6}>
 							<span className="points">
 								<span className="value">{player.points}</span>
@@ -166,7 +162,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 				}
 			</Row>
 			{
-				showPointsOverview ?
+				player && player.points ?
 					<PointsOverviewTable>
 						<thead>
 							<tr>
@@ -177,7 +173,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						</thead>
 						<tbody>
 							{
-								pointsOverview.map((category: any, index: number) =>
+								getPointsOverviewList(player, t).map((category: any, index: number) =>
 									<tr key={`overview-${index}`}>
 										<td>{category.action}</td>
 										<td>{category.quantity}</td>
