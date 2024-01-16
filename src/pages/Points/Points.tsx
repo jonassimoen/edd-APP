@@ -75,12 +75,12 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				const weekConfirmation = pointsConfirmation.find((item: any) => item.weekId === pointsWeekId);
 				const weekPointsConfirmed = weekConfirmation && weekConfirmation.confirmed;
 				const provisionalPoints = result.players
-					.filter((player: any) => player.selection[0].starting === 1)
+					.filter((player: any) => player.selections[0].starting === 1)
 					.reduce((acc: number, player: any) => {
 						const stats = player && player.stats ? player.stats : [];
 						const statsTotalPoints = stats
 							.reduce((statsAcc: number, item: any) => statsAcc + item.points, 0);
-						const points = player.selection[0].captain ? statsTotalPoints * 2 : statsTotalPoints;
+						const points = player.selections[0].captain ? statsTotalPoints * 2 : statsTotalPoints;
 						return acc + points;
 					}, 0);
 
@@ -105,30 +105,30 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				const startedThisWeek = { started: result.team.weekId <= pointsWeekId, weekId: result.team.weekId };
 
 				const starting = result.players
-					.filter((player: any) => player.selection[0].starting === 1)
+					.filter((player: any) => player.selections[0].starting === 1)
 					.map((player: any) => {
 						const playerStats = player.stats && player.stats[0];
 						const pointsOverview = playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
-						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selection, selectionProps)));
+						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
 					});
 				const bench = result.players
-					.filter((player: any) => player.selection[0].starting === 0)
+					.filter((player: any) => player.selections[0].starting === 0)
 					.map((player: any) => {
 						const playerStats = player.stats && player.stats[0];
 						const pointsOverview = playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
-						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selection, selectionProps)));
+						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
 					}).sort((first: any, second: any) => {
 						return (first.positionId === 1) ? -1 : 0;
 					});
 				const teamName = result.team?.name;
 				const teamUser = result.user;
 
-				const captainPlayer = result.players.find((player: any) => player.selection[0].captain === 1);
+				const captainPlayer = result.players.find((player: any) => player.selections[0].captain === 1);
 				const captainId = captainPlayer && captainPlayer.id;
 
-				const viceCaptainPlayer = result.players.find((player: any) => player.selection[0].captain === 2);
+				const viceCaptainPlayer = result.players.find((player: any) => player.selections[0].captain === 2);
 				const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
 				const budget = result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
