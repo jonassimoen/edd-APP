@@ -84,11 +84,11 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "home",
 			width: "40%",
 			render: (homeId: any, record: any) => {
-				const clubBadge = `${props.assetsCdn}/badges/${record.home.id}.png`;
+				const clubBadge = record.home ? `${props.assetsCdn}/badges/${record.home.id}.png` : `${props.assetsCdn}/badges/dummy.png`;
 
 				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
-					<ClubName className="team-name" fullName={record.home.name || t("general.team.tobedetermined")} shortName={record.home.short || t("general.team.tbd")}></ClubName>
+					<ClubName className="team-name" fullName={record.home?.name || t("general.team.tobedetermined")} shortName={record.home?.short || t("general.team.tbd")}></ClubName>
 				</ClubDetails>;
 			}
 		},
@@ -107,11 +107,11 @@ export const Calendar = (props: CalendarProps) => {
 			dataIndex: "away",
 			width: "40%",
 			render: (awayId: any, record: any) => {
-				const clubBadge = `${props.assetsCdn}/badges/${record.away.id}.png`;
+				const clubBadge = record.away ? `${props.assetsCdn}/badges/${record.away.id}.png` : `${props.assetsCdn}/badges/dummy.png`;
 
 				return <ClubDetails>
 					<ClubBadgeBg src={clubBadge} />
-					<ClubName className="team-name" fullName={record.away.name || t("general.team.tobedetermined")} shortName={record.away.short || t("general.team.tbd")}></ClubName>
+					<ClubName className="team-name" fullName={record.away?.name || t("general.team.tobedetermined")} shortName={record.away?.short || t("general.team.tbd")}></ClubName>
 				</ClubDetails>;
 			}
 		}
