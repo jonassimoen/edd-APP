@@ -139,7 +139,7 @@ export const Player = (props: PlayerProps) => {
 				const nextMatch = player.upcomingMatches[0];
 				return {
 					playing: nextMatch.homeId === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
-					opponentShort: nextMatch.homeId === player.clubId ? nextMatch.away.short : nextMatch.home.short,
+					opponentShort: nextMatch.homeId === player.clubId ? nextMatch.away?.short || t("general.team.tbd"): nextMatch.home?.short || t("general.team.tbd"),
 				};
 			} else {
 				return null;
