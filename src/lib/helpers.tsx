@@ -243,7 +243,7 @@ export const calendarLiveScoreComponent = (match: Match) => {
 			icon = <LiveIcon />;
 		} else {
 			className = match.status.toLowerCase().replace("_","");
-			text = `${match.awayScore} - ${match.homeScore}`;
+			text = `${match.homeScore} - ${match.awayScore}`;
 		}
 	}
 
