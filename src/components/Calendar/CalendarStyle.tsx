@@ -73,6 +73,10 @@ export const ClubBadgeBg = styled.img`
 	max-width: 50px;
 	display: inline-block;
 	margin: 5px;
+
+    &.small {
+        max-width: 20px;
+    }
 ` as any;
 
 export const ClubName: any = styled.span`

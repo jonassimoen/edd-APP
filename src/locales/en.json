@@ -40,7 +40,7 @@
     "footballWeek": "Matchday",
     "week": "Week",
     "weeks": {
-      "quarterfinal":"Quarter final",
+      "quarterfinal": "Quarter final",
       "semifinal": "Semi-final",
       "final": "Final"
     },
@@ -49,5 +49,6 @@
       "tobedetermined": "To be determined",
       "tbd": "T.B.D."
     }
-  }
+  },
+  "editBtn": "Edit"
 }

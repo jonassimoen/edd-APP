@@ -4,7 +4,7 @@ export default {
 	COMPETITION_CONFIG: import.meta.env.VITE_COMPETITION_CONFIG && import.meta.env.VITE_COMPETITION_CONFIG.length
 		? JSON.parse(import.meta.env.VITE_COMPETITION_CONFIG) : {},
 	STATISTICS: [
-		{
+		[{
 			full: "STARTING PLAYER",
 			slug: "starting",
 			short: "11",
@@ -15,8 +15,8 @@ export default {
 			slug: "minutesPlayed",
 			short: "P",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "GOALS",
 			slug: "goals",
 			short: "G",
@@ -39,14 +39,8 @@ export default {
 			slug: "shotsOnTarget",
 			short: "ST",
 			type: "number",
-		},
-		{
-			full: "SAVES",
-			slug: "saves",
-			short: "S",
-			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "KEY PASSES",
 			slug: "keyPasses",
 			short: "KP",
@@ -63,8 +57,8 @@ export default {
 			slug: "totalPasses",
 			short: "PT",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "TACKLES",
 			slug: "tackles",
 			short: "T",
@@ -81,8 +75,8 @@ export default {
 			slug: "interceptions",
 			short: "IC",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "DRIBBLES ATTEMPTED",
 			slug: "dribblesAttempted",
 			short: "DA",
@@ -99,8 +93,8 @@ export default {
 			slug: "dribblesPast",
 			short: "DS",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "FOULS DRAWN",
 			slug: "foulsDrawn",
 			short: "FD",
@@ -111,14 +105,20 @@ export default {
 			slug: "foulsCommited",
 			short: "FC",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "PENALTY SAVED",
 			slug: "penaltySaved",
 			short: "PSa",
 			type: "number",
 		},
 		{
+			full: "SAVES",
+			slug: "saves",
+			short: "S",
+			type: "number",
+		}],
+		[{
 			full: "PENALTY COMMITED",
 			slug: "penaltyCommited",
 			short: "PC",
@@ -141,8 +141,8 @@ export default {
 			slug: "penaltyMissed",
 			short: "PM",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "DUELS WON",
 			slug: "duelsWon",
 			short: "DW",
@@ -153,8 +153,8 @@ export default {
 			slug: "duelsTotal",
 			short: "DT",
 			type: "number",
-		},
-		{
+		}],
+		[{
 			full: "YELLOW CARD",
 			slug: "yellow",
 			short: "Y",
@@ -171,6 +171,6 @@ export default {
 			slug: "motm",
 			short: "MOTM",
 			type: "bool",
-		},
+		}],
 	]
 };
