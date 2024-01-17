@@ -32,7 +32,7 @@
     "footballWeek": "Speeldag",
     "week": "Week",
     "weeks": {
-      "quarterfinal":"Kwartfinale",
+      "quarterfinal": "Kwartfinale",
       "semifinal": "Halve finale",
       "final": "Finale"
     },
@@ -91,7 +91,16 @@
     "penaltySavedLabel": "Penalty gered",
     "motmLabel": "Man of the match",
     "yellowLabel": "Gele kaart",
-    "redLabel": "Rode kaart"
+    "redLabel": "Rode kaart",
+    "stoppedPenaltyLabel": "Penlaty gestopt",
+    "concededTwoLabel": "Per 2 goals tegen",
+    "cleanSheetLabel": "Geen doelpunt tegen",
+    "passAccOver85Label": "Nauwkeurigheid passing meer dan 85%",
+    "keyPassesPerTwoLabel": "Sleutelpasses per 2",
+    "dribblesSuccessPerTwoLabel": "Per 2 succesvolle dribbels",
+    "duelsWonMoreThanLostLabel": "Meer gewonnen dan verloren duels",
+    "interceptionsPerSevenLabel": "Intercepties per zeven",
+    "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {

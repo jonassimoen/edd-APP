@@ -207,6 +207,13 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
+			case "goals": {
+				const goals = player.pointsOverview && player.pointsOverview.goals || 0;
+				if (goals) {
+					pointsOverview.push({ action: t("player.goalsLabel"), quantity: goals, points: goals * actionPoints });
+				}
+				break;
+			}
 			case "assists": {
 				const assists = player.pointsOverview && player.pointsOverview.assists || 0;
 				if (assists) {
@@ -228,14 +235,6 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "goals": {
-				const goals = player.pointsOverview && player.pointsOverview.goals || 0;
-				if (goals) {
-					pointsOverview.push({ action: t("player.goalsLabel"), quantity: goals, points: goals * actionPoints });
-				}
-				break;
-			}
-			
 			case "penaltyMissed" : {
 				const penaltyMissed = player.pointsOverview && player.pointsOverview.penaltyMissed || 0;
 				if (penaltyMissed) {
@@ -275,7 +274,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 			case "passAccMore85": {
 				const passAcc = player.pointsOverview && player.pointsOverview.totalPasses && player.pointsOverview.accuratePasses / player.pointsOverview.totalPasses || 0;
 				if(passAcc && passAcc > 0.85) {
-					pointsOverview.push({action: t("player.passAccLabel"), quantity: passAcc.toPrecision(2), points: passAcc > 0.85 ? actionPoints : 0});
+					pointsOverview.push({action: t("player.passAccOver85Label"), quantity: passAcc.toPrecision(2), points: passAcc > 0.85 ? actionPoints : 0});
 				}
 				break;
 			}
@@ -283,7 +282,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const keyPasses = player.pointsOverview && player.pointsOverview.keyPasses || 0;
 				const keyPassesPerTwo = Math.floor(keyPasses / 2);
 				if(keyPassesPerTwo) {
-					pointsOverview.push({action: t("player.keyPassesLabel"), quantity: keyPasses, points: keyPassesPerTwo * actionPoints});
+					pointsOverview.push({action: t("player.keyPassesPerTwoLabel"), quantity: keyPasses, points: keyPassesPerTwo * actionPoints});
 				}
 				break;
 			}
@@ -291,14 +290,14 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const dribblesSuccess = player.pointsOverview && player.pointsOverview.dribblesSuccess || 0;
 				const dribblesSuccessPerTwo = Math.floor(dribblesSuccess / 2);
 				if(dribblesSuccessPerTwo) {
-					pointsOverview.push({action: t("player.dribblesSuccessLabel"), quantity: dribblesSuccess, points: dribblesSuccessPerTwo * actionPoints});
+					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: dribblesSuccess, points: dribblesSuccessPerTwo * actionPoints});
 				}
 				break;
 			}
 			case "moreDuelsWon": {
 				const duelsDiff = player.pointsOverview && player.pointsOverview.duelsTotal - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
 				if(duelsDiff && duelsDiff > 0) {
-					pointsOverview.push({action: t("player.duelsWonLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
+					pointsOverview.push({action: t("player.duelsWonMoreThanLostLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
 				}
 				break;
 			}
@@ -306,7 +305,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const interceptions = player.pointsOverview && player.pointsOverview.interceptions || 0;
 				const interceptionsPerSeven = Math.floor(interceptions / 2);
 				if(interceptionsPerSeven) {
-					pointsOverview.push({action: t("player.Label"), quantity: interceptions, points: interceptionsPerSeven * actionPoints});
+					pointsOverview.push({action: t("player.interceptionsPerSevenLabel"), quantity: interceptions, points: interceptionsPerSeven * actionPoints});
 				}
 				break;
 			}
@@ -314,14 +313,14 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const commitedFouls = player.pointsOverview && player.pointsOverview.commitedFouls || 0;
 				const commitedFoulsPerThree = Math.floor(commitedFouls / 2);
 				if(commitedFoulsPerThree) {
-					pointsOverview.push({action: t("player.Label"), quantity: commitedFouls, points: commitedFoulsPerThree * actionPoints});
+					pointsOverview.push({action: t("player.commitedFoulsPerThreeLabel"), quantity: commitedFouls, points: commitedFoulsPerThree * actionPoints});
 				}
 				break;
 			}
 			case "motm" : {
-				const motm = player.pointsOverview && player.pointsOverview.motm || 0;
+				const motm = player.pointsOverview && player.pointsOverview.motm;
 				if (motm) {
-					pointsOverview.push({ action: t("player.penaltyMissedLabel"), quantity: motm, points: motm * actionPoints });
+					pointsOverview.push({ action: t("player.motmLabel"), quantity: 1, points: motm * actionPoints });
 				}
 				break;
 			}

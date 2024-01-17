@@ -23,9 +23,9 @@ const playerProps =
 	["id", "name", "short", "positionId", "clubId", "injury", "form", "forename", "surname", "points", "pointsOverview", "stats", "portraitUrl"];
 
 
-const calculatePointsByPlayerStats = (players: Player[]) => {
+const calculatePointsByPlayerStats = (players: any[]) => {
 	return players
-		.map((player: Player) => player.stats.reduce((acc: number, stat: any) => acc + stat.points, 0))
+		.map((player: any) => player.stats.reduce((acc: number, stat: any) => acc + stat.points, 0))
 		.reduce((acc: number, points: number) => acc + points, 0);
 };
 
@@ -59,11 +59,11 @@ const _MatchContainer = (props: AbstractTeamType) => {
 
 	const homeBenchPlayers = useMemo(() => match && match.home && formatPlayers(match.home.players, false), [match]);
 	const awayBenchPlayers = useMemo(() => match && match.away && formatPlayers(match.away.players, false), [match]);
-	const homeTotalPoints = useMemo(() => match && match.home && calculatePointsByPlayerStats(match.home.players), [match]);
-	const awayTotalPoints = useMemo(() => match && match.away && calculatePointsByPlayerStats(match.away.players), [match]);
+	const homeTotalPoints = useMemo(() => homeStartingPlayers && homeBenchPlayers && calculatePointsByPlayerStats(homeStartingPlayers) + calculatePointsByPlayerStats(homeBenchPlayers), [homeStartingPlayers, homeBenchPlayers]);
+	const awayTotalPoints = useMemo(() => awayStartingPlayers && awayBenchPlayers && calculatePointsByPlayerStats(awayStartingPlayers) + calculatePointsByPlayerStats(awayBenchPlayers), [awayStartingPlayers, awayBenchPlayers]);
 
 	const motmId = useMemo(() => [].concat(homeStartingPlayers, homeBenchPlayers, awayStartingPlayers, awayBenchPlayers).find((p: Player) => p?.stats[0].motm)?.id, [homeStartingPlayers, homeBenchPlayers, awayStartingPlayers, awayBenchPlayers]);
-
+	console.log("homeBenchPlayers",homeBenchPlayers);
 	return (
 		<Spin spinning={matchLoading || clubsLoading} delay={0} style={{ padding: "2rem 0" }}>
 			{match && clubs &&
