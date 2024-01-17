@@ -2,8 +2,8 @@ import { Checkbox } from "@/components/UI/Checkbox/Checkbox";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import config from "@/config";
-import { Form, Modal } from "antd";
-import { useEffect, useMemo } from "react";
+import { Form, FormInstance, Modal } from "antd";
+import { useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 type PlayerStatsModalProps = {
@@ -15,6 +15,7 @@ type PlayerStatsModalProps = {
 
 export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 	const { t } = useTranslation();
+	const ref = useRef<FormInstance>();
 	const [form] = Form.useForm();
 
 	useEffect(() => {
@@ -23,6 +24,13 @@ export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 			form.setFieldsValue(props.playerStats);
 		}
 	}, [props.open, props.playerStats, form]);
+
+	const keyUpHandler = (event: any) => {
+		// enter
+		if(event.keyCode === 13) {
+			ref.current.submit();
+		}
+	};
 
 	if (props.playerStats) {
 		return (
@@ -43,6 +51,8 @@ export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 				onCancel={props.onCancel}
 			>
 				<Form
+					ref={ref}
+					onKeyUp={keyUpHandler}
 					colon={false}
 					form={form}
 					layout="horizontal"
