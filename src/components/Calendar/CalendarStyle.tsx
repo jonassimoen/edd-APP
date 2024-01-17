@@ -76,6 +76,7 @@ export const ClubBadgeBg = styled.img`
 
     &.small {
         max-width: 20px;
+        margin: 0px;
     }
 ` as any;
 

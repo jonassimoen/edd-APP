@@ -259,13 +259,13 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 			case "concededTwo": {
 				const goalsAgainst = player.pointsOverview && player.pointsOverview.goalsAgainst || 0;
 				const goalsAgainstPerTwo = Math.floor(goalsAgainst / 2);
-				if(goalsAgainstPerTwo) {
+				if(goalsAgainstPerTwo && actionPoints) {
 					pointsOverview.push({action: t("player.concededTwoLabel"), quantity: goalsAgainst, points: goalsAgainstPerTwo * actionPoints});
 				}
 				break;
 			}
 			case "cleanSheet": {
-				const cleanSheet = player.pointsOverview && player.pointsOverview.goalsAgainst == 0 || 0;
+				const cleanSheet = (player.pointsOverview && player.pointsOverview.goalsAgainst == 0) || 0;
 				if(cleanSheet && actionPoints) {
 					pointsOverview.push({action: t("player.cleanSheetLabel"), quantity: 1, points: actionPoints});
 				}

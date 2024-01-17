@@ -36,6 +36,13 @@ import { MatchStats } from "@/components/Stats/MatchStats";
 import { theme } from "@/styles/theme";
 import { useSelector } from "react-redux";
 import { PlayerStatsModal } from "./PlayerStatsModal";
+import styled from "@/styles/styled-components";
+
+const GameStatsManagementStyle = styled.div`
+	.ant-table-tbody > tr > td{
+		padding: 0 !important;
+	}
+`;
 
 type GameStatsMangementProps = {
   //todo
@@ -264,67 +271,69 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	};
 
 	return (
-		<Spin spinning={spinning} style={{ padding: "2rem 0" }}>
-			<MatchStats
-				matchId={+id}
-				homeScore={state.homeScore}
-				awayScore={state.awayScore}
-				assetsCdn={assetsCdn}
-			/>
-			{matchStatisticsImportSuccess ? (
-				<Alert
-					message="Data controleren"
-					description="Check de data met gerespecteerde databronnen (bv. Opta). Duid ook de MOTM aan volgens de officiële kanalen van FIFA/UEFA."
-					type="warning"
-					showIcon
+		<GameStatsManagementStyle>
+			<Spin spinning={spinning} style={{ padding: "2rem 0" }}>
+				<MatchStats
+					matchId={+id}
+					homeScore={state.homeScore}
+					awayScore={state.awayScore}
+					assetsCdn={assetsCdn}
 				/>
-			) : (
-				<Button
-					icon={<DownloadOutlined />}
-					onClick={() => importMatchStatistics(+(id || 0))}
-				>
-					{t("admin.gamestatistic.import")}
-				</Button>
-			)}
-			{!state.validStats && (
-				<Alert
-					message="Ongeldige statistieken"
-					description="Check de MOTM, er is er geen of meerdere toegekend. Er kan slechts één MOTM zijn."
-					type="error"
-					showIcon
+				{matchStatisticsImportSuccess ? (
+					<Alert
+						message="Data controleren"
+						description="Check de data met gerespecteerde databronnen (bv. Opta). Duid ook de MOTM aan volgens de officiële kanalen van FIFA/UEFA."
+						type="warning"
+						showIcon
+					/>
+				) : (
+					<Button
+						icon={<DownloadOutlined />}
+						onClick={() => importMatchStatistics(+(id || 0))}
+					>
+						{t("admin.gamestatistic.import")}
+					</Button>
+				)}
+				{!state.validStats && (
+					<Alert
+						message="Ongeldige statistieken"
+						description="Check de MOTM, er is er geen of meerdere toegekend. Er kan slechts één MOTM zijn."
+						type="error"
+						showIcon
+					/>
+				)}
+				<TableStyle
+					columns={columns}
+					dataSource={state.playerStats}
+					rowKey={"playerId"}
+					pagination={false}
+					sticky={true}
 				/>
-			)}
-			<TableStyle
-				columns={columns}
-				dataSource={state.playerStats}
-				rowKey={"playerId"}
-				pagination={false}
-				sticky={true}
-			/>
-			<Row justify="center" align="middle">
-				<Col span={24}>
-					<Button onClick={() => onFormSubmit()}>Opslaan</Button>
-				</Col>
-			</Row>
-			<PlayerStatsModal
-				open={playerState.open}
-				playerStats={state.playerStats?.at(playerState.index)}
-				onConfirm={(ps: any) => {
-					const playerStats = [...state.playerStats];
-					if (playerStats.length > playerState.index && playerState.index >= 0) {
-						playerStats[playerState.index] = {
-							...playerStats[playerState.index],
-							...ps,
-							goalsAgainst: (ps.clubId === match.home?.id) ? state.awayScore : state.homeScore
-						};
-					}
-					const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
-					const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
-					setState((state: GameStatsManagementState) => ({ ...state, playerStats, awayScore, homeScore }));
-					setPlayerState({ index: 0, open: false });
-				}}
-				onCancel={() => setPlayerState({ ...playerState, open: false })}
-			/>
-		</Spin>
+				<Row justify="center" align="middle">
+					<Col span={24}>
+						<Button onClick={() => onFormSubmit()}>Opslaan</Button>
+					</Col>
+				</Row>
+				<PlayerStatsModal
+					open={playerState.open}
+					playerStats={state.playerStats?.at(playerState.index)}
+					onConfirm={(ps: any) => {
+						const playerStats = [...state.playerStats];
+						if (playerStats.length > playerState.index && playerState.index >= 0) {
+							playerStats[playerState.index] = {
+								...playerStats[playerState.index],
+								...ps,
+								goalsAgainst: (ps.clubId === match.home?.id) ? state.awayScore : state.homeScore
+							};
+						}
+						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
+						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
+						setState((state: GameStatsManagementState) => ({ ...state, playerStats, awayScore, homeScore }));
+						setPlayerState({ index: 0, open: false });
+					}}
+					onCancel={() => setPlayerState({ ...playerState, open: false })}
+				/>
+			</Spin>
+		</GameStatsManagementStyle>
 	);
 };
