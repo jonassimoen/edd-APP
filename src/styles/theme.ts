@@ -1,5 +1,5 @@
 const theme =	{
-	primaryColor: "#143cdb",
+	primaryColor: "#A1B2F8",
 	primaryContrast: "#000d40",
 	positionGk: "#4ab969",
 	positionDf: "#2cb3c7",

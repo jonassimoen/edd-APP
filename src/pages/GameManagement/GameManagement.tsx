@@ -292,7 +292,7 @@ export const GameManagement = () => {
 							width: "10%",
 							align: "center",
 							render: (_: any, record: any) => {
-								if (new Date(record.date).getTime() < Date.now() && record.homeId && record.awayId) {
+								if (new Date(record.date).getTime() < Date.now() && record.home?.id && record.away?.id) {
 									return (<Link to={`events/${record.id}`}>
 										<Button
 											icon={<SkinOutlined />}

@@ -142,6 +142,8 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		});
 		setState((state: GameStatsManagementState) => ({
 			...state,
+			homeScore: playersWithStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
+			awayScore: playersWithStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
 			playerStats: playersWithStats,
 		}));
 	}, [playersReduced, stats]);
@@ -156,6 +158,8 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			});
 			setState((state: GameStatsManagementState) => ({
 				...state,
+				homeScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
+				awayScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
 				playerStats: playersWithImportedStats,
 			}));
 		}
@@ -250,9 +254,13 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const onFormSubmit = () => {
 		updateMatchStats({
 			matchId: +(id || 0),
-			stats: state.playerStats,
+			stats: state.playerStats.map((p: any) => ({
+				...p,
+				goalsAgainst: (p?.clubId === match?.home?.id ? match.awayScore : match.homeScore) || 0,
+			})),
 			score: { home: state.homeScore, away: state.awayScore },
 		});
+		navigate("/admin/games");
 	};
 
 	return (
@@ -302,19 +310,17 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 				open={playerState.open}
 				playerStats={state.playerStats?.at(playerState.index)}
 				onConfirm={(ps: any) => {
-					setState((state: GameStatsManagementState) => {
-						const playerStats = [...state.playerStats];
-						if (
-							playerStats.length > playerState.index &&
-              playerState.index >= 0
-						) {
-							playerStats[playerState.index] = {
-								...playerStats[playerState.index],
-								...ps,
-							};
-						}
-						return { ...state, playerStats };
-					});
+					const playerStats = [...state.playerStats];
+					if (playerStats.length > playerState.index && playerState.index >= 0) {
+						playerStats[playerState.index] = {
+							...playerStats[playerState.index],
+							...ps,
+							goalsAgainst: (ps.clubId === match.home?.id) ? state.awayScore : state.homeScore
+						};
+					}
+					const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
+					const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
+					setState((state: GameStatsManagementState) => ({ ...state, playerStats, awayScore, homeScore }));
 					setPlayerState({ index: 0, open: false });
 				}}
 				onCancel={() => setPlayerState({ ...playerState, open: false })}

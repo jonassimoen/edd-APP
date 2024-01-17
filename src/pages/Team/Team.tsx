@@ -48,7 +48,7 @@ export const _Team = (props: AbstractTeamType) => {
 		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
 			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
-					(match: Match) => match.weekId === weekId && ([match.homeId, match.awayId].includes(p.clubId))
+					(match: Match) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(p.clubId))
 				);
 				return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 			});
@@ -56,7 +56,7 @@ export const _Team = (props: AbstractTeamType) => {
 		const bench = teamResult.players.filter((p: any) => p.selection.starting === 0)
 			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
-					(match: Match) => match.weekId === weekId && ([match.homeId, match.awayId].includes(p.clubId))
+					(match: Match) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(p.clubId))
 				);
 				return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 			});

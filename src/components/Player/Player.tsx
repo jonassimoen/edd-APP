@@ -138,8 +138,8 @@ export const Player = (props: PlayerProps) => {
 			if (player && player.upcomingMatches && player.upcomingMatches.length) {
 				const nextMatch = player.upcomingMatches[0];
 				return {
-					playing: nextMatch.homeId === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
-					opponentShort: nextMatch.homeId === player.clubId ? nextMatch.away?.short || t("general.team.tbd"): nextMatch.home?.short || t("general.team.tbd"),
+					playing: nextMatch.home?.id === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
+					opponentShort: nextMatch.home?.id === player.clubId ? nextMatch.away?.short || t("general.team.tbd"): nextMatch.home?.short || t("general.team.tbd"),
 				};
 			} else {
 				return null;

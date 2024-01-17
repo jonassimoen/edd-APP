@@ -191,8 +191,6 @@ type Match = {
 	postposed?: number
 	homeScore?: number
 	awayScore?: number
-	homeId?: number
-	awayId?: number
 	home?: Club
 	away?: Club
 	status?: string

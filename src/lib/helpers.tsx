@@ -153,21 +153,26 @@ export const statusToIconColor = (status: string) => {
 };
 
 const PlayerActionsPoints: any = {
-	yellow: { 1: -1, 2: -1, 3: -1, 4: -1 },
-	red: { 1: -3, 2: -3, 3: -3, 4: -3 },
-	ownGoal: { 1: -2, 2: -2, 3: -2, 4: -2 },
 	playedUpTo60Min: { 1: 1, 2: 1, 3: 1, 4: 1 },
 	playedMoreThan60Min: { 1: 2, 2: 2, 3: 2, 4: 2 },
-	drawMatch: { 1: 0, 2: 0, 3: 0, 4: 0 },
-	assists: { 1: 3, 2: 3, 3: 3, 4: 3 },
 	goals: { 1: 6, 2: 6, 3: 5, 4: 4 },
+	assists: { 1: 3, 2: 3, 3: 3, 4: 3 },
+	yellow: { 1: -1, 2: -1, 3: -1, 4: -1 },
+	red: { 1: -3, 2: -3, 3: -3, 4: -3 },
+	cleanSheet: { 1: 4, 2: 4, 3: 1, 4: 0 },
+	ownGoal: { 1: -2, 2: -2, 3: -2, 4: -2 },
 	penaltyMissed: { 1: -5, 2: -2, 3: -2, 4: -2 },
 	penaltySaved: { 1: 5, 2: 15, 3: 15, 4: 15 },
 	stoppedPenalty: { 1: 5, 2: 0, 3: 0, 4: 0 },
-	cleanSheet: { 1: 4, 2: 4, 3: 1, 4: 0 },
-	goalTaken: { 1: -1, 2: -1, 3: 0, 4: 0 },
 	savesPerTwo: { 1: 1, 2: 0, 3: 0, 4: 0 },
 	motm: { 1: 5, 2: 5, 3: 5, 4: 5 },
+	concededTwo: {1: -2, 2: -1, 3: 0, 4: 0},
+	passAccMore85: {1: 2, 2: 3, 3: 4, 4: 3},
+	keyPassPerTwo: {1: 5, 2: 3, 3: 3, 4: 3},
+	successDribblesPerTwo: {1: 5, 2: 3, 3: 3, 4: 3},
+	moreDuelsWon: {1: 1, 2: 1, 3: 1, 4: 1},
+	interceptionsPerSeven: {1: 2, 2: 2, 3: 2, 4: 2},
+	commitedFoulsPerThree: {1:-2, 2:-2, 3: -2, 4: -2},
 	bonus: {}
 };
 
@@ -209,11 +214,114 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-
+			case "yellow": {
+				const yellow = player.pointsOverview && player.pointsOverview.yellow || 0;
+				if (yellow) {
+					pointsOverview.push({ action: t("player.yellowLabel"), quantity: 1, points: actionPoints });
+				}
+				break;
+			}
+			case "red": {
+				const red = player.pointsOverview && player.pointsOverview.red || 0;
+				if (red) {
+					pointsOverview.push({ action: t("player.redLabel"), quantity: 1, points: actionPoints });
+				}
+				break;
+			}
 			case "goals": {
 				const goals = player.pointsOverview && player.pointsOverview.goals || 0;
 				if (goals) {
 					pointsOverview.push({ action: t("player.goalsLabel"), quantity: goals, points: goals * actionPoints });
+				}
+				break;
+			}
+			
+			case "penaltyMissed" : {
+				const penaltyMissed = player.pointsOverview && player.pointsOverview.penaltyMissed || 0;
+				if (penaltyMissed) {
+					pointsOverview.push({ action: t("player.penaltyMissedLabel"), quantity: penaltyMissed, points: penaltyMissed * actionPoints });
+				}
+				break;
+			}
+			case "penaltySaved" : {
+				const penaltySaved = player.pointsOverview && player.pointsOverview.penaltySaved || 0;
+				if (penaltySaved) {
+					pointsOverview.push({ action: t("player.penaltySavedLabel"), quantity: penaltySaved, points: penaltySaved * actionPoints });
+				}
+				break;
+			}
+			case "stoppedPenalty" : {
+				const stoppedPenalty = player.pointsOverview && player.pointsOverview.stoppedPenalty || 0;
+				if (stoppedPenalty) {
+					stoppedPenalty.push({ action: t("player.stoppedPenaltyLabel"), quantity: stoppedPenalty, points: stoppedPenalty * actionPoints });
+				}
+				break;
+			}
+			case "concededTwo": {
+				const goalsAgainst = player.pointsOverview && player.pointsOverview.goalsAgainst || 0;
+				const goalsAgainstPerTwo = Math.floor(goalsAgainst / 2);
+				if(goalsAgainstPerTwo) {
+					pointsOverview.push({action: t("player.concededTwoLabel"), quantity: goalsAgainst, points: goalsAgainstPerTwo * actionPoints});
+				}
+				break;
+			}
+			case "cleanSheet": {
+				const cleanSheet = player.pointsOverview && player.pointsOverview.goalsAgainst == 0 || 0;
+				if(cleanSheet && actionPoints) {
+					pointsOverview.push({action: t("player.cleanSheetLabel"), quantity: 1, points: actionPoints});
+				}
+				break;
+			}
+			case "passAccMore85": {
+				const passAcc = player.pointsOverview && player.pointsOverview.totalPasses && player.pointsOverview.accuratePasses / player.pointsOverview.totalPasses || 0;
+				if(passAcc && passAcc > 0.85) {
+					pointsOverview.push({action: t("player.passAccLabel"), quantity: passAcc.toPrecision(2), points: passAcc > 0.85 ? actionPoints : 0});
+				}
+				break;
+			}
+			case "keyPassPerTwo": {
+				const keyPasses = player.pointsOverview && player.pointsOverview.keyPasses || 0;
+				const keyPassesPerTwo = Math.floor(keyPasses / 2);
+				if(keyPassesPerTwo) {
+					pointsOverview.push({action: t("player.keyPassesLabel"), quantity: keyPasses, points: keyPassesPerTwo * actionPoints});
+				}
+				break;
+			}
+			case "successDribblesPerTwo": {
+				const dribblesSuccess = player.pointsOverview && player.pointsOverview.dribblesSuccess || 0;
+				const dribblesSuccessPerTwo = Math.floor(dribblesSuccess / 2);
+				if(dribblesSuccessPerTwo) {
+					pointsOverview.push({action: t("player.dribblesSuccessLabel"), quantity: dribblesSuccess, points: dribblesSuccessPerTwo * actionPoints});
+				}
+				break;
+			}
+			case "moreDuelsWon": {
+				const duelsDiff = player.pointsOverview && player.pointsOverview.duelsTotal - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
+				if(duelsDiff && duelsDiff > 0) {
+					pointsOverview.push({action: t("player.duelsWonLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
+				}
+				break;
+			}
+			case "interceptionsPerSeven": {
+				const interceptions = player.pointsOverview && player.pointsOverview.interceptions || 0;
+				const interceptionsPerSeven = Math.floor(interceptions / 2);
+				if(interceptionsPerSeven) {
+					pointsOverview.push({action: t("player.Label"), quantity: interceptions, points: interceptionsPerSeven * actionPoints});
+				}
+				break;
+			}
+			case "commitedFoulsPerThree": {
+				const commitedFouls = player.pointsOverview && player.pointsOverview.commitedFouls || 0;
+				const commitedFoulsPerThree = Math.floor(commitedFouls / 2);
+				if(commitedFoulsPerThree) {
+					pointsOverview.push({action: t("player.Label"), quantity: commitedFouls, points: commitedFoulsPerThree * actionPoints});
+				}
+				break;
+			}
+			case "motm" : {
+				const motm = player.pointsOverview && player.pointsOverview.motm || 0;
+				if (motm) {
+					pointsOverview.push({ action: t("player.penaltyMissedLabel"), quantity: motm, points: motm * actionPoints });
 				}
 				break;
 			}
