@@ -50,5 +50,14 @@
       "tbd": "T.B.D."
     }
   },
-  "editBtn": "Edit"
+  "editBtn": "Edit",
+  "pageNotFound": {
+    "title": "Page not found!",
+    "goBack": "Go back"
+  },
+  "pageError": {
+    "title": "Something went wrong!",
+    "subtitle": "If you are a user, please report this error to the administrator.",
+    "view": "View error"
+  }
 }

@@ -24,7 +24,7 @@ import {
 import {
 	Alert,
 	Button,
-	Spin,
+	Skeleton,
 	Tag,
 	Tooltip,
 } from "antd";
@@ -272,7 +272,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	return (
 		<GameStatsManagementStyle>
-			<Spin spinning={spinning} style={{ padding: "2rem 0" }}>
+			<Skeleton loading={spinning} style={{ padding: "2rem 0" }}>
 				<MatchStats
 					matchId={+id}
 					homeScore={state.homeScore}
@@ -333,7 +333,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 					}}
 					onCancel={() => setPlayerState({ ...playerState, open: false })}
 				/>
-			</Spin>
+			</Skeleton>
 		</GameStatsManagementStyle>
 	);
 };

@@ -24,7 +24,7 @@ import { Stats } from "@/components/Stats/Stats";
 import { PointsStats } from "@/components/PointsStats/PointsStats";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { MatchdaySelector } from "@/components/MatchdaySelector/MatchdaySelector";
-import { Spin } from "antd";
+import { Button, Spin } from "antd";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -179,7 +179,11 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const startingByPositions = startingListToPositionsList(starting, application.competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");
+	const [error, setError] = useState<Error>();
 
+	if(error) {
+		throw error;
+	}
 	return (
 		<Spin spinning={clubsLoading || playersLoading || teamLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{

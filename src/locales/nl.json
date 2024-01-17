@@ -258,5 +258,14 @@
   },
   "transferPage": {
     "noTransfersTableMessage": "Geen transfers"
+  },
+  "pageNotFound": {
+    "title": "Pagina niet gevonden!",
+    "goBack": "Ga terug"
+  },
+  "pageError": {
+    "title": "Er ging iets mis!",
+    "subtitle": "Indien u een gebruiker bent, gelieve de foutmelding aan een administrator te melden.",
+    "view": "Bekijk foutmelding"
   }
 }

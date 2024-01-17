@@ -38,20 +38,14 @@ const items: MenuProps["items"] = [
 		key: "weeks",
 		icon: <CalendarOutlined />,
 	},
-	{
-		label: (<Link to={{ pathname: "points" }}>Points</Link>),
-		key: "points",
-		icon: <StarOutlined />,
-	},
 ];
 
 
 export const Admin = (props: { redirectPath: string }) => {
 	const location = useLocation();
+	const { t } = useTranslation();
 
 	const user = useAppSelector((state) => state.userState.user);
-
-	const { t } = useTranslation();
 	const [current, setCurrent] = useState(location.pathname.split("/").pop() || "admin");
 	const onClick: MenuProps["onClick"] = (e) => {
 		setCurrent(e.key);
