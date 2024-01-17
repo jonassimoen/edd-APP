@@ -15,11 +15,9 @@ type PlayerStatsModalProps = {
 
 export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 	const { t } = useTranslation();
-	const ref = useRef<FormInstance>();
 	const [form] = Form.useForm();
 
 	useEffect(() => {
-		console.log("Setting values", props.open, form);
 		if (props.open && form) {
 			form.setFieldsValue(props.playerStats);
 		}
@@ -28,7 +26,9 @@ export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 	const keyUpHandler = (event: any) => {
 		// enter
 		if(event.keyCode === 13) {
-			ref.current.submit();
+			form
+				.validateFields()
+				.then((obj) => props.onConfirm(obj));
 		}
 	};
 
@@ -51,7 +51,6 @@ export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 				onCancel={props.onCancel}
 			>
 				<Form
-					ref={ref}
 					onKeyUp={keyUpHandler}
 					colon={false}
 					form={form}
