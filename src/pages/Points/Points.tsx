@@ -189,7 +189,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 							<Block>
 								<MatchdaySelector
 									day={visibleWeekId}
-									max={deadlineWeek ? deadlineWeek : visibleWeekId}
+									max={deadlineWeek == 1 ? deadlineWeek : visibleWeekId}
 									min={1}
 									name={t(`general.weeks.${weeks.find((week: Week) => week.id === visibleWeekId)?.name}`)}
 									onPrev={(e: any) => props.onDayChange(false)}
