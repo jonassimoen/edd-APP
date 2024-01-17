@@ -223,7 +223,6 @@ const _Transfers = (props: AbstractTeamType) => {
 	return (
 		(clubs && teamResult && matches && players && deadlineInfo) && (
 			<React.Fragment>
-				{application.competition.officialStartWeek}
 				{(notTeamOwner || state.notFound) &&
 										<Navigate to={"/home"} />
 				}

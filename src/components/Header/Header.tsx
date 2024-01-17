@@ -43,15 +43,13 @@ export const Header = () => {
 	});
 
 	const { t, i18n } = useTranslation();
-	// const gameInProgress = !!matches.info.deadlineWeek;
-
-
+	const application = useSelector((state: StoreState) => state.application);
 	const allMenuItems: string[] = ["home", "stats", "rules", "rankings"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;
 	const isActive = (match: string) => location.pathname.indexOf(match) !== -1;
 	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId), [userTeam, deadlineInfo]);
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
-	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId), [userTeam, deadlineInfo]);
+	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId) && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [userTeam, deadlineInfo]);
 
 	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
 		if (allMenuItems.indexOf(item) === -1) {
@@ -225,7 +223,7 @@ export const Header = () => {
 
 							{(userTeam && isVisible("edit") &&
 								<li className={`c-nav-mobile__item ${isActive("edit") ? "active" : ""}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/edit/${userTeam.id}`}>{t("menu.transfers")}</Link>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/edit/${userTeam.id}`}>{t("menu.edit")}</Link>
 								</li>) || null}
 
 							{(!userTeam && isVisible("new") &&
