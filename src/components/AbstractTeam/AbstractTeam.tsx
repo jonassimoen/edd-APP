@@ -175,7 +175,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		isTeamOwner?: boolean,
 		teamUser?: any
 	) => {
-		console.log("INIT TEAM STATE");
 		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
@@ -216,15 +215,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 		const startingSpotEmpty = state.starting.find((p: Player) => (p && !p.id) && (p && p.positionId === player.positionId));
 		const benchSpotEmpty = state.bench.find((p: Player) => (p && !p.id) && (p && p.positionId === player.positionId));
-
-		// const pickingResult = state.validator.pick(player);
-		// if (pickingResult.result.Bench.includes(player.id)) {
-		// 	startingSpotEmpty = false;
-		// 	benchSpotEmpty = true;
-		// } else {
-		// 	startingSpotEmpty = true;
-		// 	benchSpotEmpty = false;
-		// }
 
 		if (startingSpotEmpty) {
 			let firstIndex: any = null;

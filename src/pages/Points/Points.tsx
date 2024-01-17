@@ -47,7 +47,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
-	// const visibleWeekId = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
 	const currentWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.weeks.find((week: Week) => week.id === visibleWeekId), [visibleWeekId, deadlineInfo]);
 
 
@@ -63,16 +62,16 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		if (!teamResult) {
 			return;
 		}
-		const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
+		// const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "stats"];
 		const selectionProps: any[] = ["points"];
-		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: pointsWeekId })])
+		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId })])
 			.then(([result]: any[]) => {
-				console.log(pointsWeekId);
+				console.log("fetching data from week",weekId);
 				result = result.data;
 				const pointsConfirmation: any[] = [];
-				const weekStat = result.weekStat.find((stat: any) => stat.weekId === pointsWeekId);
-				const weekConfirmation = pointsConfirmation.find((item: any) => item.weekId === pointsWeekId);
+				const weekStat = result.weekStat.find((stat: any) => stat.weekId === weekId);
+				const weekConfirmation = pointsConfirmation.find((item: any) => item.weekId === weekId);
 				const weekPointsConfirmed = weekConfirmation && weekConfirmation.confirmed;
 				const provisionalPoints = result.players
 					.filter((player: any) => player.selections[0].starting === 1)
@@ -102,14 +101,12 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					weekAveragePoints: (weekStat && weekStat.average) || "-"
 				};
 
-				const startedThisWeek = { started: result.team.weekId <= pointsWeekId, weekId: result.team.weekId };
-
 				const starting = result.players
 					.filter((player: any) => player.selections[0].starting === 1)
 					.map((player: any) => {
 						const playerStats = player.stats && player.stats[0];
 						const pointsOverview = playerStats;
-						const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
+						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.homeId, match.awayId].includes(player.clubId)));
 						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
 					});
 				const bench = result.players
@@ -117,7 +114,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					.map((player: any) => {
 						const playerStats = player.stats && player.stats[0];
 						const pointsOverview = playerStats;
-						const displayWeekMatches = matches.filter((match: any) => match.weekId === pointsWeekId && ([match.homeId, match.awayId].includes(player.clubId)));
+						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.homeId, match.awayId].includes(player.clubId)));
 						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
 					}).sort((first: any, second: any) => {
 						return (first.positionId === 1) ? -1 : 0;
@@ -144,7 +141,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 				props.loadAllMatches();
 
-				props.initTeamState(starting, bench, teamName, captainId, budget, undefined, pointsWeekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
+				props.initTeamState(starting, bench, teamName, captainId, budget, undefined, weekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
 			})
 			.catch(err => {
 				console.log(err);
@@ -153,7 +150,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	};
 
 	useEffect(() => {
-		console.log("EFFECT, visibleweekid", visibleWeekId);
 		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
 			getTeamInfo(visibleWeekId);
 		}
@@ -185,7 +181,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const isPublicRoute = location.pathname.includes("public");
 
 	return (
-		// clubsSuccess && playersSuccess && matchesSuccess && teamSuccess && deadlineInfoSuccess &&
 		<Spin spinning={clubsLoading || playersLoading || teamLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{
 				(initializedExternally && visibleWeekId &&
