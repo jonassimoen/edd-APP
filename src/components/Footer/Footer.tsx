@@ -2,17 +2,19 @@
 import { MessageOutlined } from "@ant-design/icons";
 import { FooterStyle } from "./FooterStyle";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "@/reducers";
+import { Crisp } from "crisp-sdk-web";
 
-type FooterProps = {
-    user?: User
-}
-
-export const Footer = (props: FooterProps) => {
+export const Footer = () => {
 	return (
 		<FooterStyle>
-			<ul>
-				<li><Link to="home"><MessageOutlined /></Link></li>
-			</ul>
+			<a onClick={() => {
+				if(!Crisp.chat.isChatOpened()) {
+					Crisp.chat.open();
+				}
+			}}>
+				<MessageOutlined/> Hulp nodig?
+			</a>
 		</FooterStyle>
 	);
 };

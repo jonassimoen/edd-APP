@@ -12,6 +12,7 @@ import { useAppSelector } from "@/reducers";
 import { logout } from "@/features/userSlice";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { theme } from "@/styles/theme";
+import { Crisp } from "crisp-sdk-web";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -69,6 +70,9 @@ export const Header = () => {
 		if (user.role === 7) {
 			allMenuItems.push("admin");
 		}
+		
+		Crisp.user.setEmail(user.email);
+		Crisp.user.setNickname(user.firstName);
 	}
 
 	if (user && showPoints) {

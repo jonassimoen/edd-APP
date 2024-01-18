@@ -58,6 +58,11 @@
   "pageError": {
     "title": "Something went wrong!",
     "subtitle": "If you are a user, please report this error to the administrator.",
-    "view": "View error"
+    "view": "View error",
+    "message": "Automatic message about error",
+    "contactAdmin": "Send error to administrator"
+  },
+  "errorPage": {
+    "processing": "Thank you for the report. We will start investigating the error as soon as possible!"
   }
 }

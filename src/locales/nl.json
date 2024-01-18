@@ -266,6 +266,11 @@
   "pageError": {
     "title": "Er ging iets mis!",
     "subtitle": "Indien u een gebruiker bent, gelieve de foutmelding aan een administrator te melden.",
-    "view": "Bekijk foutmelding"
+    "view": "Bekijk foutmelding",
+    "message": "Automatisch bericht over foutmelding ",
+    "contactAdmin": "Stuur foutmelding door"
+  },
+  "errorPage": {
+    "processing": "Bedankt voor het melden! Wij onderzoeken de oorzaak van deze foutmelding zo snel mogelijk."
   }
 }

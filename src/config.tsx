@@ -1,6 +1,7 @@
 export default {
 	API_URL: import.meta.env.VITE_API_URL,
 	GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+	CHAT_API: import.meta.env.VITE_CHAT_API,
 	COMPETITION_CONFIG: import.meta.env.VITE_COMPETITION_CONFIG && import.meta.env.VITE_COMPETITION_CONFIG.length
 		? JSON.parse(import.meta.env.VITE_COMPETITION_CONFIG) : {},
 	STATISTICS: [

@@ -86,3 +86,13 @@ p {
 .is-hidden {
 		display: none !important;
 }
+
+#crisp-chatbox a[rel="noopener noreferrer nofollow"] {
+	display: none !important;
+	opacity: 0;
+	visibility: hidden;
+}
+
+#crisp-chatbox a[role="button"][data-visible="false"] {
+	display: none !important;
+}

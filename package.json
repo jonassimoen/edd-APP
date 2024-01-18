@@ -19,6 +19,7 @@
 		"antd": "^5.11.5",
 		"async-mutex": "^0.4.0",
 		"axios": "^1.4.0",
+		"crisp-sdk-web": "^1.0.21",
 		"dayjs": "^1.11.7",
 		"decimal.js": "^10.4.3",
 		"html-react-parser": "^5.0.0",
