@@ -93,6 +93,6 @@ p {
 	visibility: hidden;
 }
 
-#crisp-chatbox a[role="button"][data-visible="false"] {
+#crisp-chatbox a[role="button"][data-visible="false"], a[role="button"][data-maximized="false"] {
 	display: none !important;
 }
