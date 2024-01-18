@@ -151,6 +151,10 @@
     "welcome": "Welkom, fantasy magiër {{name}}!",
     "importing": {
       "loading": "Bezig met importeren..."
+    },
+    "gamestatistic": {
+      "import": "Importeer statistieken",
+      "editGoalMinutes": "Wijzig minuten goals"
     }
   },
   "management": {

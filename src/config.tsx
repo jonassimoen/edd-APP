@@ -12,9 +12,15 @@ export default {
 			type: "boolean"
 		},
 		{
-			full: "MINUTES PLAYED",
-			slug: "minutesPlayed",
-			short: "P",
+			full: "MINUTE IN",
+			slug: "in",
+			short: "I",
+			type: "number",
+		},
+		{
+			full: "MINUTE OUT",
+			slug: "out",
+			short: "O",
 			type: "number",
 		}],
 		[{

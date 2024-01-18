@@ -11,7 +11,12 @@ type PlayerStatsModalProps = {
   playerStats: any;
   onConfirm: (playerStat: any) => void;
   onCancel: () => void;
-};
+}
+;
+const playerStateNil = config.STATISTICS.flat().reduce((obj: any, item: any) => {
+	obj[item.slug] = 0;
+	return obj;
+}, {});
 
 export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 	const { t } = useTranslation();
@@ -19,7 +24,7 @@ export const PlayerStatsModal = (props: PlayerStatsModalProps) => {
 
 	useEffect(() => {
 		if (props.open && form) {
-			form.setFieldsValue(props.playerStats);
+			form.setFieldsValue({...playerStateNil, ...props.playerStats});
 		}
 	}, [props.open, props.playerStats, form]);
 

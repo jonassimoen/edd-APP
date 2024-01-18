@@ -14,7 +14,8 @@
   "admin": {
     "welcome": "Welcome, fantasy magician {{name}}!",
     "gamestatistic": {
-      "import": "Import statistics"
+      "import": "Import statistics",
+      "editGoalMinutes": "Edit minutes goals"
     }
   },
   "players": {

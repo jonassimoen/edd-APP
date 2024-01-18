@@ -20,10 +20,12 @@ import {
 	CheckOutlined,
 	CloseOutlined,
 	DownloadOutlined,
+	HistoryOutlined,
 } from "@ant-design/icons";
 import {
 	Alert,
 	Button,
+	Flex,
 	Skeleton,
 	Tag,
 	Tooltip,
@@ -37,6 +39,7 @@ import { theme } from "@/styles/theme";
 import { useSelector } from "react-redux";
 import { PlayerStatsModal } from "./PlayerStatsModal";
 import styled from "@/styles/styled-components";
+import { ScoreStatsModal } from "./ScoreStatsModal";
 
 const GameStatsManagementStyle = styled.div`
 	.ant-table-tbody > tr > td{
@@ -52,12 +55,16 @@ type GameStatsManagementState = {
   playerStats: any[];
   homeScore: number;
   awayScore: number;
+  goalMinutes: {
+	home: number[];
+	away: number[];
+  }
   validStats: boolean;
   isProcessing: boolean;
 };
 type PlayerStatsModalState = {
   open: boolean;
-  index: number;
+  index?: number;
 };
 
 export const GameStatsManagement = (props: GameStatsMangementProps) => {
@@ -81,12 +88,19 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		playerStats: [],
 		homeScore: 0,
 		awayScore: 0,
+		goalMinutes: {
+			home: [],
+			away: [],
+		},
 		validStats: true,
 		isProcessing: false,
 	});
 	const [playerState, setPlayerState] = useState<PlayerStatsModalState>({
 		open: false,
-		index: 0,
+		index: -1,
+	});
+	const [scoreState, setScoreState] = useState<PlayerStatsModalState>({
+		open: false,
 	});
 	const [spinning, setSpinning] = useState<boolean>(true);
 
@@ -149,8 +163,8 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		});
 		setState((state: GameStatsManagementState) => ({
 			...state,
-			homeScore: playersWithStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
-			awayScore: playersWithStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
+			homeScore: playersWithStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0),
+			awayScore: playersWithStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0),	
 			playerStats: playersWithStats,
 		}));
 	}, [playersReduced, stats]);
@@ -165,8 +179,8 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			});
 			setState((state: GameStatsManagementState) => ({
 				...state,
-				homeScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
-				awayScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0),
+				homeScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0),
+				awayScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0),
 				playerStats: playersWithImportedStats,
 			}));
 		}
@@ -189,6 +203,11 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const openEditModal = (index: number) => {
 		setPlayerState({ open: true, index });
 	};
+
+	const goalMinutesEntered = useMemo(() => 
+		state.homeScore === state.goalMinutes.home.length
+		&& state.awayScore === state.goalMinutes.away.length, 
+	[state]);
 
 	const columns = [
 		{
@@ -228,10 +247,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			),
 		},
 	].concat(
-		config.STATISTICS.reduce(
-			(acc: any, value: any) => acc.concat(value),
-			[]
-		).map((stat: any) => ({
+		config.STATISTICS.flat().map((stat: any) => ({
 			title: () => (
 				<Tooltip
 					placement="top"
@@ -261,11 +277,9 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	const onFormSubmit = () => {
 		updateMatchStats({
 			matchId: +(id || 0),
-			stats: state.playerStats.map((p: any) => ({
-				...p,
-				goalsAgainst: (p?.clubId === match?.home?.id ? match.awayScore : match.homeScore) || 0,
-			})),
+			stats: state.playerStats,
 			score: { home: state.homeScore, away: state.awayScore },
+			goalMinutes: state.goalMinutes,
 		});
 		navigate("/admin/games");
 	};
@@ -279,21 +293,34 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 					awayScore={state.awayScore}
 					assetsCdn={assetsCdn}
 				/>
-				{matchStatisticsImportSuccess ? (
-					<Alert
-						message="Data controleren"
-						description="Check de data met gerespecteerde databronnen (bv. Opta). Duid ook de MOTM aan volgens de officiële kanalen van FIFA/UEFA."
-						type="warning"
-						showIcon
-					/>
-				) : (
-					<Button
-						icon={<DownloadOutlined />}
-						onClick={() => importMatchStatistics(+(id || 0))}
-					>
-						{t("admin.gamestatistic.import")}
-					</Button>
-				)}
+				<Flex style={{width: "100%", padding: "1rem 2rem"}} content={"center"}>
+					{matchStatisticsImportSuccess ? (
+						<Alert
+							message="Data controleren"
+							description="Check de data met gerespecteerde databronnen (bv. Opta). Duid ook de MOTM aan volgens de officiële kanalen van FIFA/UEFA."
+							type="warning"
+							showIcon
+						/>
+					) : (
+						<Button
+							style={{width: "50%"}}
+							icon={<DownloadOutlined />}
+							onClick={() => importMatchStatistics(+(id || 0))}
+						>
+							{t("admin.gamestatistic.import")}
+						</Button>
+					)}
+					{
+						<Button
+							style={{width: "50%"}}
+							icon={<HistoryOutlined />}
+							type={goalMinutesEntered?"default":"primary"}
+							onClick={() => setScoreState({open: true})}
+						>
+							{t("admin.gamestatistic.editGoalMinutes")}
+						</Button>
+					}
+				</Flex>
 				{!state.validStats && (
 					<Alert
 						message="Ongeldige statistieken"
@@ -311,7 +338,12 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 				/>
 				<Row justify="center" align="middle">
 					<Col span={24}>
-						<Button onClick={() => onFormSubmit()}>Opslaan</Button>
+						<Button 
+							onClick={() => onFormSubmit()}
+							disabled={!goalMinutesEntered}
+						>
+							Opslaan
+						</Button>
 					</Col>
 				</Row>
 				<PlayerStatsModal
@@ -323,15 +355,25 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 							playerStats[playerState.index] = {
 								...playerStats[playerState.index],
 								...ps,
-								goalsAgainst: (ps.clubId === match.home?.id) ? state.awayScore : state.homeScore
 							};
 						}
-						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
-						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + val.goals, 0);
+						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0);
+						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0);
 						setState((state: GameStatsManagementState) => ({ ...state, playerStats, awayScore, homeScore }));
 						setPlayerState({ index: 0, open: false });
 					}}
 					onCancel={() => setPlayerState({ ...playerState, open: false })}
+				/>
+				<ScoreStatsModal
+					open={scoreState.open}
+					goalMinutes={state.goalMinutes}
+					numberGoalsHome={state.homeScore}
+					numberGoalsAway={state.awayScore}
+					onConfirm={(goalMinutes: any) => {
+						setState({...state, goalMinutes});
+						setScoreState({open:false});
+					}}
+					onCancel={() => setScoreState({open:false})}
 				/>
 			</Skeleton>
 		</GameStatsManagementStyle>

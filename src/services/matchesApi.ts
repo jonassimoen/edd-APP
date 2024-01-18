@@ -93,11 +93,11 @@ export const matchesApi = createApi({
 					: ["MatchStatistics"],
 		}),
 
-		updateMatchStatistics: builder.mutation<Statistic[], { stats: Partial<Statistic>[], matchId: number, score: { home: number, away: number} }>({
-			query: ({ matchId, stats, score }) => ({
+		updateMatchStatistics: builder.mutation<Statistic[], { stats: Partial<Statistic>[], matchId: number, score: { home: number, away: number}, goalMinutes: { home: number[], away: number[]} }>({
+			query: ({ matchId, stats, score, goalMinutes }) => ({
 				url: `${matchId}/stats`,
 				method: "PUT",
-				body: {stats, score},
+				body: {stats, score, goalMinutes},
 			}),
 			invalidatesTags: (res, err, arg) => [{ type: "MatchStatistics", id: arg.matchId }, { type: "Match", id: arg.matchId }, "PlayerStats"],
 		}),
