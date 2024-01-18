@@ -295,7 +295,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				break;
 			}
 			case "moreDuelsWon": {
-				const duelsDiff = player.pointsOverview && player.pointsOverview.duelsTotal - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
+				const duelsDiff = player.pointsOverview && player.pointsOverview.duelsWon - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
 				if(duelsDiff && duelsDiff > 0) {
 					pointsOverview.push({action: t("player.duelsWonMoreThanLostLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
 				}
