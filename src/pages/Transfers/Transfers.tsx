@@ -299,8 +299,10 @@ const _Transfers = (props: AbstractTeamType) => {
 																captainId={captainId}
 																selection={startingByPositions}
 																playerType={PlayerType.SoccerPortrait}
-																playerBadgeColor="#000"
-																playerBadgeBgColor={theme.primaryColor}
+																playerBadgeColor={"#fff"}
+																playerBadgeBgColor={theme.primaryContrast}
+																playerPointsColor={"#000"}
+																playerPointsBgColor={theme.primaryColor}
 																modalEnabled={true}
 																showCaptainBadge={true}
 																showPlayerValue={true}
@@ -309,8 +311,6 @@ const _Transfers = (props: AbstractTeamType) => {
 																onRemove={canTransferOut && ((player: Player) => props.onTransferPlayerOut(player))}
 																onPlaceholderClick={null}
 																actionLessPlayerIds={null}
-																playerPointsColor={"#000"}
-																playerPointsBgColor="#84FF00"
 																assetsCdn={application.competition.assetsCdn}
 															/>
 														</Block>

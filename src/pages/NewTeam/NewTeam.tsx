@@ -138,19 +138,19 @@ const _NewTeam = (props: AbstractTeamType) => {
 								showCaptainBadge={true}
 								showPlayerValue={true}
 								// playerType={}
-								playerBadgeColor="#fff"
 								playerType={PlayerType.SoccerPortrait}
 								captainId={captainId}
 								viceCaptainId={viceCaptainId}
-								playerBadgeBgColor={theme.primaryContrast}
 								onPlaceholderClick={onPlaceHolderClick}
 								showPlayerValueInsteadOfPoints={true}
 								onCaptainSelect={props.onCaptainSelect}
 								onViceCaptainSelect={props.onViceCaptainSelect}
 								onRemove={(player: Player) => props.removePlayer(player)}
 								modalEnabled={true}
+								playerBadgeColor={"#fff"}
+								playerBadgeBgColor={theme.primaryContrast}
 								playerPointsColor={"#000"}
-								playerPointsBgColor="#84FF00" />
+								playerPointsBgColor={theme.primaryColor} />
 
 							<Row>
 								{(team && !hasPlayers &&

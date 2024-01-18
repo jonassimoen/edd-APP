@@ -48,6 +48,7 @@ export const PlayerBg = styled.img`
 
 export const Badge = styled.div`
     background-color: ${(props: any) => props.bgColor};
+	color: ${(props: any) => props.color};
     position: absolute;
     top: 75%;
     bottom: 0;
@@ -87,7 +88,7 @@ export const OpponentBadge = styled.div`
 	height: 15px;
 	
 	background: ${(props: any) => props.bgColor};
-	color: white;
+	color:  ${(props: any) => props.color};
 	padding: 3px;
 	overflow: hidden;
 	white-space: nowrap;

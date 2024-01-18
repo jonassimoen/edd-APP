@@ -203,8 +203,8 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				showPlayerName &&   // badgeBgColor of playerPositionColor // span: color: pointsColor
-				<Badge color={badgeColor} bgColor={motm ? "#c4a747" : badgeBgColor}>
-					<span style={{ color: "white" }}>{playerName}</span>
+				<Badge bgColor={motm ? "#c4a747" : badgeBgColor}>
+					<span style={{ color: badgeColor }}>{playerName}</span>
 				</Badge>
 			}
 
@@ -224,7 +224,7 @@ export const Player = (props: PlayerProps) => {
 			{
 				(
 					player && showPlayerValue &&
-					<Value benchPlayer={benchPlayer} color={badgeColor}>
+					<Value benchPlayer={benchPlayer} color={pointsColor} bgColor={pointsBgColor}>
 						<span>{(player.value) ? `€${player.value}M` : null}</span>
 					</Value>
 				) || null

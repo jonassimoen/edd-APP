@@ -85,11 +85,11 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									selection={homeStartingPlayersByPositions}
 									centerAligned={true}
 									playerType={PlayerType.SoccerPortrait}
-									playerBadgeColor={"#fff"}
 									modalEnabled={true}
 									captainId={undefined}
-									playerBadgeBgColor={theme.primaryColor}
-									playerPointsColor={"#fff"}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
+									playerPointsColor={"#000"}
 									playerPointsBgColor={theme.primaryColor}
 									motmId={motmId}
 								/>
@@ -101,8 +101,8 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									playerType={PlayerType.SoccerPortrait}
 									modalEnabled={true}
 									assetsCdn={application.competition.assetsCdn}
-									playerBadgeColor={"#000"}
-									playerBadgeBgColor={theme.primaryColor}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
 									playerPointsColor={"#000"}
 									playerPointsBgColor={theme.primaryColor}
 									motmId={motmId}
@@ -125,11 +125,11 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									selection={awayStartingPlayersByPositions}
 									centerAligned={true}
 									playerType={PlayerType.SoccerPortrait}
-									playerBadgeColor={"#fff"}
 									modalEnabled={true}
 									captainId={undefined}
-									playerBadgeBgColor={theme.primaryColor}
-									playerPointsColor={"#fff"}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
+									playerPointsColor={"#000"}
 									playerPointsBgColor={theme.primaryColor}
 								/>
 								<Substitutes
@@ -140,8 +140,8 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									playerType={PlayerType.SoccerPortrait}
 									modalEnabled={true}
 									assetsCdn={application.competition.assetsCdn}
-									playerBadgeColor={"#000"}
-									playerBadgeBgColor={theme.primaryColor}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
 									playerPointsColor={"#000"}
 									playerPointsBgColor={theme.primaryColor}
 								/>
