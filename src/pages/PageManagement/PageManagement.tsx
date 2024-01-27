@@ -189,7 +189,7 @@ export const PageManagement = () => {
 			<CreateModal
 				open={state.openCreateModal}
 				object={{} as Page}
-				onCreate={(page: Page) => { console.log(page); createPage(page); setState({ ...state, openCreateModal: false }); }}
+				onCreate={(page: Page) => { createPage(page); setState({ ...state, openCreateModal: false }); }}
 				onCancel={() => setState({ ...state, openCreateModal: false })}
 				title={t("pageTitle")}
 			>

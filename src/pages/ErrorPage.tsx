@@ -28,7 +28,6 @@ export const ErrorPage = () => {
 					type="primary"
 					key="message"
 					onClick={() => {
-						console.log("chat opened:",Crisp.chat.isChatOpened());
 						if(!Crisp.chat.isChatOpened()) {
 							Crisp.chat.open();
 						}

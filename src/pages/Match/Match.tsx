@@ -63,7 +63,6 @@ const _MatchContainer = (props: AbstractTeamType) => {
 	const awayTotalPoints = useMemo(() => awayStartingPlayers && awayBenchPlayers && calculatePointsByPlayerStats(awayStartingPlayers) + calculatePointsByPlayerStats(awayBenchPlayers), [awayStartingPlayers, awayBenchPlayers]);
 
 	const motmId = useMemo(() => [].concat(homeStartingPlayers, homeBenchPlayers, awayStartingPlayers, awayBenchPlayers).find((p: Player) => p?.stats[0].motm)?.id, [homeStartingPlayers, homeBenchPlayers, awayStartingPlayers, awayBenchPlayers]);
-	console.log("homeBenchPlayers",homeBenchPlayers);
 	return (
 		<Spin spinning={matchLoading || clubsLoading} delay={0} style={{ padding: "2rem 0" }}>
 			{match && clubs &&

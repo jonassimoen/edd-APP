@@ -89,7 +89,6 @@ export const Team = (props: TeamProps) => {
 					<div className={"position"} key={`posIdx-${positionIdx}`}>
 						{
 							position.map((player: any, playerIdx: number) => {
-								console.log("playerInTeamComp",player.id);
 								const club = clubs.find((item: Club, index: number) => player && item.id === player.clubId);
 								
 								if(PlayerType.SoccerPortrait === playerType) {
@@ -111,6 +110,7 @@ export const Team = (props: TeamProps) => {
 										modalEnabled={modalEnabled}
 										captainId={captainId}
 										viceCaptainId={viceCaptainId}
+										captainHasPlayed={captainHasPlayed}
 										player={player}
 										replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
 										showPlayerValue={showPlayerValue}

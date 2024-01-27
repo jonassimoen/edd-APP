@@ -67,7 +67,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		const selectionProps: any[] = ["points"];
 		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId })])
 			.then(([result]: any[]) => {
-				console.log("fetching data from week",weekId);
 				result = result.data;
 				const pointsConfirmation: any[] = [];
 				const weekStat = result.weekStat.find((stat: any) => stat.weekId === weekId);
@@ -174,8 +173,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);
 	const captainBench = useMemo(() => bench.find(player => player && player.id === captainId), [bench, captainId]);
 	// todo: check variable
-	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.time) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
-
+	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.minutesPlayed > 0) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
 	const startingByPositions = startingListToPositionsList(starting, application.competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");

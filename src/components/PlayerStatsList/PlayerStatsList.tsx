@@ -299,7 +299,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					keyProperty="value"
 					textProperty="name"
 					values={budgetsList}
-					onSelect={(value: any) => { onFilterChange("playerValue", value); console.log("player value changed to", value); }}
+					onSelect={(value: any) => onFilterChange("playerValue", value)}
 					placeholder={budgetsList[0].name}
 					style={{ marginRight: 0 }}
 				/>

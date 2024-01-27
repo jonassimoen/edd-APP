@@ -159,8 +159,7 @@ export const Player = (props: PlayerProps) => {
 	useEffect(() => {
 		if (player && replacePlayerPointsWithStatsPoints && hasStats) {
 			const statsPointsCurrentWeek = player.stats.reduce((acc: number, stat: any) => acc + stat.points, 0);
-			const captainOrViceCaptainPoints = isCaptain || (!captainHasPlayed && isViceCaptain);
-
+			const captainOrViceCaptainPoints = (isCaptain && captainHasPlayed) || (!captainHasPlayed && isViceCaptain);
 			const statsPointsCurrentWeekFactor = captainOrViceCaptainPoints ? 1.5 : 1;
 			player.points = statsPointsCurrentWeek * statsPointsCurrentWeekFactor;
 		}
@@ -188,7 +187,6 @@ export const Player = (props: PlayerProps) => {
 	};
 
 	const onBgLoadError = (event: any) => {
-		console.log("FAILED FETCHING", player.id);
 		if (state.faceFallback) {
 			setState({ ...state, face: state.faceFallback, });
 		}
@@ -210,7 +208,7 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				showPoints && hasStats && player.points !== null && player.points !== undefined &&
-				<Points color={"#000"} bgColor={isCaptain || isViceCaptain ? "#ffc422" : props.pointsBgColor}>{player.points}</Points>
+				<Points color={"#000"} bgColor={(isCaptain && captainHasPlayed) || (!captainHasPlayed && isViceCaptain) ? "#ffc422" : props.pointsBgColor}>{player.points}</Points>
 			}
 
 			{
