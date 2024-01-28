@@ -161,7 +161,7 @@ export const Player = (props: PlayerProps) => {
 			const statsPointsCurrentWeek = player.stats.reduce((acc: number, stat: any) => acc + stat.points, 0);
 			const captainOrViceCaptainPoints = (isCaptain && captainHasPlayed) || (!captainHasPlayed && isViceCaptain);
 			const statsPointsCurrentWeekFactor = captainOrViceCaptainPoints ? 1.5 : 1;
-			player.points = statsPointsCurrentWeek ? statsPointsCurrentWeek * statsPointsCurrentWeekFactor : null;
+			player.points = player.stats ? statsPointsCurrentWeek * statsPointsCurrentWeekFactor : null;
 		}
 	}, [player, isCaptain, captainHasPlayed, isViceCaptain]);
 
