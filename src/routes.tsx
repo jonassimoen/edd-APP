@@ -1,5 +1,5 @@
 
-import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter, useLocation } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Header } from "@/components/Header/Header";
 import { LoginCallback } from "./pages/LoginCallback";
@@ -26,8 +26,14 @@ import { Rankings } from "./pages/Rankings/Rankings";
 import { EditTeam } from "./pages/EditTeam/EditTeam";
 import { PageNotFound } from "./pages/PageNotFound";
 import { ErrorPage } from "./pages/ErrorPage";
+import { useEffect } from "react";
+import * as Cronitor from "@cronitorio/cronitor-rum";
 
 const Layout = ({ children }: any) => {
+	const location = useLocation();
+	useEffect(() => {
+		Cronitor.track("Pageview");
+	}, [location.pathname]);
 	return (
 		<>
 			<Header />

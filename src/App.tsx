@@ -14,6 +14,7 @@ import localeData from "dayjs/plugin/localeData";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import config from "./config";
 import { Crisp } from "crisp-sdk-web";
+import * as Cronitor from "@cronitorio/cronitor-rum";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -22,7 +23,15 @@ dayjs.locale("nl-BE");
 
 
 const App = () => {
-	useEffect(() => Crisp.configure(config.CHAT_API), []);
+	useEffect(() => {
+		Crisp.configure(config.CHAT_API);
+
+		Cronitor.load(config.CRONITOR_KEY, {
+			debug: false, 
+		});
+
+	}, []);
+	
 
 	return (
 		<ConfigProvider theme={{
