@@ -310,7 +310,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				break;
 			}
 			case "commitedFoulsPerThree": {
-				const commitedFouls = player.pointsOverview && player.pointsOverview.commitedFouls || 0;
+				const commitedFouls = player.pointsOverview && player.pointsOverview.foulsCommited || 0;
 				const commitedFoulsPerThree = Math.floor(commitedFouls / 3);
 				if(commitedFoulsPerThree) {
 					pointsOverview.push({action: t("player.commitedFoulsPerThreeLabel"), quantity: commitedFouls, points: commitedFoulsPerThree * actionPoints});
