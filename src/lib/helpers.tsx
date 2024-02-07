@@ -169,7 +169,7 @@ const PlayerActionsPoints: any = {
 	concededTwo: {1: -2, 2: -1, 3: 0, 4: 0},
 	passAccMore85: {1: 2, 2: 3, 3: 4, 4: 3},
 	keyPassPerTwo: {1: 5, 2: 3, 3: 3, 4: 3},
-	successDribblesPerTwo: {1: 5, 2: 3, 3: 3, 4: 3},
+	successDribblesPerFive: {1: 5, 2: 3, 3: 3, 4: 3},
 	moreDuelsWon: {1: 1, 2: 1, 3: 1, 4: 1},
 	interceptionsPerSeven: {1: 2, 2: 2, 3: 2, 4: 2},
 	commitedFoulsPerThree: {1:-2, 2:-2, 3: -2, 4: -2},
@@ -286,9 +286,9 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "successDribblesPerTwo": {
+			case "successDribblesPerFive": {
 				const dribblesSuccess = player.pointsOverview && player.pointsOverview.dribblesSuccess || 0;
-				const dribblesSuccessPerTwo = Math.floor(dribblesSuccess / 2);
+				const dribblesSuccessPerTwo = Math.floor(dribblesSuccess / 5);
 				if(dribblesSuccessPerTwo) {
 					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: dribblesSuccess, points: dribblesSuccessPerTwo * actionPoints});
 				}
