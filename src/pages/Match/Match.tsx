@@ -130,6 +130,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									playerBadgeBgColor={theme.primaryContrast}
 									playerPointsColor={"#000"}
 									playerPointsBgColor={theme.primaryColor}
+									motmId={motmId}
 								/>
 								<Substitutes
 									selection={awayBenchPlayers?.sort((a: any, b: any) => a.positionId - b.positionId)}
@@ -143,6 +144,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 									playerBadgeBgColor={theme.primaryContrast}
 									playerPointsColor={"#000"}
 									playerPointsBgColor={theme.primaryColor}
+									motmId={motmId}
 								/>
 							</Block>
 						</Col>
