@@ -45,6 +45,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	} = props;
 
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const displayWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.displayWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
 	const currentWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.weeks.find((week: Week) => week.id === visibleWeekId), [visibleWeekId, deadlineInfo]);
 
@@ -187,7 +188,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 							<Block>
 								<MatchdaySelector
 									day={visibleWeekId}
-									max={deadlineWeek == 1 ? deadlineWeek : visibleWeekId}
+									max={displayWeek ? displayWeek : visibleWeekId}
 									min={1}
 									name={t(`general.weeks.${weeks.find((week: Week) => week.id === visibleWeekId)?.name}`)}
 									onPrev={(e: any) => props.onDayChange(false)}
