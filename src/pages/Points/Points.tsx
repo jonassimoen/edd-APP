@@ -6,7 +6,7 @@ import { startingListToPositionsList } from "@/lib/helpers";
 import { useAppSelector } from "@/reducers";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { useGetMatchesQuery } from "@/services/matchesApi";
-import { useGetTeamQuery, useLazyGetPointsQuery } from "@/services/teamsApi";
+import { useLazyGetPointsQuery } from "@/services/teamsApi";
 import { useGetDeadlineInfoQuery, useGetWeeksQuery } from "@/services/weeksApi";
 import { theme } from "@/styles/theme";
 import Title from "antd/es/typography/Title";
@@ -32,7 +32,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const [state, setState] = useState({});
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
 	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
-	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
@@ -59,9 +58,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	};
 
 	const getTeamInfo = (weekId: number) => {
-		if (!teamResult) {
-			return;
-		}
 		// const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "stats"];
 		const selectionProps: any[] = ["points"];
@@ -149,10 +145,10 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	};
 
 	useEffect(() => {
-		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
+		if (deadlineInfoSuccess && clubsSuccess && matchesSuccess) {
 			getTeamInfo(visibleWeekId);
 		}
-	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess, visibleWeekId]);
+	}, [clubsSuccess, matchesSuccess, deadlineInfoSuccess, visibleWeekId]);
 
 	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo } = props;
 
@@ -183,7 +179,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		throw error;
 	}
 	return (
-		<Spin spinning={clubsLoading || playersLoading || teamLoading || matchesLoading || deadlineInfoLoading} delay={0}>
+		<Spin spinning={clubsLoading || playersLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{
 				(initializedExternally && visibleWeekId &&
 					<Row style={{ margin: 0 }}>

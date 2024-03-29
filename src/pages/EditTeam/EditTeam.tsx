@@ -32,7 +32,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 	const application = useSelector((state: StoreState) => state.application);
 	const [t] = useTranslation();
 	const { id } = useParams();
-	const { data: teamResult, isSuccess: teamSucces } = useGetTeamQuery(+id || 0);
+	const { data: teamResult, isSuccess: teamSucces, isError: teamError, error: teamErrorData } = useGetTeamQuery(+id || 0);
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const { data: matches, isSuccess: matchesSuccess, isLoading: matchesLoading } = useGetMatchesQuery();
 	const { data: clubs, isSuccess: clubsSuccess, isLoading: clubsLoading } = useGetClubsQuery();
@@ -130,6 +130,16 @@ const _EditTeam = (props: AbstractTeamType) => {
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const wildCardOrFreeHitEnabled = useMemo(() => boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek, [deadlineInfo]);
 	const startingByPositions = startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]);
+
+	if(teamError) {
+		return (
+			<Alert
+				description={(teamErrorData as any).data.message}
+				type="error"
+				showIcon
+			/>
+		);
+	}
 
 	return (
 		<NewTeamStyle>

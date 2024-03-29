@@ -29,6 +29,7 @@ import { useGetPlayersQuery } from "@/services/playersApi";
 import { notification } from "antd";
 import { TransfersOverview } from "@/components/Stats/TransfersOverview";
 import { ConfirmModal } from "@/components/ConfirmModal/ConfirmModal";
+import { Alert } from "@/components/UI/Alert/Alert";
 
 type TransfersState = {
 		notFound: boolean
@@ -50,7 +51,7 @@ const _Transfers = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const { t } = useTranslation();
 
-	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
+	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess, error: teamErrorData } = useGetTeamQuery(+(id || 0));
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
@@ -220,6 +221,16 @@ const _Transfers = (props: AbstractTeamType) => {
 	const startingPicked = useMemo(() => starting.filter(player => player && player.id), [starting]);
 	const benchPicked = useMemo(() => bench.filter(player => player && player.id), [bench]);
 
+	if(teamError) {
+		return (
+			<Alert
+				description={(teamErrorData as any).data.message}
+				type="error"
+				showIcon
+			/>
+		);
+	}
+	
 	return (
 		(clubs && teamResult && matches && players && deadlineInfo) && (
 			<React.Fragment>

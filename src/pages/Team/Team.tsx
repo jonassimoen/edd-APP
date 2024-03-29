@@ -28,12 +28,13 @@ import { DeadlineBar } from "./TeamStyle";
 import dayjs from "dayjs";
 import { Card } from "antd";
 import Meta from "antd/es/card/Meta";
+import { Alert } from "@/components/UI/Alert/Alert";
 
 export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const user = useAppSelector((state) => state.userState.user);
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
-	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess } = useGetTeamQuery(+(id || 0));
+	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess, error: teamErrorData } = useGetTeamQuery(+(id || 0));
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
 	const { t } = useTranslation();
@@ -92,14 +93,31 @@ export const _Team = (props: AbstractTeamType) => {
 	const startingByPositions = useMemo(() => startingListToPositionsList(props.starting, application.competition.lineupPositionRows), [props.starting]);
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
-
+	const notTeamOwner = useMemo(() => teamResult && teamResult.team && teamResult.team.userId && user && user.id &&( user.id != teamResult.team.userId), [teamResult, user]);
+	
+	if(teamError) {
+		return (
+			<Alert
+				description={(teamErrorData as any).data.message}
+				type="error"
+				showIcon
+			/>
+		);
+	}
 	return (
 		(clubs && teamResult && matches && deadlineInfo) && (
 			<React.Fragment>
 				{
-					(!teamResult.team &&
+					!teamResult.team &&
 						<Navigate to="/home" />
-					)
+				}
+				{
+					teamResult.team && notTeamOwner &&
+						<Navigate to={`/public/${id}`} />
+				}
+				{
+					teamResult.team && teamResult.team.players && teamResult.team.players.length === 0 && 
+						<Navigate to="/new" />
 				}
 				<Row>
 					{
