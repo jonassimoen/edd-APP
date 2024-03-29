@@ -9,6 +9,19 @@
   <body>
     <div id="root"></div>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7958405779987150" crossorigin="anonymous"></script>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(function(OneSignal) {
+        OneSignal.init({
+          appId: "4f46b2ed-4005-4605-b9e2-a2310ebe983f",
+          safari_web_id: "web.onesignal.auto.165f55d2-2c2b-457d-b7b8-8b89270f4464",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
