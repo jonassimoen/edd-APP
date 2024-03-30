@@ -14,7 +14,9 @@
 	"dependencies": {
 		"@ant-design/icons": "^5.1.3",
 		"@cronitorio/cronitor-rum": "^0.4.1",
+		"@cronitorio/cronitor-rum-nextjs": "^0.4.0",
 		"@mantine/hooks": "^6.0.11",
+		"@react-native-community/push-notification-ios": "^1.11.0",
 		"@reduxjs/toolkit": "^1.9.5",
 		"@tabler/icons-react": "^2.20.0",
 		"antd": "^5.11.5",
@@ -23,6 +25,7 @@
 		"crisp-sdk-web": "^1.0.21",
 		"dayjs": "^1.11.7",
 		"decimal.js": "^10.4.3",
+		"firebase": "^10.10.0",
 		"html-react-parser": "^5.0.0",
 		"i18next-browser-languagedetector": "^7.0.1",
 		"lodash": "^4.17.21",
