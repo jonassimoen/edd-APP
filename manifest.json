@@ -1,0 +1,16 @@
+{
+    "name": "European Dream Draft",
+    "short_name": "EDD",
+    "theme_color": "#A1B2F8",
+    "background_color": "#000d40",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "https://www.dreamdraft.be/",
+    "icons": [
+        {
+            "src": "https://www.dreamdraft.be/favicon.ico",
+            "sizes": "128x128",
+            "type": "image/x-icon"
+        }
+    ]
+}

@@ -15,14 +15,12 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import config from "./config";
 import { Crisp } from "crisp-sdk-web";
 import * as Cronitor from "@cronitorio/cronitor-rum";
-import { messaging } from "./firebase";
-import { getMessaging, getToken, onMessage } from "@firebase/messaging";
+import Pushy from "pushy-sdk-web";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
 dayjs.extend(customParseFormat);
 dayjs.locale("nl-BE");
-
 
 const App = () => {
 	useEffect(() => {
@@ -34,42 +32,18 @@ const App = () => {
 
 	}, []);
 	useEffect(() => {
-		if (navigator.serviceWorker) {
-			// Register the SW
-			navigator.serviceWorker.register("/firebase-messaging-sw.js").then(function(registration){console.log("ok");}).catch(console.log);
-		}
-		if(window.Notification) {
-			if(Notification.permission === "granted") {
-				console.log("granted");
-			} else if(Notification.permission !== "denied") {
-				Notification.requestPermission(permission => {
-					if(permission === "granted") {
-						console.log("granted");
-					}
-				});
-			}
-		}
-		// eslint-disable-next-line @typescript-eslint/no-use-before-define
-		getToken(messaging, { vapidKey: "BKTXfGcEVAbAVyPPdP2zb0APYHrcYJXgtq5qr6ivL5r2E2FKlRvbEkSBTms0V4VS432fVKRLZgs8dC3BtFCmri0" }).then((currentToken) => {
-			if (currentToken) {
-			// Send the token to your server and update the UI if necessary
-			// ...
-				console.log(currentToken);
-			} else {
-			// Show permission request UI
-				console.log("No registration token available. Request permission to generate one.");
-			// ...
-			}
-		}).catch((err) => {
-			console.log("An error occurred while retrieving token. ", err);
-			// ...
+		Pushy.register({ appId: "6609577c6d2ffee34cd058a7" }).then(function (deviceToken: string) {
+			// Print device token to console
+			alert("Pushy device token: " + deviceToken);
+
+			// Send the token to your backend server via an HTTP GET request
+			//fetch('https://your.api.hostname/register/device?token=' + deviceToken);
+
+			// Succeeded, optionally do something to alert the user
+		}).catch(function (err: { message: string; }) {
+			// Notify user of failure
+			alert("Registration failed: " + err.message);
 		});
-		// const messaging = getMessaging();
-		onMessage(messaging, (payload) => {
-			console.log('Message received. ', payload);
-			// Update the UI to include the received message.
-			
-		  });
 	}, []);
 
 	return (
