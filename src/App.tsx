@@ -32,6 +32,7 @@ const App = () => {
 
 	}, []);
 	useEffect(() => {
+		navigator.serviceWorker.register("./service-worker.js");
 		Pushy.register({ appId: "6609577c6d2ffee34cd058a7" }).then(function (deviceToken: string) {
 			// Print device token to console
 			alert("Pushy device token: " + deviceToken);
