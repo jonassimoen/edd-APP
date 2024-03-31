@@ -33,18 +33,26 @@ const App = () => {
 	}, []);
 	useEffect(() => {
 		navigator.serviceWorker.register("./service-worker.js");
-		Pushy.register({ appId: "6609577c6d2ffee34cd058a7" }).then(function (deviceToken: string) {
-			// Print device token to console
-			alert("Pushy device token: " + deviceToken);
-
-			// Send the token to your backend server via an HTTP GET request
-			//fetch('https://your.api.hostname/register/device?token=' + deviceToken);
-
-			// Succeeded, optionally do something to alert the user
-		}).catch(function (err: { message: string; }) {
-			// Notify user of failure
-			alert("Registration failed: " + err.message);
+		Notification.requestPermission().then((permission) => {
+			// If the user accepts, let's create a notification
+			if (permission === "granted") {
+				const notification = new Notification("Notifications enabled!");
+				Pushy.register({ appId: "6609577c6d2ffee34cd058a7" }).then(function (deviceToken: string) {
+					// Print device token to console
+					alert("Pushy device token: " + deviceToken);
+		
+					// Send the token to your backend server via an HTTP GET request
+					//fetch('https://your.api.hostname/register/device?token=' + deviceToken);
+		
+					// Succeeded, optionally do something to alert the user
+				}).catch(function (err: { message: string; }) {
+					// Notify user of failure
+					alert("Registration failed: " + err.message);
+				});
+				// …
+			}
 		});
+		
 	}, []);
 
 	return (
