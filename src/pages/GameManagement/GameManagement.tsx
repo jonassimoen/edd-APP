@@ -288,7 +288,7 @@ export const GameManagement = () => {
 							}
 						},
 						{
-							dataIndex: "operation",
+							dataIndex: "id",
 							width: "10%",
 							align: "center",
 							render: (_: any, record: any) => {

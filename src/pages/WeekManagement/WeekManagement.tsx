@@ -178,7 +178,7 @@ export const WeekManagement = () => {
 							}
 						},
 						{
-							dataIndex: "operation",
+							dataIndex: "id",
 							width: "10%",
 							align: "left",
 							render: (_: any, record: any) => {
