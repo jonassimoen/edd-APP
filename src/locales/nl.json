@@ -59,7 +59,10 @@
     "team": {
       "tobedetermined": "Nog te bepalen",
       "tbd": "N.t.b."
-    }
+    },
+    "teamBoosters": "Team boosters",
+    "teamBooster": "Team booster",
+    "activated": "geactiveerd"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -276,5 +279,10 @@
   },
   "errorPage": {
     "processing": "Bedankt voor het melden! Wij onderzoeken de oorzaak van deze foutmelding zo snel mogelijk."
+  },
+  "boosters": {
+    "tripleCaptain": "Driedubbele kapitein",
+    "activate": "Activeer",
+    "active": "ACTIEF"
   }
 }

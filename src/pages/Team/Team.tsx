@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import { Card } from "antd";
 import Meta from "antd/es/card/Meta";
 import { Alert } from "@/components/UI/Alert/Alert";
+import { BoosterList } from "@/components/BoosterList/BoosterList";
 
 export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -70,18 +71,16 @@ export const _Team = (props: AbstractTeamType) => {
 		const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
 		const budget = teamResult.players.reduce((acc: any, player: Player) => acc - player.value, application.competition.budget);
-		// const boosters = undefined; // todo
 
 		const isTeamOwner = !!(teamResult.team?.userId === user?.id);
 
 		const boosters = {
-			freeHit: teamResult.team.freeHit,
-			bank: teamResult.team.bank,
 			tripleCaptain: teamResult.team.tripleCaptain,
-			wildCard: teamResult.team.wildCard
+			viceVictory: teamResult.team.viceVictory,
+			superSub: teamResult.team.superSub
 		};
 
-		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
+		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters, isTeamOwner);
 	};
 
 	useEffect(() => {
@@ -184,6 +183,12 @@ export const _Team = (props: AbstractTeamType) => {
 							<SaveOutlined style={{ marginRight: "10px" }} />
 							{t("team.saveTeam")}
 						</Button>
+						<BoosterList 
+							tripleCaptain={props.boosters.tripleCaptain}
+							viceVictory={props.boosters.viceVictory}
+							superSub={props.boosters.superSub}
+							deadlineWeek={deadlineWeek}
+						/>
 					</Col>
 					<Col lg={12} md={12} sm={24} xs={24}>
 						<Title level={2}>{t("general.footballCalendar")}</Title>

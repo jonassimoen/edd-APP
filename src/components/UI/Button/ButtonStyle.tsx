@@ -10,8 +10,8 @@ export const ButtonStyle = styled(Button)`
 	&.ant-btn-primary {
 		color: #FFF;
 		background-color: ${theme.primaryContrast};
-
-		&:hover {
+		
+		&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
 			background-color: ${theme.primaryColor};
 			color: ${theme.primaryContrast};
 		}

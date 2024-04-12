@@ -49,7 +49,10 @@
     "team": {
       "tobedetermined": "To be determined",
       "tbd": "T.B.D."
-    }
+    },
+    "teamBoosters": "Team boosters",
+    "teamBooster": "Team booster",
+    "activated": "activated"
   },
   "editBtn": "Edit",
   "pageNotFound": {
@@ -65,5 +68,9 @@
   },
   "errorPage": {
     "processing": "Thank you for the report. We will start investigating the error as soon as possible!"
+  },
+  "boosters": {
+    "activate": "Activate",
+    "active": "ACTIVE"
   }
 }

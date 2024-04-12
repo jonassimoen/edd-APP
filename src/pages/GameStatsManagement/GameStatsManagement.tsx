@@ -190,7 +190,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		if (matchStatisticsImportSuccess) {
 			openSuccessNotification({
 				title: "Matchdata is geïmporteerd.",
-				icon: <CheckOutlined />,
 				message: "Check de data grondig!",
 			});
 		} else if(matchStatisticsImportError) {

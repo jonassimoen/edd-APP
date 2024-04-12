@@ -100,19 +100,17 @@ type Team = {
 	userId: number
 	weekId: number
 	budget: number
-	freeHit: number
-	bank: number
-	tripleCaptain: number
-	wildCard: number
+	tripleCaptain?: number
+	viceVictory?: number
+	superSub?: number
 	rank: number
 	points: number
 }
 
 type Boosters = {
-	freeHit?: number
-	bank?: number
 	tripleCaptain?: number
-	wildCard?: number
+	viceVictory?: number
+	superSub?: number
 }
 
 type User = {
