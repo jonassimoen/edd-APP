@@ -63,7 +63,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		// const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "stats"];
 		const selectionProps: any[] = ["booster", "played", "points"];
-		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId })])
+		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId }, true)])
 			.then(([result]: any[]) => {
 				result = result.data;
 				const pointsConfirmation: any[] = [];

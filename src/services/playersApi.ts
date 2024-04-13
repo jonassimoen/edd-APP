@@ -47,4 +47,4 @@ export const playersApi = createApi({
 	})
 });
 
-export const { useGetPlayerQuery, useGetPlayersQuery, useUpdatePlayerMutation, useCreatePlayerMutation, useImportPlayersMutation } = playersApi;
+export const { useGetPlayerQuery, useGetPlayersQuery, useLazyGetPlayersQuery, useUpdatePlayerMutation, useCreatePlayerMutation, useImportPlayersMutation } = playersApi;

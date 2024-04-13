@@ -6,6 +6,7 @@ import { url } from "inspector";
 export const teamsApi = createApi({
 	reducerPath: "teamsApi",
 	tagTypes: ["userTeam", "userTeamPoints"],
+	keepUnusedDataFor: 60*3,
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/teams`, credentials: "include" }),
 	endpoints: (builder) => ({
 

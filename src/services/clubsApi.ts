@@ -47,4 +47,4 @@ export const clubsApi = createApi({
 	})
 });
 
-export const { useGetClubQuery, useGetClubsQuery, useUpdateClubMutation, useCreateClubMutation, useImportClubsMutation } = clubsApi;
+export const { useGetClubQuery, useGetClubsQuery, useLazyGetClubsQuery, useUpdateClubMutation, useCreateClubMutation, useImportClubsMutation } = clubsApi;

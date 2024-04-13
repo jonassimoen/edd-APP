@@ -41,7 +41,7 @@ export const weeksApi = createApi({
 			invalidatesTags: (res, err, arg) => [{ type: "Week", id: arg.id }],
 		}),
 
-		getDeadlineInfo: builder.query<{ deadlineInfo: DeadlineInfo, weeks: Week[] }, void>({
+		getDeadlineInfo: builder.query<{ deadlineInfo: DeadlineInfo, weeks: Week[], rft: string }, void>({
 			query: () => "/deadline-info",
 			providesTags: (res, err, arg) =>
 				res
