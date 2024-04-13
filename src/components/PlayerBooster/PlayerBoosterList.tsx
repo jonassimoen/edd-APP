@@ -41,7 +41,7 @@ export const PlayerBoosterList = (props: PlayerBoosterListProps) => {
 	
 	return (
 		<PlayerBoosterListStyle>
-			<Title level={2}>{t("general.PlayerBoosters")}</Title>
+			<Title level={2}>{t("general.playerBoosters")}</Title>
 			<Row>
 				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
 					<PlayerBooster

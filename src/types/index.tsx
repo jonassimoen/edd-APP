@@ -252,3 +252,11 @@ type DeadlineInfo = {
 	deadlineDate: string
 	endWeek: number
 }
+
+type BoostersWeekStatus = {
+	tripleCaptain: boolean,
+	viceVictory: boolean,
+	goalRush: boolean,
+	hiddenGem: boolean,
+	superSub: boolean,
+}

@@ -25,6 +25,7 @@ import { PointsStats } from "@/components/PointsStats/PointsStats";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { MatchdaySelector } from "@/components/MatchdaySelector/MatchdaySelector";
 import { Button, Spin } from "antd";
+import { BoosterStats } from "@/components/BoosterStats/BoosterStats";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -127,10 +128,11 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				const budget = result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
 
 				const boosters = {
-					freeHit: result.team.freeHit,
-					bank: result.team.bank,
 					tripleCaptain: result.team.tripleCaptain,
-					wildCard: result.team.wildCard
+					viceVictory: result.team.viceVictory,
+					goalRush: result.team.goalRush,
+					hiddenGem: result.team.hiddenGem,
+					superSub: result.team.superSub,
 				};
 
 				const isTeamOwner = !!(result.team.userId === user.id);
@@ -151,20 +153,14 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		}
 	}, [clubsSuccess, matchesSuccess, deadlineInfoSuccess, visibleWeekId]);
 
-	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo } = props;
+	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo, boosters } = props;
 
-	// TODO --
-	// const boosterWeekStatus: BoostersWeekStatus = {
-	//		 // bank: boosters.bank === visibleWeekId,
-	//		 // tripleCaptain: boosters.tripleCaptain === visibleWeekId,
-	//		 // freeHit: boosters.freeHit === visibleWeekId,
-	//		 // wildCard: boosters.wildCard === visibleWeekId
-	// };
 	const boosterWeekStatus: any = {
-		bank: false,
-		tripleCaptain: false,
-		freeHit: false,
-		wildCard: false
+		tripleCaptain: boosters.tripleCaptain === visibleWeekId,
+		viceVictory: boosters.viceVictory === visibleWeekId,
+		goalRush: boosters.goalRush === visibleWeekId,
+		hiddenGem: boosters.hiddenGem === visibleWeekId,
+		superSub: boosters.superSub === visibleWeekId,
 	};
 
 	const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);
@@ -204,9 +200,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					<Row style={{ margin: 0 }}>
 						<Col lg={12} md={12} sm={24} xs={24}>
 							<Block style={{ marginTop: "10px" }}>
-								{
-									<Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title>
-								}
+								<Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title>
 								{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
 								<PointsStats
 									visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
@@ -260,6 +254,14 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									swapPlayerId={props.swapPlayerId}
 									swappedFrom={props.swappedFrom}
 									isSwapAble={false} // todo: implement powersub
+								/>
+							</Block>
+							<Block style={{ marginTop: "10px" }}>
+								<Title level={2}>{t("pointsPage.boostersUsed")} </Title>
+								<BoosterStats
+									boosterWeekStatus={boosterWeekStatus}
+									boostedPlayers={starting.concat(bench).filter(p => p.booster).map(p => pick(p, ["booster","id","short","name"]))}
+									assetsCdn={application.competition.assetsCdn}
 								/>
 							</Block>
 						</Col>

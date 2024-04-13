@@ -50,7 +50,7 @@ export const Badge = styled.div`
     background-color: ${(props: any) => props.bgColor};
 	color: ${(props: any) => props.color};
     position: absolute;
-    top: 75%;
+    top: 74%;
     bottom: 0;
     left: 0;
     right: 0;

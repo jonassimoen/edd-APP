@@ -22,6 +22,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 
 	const boosterUsed = useMemo(() => !!(props.activatedWeek && props.activatedWeek <= props.deadlineWeek), [props]);
 	const boosterActive = useMemo(() => !!(props.activatedWeek && props.activatedWeek == props.deadlineWeek), [props]);
+	const assignedPlayerValid = useMemo(() => props.player && Object.keys(props.player).length !== 0, [props.player]);
 	
 	const onActivateClick = () => {
 		if(!boosterUsed && props.onBoosterActivation) {
@@ -34,7 +35,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 			<p className="booster-type">{t(`boosters.${props.type}`)}</p>
 			<div className="booster-icon">
 				{
-					boosterUsed ?
+					boosterUsed && assignedPlayerValid ?
 						<div className="booster-player">
 							<Player
 								badgeColor={"#fff"}

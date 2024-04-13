@@ -63,7 +63,7 @@
     "teamBoosters": "Team boosters",
     "teamBooster": "Team booster",
     "activated": "geactiveerd",
-    "PlayerBoosters": "Speler boosters"
+    "playerBoosters": "Speler boosters"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -254,7 +254,14 @@
     "yourPoints": "jouw punten",
     "weekWinnerPoints": "winnaar",
     "statsBlockTitle": "Statistieken",
-    "overviewBlockTitle": "Overzicht"
+    "overviewBlockTitle": "Overzicht",
+    "overviewBoosters": "Boosters speeldag",
+    "boostersUsed": "Gebruikte boosters",
+    "boosterStats": {
+      "type": "Booster type",
+      "player": "Speler",
+      "extraPoints": "Extra punten"
+    }
   },
   "pageTitle": "Pagina",
   "rankingsPage": {
@@ -287,13 +294,9 @@
     "tripleCaptain": "Driedubbele kapitein",
     "activate": "Activeer",
     "active": "Nu actief",
-    "player": {
-      "boosterType": "Type booster",
-      "status": "Status",
-      "usedPlayer": "Gebruikte speler",
-      "hiddenGem": "Verborgen diamant",
-      "goalRush": "Goal rush"
-    },
+    "usedPlayer": "Gebruikte speler",
+    "hiddenGem": "Verborgen diamant",
+    "goalRush": "Goal rush",
     "used": "Reeds gebruikt",
     "available": "Beschikbaar"
   }
