@@ -65,7 +65,7 @@ export const Badge = styled.div`
 		white-space: nowrap;
 		overflow: hidden;
 		font-size: 12px;
-		line-height: 1.1;
+		line-height: normal;
 		padding: 5px;
 
 		@media ${mediaQueries.mobileM} {
@@ -90,9 +90,18 @@ export const OpponentBadge = styled.div`
 	background: ${(props: any) => props.bgColor};
 	color:  ${(props: any) => props.color};
 	padding: 3px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+
+    span {
+        text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		line-height: 1.1;
+		padding: 5px;
+		
+		@media ${mediaQueries.tablet} {
+			font-family: inherit;
+		}
+    }
 
 	@media ${mediaQueries.tablet} {
 		overflow: hidden;
