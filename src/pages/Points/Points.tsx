@@ -103,7 +103,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const playerStats = player.stats && player.stats[0];
 						const pointsOverview = playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
-						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
+						return Object.assign({ played: player.selections[0].played, inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
 					});
 				const bench = result.players
 					.filter((player: any) => player.selections[0].starting === 0)
@@ -111,7 +111,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const playerStats = player.stats && player.stats[0];
 						const pointsOverview = playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
-						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
+						return Object.assign({ played: player.selections[0].played,  inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps, pick(player.selections, selectionProps)));
 					}).sort((first: any, second: any) => {
 						return (first.positionId === 1) ? -1 : 0;
 					});

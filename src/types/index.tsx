@@ -41,6 +41,7 @@ type Player = {
 	squadStatus: string
 	clubId: number
 	inStarting?: boolean
+	played?: boolean
 	points: number
 	pointsOverview: boolean
 
