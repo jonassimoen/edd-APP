@@ -35,7 +35,11 @@
   "cancelBtn": "Cancel",
   "player": {
     "opponentHome": "H",
-    "opponentAway": "A"
+    "opponentAway": "A",
+    "modal": {
+      "selectionActions": "Selection actions",
+      "boosterActions": "Booster actions"
+    }
   },
   "general": {
     "footballWeek": "Matchday",
@@ -52,7 +56,8 @@
     },
     "teamBoosters": "Team boosters",
     "teamBooster": "Team booster",
-    "activated": "activated"
+    "activated": "activated",
+    "PlayerBoosters": "Player boosters"
   },
   "editBtn": "Edit",
   "pageNotFound": {
@@ -71,6 +76,15 @@
   },
   "boosters": {
     "activate": "Activate",
-    "active": "ACTIVE"
+    "active": "Currently active",
+    "player": {
+      "boosterType": "Booster type",
+      "status": "Status",
+      "usedPlayer": "Used player",
+      "hiddenGem": "Hidden gem",
+      "goalRush": "Goal rush"
+    },
+    "used": "Already used",
+    "available": "Available"
   }
 }

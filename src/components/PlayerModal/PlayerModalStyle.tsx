@@ -64,6 +64,19 @@ export const PlayerModalStyle = styled(Modal)`
 				margin-bottom: 10px;
 			}
 
+			.player-actions {
+				margin-top: 2rem;
+				.title {
+					width: 100%;
+					background-color: ${theme.primaryColor};
+					color: ${theme.primaryContrast};
+					padding: 2px 10px;
+					line-height: 1.75;
+					margin: 0;
+					font-size: 14px;
+				}
+			}
+
 			.player-body {
 				margin: 0;
 			}

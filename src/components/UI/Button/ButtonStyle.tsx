@@ -6,6 +6,7 @@ import { theme } from "@/styles/theme";
 
 export const ButtonStyle = styled(Button)`
 	border-radius: 0px !important;
+	line-height: normal;
 
 	&.ant-btn-primary {
 		color: #FFF;

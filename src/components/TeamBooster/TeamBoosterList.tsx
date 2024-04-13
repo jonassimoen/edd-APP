@@ -1,22 +1,22 @@
 import Title from "antd/es/typography/Title";
-import { BoosterListStyle } from "./BoosterListStyle";
+import { TeamBoosterListStyle } from "./TeamBoosterListStyle";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "../UI/Grid/Grid";
 import { TripleCaptSvg, BenchSvg, WildcardSvg, DaySvg } from "@/styles/custom-icons";
-import { Booster } from "./Booster";
+import { TeamBooster } from "./TeamBooster";
 import { useActivateBoosterMutation } from "@/services/teamsApi";
 import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { useParams } from "react-router";
 import { useMemo } from "react";
 
-declare type BoosterListProps = {
+declare type TeamBoosterListProps = {
 	tripleCaptain?: number
 	viceVictory?: number
 	superSub?: number
 	deadlineWeek: number
 }
 
-export const BoosterList = (props: BoosterListProps) => {
+export const TeamBoosterList = (props: TeamBoosterListProps) => {
 	const {t} = useTranslation();
 	const { id } = useParams();
 	const [activateBooster] = useActivateBoosterMutation();
@@ -43,11 +43,11 @@ export const BoosterList = (props: BoosterListProps) => {
 		, [props]);
 
 	return (
-		<BoosterListStyle>
+		<TeamBoosterListStyle>
 			<Title level={2}>{t("general.teamBoosters")}</Title>
 			<Row>
-				<Col md={12} sm={12} xs={12}>
-					<Booster 
+				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+					<TeamBooster 
 						iconSvg={TripleCaptSvg}
 						type="tripleCaptain" 
 						onActivation={onBoosterActivation}
@@ -55,8 +55,8 @@ export const BoosterList = (props: BoosterListProps) => {
 						currentlyActive={tripleCaptain === deadlineWeek}
 					/>
 				</Col>
-				<Col md={12} sm={12} xs={12}>
-					<Booster 
+				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+					<TeamBooster 
 						iconSvg={BenchSvg}
 						type="viceVictory" 
 						onActivation={onBoosterActivation}
@@ -65,6 +65,6 @@ export const BoosterList = (props: BoosterListProps) => {
 					/>
 				</Col>
 			</Row>
-		</BoosterListStyle>
+		</TeamBoosterListStyle>
 	);
 };

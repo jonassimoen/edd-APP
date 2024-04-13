@@ -29,7 +29,8 @@ import dayjs from "dayjs";
 import { Card } from "antd";
 import Meta from "antd/es/card/Meta";
 import { Alert } from "@/components/UI/Alert/Alert";
-import { BoosterList } from "@/components/BoosterList/BoosterList";
+import { TeamBoosterList } from "@/components/TeamBooster/TeamBoosterList";
+import { PlayerBoosterList } from "@/components/PlayerBooster/PlayerBoosterList";
 
 export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -46,7 +47,7 @@ export const _Team = (props: AbstractTeamType) => {
 			return;
 		}
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId"];
-		const selectionProps: any[] = [];
+		const selectionProps: any[] = ["booster"];
 		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
 			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
@@ -77,7 +78,9 @@ export const _Team = (props: AbstractTeamType) => {
 		const boosters = {
 			tripleCaptain: teamResult.team.tripleCaptain,
 			viceVictory: teamResult.team.viceVictory,
-			superSub: teamResult.team.superSub
+			superSub: teamResult.team.superSub,
+			hiddenGem: teamResult.team.hiddenGem,
+			goalRush: teamResult.team.goalRush,
 		};
 
 		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters, isTeamOwner);
@@ -183,7 +186,14 @@ export const _Team = (props: AbstractTeamType) => {
 							<SaveOutlined style={{ marginRight: "10px" }} />
 							{t("team.saveTeam")}
 						</Button>
-						<BoosterList 
+						<PlayerBoosterList 
+							assetsCdn={application.competition.assetsCdn}
+							playersWithBoosters={props.starting?.concat(props.bench).filter((p: any) => p?.booster)}
+							goalRushWeek={props.boosters.goalRush}
+							hiddenGemWeek={props.boosters.hiddenGem}
+							deadlineWeek={deadlineWeek}
+						/>
+						<TeamBoosterList 
 							tripleCaptain={props.boosters.tripleCaptain}
 							viceVictory={props.boosters.viceVictory}
 							superSub={props.boosters.superSub}

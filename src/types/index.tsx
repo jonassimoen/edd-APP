@@ -92,6 +92,7 @@ type PlayerSelection = {
 	teamId: number
 	playerId: number
 	value: number
+	booster?: string
 }
 
 type Team = {
@@ -101,17 +102,23 @@ type Team = {
 	userId: number
 	weekId: number
 	budget: number
+	rank: number
+	points: number
+	
+	// Boosters
 	tripleCaptain?: number
 	viceVictory?: number
 	superSub?: number
-	rank: number
-	points: number
+	hiddenGem?: number
+	goalRush?: number
 }
 
 type Boosters = {
 	tripleCaptain?: number
 	viceVictory?: number
 	superSub?: number
+	hiddenGem?: number
+	goalRush?: number
 }
 
 type User = {

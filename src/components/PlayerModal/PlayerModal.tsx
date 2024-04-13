@@ -29,12 +29,13 @@ type PlayerModalProps = {
 	isSwapAble?: any
 	onSwap?: any
 	swapPlayerId?: number | null
+	boosters?: boolean
 }
 
 export const PlayerModal = (props: PlayerModalProps) => {
 	const { t } = useTranslation();
 
-	const { player, isSwapAble, swapPlayerId } = props;
+	const { player, isSwapAble, swapPlayerId, boosters } = props;
 
 	const playerPositionColor = getPlayerPositionHexColor(player, theme);
 	const PositionLabels: any = {
@@ -71,11 +72,19 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		props.onCancel(event);
 	};
 
+	const hasSelectionActions = useMemo(
+		() => !!(props.onCaptainSelect || props.onViceCaptainSelect || (props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId)) || (props.onRemove && !swapPlayerId) ), 
+		[props]
+	);
+
 	const actionColumnSize = useMemo(
 		() => Math.floor(24 / (+!!onCaptainSelect + +!!onViceCaptainSelect + +(!!onSwap && (player.id !== swapPlayerId))
 			+ +(!!onSwap && (player.id === swapPlayerId)) + +!!props.onRemove)
 		),
 		[props]);
+
+	const showPointsOverview = player && player.pointsOverview && player.points !== null && player.points !== undefined;
+		
 
 	return (
 		<PlayerModalStyle
@@ -97,7 +106,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 
 				</Col>
 				{
-					player && player.points ?
+					player && player.points && showPointsOverview ?
 						<Col md={6} sm={6} xs={6}>
 							<span className="points">
 								<span className="value">{player.points}</span>
@@ -107,6 +116,10 @@ export const PlayerModal = (props: PlayerModalProps) => {
 				}
 			</Row>
 			<Row className="player-actions">
+				{
+					hasSelectionActions && 
+						<div className="title">{t("player.modal.selectionActions")}</div>
+				}
 				{
 					props.onCaptainSelect ?
 						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
@@ -160,9 +173,12 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						</Col> :
 						null
 				}
+				{
+					boosters && <div className="title">{t("player.modal.boosterActions")}</div>
+				}
 			</Row>
 			{
-				player && player.pointsOverview && !!player.played && player.points !== null && player.points !== undefined ?
+				player && player.pointsOverview && showPointsOverview && !!player.played ?
 					<PointsOverviewTable>
 						<thead>
 							<tr>

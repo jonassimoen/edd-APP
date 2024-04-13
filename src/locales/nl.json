@@ -62,7 +62,8 @@
     },
     "teamBoosters": "Team boosters",
     "teamBooster": "Team booster",
-    "activated": "geactiveerd"
+    "activated": "geactiveerd",
+    "PlayerBoosters": "Speler boosters"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -80,7 +81,9 @@
     "modal": {
       "actionColumnName": "Actie",
       "quantityColumnName": "Aantal",
-      "pointsColumnName": "Punten"
+      "pointsColumnName": "Punten",
+      "selectionActions": "Selectie acties",
+      "boosterActions": "Booster acties"
     },
     "assistsLabel": "Assist",
     "goalsLabel": "Doelpunt",
@@ -283,6 +286,15 @@
   "boosters": {
     "tripleCaptain": "Driedubbele kapitein",
     "activate": "Activeer",
-    "active": "ACTIEF"
+    "active": "Nu actief",
+    "player": {
+      "boosterType": "Type booster",
+      "status": "Status",
+      "usedPlayer": "Gebruikte speler",
+      "hiddenGem": "Verborgen diamant",
+      "goalRush": "Goal rush"
+    },
+    "used": "Reeds gebruikt",
+    "available": "Beschikbaar"
   }
 }

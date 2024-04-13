@@ -1,17 +1,18 @@
 import { useTranslation } from "react-i18next";
-import { BoosterStyle } from "./BoosterStyle";
+import { TeamBoosterStyle } from "./TeamBoosterStyle";
 import Icon from "@ant-design/icons";
 import { Button } from "../UI/Button/Button";
+import { ComponentType, SVGProps } from "react";
 
-declare type BoosterProps = {
+declare type TeamBoosterProps = {
 	type: string;
-	iconSvg: any;
+	iconSvg?: ComponentType<SVGProps<SVGSVGElement>>
 	currentlyActive?: boolean;
 	unusable?: boolean;
 	onActivation: (type: string) => any;
 }
 
-export const Booster = (props: BoosterProps) => {
+export const TeamBooster = (props: TeamBoosterProps) => {
 	const {t} = useTranslation();
 
 	const onActivateClick = () => {
@@ -21,11 +22,11 @@ export const Booster = (props: BoosterProps) => {
 	};
 
 	return (
-		<BoosterStyle className="booster">
+		<TeamBoosterStyle className="booster">
 			<p className="booster-type">{t(`boosters.${props.type}`)}</p>
 			<Icon 
 				component={props.iconSvg} 
-				style={{display: "block", fontSize: 40, marginBottom: 20}}
+				style={{display: "block", fontSize: 50, marginBottom: 20}}
 			/>
 			<Button
 				disabled={props.unusable}
@@ -34,6 +35,6 @@ export const Booster = (props: BoosterProps) => {
 			>
 				{props.currentlyActive?t("boosters.active"):t("boosters.activate")}
 			</Button>
-		</BoosterStyle>
+		</TeamBoosterStyle>
 	);
 };
