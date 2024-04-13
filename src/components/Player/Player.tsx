@@ -214,9 +214,9 @@ export const Player = (props: PlayerProps) => {
 			{
 				opponentInfo ?
 					<OpponentBadge color={pointsColor} bgColor={pointsBgColor}>
-						<p>
+						<span>
 							{`${opponentInfo.opponentShort} (${opponentInfo.playing})`}
-						</p>
+						</span>
 					</OpponentBadge> : null
 			}
 			{
