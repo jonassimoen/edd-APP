@@ -108,10 +108,11 @@ const _Transfers = (props: AbstractTeamType) => {
 				teamResult.team.budget : getPlayersValueWithTransfers(teamResult.players);
 
 			const boosters = {
-				freeHit: teamResult.team.freeHit,
-				bank: teamResult.team.bank,
 				tripleCaptain: teamResult.team.tripleCaptain,
-				wildCard: teamResult.team.wildCard
+				viceVictory: teamResult.team.viceVictory,
+				superSub: teamResult.team.superSub,
+				hiddenGem: teamResult.team.hiddenGem,
+				goalRush: teamResult.team.goalRush,
 			};
 
 			props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, teamResult.transfers, deadlineWeekTransfers, pastTransfers, viceCaptainId, boosters);
@@ -203,7 +204,8 @@ const _Transfers = (props: AbstractTeamType) => {
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
 	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
-	const enabledWildOrFreeHit = useMemo(() => boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek, [boosters]);
+	// TODO
+	const enabledWildOrFreeHit = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [boosters]);
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]), [starting, bench]);
 	const remainingTransfers = useMemo(() => {
 		let remainingTransfers = null;

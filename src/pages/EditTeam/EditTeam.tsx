@@ -64,10 +64,11 @@ const _EditTeam = (props: AbstractTeamType) => {
 			: result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
 
 		const boosters = {
-			freeHit: result.team.freeHit,
-			bank: result.team.bank,
-			tripleCaptain: result.team.tripleCaptain,
-			wildCard: result.team.wildCard,
+			tripleCaptain: teamResult.team.tripleCaptain,
+			viceVictory: teamResult.team.viceVictory,
+			superSub: teamResult.team.superSub,
+			hiddenGem: teamResult.team.hiddenGem,
+			goalRush: teamResult.team.goalRush,
 		};
 
 		// const deadlineWeek = (deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek) || 0;
@@ -128,7 +129,8 @@ const _EditTeam = (props: AbstractTeamType) => {
 			&& deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek,
 		[team, deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
-	const wildCardOrFreeHitEnabled = useMemo(() => boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek, [deadlineInfo]);
+	// TODO
+	const wildCardOrFreeHitEnabled = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [deadlineInfo]);
 	const startingByPositions = startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]);
 
 	if(teamError) {
