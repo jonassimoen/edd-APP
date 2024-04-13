@@ -261,7 +261,8 @@
       "type": "Booster type",
       "player": "Speler",
       "extraPoints": "Extra punten"
-    }
+    },
+    "noBoostersUsed": "Geen boosters gebruikt deze speeldag."
   },
   "pageTitle": "Pagina",
   "rankingsPage": {

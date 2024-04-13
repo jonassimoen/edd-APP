@@ -28,8 +28,8 @@ export const BoosterStats = (props: BoosterStatsProps) => {
 
 	const { boostedPlayers } = props;
 
-	return (
-		<BoosterStatsTable>
+	return usedBoosterTypes && usedBoosterTypes.length !== 0 ?
+		(<BoosterStatsTable>
 			<thead>
 				<tr>
 					<th></th>
@@ -64,6 +64,5 @@ export const BoosterStats = (props: BoosterStatsProps) => {
 					})
 				}
 			</tbody>
-		</BoosterStatsTable>
-	);
+		</BoosterStatsTable>): (<p>{t("pointsPage.noBoostersUsed")}</p>);
 };

@@ -170,11 +170,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const startingByPositions = startingListToPositionsList(starting, application.competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");
-	const [error, setError] = useState<Error>();
-
-	if(error) {
-		throw error;
-	}
 	return (
 		<Spin spinning={clubsLoading || playersLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{
@@ -263,6 +258,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									boostedPlayers={starting.concat(bench).filter(p => p.booster).map(p => pick(p, ["booster","id","short","name"]))}
 									assetsCdn={application.competition.assetsCdn}
 								/>
+								
 							</Block>
 						</Col>
 						<Col lg={12} md={12} sm={24} xs={24}>
