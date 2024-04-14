@@ -94,7 +94,7 @@ export const OpponentBadge = styled.div`
         text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
-		line-height: 1em;
+		line-height: 0.9em;
 		padding: 3px;
     }
 

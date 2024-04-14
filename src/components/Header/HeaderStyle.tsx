@@ -179,20 +179,20 @@ export const HeaderStyle = styled.header`
     }
 
     .c-nav-mobile {
+        display: flex;
         
         @media (min-width: 64em) {
             display: none
         }
-        display: flex;
         flex-wrap: wrap;
         position: fixed;
         z-index: 3;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
+        width: 100vw;
+        height: 100vh;
         padding: 6rem 1.5rem 4rem;
-        background: ${theme.primaryContrast};
+        background-color: ${theme.primaryContrast};
         -webkit-clip-path: inset(0 0 100% 0);
         clip-path: inset(0 0 100% 0);
         -webkit-transition: -webkit-clip-path .5s cubic-bezier(0, .5, 0, 1);
