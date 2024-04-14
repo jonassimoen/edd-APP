@@ -17,6 +17,11 @@ export const HeaderStyle = styled.header`
             clip-path: inset(0 0 0 0);
             pointer-events: auto;
         }
+
+        & .c-nav-mobile__list {
+            opacity: 1;
+            transform: translateY(0);
+        }
     
         & .c-nav-trigger__top {
             -webkit-transform: translateY(8px) rotate(135deg);
@@ -175,7 +180,7 @@ export const HeaderStyle = styled.header`
 
     .c-nav-mobile {
         
-        @media ${mediaQueries.laptop} {
+        @media (min-width: 64em) {
             display: none
         }
         display: flex;
@@ -209,9 +214,12 @@ export const HeaderStyle = styled.header`
         }
 
         &__list {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
+            .has-open-nav {
+                opacity: 1;
+            }
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all .5s ease-out;
         }
 
         &__item {
