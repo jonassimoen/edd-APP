@@ -160,6 +160,8 @@ type PageTranslation = {
 type ApplicationState = {
 	competition: Competition
 	title: string
+	clubs: Club[]
+	players: Player[]
 }
 
 type Competition = {

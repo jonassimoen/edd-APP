@@ -61,9 +61,9 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	const getTeamInfo = (weekId: number) => {
 		// const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "stats"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId"];
 		const selectionProps: any[] = ["booster", "played", "points"];
-		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId }, true)])
+		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId })])
 			.then(([result]: any[]) => {
 				result = result.data;
 				const pointsConfirmation: any[] = [];
@@ -77,7 +77,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const statsTotalPoints = stats
 							.reduce((statsAcc: number, item: any) => statsAcc + item.points, 0);
 						const points = player.selections[0].captain ? statsTotalPoints * 2 : statsTotalPoints;
-						return acc + points;
+						return acc + points + player.selections[0].endWinnerSelections;
 					}, 0);
 
 
@@ -102,17 +102,19 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					.filter((player: any) => player.selections[0].starting === 1)
 					.map((player: any) => {
 						const playerStats = player.stats && player.stats[0];
-						const pointsOverview = playerStats;
+						const endWinnerSelections = player.selections[0].endWinnerSelections;
+						const pointsOverview = endWinnerSelections?{endWinnerSelections, ...playerStats}:playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
-						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), pick(player.selections[0], selectionProps));
+						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), {stats: player.stats}, pick(player.selections[0], selectionProps));
 					});
 				const bench = result.players
 					.filter((player: any) => player.selections[0].starting === 0)
 					.map((player: any) => {
 						const playerStats = player.stats && player.stats[0];
-						const pointsOverview = playerStats;
+						const endWinnerSelections = player.selections[0].endWinnerSelections;
+						const pointsOverview = endWinnerSelections?{endWinnerSelections, ...playerStats}:playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
-						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), pick(player.selections[0], selectionProps));
+						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), {stats: player.stats}, pick(player.selections[0], selectionProps));
 					}).sort((first: any, second: any) => {
 						return (first.positionId === 1) ? -1 : 0;
 					});
@@ -220,7 +222,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									swapPlayerId={props.swapPlayerId}
 									swappedFrom={props.swappedFrom}
 									// boosterWeekStatus={boosterWeekStatus}
-									replacePlayerPointsWithStatsPoints={true}
+									replacePlayerPointsWithStatsPoints={false}
 									showCaptainBadge={true}
 									modalEnabled={true}
 									playerBadgeColor={"#fff"}

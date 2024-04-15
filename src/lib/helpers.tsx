@@ -172,8 +172,8 @@ const PlayerActionsPoints: any = {
 	successDribblesPerFive: {1: 5, 2: 3, 3: 3, 4: 3},
 	moreDuelsWon: {1: 1, 2: 1, 3: 1, 4: 1},
 	interceptionsPerSeven: {1: 2, 2: 2, 3: 2, 4: 2},
-	commitedFoulsPerThree: {1:-2, 2:-2, 3: -2, 4: -2},
-	bonus: {}
+	commitedFoulsPerThree: {1: -2, 2: -2, 3: -2, 4: -2},
+	endWinnerSelections: {1: 1, 2: 1, 3: 1, 4: 1},
 };
 
 export const getPointsOverviewList = (player: any, t: TFunction<"translation", undefined, "translation">) => {
@@ -321,6 +321,13 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const motm = player.pointsOverview && player.pointsOverview.motm;
 				if (motm) {
 					pointsOverview.push({ action: t("player.motmLabel"), quantity: 1, points: motm * actionPoints });
+				}
+				break;
+			}
+			case "endWinnerSelections" : {
+				const ews = player.pointsOverview && player.pointsOverview.endWinnerSelections;
+				if (ews) {
+					pointsOverview.push({ action: t("player.endWinnerSelectionsLabel"), quantity: ews, points: ews });
 				}
 				break;
 			}

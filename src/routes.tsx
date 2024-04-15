@@ -22,6 +22,7 @@ import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
 import { Welcome } from "./pages/Welcome/Welcome";
 import { PageManagement } from "./pages/PageManagement/PageManagement";
+import { GeneralManagement } from "./pages/GeneralManagement/GeneralManagement";
 import { Rankings } from "./pages/Rankings/Rankings";
 import { EditTeam } from "./pages/EditTeam/EditTeam";
 import { PageNotFound } from "./pages/PageNotFound";
@@ -110,6 +111,10 @@ export const router = createBrowserRouter([
 					path: "/admin",
 					element: <ProtectedRoute access={true} redirectPath='/home'><Admin redirectPath='/home' /></ProtectedRoute>,
 					children: [
+						{
+							path: "",
+							element: <GeneralManagement />
+						},
 						{
 							path: "pages",
 							element: <PageManagement />

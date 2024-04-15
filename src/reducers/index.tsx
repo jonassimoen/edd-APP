@@ -11,8 +11,10 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { playerStatsApi } from "@/services/statisticsApi";
 import { pagesApi } from "@/services/pagesApi";
+import { generalApi } from "@/services/generalApi";
 
 const reducer = combineReducers({
+	[generalApi.reducerPath]: generalApi.reducer,
 	[usersApi.reducerPath]: usersApi.reducer,
 	[teamsApi.reducerPath]: teamsApi.reducer,
 	[playersApi.reducerPath]: playersApi.reducer,
@@ -41,6 +43,7 @@ export const store = configureStore({
 	reducer: reducer,
 	middleware: (getDefaultMiddleware) => [
 		...getDefaultMiddleware(),
+		generalApi.middleware,
 		usersApi.middleware,
 		teamsApi.middleware,
 		playersApi.middleware,

@@ -83,7 +83,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		),
 		[props]);
 
-	const showPointsOverview = player && player.pointsOverview && player.points !== null && player.points !== undefined;
+	const showPointsOverview = player && player.pointsOverview && (!!player.played || player.points);
 		
 
 	return (
@@ -178,7 +178,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 				}
 			</Row>
 			{
-				player && player.pointsOverview && showPointsOverview && !!player.played ?
+				player && player.pointsOverview && showPointsOverview ?
 					<PointsOverviewTable>
 						<thead>
 							<tr>
