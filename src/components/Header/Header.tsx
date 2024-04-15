@@ -48,14 +48,14 @@ export const Header = () => {
 	const allMenuItems: string[] = ["home", "stats", "rules", "rankings"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;
 	const isActive = (match: string) => location.pathname.indexOf(match) !== -1;
-	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId), [userTeam, deadlineInfo]);
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const gameEnded = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek == 0, [deadlineInfo]);
+	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && (gameEnded || (gameInProgress && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId))), [userTeam, gameEnded, gameInProgress, deadlineInfo]);
 	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId) && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [userTeam, deadlineInfo]);
 
 	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
-		if (allMenuItems.indexOf(item) === -1) {
+		if (allMenuItems.indexOf(item) === -1)
 			allMenuItems.splice(positionIndex, 0, item);
-		}
 	};
 
 	useEffect(() => {
@@ -186,7 +186,7 @@ export const Header = () => {
 						</Layout>
 					</div>
 				</div>
-				{isVisible("team") &&
+				{(isVisible("team") || isVisible("points")) &&
 					<div className="c-row c-row--sm c-row--alpha" style={{ marginBottom: "15px" }}>
 						<Layout>
 							<ul className="o-list c-nav-tabs">
