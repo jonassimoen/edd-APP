@@ -44,6 +44,7 @@ type Player = {
 	played?: boolean
 	points: number
 	pointsOverview: boolean
+	booster: string
 
 	stats?: Statistic[]
 	selections?: PlayerSelection[]

@@ -6,7 +6,7 @@ import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers"
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
 import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined, UndoOutlined } from "@ant-design/icons";
-import { CaptainButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { CaptainButtonSvg, RacketSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 import { PlayerModal } from "../PlayerModal/PlayerModal";
 import config from "@/config";
 
@@ -16,6 +16,7 @@ const SwapIcon = (props: any) => <Icon component={SwapButtonSvg} {...props} />;
 const UndoIcon = (props: any) => <Icon component={RollBackSvg} {...props} />;
 const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
 const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {...props} />;
+const BoosterIcon = (props: any) => <Icon component={RacketSvg} {...props} />;
 
 declare type PlayerState = {
 	modalVisible: boolean
@@ -42,6 +43,7 @@ declare type PlayerProps = {
 	swapPlayerId?: number | null
 	positionLabel?: string
 	showCaptainBadge?: boolean
+	showBoosterBadge?: boolean
 	club?: Club
 	isSwapable?: any
 	swappedFrom?: string | null
@@ -83,6 +85,7 @@ export const Player = (props: PlayerProps) => {
 		positionLabel,
 		isSwapable,
 		showCaptainBadge,
+		showBoosterBadge,
 		swappedFrom,
 		onRemove,
 		onSwap,
@@ -152,6 +155,7 @@ export const Player = (props: PlayerProps) => {
 	const hasActions = useMemo(() => player && player.id && (actionLessPlayerIds || []).indexOf(player.id) === -1, [player]);
 	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
 	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
+	const hasBooster = useMemo(() => player && !!player.booster, [player]);
 
 	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints || replacePlayerPointsWithStatsPoints;
 	const showPlayerName = !avatarOnly;
@@ -269,6 +273,13 @@ export const Player = (props: PlayerProps) => {
 				<TopRightAction bgColor={theme.primaryColor}>
 					<ViceCaptainIcon style={{ fontSize: 18 }} />
 				</TopRightAction>
+			}
+
+			{
+				player && hasBooster && showBoosterBadge &&
+				<TopLeftAction bgColor={theme.primaryColor}>
+					<BoosterIcon style={{ fontSize: 18 }} />
+				</TopLeftAction>
 			}
 
 			{

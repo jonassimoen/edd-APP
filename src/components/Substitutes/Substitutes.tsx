@@ -28,6 +28,7 @@ type SubstitutesProps = {
 	captainId?: number
 	viceCaptainId?: number
 	showCaptainBadge?: boolean
+	showBoosterBadge?: boolean
 
 	onRemove?: any
 	onSwap?: any
@@ -86,6 +87,7 @@ export const Substitutes = (props: SubstitutesProps) => {
 							onSwap={props.onSwap}
 							swapPlayerId={props.swapPlayerId}
 							swappedFrom={props.swappedFrom}
+							showBoosterBadge={props.showBoosterBadge}
 							// benchPlayer={true}
 							positionLabel={positionLabel}
 							onPlaceholderClick={props.onPlaceholderClick}

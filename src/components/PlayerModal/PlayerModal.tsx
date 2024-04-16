@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import Icon from "@ant-design/icons";
 import { CaptainButtonSvg, DeleteButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { GoalRushSvg, HiddenGemSvg, TripleCaptSvg } from "@/styles/custom-icons";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
 const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {...props} />;
@@ -31,6 +32,14 @@ type PlayerModalProps = {
 	swapPlayerId?: number | null
 	boosters?: boolean
 }
+
+const BoosterIcons: {[type: string]: () => JSX.Element} = {
+	"TripleCaptain": TripleCaptSvg,
+	"ViceVictory": TripleCaptSvg,
+	"GoalRush": GoalRushSvg,
+	"HiddenGem": HiddenGemSvg,
+	"SuperSub": TripleCaptSvg,
+};
 
 export const PlayerModal = (props: PlayerModalProps) => {
 	const { t } = useTranslation();
@@ -84,6 +93,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		[props]);
 
 	const showPointsOverview = player && player.pointsOverview && (!!player.played || player.points);
+	const pointsOverviewList = useMemo(() => getPointsOverviewList(player, t), [player]);
 		
 
 	return (
@@ -189,13 +199,30 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						</thead>
 						<tbody>
 							{
-								getPointsOverviewList(player, t).map((category: any, index: number) =>
+								pointsOverviewList.map((category: any, index: number) =>
 									<tr key={`overview-${index}`}>
 										<td>{category.action}</td>
 										<td>{category.quantity}</td>
 										<td>{category.points}</td>
 									</tr>
 								)
+							}
+							<tr className='points-total'>
+								<td><b>{t("pointsPage.totalRegularPoints")}</b></td>
+								<td></td>
+								<td><b>{pointsOverviewList.reduce((acc: number, v: any) => acc + v.points, 0)}</b></td>
+							</tr>
+							{
+								player.booster ? (
+									<tr className="booster">
+										<td>
+											<Icon component={BoosterIcons[player.booster]} style={{fontSize: 20}} />
+											{t(`boosters.${player.booster}`)}
+										</td>
+										<td></td>
+										<td>{(player.points - player.stats[0].points) || 0}</td>
+									</tr>
+								) : null
 							}
 						</tbody>
 					</PointsOverviewTable> : null

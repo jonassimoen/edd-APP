@@ -224,6 +224,8 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									// boosterWeekStatus={boosterWeekStatus}
 									replacePlayerPointsWithStatsPoints={false}
 									showCaptainBadge={true}
+									showBoosterBadge={true}
+									
 									modalEnabled={true}
 									playerBadgeColor={"#fff"}
 									playerBadgeBgColor={theme.primaryContrast}
@@ -246,6 +248,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									showCaptainBadge={true}
 									modalEnabled={true}
 									replacePlayerPointsWithStatsPoints={true}
+									showBoosterBadge={true}
 
 									onSwap={props.onPlayerSwap}
 									swapPlayerId={props.swapPlayerId}
@@ -257,7 +260,14 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 								<Title level={2}>{t("pointsPage.boostersUsed")} </Title>
 								<BoosterStats
 									boosterWeekStatus={boosterWeekStatus}
-									boostedPlayers={starting.concat(bench).filter(p => p.booster).map(p => pick(p, ["booster","id","short","name"]))}
+									boostedPlayers={
+										starting.concat(bench).filter(p => p.booster).map(p => 
+											Object.assign(
+												{generalPoints: p.stats[0]?.points},
+												pick(p, ["booster","id","short","name","points"])
+											)
+										)
+									}
 									assetsCdn={application.competition.assetsCdn}
 								/>
 								

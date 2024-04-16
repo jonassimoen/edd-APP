@@ -7,7 +7,7 @@ import { GoalRushSvg, HiddenGemSvg, TripleCaptSvg } from "@/styles/custom-icons"
 
 declare type BoosterStatsProps = {
 	boosterWeekStatus: BoostersWeekStatus;
-	boostedPlayers: Partial<Player>[];
+	boostedPlayers: Partial<Player & {generalPoints: number}>[];
 	assetsCdn: string;
 }
 
@@ -43,6 +43,8 @@ export const BoosterStats = (props: BoosterStatsProps) => {
 					usedBoosterTypes.map((type: string) => {
 						const affectedPlayer = boostedPlayers.filter((p: any) => p?.booster?.toLowerCase() == type.toLowerCase())[0];
 						const faceUrl = `${props.assetsCdn}/players/${affectedPlayer?.id}.png`;
+						const extraPoints = affectedPlayer?.points && affectedPlayer?.generalPoints && 
+							affectedPlayer?.points - affectedPlayer?.generalPoints;
 						return (
 							<tr key={type}>
 								<td><Icon component={BoosterIcons[type]} style={{fontSize: 20}} /></td>
@@ -57,7 +59,7 @@ export const BoosterStats = (props: BoosterStatsProps) => {
 									{affectedPlayer?.short}
 								</td>
 								<td>
-									{affectedPlayer?.points || 0}
+									{extraPoints || 0}
 								</td>
 							</tr>
 						);

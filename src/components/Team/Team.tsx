@@ -33,6 +33,7 @@ export declare type TeamProps = {
     captainId?: number;
     captainHasPlayed?: boolean;
     showCaptainBadge?: boolean;
+	showBoosterBadge?: boolean
     // boosterWeekStatus?: BoostersWeekStatus;
     viceCaptainId?: number;
     centerAligned?: boolean | undefined;
@@ -70,7 +71,8 @@ export const Team = (props: TeamProps) => {
 		isSwapAble, 
 		captainHasPlayed, 
 		viceCaptainId, 
-		showCaptainBadge, 
+		showCaptainBadge,
+		showBoosterBadge,
 		onViceCaptainSelect,
 		motmId,
 	} = props;
@@ -115,6 +117,7 @@ export const Team = (props: TeamProps) => {
 										replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
 										showPlayerValue={showPlayerValue}
 										showCaptainBadge={showCaptainBadge}
+										showBoosterBadge={showBoosterBadge}
 										onRemove={onRemove}
 										showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
 										onSwap={onSwap}

@@ -107,8 +107,8 @@ export const PointsOverviewTable = styled.table`
 	border-collapse: collapse;
 
 	thead {
-		background: ${theme.primaryColor};
-		color: #000;
+		background: ${theme.primaryContrast};
+		color: #fff;
 		text-align: center;
 	}
 
@@ -119,6 +119,18 @@ export const PointsOverviewTable = styled.table`
 
 			&:nth-child(1) {
 				text-align: left;
+			}
+		}
+
+		&.points-total {
+			background: ${theme.primaryColor};
+		}
+
+		&.booster td {
+			padding-top: 1.5rem;
+
+			.anticon {
+				margin-right: 1rem;
 			}
 		}
 	}
