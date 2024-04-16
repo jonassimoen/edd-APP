@@ -14,6 +14,7 @@ declare type PlayerBoosterProps = {
 	activatedWeek?: number
 	deadlineWeek?: number
 	assetsCdn?: string
+	boosterLimit: boolean
 	onBoosterActivation: (type?: string) => any
 }
 
@@ -25,7 +26,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 	const assignedPlayerValid = useMemo(() => props.player && Object.keys(props.player).length !== 0, [props.player]);
 	
 	const onActivateClick = () => {
-		if(!boosterUsed && props.onBoosterActivation) {
+		if(!boosterUsed && !props.boosterLimit && props.onBoosterActivation) {
 			props.onBoosterActivation(props.type);
 		}
 	};
@@ -59,7 +60,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 			</div>
 			
 			<Button
-				disabled={boosterUsed}
+				disabled={boosterUsed || props.boosterLimit}
 				onClick={onActivateClick}
 				type="primary"
 				className={boosterActive?"activeBooster":null}

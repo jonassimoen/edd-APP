@@ -1,7 +1,7 @@
 import { AbstractTeam } from "@/components/AbstractTeam/AbstractTeam";
 import { Team } from "@/components/Team/Team";
 import Title from "antd/es/typography/Title";
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { PlayerType } from "@/types/PlayerTypes";
@@ -10,7 +10,6 @@ import { Navigate, useParams } from "react-router-dom";
 import { useGetTeamQuery } from "@/services/teamsApi";
 import { pick } from "lodash";
 import { useSelector } from "react-redux";
-import { useAuth } from "@/lib/stores/AuthContext";
 import { startingListToPositionsList } from "@/lib/helpers";
 import { Substitutes } from "@/components/Substitutes/Substitutes";
 
@@ -25,12 +24,9 @@ import { useGetMatchesQuery } from "@/services/matchesApi";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { Block } from "@/components/Block/Block";
 import { DeadlineBar } from "./TeamStyle";
-import dayjs from "dayjs";
-import { Card } from "antd";
-import Meta from "antd/es/card/Meta";
 import { Alert } from "@/components/UI/Alert/Alert";
-import { TeamBoosterList } from "@/components/TeamBooster/TeamBoosterList";
-import { PlayerBoosterList } from "@/components/PlayerBooster/PlayerBoosterList";
+import { BoosterList } from "@/components/Booster/BoosterList";
+import dayjs from "dayjs";
 
 export const _Team = (props: AbstractTeamType) => {
 	const { id } = useParams();
@@ -43,9 +39,6 @@ export const _Team = (props: AbstractTeamType) => {
 	const application = useSelector((state: StoreState) => state.application);
 
 	const getTeamInfo = (weekId: number) => {
-		if (!teamResult) {
-			return;
-		}
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId"];
 		const selectionProps: any[] = ["booster"];
 		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
@@ -87,16 +80,18 @@ export const _Team = (props: AbstractTeamType) => {
 	};
 
 	useEffect(() => {
-		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess) {
+		if (deadlineInfoSuccess && clubsSuccess && teamSuccess && matchesSuccess && teamResult) {
 			getTeamInfo(props.visibleWeekId);
 		}
-	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess]);
+	}, [clubsSuccess, teamSuccess, matchesSuccess, deadlineInfoSuccess, teamResult]);
 
 	const startingByPositions = useMemo(() => startingListToPositionsList(props.starting, application.competition.lineupPositionRows), [props.starting]);
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
 	const notTeamOwner = useMemo(() => teamResult && teamResult.team && teamResult.team.userId && user && user.id &&( user.id != teamResult.team.userId), [teamResult, user]);
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const boostedPlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => p?.booster), [props.starting, props.bench]);
+	const unboostedPlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => !p?.booster), [props.starting, props.bench]);
 	
 	if(teamError) {
 		return (
@@ -191,18 +186,16 @@ export const _Team = (props: AbstractTeamType) => {
 							<SaveOutlined style={{ marginRight: "10px" }} />
 							{t("team.saveTeam")}
 						</Button>
-						<PlayerBoosterList 
-							assetsCdn={application.competition.assetsCdn}
-							playersWithBoosters={props.starting?.concat(props.bench).filter((p: any) => p?.booster)}
-							goalRushWeek={props.boosters.goalRush}
-							hiddenGemWeek={props.boosters.hiddenGem}
-							deadlineWeek={deadlineWeek}
-						/>
-						<TeamBoosterList 
+						<BoosterList 
 							tripleCaptain={props.boosters.tripleCaptain}
 							viceVictory={props.boosters.viceVictory}
 							superSub={props.boosters.superSub}
 							deadlineWeek={deadlineWeek}
+							assetsCdn={application.competition.assetsCdn}
+							playersWithBoosters={boostedPlayers}
+							goalRush={props.boosters.goalRush}
+							hiddenGem={props.boosters.hiddenGem}
+							possiblePlayers={unboostedPlayers}
 						/>
 					</Col>
 					<Col lg={12} md={12} sm={24} xs={24}>

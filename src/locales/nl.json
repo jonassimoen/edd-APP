@@ -63,7 +63,9 @@
     "teamBoosters": "Team boosters",
     "teamBooster": "Team booster",
     "activated": "geactiveerd",
-    "playerBoosters": "Speler boosters"
+    "playerBoosters": "Speler boosters",
+    "confirm": "Bevestig",
+    "cancel": "Annuleer"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -300,6 +302,9 @@
     "hiddenGem": "Verborgen diamant",
     "goalRush": "Goal rush",
     "used": "Reeds gebruikt",
-    "available": "Beschikbaar"
+    "available": "Beschikbaar",
+    "confirmMsg": "Als je deze booster activeert is er <b>geen mogelijkheid om dit ongedaan te maken</b>. Ben je zeker dat je deze wilt activeren?",
+    "affectedPlayer": "Geselecteerde speler",
+    "noPlayerSelected": "Je moet een speler selecteren voor deze booster!"
   }
 }

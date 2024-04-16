@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TeamBoosterListStyle = styled.div`
+export const BoosterListStyle = styled.div`
 	p {
 		padding: 0.75rem;
 	}

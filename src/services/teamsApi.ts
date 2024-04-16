@@ -42,7 +42,7 @@ export const teamsApi = createApi({
 			})
 		}),
 		
-		activateBooster: builder.mutation<{message: string}, { teamId: number, type: string }>({
+		activateBooster: builder.mutation<{message: string}, { teamId: number, type: string, playerId: number }>({
 			invalidatesTags: ["userTeam"],
 			query: ({ teamId, ...data }) => ({
 				url: `${teamId}/booster`,

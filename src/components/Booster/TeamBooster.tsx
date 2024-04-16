@@ -2,21 +2,25 @@ import { useTranslation } from "react-i18next";
 import { TeamBoosterStyle } from "./TeamBoosterStyle";
 import Icon from "@ant-design/icons";
 import { Button } from "../UI/Button/Button";
-import { ComponentType, SVGProps } from "react";
+import { ComponentType, SVGProps, useMemo } from "react";
 
 declare type TeamBoosterProps = {
 	type: string;
 	iconSvg?: ComponentType<SVGProps<SVGSVGElement>>
-	currentlyActive?: boolean;
-	unusable?: boolean;
+	activatedWeek?: number
+	deadlineWeek?: number
+	boosterLimit: boolean
 	onActivation: (type: string) => any;
 }
 
 export const TeamBooster = (props: TeamBoosterProps) => {
 	const {t} = useTranslation();
+	
+	const boosterUsed = useMemo(() => !!(props.activatedWeek && props.activatedWeek <= props.deadlineWeek), [props]);
+	const boosterActive = useMemo(() => !!(props.activatedWeek && props.activatedWeek == props.deadlineWeek), [props]);
 
 	const onActivateClick = () => {
-		if(!props.unusable) {
+		if(!boosterActive && !props.boosterLimit && !boosterUsed) {
 			props.onActivation(props.type);
 		}
 	};
@@ -29,11 +33,17 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 				style={{display: "block", fontSize: 50, marginBottom: 20}}
 			/>
 			<Button
-				disabled={props.unusable}
+				disabled={boosterUsed || props.boosterLimit}
 				onClick={onActivateClick}
 				type="primary"
+				className={boosterActive?"activeBooster":null}
 			>
-				{props.currentlyActive?t("boosters.active"):t("boosters.activate")}
+				{boosterActive ?
+					t("boosters.active") 
+					: 
+					boosterUsed ? 
+						`${t("boosters.used")}: \n ${t("general.footballWeek")} ${props.activatedWeek}`
+						: t("boosters.activate")}
 			</Button>
 		</TeamBoosterStyle>
 	);
