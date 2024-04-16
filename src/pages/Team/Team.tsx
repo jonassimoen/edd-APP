@@ -96,6 +96,7 @@ export const _Team = (props: AbstractTeamType) => {
 	const deadlineWeek = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const deadlineDate = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineDate, [deadlineInfo]);
 	const notTeamOwner = useMemo(() => teamResult && teamResult.team && teamResult.team.userId && user && user.id &&( user.id != teamResult.team.userId), [teamResult, user]);
+	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	
 	if(teamError) {
 		return (
@@ -120,6 +121,10 @@ export const _Team = (props: AbstractTeamType) => {
 				{
 					teamResult.team && teamResult.team.players && teamResult.team.players.length === 0 && 
 						<Navigate to="/new" />
+				}
+				{
+					!gameInProgress && 
+						<Navigate to={`/points/${id}`} />
 				}
 				<Row>
 					{

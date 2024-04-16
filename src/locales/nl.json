@@ -106,7 +106,8 @@
     "dribblesSuccessPerTwoLabel": "Per 2 succesvolle dribbels",
     "duelsWonMoreThanLostLabel": "Meer gewonnen dan verloren duels",
     "interceptionsPerSevenLabel": "Intercepties per zeven",
-    "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3"
+    "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3",
+    "endWinnerSelectionsLabel": "Eindwinnaar (per speeldagselectie)"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {

@@ -14,12 +14,11 @@ type RulesState = {
 export const Rules = () => {
 	const { data: page, isLoading: pageLoading } = useGetPageQuery("rules");
 	const [state, setState] = useState<RulesState>({
-		text: "",
+		text: "<p>Geen rules.</p>",
 	});
-
 	useEffect(() => {
 		const body = page && page[0] && page[0].translation && page[0].translation[0] && page[0].translation[0].body;
-		setState({ ...state, text: body || "" });
+		setState({ ...state, text: body || "<p>Geen rules.</p>" });
 	}, [page]);
 
 	return (

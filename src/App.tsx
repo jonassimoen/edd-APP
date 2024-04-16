@@ -46,11 +46,17 @@ const App = () => {
 
 	useEffect(() => {
 		const latestFetch = +JSON.parse(localStorage.getItem("static_latest_fetch"));
-		if(!latestFetch || latestFetch < new Date(data?.rft).getTime()) {
-			getPlayers().unwrap().then((p: Player[]) => dispatch(setPlayers(p)));
-			getClubs().unwrap().then((c: Club[]) => dispatch(setClubs(c)));
+		const players = localStorage.getItem("_static_players");
+		const clubs = localStorage.getItem("_static_clubs");
+		if(!latestFetch || !players || !clubs || latestFetch < new Date(data?.rft).getTime()) {
+			getPlayers().unwrap().then(
+				(p: Player[]) => localStorage.setItem("_static_players", JSON.stringify(p)));
+			getClubs().unwrap().then(
+				(c: Club[]) => localStorage.setItem("_static_clubs", JSON.stringify(c)));
 			localStorage.setItem("static_latest_fetch", JSON.stringify(Date.now()));
 		}
+		dispatch(setPlayers(JSON.parse(players)));
+		dispatch(setClubs(JSON.parse(clubs)));
 	}, [data?.rft]);
 	
 
