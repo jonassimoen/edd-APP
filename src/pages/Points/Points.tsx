@@ -168,9 +168,11 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const captainBench = useMemo(() => bench.find(player => player && player.id === captainId), [bench, captainId]);
 	// todo: check variable
 	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.minutesPlayed > 0) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
+	const currentWeekName = useMemo(() => weeks?.find((week: Week) => week.id === visibleWeekId)?.name, [weeks, visibleWeekId]);
 	const startingByPositions = startingListToPositionsList(starting, competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");
+
 	return (
 		<Spin spinning={clubsLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{
@@ -182,7 +184,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									day={visibleWeekId}
 									max={displayWeek ? displayWeek : visibleWeekId}
 									min={1}
-									name={t(`general.weeks.${weeks.find((week: Week) => week.id === visibleWeekId)?.name}`)}
+									name={currentWeekName?(`general.weeks.${currentWeekName}`):null}
 									onPrev={(e: any) => props.onDayChange(false)}
 									onNext={(e: any) => props.onDayChange(true)}
 								/>
