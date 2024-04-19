@@ -243,7 +243,7 @@ export const Player = (props: PlayerProps) => {
 				// todo
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				<NoPlayer onClick={onPlaceholderClick ? (e: any) => onPlaceholderClick(player) : () => { }}>
-					<AddIcon style={{ fontSize: "2em", color: theme.primaryContrast, cursor: "pointer" }} />
+					<AddIcon className="add-icon" />
 				</NoPlayer>
 			}
 

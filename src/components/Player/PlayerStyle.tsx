@@ -105,6 +105,15 @@ export const OpponentBadge = styled.div`
 
 export const NoPlayer = styled.div`
 	margin: 0 auto;
+	position: absolute;
+	left:0;right:0;
+	top:25%;
+
+	.add-icon {
+		fontSize: 2em;
+		color: ${theme.primaryContrast};
+		cursor: pointer;
+	}
 ` as any;
 
 export const Value = styled.div`
