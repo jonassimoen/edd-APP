@@ -62,7 +62,7 @@ export const TransfersList = (props: TransfersListProps) => {
 	if(showWeek) {
 		columns.push({
 			key: "weeId",
-			title: t("general.footballWeek"),
+			title: t("general.matchday"),
 			width: "20%",
 			dataIndex: "weekId",
 			render: (text: string, team: any) => {

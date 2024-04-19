@@ -157,7 +157,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 					<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
 					<Row>
 						<Col lg={12} md={24} sm={24} xs={24} className="left">
-							<Title level={2}>{t("general.footballLineup")}</Title>
+							<Title level={2}>{t("general.lineup")}</Title>
 							<Input
 								onChange={props.onTeamNameChange}
 								style={{ maxWidth: "100%" }}
@@ -226,7 +226,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 						</Col>
 						<Col lg={12} md={24} sm={24} xs={24} className="right">
 
-							<Title level={2}>{t("general.footballAllPlayers")}</Title>
+							<Title level={2}>{t("general.allPlayers")}</Title>
 							<Element name="all-players">
 								<PlayerList
 									data={players}

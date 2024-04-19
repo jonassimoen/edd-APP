@@ -208,7 +208,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 								/>
 							</Block>
 							<Block style={{ marginTop: "10px" }}>
-								<Title level={2}>{t("general.footballLineup")}</Title>
+								<Title level={2}>{t("general.lineup")}</Title>
 								<Team widthRatio={15}
 									heightRatio={10}
 									clubs={clubs}
@@ -292,7 +292,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 							{
 								matches && matches.length && visibleWeekId ?
 									<Block style={{ marginTop: "10px" }}>
-										<Title level={2}>{t("general.footballCalendar")}</Title>
+										<Title level={2}>{t("general.calendar")}</Title>
 										<Calendar
 											assetsCdn={competition.assetsCdn}
 											size={30}

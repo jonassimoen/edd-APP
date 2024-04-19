@@ -18,19 +18,20 @@
     "howDoesItWork": "Hoe werkt het?"
   },
   "general": {
-    "footballLineup": "Opstelling",
-    "footballAllPlayers": "Spelers",
+    "lineup": "Opstelling",
+    "allPlayers": "Spelers",
     "pick": "Kies",
     "choosePlayer": "Kies speler",
-    "footballCalendar": "Wedstrijden",
+    "calendar": "Wedstrijden",
     "budgetFilterPrefix": "Max. €",
     "budgetFilterSuffix": "miljoen",
-    "footballAllBudget": "Onbeperkt budget",
-    "footballAllPositions": "Alle posities",
-    "footballAllClubs": "Alle landen",
+    "allBudget": "Onbeperkt budget",
+    "allPositions": "Alle posities",
+    "allClubs": "Alle ploegen",
     "playersListSearchInputPlaceholder": "Zoek speler op naam",
-    "footballWeek": "Speeldag",
+    "matchday": "Speeldag",
     "week": "Week",
+    "allWeeks": "Alle speeldagen",
     "weeks": {
       "quarterfinal": "Kwartfinale",
       "semifinal": "Halve finale",
@@ -151,7 +152,7 @@
   },
   "form": {
     "positionId": {
-      "tooltip": ""
+      "tooltip": "Positie"
     }
   },
   "editBtn": "Wijzig",
@@ -224,9 +225,21 @@
     "interceptionsColumnForAllPlayersTable": "Intercepties",
     "againstColumnForAllPlayersTable": "Tegendoelpunten",
     "cleanColumnForAllPlayersTable": "Geen tegendoelpunten",
+    "yellowColumnForAllPlayersTable": "Gele kaarten",
+    "redColumnForAllPlayersTable": "Rode kaarten",
     "dribbleAccuracyColumnForAllPlayersTable": "Percentage succesvolle dribbels",
     "timePlayedColumnForAllPlayersTable": "Minuten gespeeld",
-    "matchPlayedColumnForAllPlayersTable": "Matches gespeeld"
+    "matchPlayedColumnForAllPlayersTable": "Matches gespeeld",
+    "percentageInTeamForAllPlayersTable": "% in team",
+    "percentageCaptainForAllPlayersTable": "% kapitein",
+    "roiForAllPlayersTable": "ROI",
+    "playersGeneralStatsTitle": "Spelers statistieken",
+    "attackingStats": "Aanvallend",
+    "defendingStats": "Verdedigend",
+    "cardStats": "Kaarten",
+    "playStats": "Speeltijd",
+    "userStats": "Gebruikers",
+    "percentageViceCaptainForAllPlayersTable": "% vice"
   },
   "team": {
     "saveTeam": "Team opslaan",

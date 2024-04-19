@@ -22,7 +22,7 @@ export const MatchdaySelector = (props: MatchdaySelectorProps) => {
 				className={previousDisabled ? "disabled" : ""}
 				onClick={previousDisabled ? () => ({}) : props.onPrev}
 			/>
-			{t("general.footballWeek")} {props.day} {props.name ? ` - ${props.name}` : ""}
+			{t("general.matchday")} {props.day} {props.name ? ` - ${props.name}` : ""}
 			<ButtonStyle
 				type="next"
 				className={nextDisabled ? "disabled" : ""}

@@ -74,7 +74,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	});
 
 	const positions = [
-		{ id: -1, name: <span className={"prefixed-label"}> <TagsOutlined style={{ marginRight: 5 }} /> {t("general.footballAllPositions")} </span> },
+		{ id: -1, name: <span className={"prefixed-label"}> <TagsOutlined style={{ marginRight: 5 }} /> {t("general.allPositions")} </span> },
 		{ id: 1, name: t("player.goalkeeper") },
 		{ id: 2, name: t("player.defender") },
 		{ id: 3, name: t("player.midfielder") },
@@ -82,7 +82,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	];
 
 	const budgets = [
-		{ text: <span className={"prefixed-label"}> <EuroOutlined style={{ marginRight: 5 }} /> {t("general.footballAllBudget")} </span>, value: 100 },
+		{ text: <span className={"prefixed-label"}> <EuroOutlined style={{ marginRight: 5 }} /> {t("general.allBudget")} </span>, value: 100 },
 		{ text: `${t("general.budgetFilterPrefix")} 10 ${t("general.budgetFilterSuffix")}`, value: 10 },
 		{ text: `${t("general.budgetFilterPrefix")} 7 ${t("general.budgetFilterSuffix")}`, value: 7 },
 		{ text: `${t("general.budgetFilterPrefix")} 6 ${t("general.budgetFilterSuffix")}`, value: 6 },
@@ -91,7 +91,7 @@ export const PlayerList = (props: PlayerListProps) => {
 
 	const clubsList = [{
 		id: -1,
-		name: <span className={"prefixed-label"}> <StarOutlined style={{ marginRight: 5 }} /> {t("general.footballAllClubs")} </span>
+		name: <span className={"prefixed-label"}> <StarOutlined style={{ marginRight: 5 }} /> {t("general.allClubs")} </span>
 	}]
 		.concat(clubs.map((c: Club) => ({ id: c.id, name: <span>{c.name}</span> })));
 

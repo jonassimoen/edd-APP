@@ -127,14 +127,14 @@ export const _Team = (props: AbstractTeamType) => {
 							<Col lg={24} md={24} sm={24} xs={24}>
 								<Block>
 									<DeadlineBar>
-										<p>{`${t("general.footballWeek")} ${deadlineWeek} deadline:`} <span className="deadline-date">{dayjs(deadlineDate).format("dddd DD MMMM HH:mm")}</span></p>
+										<p>{`${t("general.matchday")} ${deadlineWeek} deadline:`} <span className="deadline-date">{dayjs(deadlineDate).format("dddd DD MMMM HH:mm")}</span></p>
 									</DeadlineBar>
 								</Block>
 							</Col>)
 						|| null
 					}
 					<Col lg={12} md={12} sm={24} xs={24}>
-						<Title level={2}>{t("general.footballLineup")}</Title>
+						<Title level={2}>{t("general.lineup")}</Title>
 						<Team
 							widthRatio={15}
 							heightRatio={10}
@@ -199,7 +199,7 @@ export const _Team = (props: AbstractTeamType) => {
 						/>
 					</Col>
 					<Col lg={12} md={12} sm={24} xs={24}>
-						<Title level={2}>{t("general.footballCalendar")}</Title>
+						<Title level={2}>{t("general.calendar")}</Title>
 						<Calendar
 							assetsCdn={application.competition.assetsCdn}
 							weekId={props.visibleWeekId}

@@ -248,7 +248,7 @@ const _Transfers = (props: AbstractTeamType) => {
 															<Title level={2}>{t("transfersPage.transfersBlockTitle")}</Title>
 															<React.Fragment>
 																<div style={{ textAlign: "center" }}>
-																	<Title level={4}>{`${t("general.footballWeek")} ${deadlineWeek}`}</Title>
+																	<Title level={4}>{`${t("general.matchday")} ${deadlineWeek}`}</Title>
 																</div>
 																<TransfersList
 																	data={deadlineWeekTransfersFormatted}
@@ -301,7 +301,7 @@ const _Transfers = (props: AbstractTeamType) => {
 															</div>
 														</Block>
 														<Block>
-															<Title level={2}>{t("general.footballLineup")}</Title>
+															<Title level={2}>{t("general.lineup")}</Title>
 															<Team
 																widthRatio={15}
 																heightRatio={10}
@@ -328,7 +328,7 @@ const _Transfers = (props: AbstractTeamType) => {
 													</Col>
 													<Col md={12} sm={12} xs={24}>
 														<Block>
-															<Title level={2}>{t("general.footballAllPlayers")}</Title>
+															<Title level={2}>{t("general.allPlayers")}</Title>
 															<Element name="all-players">
 																<PlayerList
 																	clubs={clubs}

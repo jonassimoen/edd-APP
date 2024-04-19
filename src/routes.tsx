@@ -52,63 +52,63 @@ export const router = createBrowserRouter([
 			errorElement: <ErrorPage />,
 			children: [
 				{
-					path: "/",
+					path: "",
 					element: <Navigate to={{ pathname: "/home" }} />,
 				},
 				{
-					path: "/home",
+					path: "home",
 					element: <Home />
 				},
 				{
-					path: "/new",
+					path: "new",
 					element: <ProtectedRoute access={true} redirectPath="/home"><NewTeam /></ProtectedRoute>
 				},
 				{
-					path: "/points/:id", 
-					element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
+					path: "points/:id", 
+					element: <ProtectedRoute access={true} redirectPath="home"><PointsPage /></ProtectedRoute>
 				},
 				{
-					path: "/public/:id", //todo
-					element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
+					path: "public/:id", //todo
+					element: <ProtectedRoute access={true} redirectPath="home"><PointsPage /></ProtectedRoute>
 				},
 				{
-					path: "/team/:id",
+					path: "team/:id",
 					element: <ProtectedRoute access={true} redirectPath="/home"><TeamPage /></ProtectedRoute>
 				},
 				{
-					path: "/transfers/:id", 
+					path: "transfers/:id", 
 					element: <ProtectedRoute access={true} redirectPath="/home"><TransfersPage /></ProtectedRoute>
 				},
 				{
-					path: "/edit/:id",
+					path: "edit/:id",
 					element: <ProtectedRoute access={true} redirectPath="/home"><EditTeam /></ProtectedRoute>
 				},
 				{
-					path: "/profile",
+					path: "profile",
 					element: <ProtectedRoute access={true} redirectPath="/home"><Profile /></ProtectedRoute>
 				},
 				{
-					path: "/deadlines", //todo
+					path: "deadlines", //todo
 					element: <ProtectedRoute access={true} redirectPath="/home"><Deadlines /></ProtectedRoute>
 				},
 				{
-					path: "/stats",
+					path: "stats",
 					element: <ProtectedRoute access={true} redirectPath="/home"><Stats /></ProtectedRoute>
 				},
 				{
-					path: "/match/:id", 
+					path: "match/:id", 
 					element: <ProtectedRoute access={true} redirectPath="/home"><MatchContainer /></ProtectedRoute>
 				},
 				{
-					path: "/rankings",
+					path: "rankings",
 					element: <Rankings />
 				},
 				{
-					path: "/rules", 
+					path: "rules", 
 					element: <Rules />,
 				},
 				{
-					path: "/admin",
+					path: "admin",
 					element: <ProtectedRoute access={true} redirectPath='/home'><Admin redirectPath='/home' /></ProtectedRoute>,
 					children: [
 						{
@@ -142,11 +142,11 @@ export const router = createBrowserRouter([
 					]
 				},
 				{
-					path: "/login/callback",
+					path: "login/callback",
 					element: <LoginCallback />,
 				},
 				{
-					path: "/welcome",
+					path: "welcome",
 					element: <ProtectedRoute access={true} redirectPath="/home"><Welcome /></ProtectedRoute>,
 				},
 				{

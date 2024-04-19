@@ -31,7 +31,6 @@ const detectOptions = {
 	// cookieOptions: { path: '/', sameSite: 'strict' }
 };
 
-
 i18next
 	.use(LanguageDetector)
 	.use(initReactI18next)
@@ -39,7 +38,7 @@ i18next
 		interpolation: {
 			escapeValue: false,
 		},
-		// lng: 'nl',
+		// lng: "nl",
 		fallbackLng: "nl",
 		resources: {
 			nl: { translation: nl },

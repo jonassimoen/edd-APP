@@ -69,7 +69,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 					t("boosters.active") 
 					: 
 					boosterUsed ? 
-						`${t("boosters.used")}: \n ${t("general.footballWeek")} ${props.activatedWeek}`
+						`${t("boosters.used")}: \n ${t("general.matchday")} ${props.activatedWeek}`
 						: t("boosters.activate")}
 			</Button>
 		</PlayerBoosterStyle>

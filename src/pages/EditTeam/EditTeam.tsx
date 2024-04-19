@@ -157,7 +157,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 				team && initializedExternally && players && clubs &&
 				<Row>
 					<Col md={12} sm={12} xs={24} className="left">
-						<Title level={2}>{t("general.footballLineup")}</Title>
+						<Title level={2}>{t("general.lineup")}</Title>
 						<Block>
 							<NewGameStats
 								budget={budget}
@@ -210,7 +210,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 					</Col>
 					<Col md={12} sm={12} xs={24} className="right">
 						<Block>
-							<Title level={2}>{t("general.footballAllPlayers")}</Title>
+							<Title level={2}>{t("general.allPlayers")}</Title>
 							<Element name="all-players">
 								<PlayerList
 									data={players}

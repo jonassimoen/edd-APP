@@ -223,7 +223,7 @@ export const GameManagement = () => {
 								const week = weeks && weeks.find((week: Week) => week.id === weekId);
 								console.log(week);
 								if(week) {
-									return (<p>{week && week?.name ? t(`general.weeks.${week?.name}`) : `${t("general.footballWeek")} ${weekId}`}</p>);
+									return (<p>{week && week?.name ? t(`general.weeks.${week?.name}`) : `${t("general.matchday")} ${weekId}`}</p>);
 								} else {
 									return (<p>-</p>);
 								}
