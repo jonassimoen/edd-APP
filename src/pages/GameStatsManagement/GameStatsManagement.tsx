@@ -246,7 +246,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			),
 		},
 	].concat(
-		config.STATISTICS.flat().map((stat: any) => ({
+		config.STATISTICS.map((stat: any) => stat.inputs).flat().map((stat: any) => ({
 			title: () => (
 				<Tooltip
 					placement="top"
