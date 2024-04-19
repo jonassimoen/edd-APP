@@ -17,15 +17,12 @@ import { Navigate, useParams } from "react-router-dom";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { PlayerType } from "@/types/PlayerTypes";
 import { theme } from "@/styles/theme";
-import { useGetClubsQuery } from "@/services/clubsApi";
 import { TransfersList } from "@/components/TransfersList/TransfersList";
 import { Button } from "@/components/UI/Button/Button";
-import Icon from "@ant-design/icons/lib/components/Icon";
 import { CloseCircleFilled, SaveFilled } from "@ant-design/icons";
 import { Element } from "react-scroll";
 import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { useGetMatchesQuery } from "@/services/matchesApi";
-import { useGetPlayersQuery } from "@/services/playersApi";
 import { notification } from "antd";
 import { TransfersOverview } from "@/components/Stats/TransfersOverview";
 import { ConfirmModal } from "@/components/ConfirmModal/ConfirmModal";
@@ -45,7 +42,6 @@ const _Transfers = (props: AbstractTeamType) => {
 		performingTransferReset: false,
 		transferConfirmModalVisible: false,
 	});
-	const application = useSelector((state: StoreState) => state.application);
 	const { user, teams } = useAppSelector((state) => state.userState);
 
 	const { id } = useParams();
@@ -53,9 +49,11 @@ const _Transfers = (props: AbstractTeamType) => {
 
 	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess, error: teamErrorData } = useGetTeamQuery(+(id || 0));
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
-	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
-	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
+	
+	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	const players = JSON.parse(localStorage.getItem("_static_players"));
+	const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
 
 	useEffect(() => {
 		if (teamSuccess) {
@@ -97,11 +95,11 @@ const _Transfers = (props: AbstractTeamType) => {
 					.reduce((acc: any, player: any) => {
 						const wasTfed = teamResult.transfers.find((tf: any) => tf.inId === player.id);
 						const playerValue = wasTfed ?
-							roundNextHalf(player.value + (player.value * (application.competition.transferTaxPercentage || 0) / 100)) :
+							roundNextHalf(player.value + (player.value * (competition.transferTaxPercentage || 0) / 100)) :
 							player.value;
 						return acc + playerValue;
 					}, 0);
-				return application.competition.budget - playersValue;
+				return competition.budget - playersValue;
 			};
 
 			const budget = teamResult.team.budget !== null ?
@@ -202,22 +200,22 @@ const _Transfers = (props: AbstractTeamType) => {
 
 	const team = useMemo(() => teamResult && teamResult.team, [teamResult]);
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
-	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [deadlineInfo]);
+	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek > competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	// TODO
 	const enabledWildOrFreeHit = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [boosters]);
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]), [starting, bench]);
 	const remainingTransfers = useMemo(() => {
 		let remainingTransfers = null;
-		if (application.competition.weeklyTransfers) {
-			remainingTransfers = application.competition.transfersAllowed - deadlineWeekTransfersFormattedWithoutExtra.length;
-		} else if (application.competition.transferCanBeSaved) {
-			remainingTransfers = application.competition.transfersAllowed * (deadlineWeek - 1) - (deadlineWeekTransfersFormattedWithoutExtra.length + pastTransfersFormatted.length);
+		if (competition.weeklyTransfers) {
+			remainingTransfers = competition.transfersAllowed - deadlineWeekTransfersFormattedWithoutExtra.length;
+		} else if (competition.transferCanBeSaved) {
+			remainingTransfers = competition.transfersAllowed * (deadlineWeek - 1) - (deadlineWeekTransfersFormattedWithoutExtra.length + pastTransfersFormatted.length);
 		} else {
-			remainingTransfers = application.competition.transfersAllowed - (deadlineWeekTransfersFormattedWithoutExtra.length + pastTransfersFormatted.length);
+			remainingTransfers = competition.transfersAllowed - (deadlineWeekTransfersFormattedWithoutExtra.length + pastTransfersFormatted.length);
 		}
 		return remainingTransfers;
-	}, [application, deadlineWeekTransfersFormattedWithoutExtra, pastTransfersFormatted, deadlineWeek]);
+	}, [competition, deadlineWeekTransfersFormattedWithoutExtra, pastTransfersFormatted, deadlineWeek]);
 	const canTransferOut = useMemo(() => remainingTransfers > 0, [remainingTransfers]);
 
 	const startingPicked = useMemo(() => starting.filter(player => player && player.id), [starting]);
@@ -255,7 +253,7 @@ const _Transfers = (props: AbstractTeamType) => {
 																<TransfersList
 																	data={deadlineWeekTransfersFormatted}
 																	showHeader={true}
-																	tax={application.competition.transferTaxPercentage}
+																	tax={competition.transferTaxPercentage}
 																	size={15}
 																/>
 																<div style={{ textAlign: "center", paddingTop: "5px" }}>
@@ -295,7 +293,7 @@ const _Transfers = (props: AbstractTeamType) => {
 															<div style={{ marginBottom: "15px" }}>
 																<TransfersOverview
 																	budget={budget}
-																	totalPlayers={application.competition.lineupSize + application.competition.benchSize}
+																	totalPlayers={competition.lineupSize + competition.benchSize}
 																	totalPlayersSelected={startingPicked.length + benchPicked.length}
 																	minusPoints={0}
 																	remainingFreeTransfers={remainingTransfers}
@@ -324,7 +322,7 @@ const _Transfers = (props: AbstractTeamType) => {
 																onRemove={canTransferOut && ((player: Player) => props.onTransferPlayerOut(player))}
 																onPlaceholderClick={null}
 																actionLessPlayerIds={null}
-																assetsCdn={application.competition.assetsCdn}
+																assetsCdn={competition.assetsCdn}
 															/>
 														</Block>
 													</Col>
@@ -343,10 +341,10 @@ const _Transfers = (props: AbstractTeamType) => {
 																	playerType={PlayerType.SoccerPortrait}
 																	actionLabel={t("transferPage.transferButtonLabel")}
 																	data={players}
-																	playerTax={application.competition.transferTaxPercentage}
+																	playerTax={competition.transferTaxPercentage}
 																	onPick={onPlayerIn}
 																	action
-																	assetsCdn={application.competition.assetsCdn}
+																	assetsCdn={competition.assetsCdn}
 																	showHeader={false}
 																	size={10}
 																/>

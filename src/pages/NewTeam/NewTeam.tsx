@@ -9,9 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { Element, scroller } from "react-scroll";
-import { useGetPlayersQuery } from "@/services/playersApi";
 import Title from "antd/es/typography/Title";
-import { useGetClubsQuery } from "@/services/clubsApi";
 import { PlayerType } from "@/types/PlayerTypes";
 import { NewTeamStyle } from "./NewTeamStyle";
 import { Button } from "@/components/UI/Button/Button";
@@ -33,8 +31,9 @@ declare type NewTeamState = {
 
 const _NewTeam = (props: AbstractTeamType) => {
 	const { t } = useTranslation();
-	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
-	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
+	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	const players = JSON.parse(localStorage.getItem("_static_players"));
+	const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
 	const [getTeam, { data: teamData, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess }] = useLazyGetTeamQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
 	// add team
@@ -93,13 +92,12 @@ const _NewTeam = (props: AbstractTeamType) => {
 			.catch(() => {/*todo*/ });
 	};
 
-	const application = useSelector((state: StoreState) => state.application);
 	// matches from props/state
 	const { starting, bench, captainId, viceCaptainId, teamName, budget, savingTeamPending, activePositionFilter } = props;
 	const { redirectToPayments, hasPlayers } = state;
 
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(props.starting as any, props.bench as any), [2, 5, 5, 3]), [props.starting, props.bench]);
-	const totalPlayersToPick = application.competition.lineupSize + application.competition.benchSize;
+	const totalPlayersToPick = competition.lineupSize + competition.benchSize;
 	const startingPicked = useMemo(() => starting?.filter(player => !!player.id), [props.starting]);
 	const benchPicked = useMemo(() => bench?.filter(player => !!player.id), [props.bench]);
 	const totalPlayersPicked = useMemo(() => (startingPicked?.length || 0) + (benchPicked?.length || 0), [startingPicked, benchPicked]);
@@ -133,7 +131,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 								heightRatio={10}
 								clubs={clubs}
 								bg={""}
-								assetsCdn={application.competition.assetsCdn}
+								assetsCdn={competition.assetsCdn}
 								selection={startingByPositions}
 								showCaptainBadge={true}
 								showPlayerValue={true}
@@ -193,7 +191,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 									action={true}
 									isPickable={props.isPickAble}
 									onPick={props.pickPlayer}
-									assetsCdn={application.competition.assetsCdn}
+									assetsCdn={competition.assetsCdn}
 								/>
 							</Element>
 						</Col>

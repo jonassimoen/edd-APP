@@ -19,7 +19,7 @@ import { useGetTeamQuery } from "./services/teamsApi";
 import { useGetDeadlineInfoQuery } from "./services/weeksApi";
 import { useLazyGetPlayersQuery } from "./services/playersApi";
 import { useLazyGetClubsQuery } from "./services/clubsApi";
-import { setClubs, setPlayers } from "./reducers/application";
+import { clubsLoading, playersLoading, setClubs, setPlayers } from "./reducers/application";
 import { useDispatch } from "react-redux";
 
 dayjs.extend(weekday);
@@ -49,6 +49,8 @@ const App = () => {
 		const players = localStorage.getItem("_static_players");
 		const clubs = localStorage.getItem("_static_clubs");
 		if(!latestFetch || !players || !clubs || latestFetch < new Date(data?.rft).getTime()) {
+			dispatch(playersLoading());
+			dispatch(clubsLoading());
 			getPlayers().unwrap().then(
 				(p: Player[]) => localStorage.setItem("_static_players", JSON.stringify(p)));
 			getClubs().unwrap().then(

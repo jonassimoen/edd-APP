@@ -19,24 +19,22 @@ import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { PlayerType } from "@/types/PlayerTypes";
 import { theme } from "@/styles/theme";
 import { Element, scroller } from "react-scroll";
-import { useGetClubsQuery } from "@/services/clubsApi";
 import { SaveOutlined } from "@ant-design/icons";
 import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { useGetMatchesQuery } from "@/services/matchesApi";
-import { useGetPlayersQuery } from "@/services/playersApi";
 import { Button } from "@/components/UI/Button/Button";
 import { Alert } from "@/components/UI/Alert/Alert";
 
 const _EditTeam = (props: AbstractTeamType) => {
 	const { user, teams } = useAppSelector((state) => state.userState);
-	const application = useSelector((state: StoreState) => state.application);
 	const [t] = useTranslation();
 	const { id } = useParams();
 	const { data: teamResult, isSuccess: teamSucces, isError: teamError, error: teamErrorData } = useGetTeamQuery(+id || 0);
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const { data: matches, isSuccess: matchesSuccess, isLoading: matchesLoading } = useGetMatchesQuery();
-	const { data: clubs, isSuccess: clubsSuccess, isLoading: clubsLoading } = useGetClubsQuery();
-	const { data: players, isSuccess: playersSuccess, isLoading: playersLoading } = useGetPlayersQuery();
+	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	const players = JSON.parse(localStorage.getItem("_static_players"));
+	const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
 
 	const getTeamInfo = () => {
 		if (!teamSucces) {
@@ -61,7 +59,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 
 		const budget = result.team.budget !== null
 			? result.team.budget
-			: result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
+			: result.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
 
 		const boosters = {
 			tripleCaptain: teamResult.team.tripleCaptain,
@@ -113,7 +111,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		activePositionFilter,
 	} = props;
 
-	const totalPlayersToPick = application.competition.lineupSize + application.competition.benchSize;
+	const totalPlayersToPick = competition.lineupSize + competition.benchSize;
 	const startingPicked = starting.filter(player => !!player);
 	const benchPicked = bench.filter(player => !!player);
 	const totalPlayersPicked = startingPicked.length + benchPicked.length;
@@ -126,7 +124,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		[team, deadlineInfo]);
 	const gameOfficialyStarted = useMemo(
 		() => team && team.id && deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek
-			&& deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek,
+			&& deadlineInfo.deadlineInfo.deadlineWeek > competition.officialStartWeek,
 		[team, deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	// TODO
@@ -171,7 +169,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 								heightRatio={10}
 								bg={teamBackground}
 								selection={startingByPositions}
-								assetsCdn={application.competition.assetsCdn}
+								assetsCdn={competition.assetsCdn}
 								playerType={PlayerType.SoccerPortrait}
 								captainId={captainId}
 								viceCaptainId={viceCaptainId}
@@ -223,7 +221,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 									matches={matches}
 									deadlineWeek={deadlineWeek}
 									hidePositions={false}
-									assetsCdn={application.competition.assetsCdn}
+									assetsCdn={competition.assetsCdn}
 									activePositionFilter={activePositionFilter}
 									isPickable={props.isPickAble}
 									onPick={props.pickPlayer}

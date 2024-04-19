@@ -4,41 +4,40 @@ import { Team } from "@/components/Team/Team";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { startingListToPositionsList } from "@/lib/helpers";
 import { useAppSelector } from "@/reducers";
-import { useGetClubsQuery } from "@/services/clubsApi";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { useLazyGetPointsQuery } from "@/services/teamsApi";
 import { useGetDeadlineInfoQuery, useGetWeeksQuery } from "@/services/weeksApi";
 import { theme } from "@/styles/theme";
 import Title from "antd/es/typography/Title";
 import { pick } from "lodash";
-import React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { PlayerType } from "@/types/PlayerTypes";
-import { useGetPlayersQuery } from "@/services/playersApi";
 import { Substitutes } from "@/components/Substitutes/Substitutes";
 import { Calendar } from "@/components/Calendar/Calendar";
 import { Stats } from "@/components/Stats/Stats";
 import { PointsStats } from "@/components/PointsStats/PointsStats";
 import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { MatchdaySelector } from "@/components/MatchdaySelector/MatchdaySelector";
-import { Button, Spin } from "antd";
+import { Spin } from "antd";
 import { BoosterStats } from "@/components/BoosterStats/BoosterStats";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const user = useAppSelector((state) => state.userState.user);
 	const [state, setState] = useState({});
-	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSuccess } = useGetClubsQuery();
-	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSuccess } = useGetPlayersQuery();
+
+	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	const players = JSON.parse(localStorage.getItem("_static_players"));
+	const {competition, clubsSuccess, clubsLoading} = useSelector((state: StoreState) => state.application);
+
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
 	const [getPointsTeam] = useLazyGetPointsQuery();
 	const { t } = useTranslation();
-	const application = useSelector((state: StoreState) => state.application);
 	const location = useLocation();
 
 	const {
@@ -127,7 +126,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				const viceCaptainPlayer = result.players.find((player: any) => player.selections[0].captain === 2);
 				const viceCaptainId = viceCaptainPlayer && viceCaptainPlayer.id;
 
-				const budget = result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
+				const budget = result.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
 
 				const boosters = {
 					tripleCaptain: result.team.tripleCaptain,
@@ -169,11 +168,11 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const captainBench = useMemo(() => bench.find(player => player && player.id === captainId), [bench, captainId]);
 	// todo: check variable
 	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.minutesPlayed > 0) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
-	const startingByPositions = startingListToPositionsList(starting, application.competition.lineupPositionRows);
+	const startingByPositions = startingListToPositionsList(starting, competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");
 	return (
-		<Spin spinning={clubsLoading || playersLoading || matchesLoading || deadlineInfoLoading} delay={0}>
+		<Spin spinning={clubsLoading || matchesLoading || deadlineInfoLoading} delay={0}>
 			{
 				(initializedExternally && visibleWeekId &&
 					<Row style={{ margin: 0 }}>
@@ -216,7 +215,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									viceCaptainId={viceCaptainId}
 									centerAligned={true}
 									selection={startingByPositions}
-									assetsCdn={application.competition.assetsCdn}
+									assetsCdn={competition.assetsCdn}
 									onSwap={props.onPlayerSwap}
 									isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
 									swapPlayerId={props.swapPlayerId}
@@ -237,7 +236,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									selection={bench}
 									title={"De bank"}
 									clubs={clubs}
-									assetsCdn={application.competition.assetsCdn}
+									assetsCdn={competition.assetsCdn}
 									playerType={PlayerType.SoccerPortrait}
 									playerBadgeColor={"#fff"}
 									playerBadgeBgColor={theme.primaryContrast}
@@ -268,7 +267,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 											)
 										)
 									}
-									assetsCdn={application.competition.assetsCdn}
+									assetsCdn={competition.assetsCdn}
 								/>
 								
 							</Block>
@@ -293,7 +292,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 									<Block style={{ marginTop: "10px" }}>
 										<Title level={2}>{t("general.footballCalendar")}</Title>
 										<Calendar
-											assetsCdn={application.competition.assetsCdn}
+											assetsCdn={competition.assetsCdn}
 											size={30}
 											weekId={visibleWeekId}
 											showHeader={false}

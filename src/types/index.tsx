@@ -163,6 +163,10 @@ type ApplicationState = {
 	title: string
 	clubs: Club[]
 	players: Player[]
+	playersLoading: boolean
+	clubsLoading: boolean
+	playersSuccess: boolean
+	clubsSuccess: boolean
 }
 
 type Competition = {
