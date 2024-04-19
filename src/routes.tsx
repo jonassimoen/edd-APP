@@ -1,5 +1,5 @@
 
-import { Navigate, Outlet, createBrowserRouter, useLocation } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Header } from "@/components/Header/Header";
 import { LoginCallback } from "./pages/LoginCallback";
@@ -29,10 +29,21 @@ import { PageNotFound } from "./pages/PageNotFound";
 import { ErrorPage } from "./pages/ErrorPage";
 import { useEffect } from "react";
 import * as Cronitor from "@cronitorio/cronitor-rum";
+import { useTranslation } from "react-i18next";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
+	const {i18n} = useTranslation();
+	const navigate = useNavigate();
+
 	useEffect(() => {
+		if(location.pathname.includes("/en")) {
+			i18n.changeLanguage("en");
+			navigate(window.location.pathname.replace("/en",""));
+		} else if(location.pathname.includes("/nl")) {
+			i18n.changeLanguage("nl");
+			navigate(window.location.pathname.replace("/nl",""));
+		}
 		Cronitor.track("Pageview");
 	}, [location.pathname]);
 	return (
@@ -151,7 +162,7 @@ export const router = createBrowserRouter([
 				},
 				{
 					path: "*",
-					element: <PageNotFound />
+					element: <Home />
 				}
 			]
 		}

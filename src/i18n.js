@@ -6,7 +6,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 const detectOptions = {
 	// order and from where user language should be detected
-	order: ["querystring", "cookie", "localStorage", "sessionStorage", "navigator", "htmlTag", "path", "subdomain"],
+	order: [ "path", "querystring", "cookie", "localStorage", "sessionStorage", "navigator", "htmlTag", "subdomain"],
   
 	// keys or params to lookup language from
 	lookupQuerystring: "lng",
@@ -30,6 +30,7 @@ const detectOptions = {
 	// optional set cookie options, reference:[MDN Set-Cookie docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
 	// cookieOptions: { path: '/', sameSite: 'strict' }
 };
+
 
 i18next
 	.use(LanguageDetector)
