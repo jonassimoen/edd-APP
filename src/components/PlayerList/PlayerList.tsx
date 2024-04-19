@@ -185,7 +185,7 @@ export const PlayerList = (props: PlayerListProps) => {
 			title: "Player",
 			dataIndex: "name",
 			width: "45%",
-			render: (txt: string, record: Player) => {
+			render: (txt: string, record: Player, index: number) => {
 				const club = clubs?.find(club => club.id === record.clubId);
 				const position = positions.find(
 					position => position.id === record.positionId
@@ -260,7 +260,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	}
 
 	return (
-		<ContainerStyle ref={tourRef}>
+		<ContainerStyle>
 			{
 				<Input
 					prefix={<SearchOutlined />}
@@ -313,6 +313,12 @@ export const PlayerList = (props: PlayerListProps) => {
 				rowClassName={(record: object, index: number) =>
 					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"}`
 				}
+				onRow={(_: any, index: number) => {
+					if(index==0) {
+						console.log(index, _, tourRef);
+						return {ref: tourRef};
+					}
+				}}
 				pagination={{ position: ["bottomCenter"], pageSize: 9, showLessItems: true, showSizeChanger: false }}
 				locale={{
 					emptyText: t("players.noneFound")

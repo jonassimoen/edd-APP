@@ -43,7 +43,8 @@
 		font-display: swap;
 }
 
-$primaryColor: #000d40;
+$primaryColor: #A1B2F8;
+$primaryContrast: #000d40;
 
 html {
 		font-family:	UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -85,6 +86,36 @@ p {
 
 .is-hidden {
 		display: none !important;
+}
+
+// Temporary fix for non-mobile-friendly tour widget of antd: https://github.com/ant-design/ant-design/issues/40419
+.ant-tour {
+	max-width: 85%;
+
+	.ant-tour-buttons .ant-btn {
+		border-radius: 0px !important;
+		line-height: normal;
+		padding: 0 0.75rem;
+
+		&.ant-btn-primary {
+			color: #FFF;
+			background-color: $primaryContrast;
+			
+			&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
+				background-color: $primaryColor;
+				color: $primaryContrast;
+			}
+		}
+
+		&.ant-btn-default {
+			color: $primaryContrast;
+			
+			&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
+				background-color: $primaryContrast;
+				color: $primaryColor;
+			}
+		}
+	}
 }
 
 #crisp-chatbox a[rel="noopener noreferrer nofollow"] {

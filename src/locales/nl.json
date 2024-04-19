@@ -65,7 +65,10 @@
     "activated": "geactiveerd",
     "playerBoosters": "Speler boosters",
     "confirm": "Bevestig",
-    "cancel": "Annuleer"
+    "cancel": "Annuleer",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "finish": "Afsluiten"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -318,7 +321,7 @@
       },
       "pickPlayer": {
         "title": "Kies een speler uit de lijst",
-        "description": "Nog genoeg budget? Nog een vrije plek op de positie van deze speler? Prima, dan kun je deze speler toevoegen aan je team! Wanneer je deze speler niet meer kunt toevoegen, heb je mogelijks al het maximaal aantal spelers van dezelfde ploeg bereikt, is je budget op of heb je geen plekjes meer over op deze positie!"
+        "description": "Kies hier een speler (eventueel gefilterd op positie door de vorige step) volgens de regels van het spel (binnen het budget en max. aantal spelers per club)."
       },
       "stats": {
         "title": "Bekijk je statistieken",

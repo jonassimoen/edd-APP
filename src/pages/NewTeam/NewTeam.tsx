@@ -22,6 +22,7 @@ import { Input } from "@/components/UI/Input/Input";
 import { setTeams } from "@/features/userSlice";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { theme } from "@/styles/theme";
+import { ButtonStyle } from "@/components/UI/Button/ButtonStyle";
 const { useBreakpoint } = Grid;
 
 declare type NewTeamState = {
@@ -107,32 +108,43 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const playerListRef = useRef(null);
 	const specificPlayerRef = useRef(null);
 	const statsRef = useRef(null);
+	const prevButtonProps: { children: React.ReactNode, style?: React.CSSProperties; } = {
+		children: t("general.previous"),
+	};
+	const nextButtonProps: { children: React.ReactNode, style?: React.CSSProperties; } = {
+		children: t("general.next"),
+	};
 	const steps: TourProps["steps"] = [
 		{
 			title: t("tour.newTeam.pickTeamName.title"),
 			target: nameRef.current,
+			prevButtonProps, nextButtonProps,
 		},
 		{
 			title: t("tour.newTeam.specificPlayer.title"),
 			description: t("tour.newTeam.specificPlayer.description"),
 			target: specificPlayerRef.current,
 			placement: "bottom",
+			prevButtonProps, nextButtonProps,
 		},
 		{
 			title: t("tour.newTeam.pickPlayer.title"),
 			description: t("tour.newTeam.pickPlayer.description"),
 			target: playerListRef.current,
 			placement: "left",
+			prevButtonProps, nextButtonProps,
 		},
 		{
 			title: t("tour.newTeam.stats.title"),
 			description: t("tour.newTeam.stats.description"),
 			target: statsRef.current,
 			placement: "top",
+			prevButtonProps, nextButtonProps,
 		},
 		{
 			title: t("tour.newTeam.end.title"),
-			target: null
+			target: null,
+			prevButtonProps, nextButtonProps: {children: t("general.finish")},
 		},
 	];
 	const [tourOpen, setTourOpen] = useState<boolean>(true);
