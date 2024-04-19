@@ -1,5 +1,5 @@
 import { defaultUser, useAuth } from "@/lib/stores/AuthContext";
-import { useGetProfileQuery, useGetTeamsQuery } from "@/services/usersApi";
+import { useGetProfileQuery, useGetTeamsQuery, useLogoutMutation } from "@/services/usersApi";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,6 +31,7 @@ export const Header = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { authenticated, user } = useAppSelector((state) => state.userState);
+	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
@@ -109,8 +110,9 @@ export const Header = () => {
 		setState({ ...state, menuToggled: !state.menuToggled });
 	};
 	const onLogout = (e: any) => {
-		secureLocalStorage.removeItem("token");
+		logoutRequest();
 		secureLocalStorage.removeItem("user");
+
 		dispatch(logout);
 		window.location.reload();
 	};

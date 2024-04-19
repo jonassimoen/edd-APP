@@ -40,7 +40,7 @@ export const AuthContextProvider: FC<PropsWithChildren<object>> = ({ children })
 	});
 
 	useEffect(() => {
-		if (secureLocalStorage.getItem("token")) {
+		if (secureLocalStorage.getItem("user")) {
 			if (!isFetchingProfile) {
 				getProfile().then(({ data }) => {
 					setUserAuth({

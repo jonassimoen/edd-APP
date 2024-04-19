@@ -7,6 +7,13 @@ export const usersApi = createApi({
 	tagTypes: ["userTeam"],
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/user/`, credentials: "include" }),
 	endpoints: (builder) => ({
+		logout: builder.mutation<void,void>({
+			query: () => ({
+				url: "logout",
+				method: "POST"
+			}),
+		}),
+
 		getProfile: builder.query<User, void>({
 			query: () => "profile",
 			async onQueryStarted(args, { dispatch, queryFulfilled }) {
@@ -34,4 +41,4 @@ export const usersApi = createApi({
 	})
 });
 
-export const { useGetProfileQuery, useLazyGetProfileQuery, useGetTeamsQuery, useLazyGetTeamsQuery } = usersApi;
+export const { useGetProfileQuery, useLazyGetProfileQuery, useGetTeamsQuery, useLazyGetTeamsQuery, useLogoutMutation } = usersApi;

@@ -25,7 +25,6 @@ export const LoginCallback = () => {
 
 	useEffect(() => {
 		if (access_token) {
-			secureLocalStorage.setItem("token", access_token as string);
 			getProfile();
 			getTeams();
 		} else {
