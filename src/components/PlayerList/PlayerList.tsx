@@ -37,6 +37,7 @@ declare type PlayerListProps = {
 	deadlineWeek?: any;
 	playerTax?: number | undefined;
 	assetsCdn: string
+	tourRef?: any
 }
 
 declare type PlayerListState = {
@@ -59,7 +60,8 @@ export const PlayerList = (props: PlayerListProps) => {
 		action,
 		data,
 		isLoading,
-		showHeader
+		showHeader,
+		tourRef,
 	} = props;
 
 	const [state, setState] = useState<PlayerListState>({
@@ -258,7 +260,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	}
 
 	return (
-		<ContainerStyle>
+		<ContainerStyle ref={tourRef}>
 			{
 				<Input
 					prefix={<SearchOutlined />}

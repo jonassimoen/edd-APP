@@ -6,12 +6,13 @@ declare type StatsProps =  {
     budget: number
     totalPlayers: number
     selectedPlayers: number
+	tourRef?: any
 }
 
 export const NewGameStats = (props: StatsProps) => {
 	const { t } = useTranslation();
 	return (
-		<StatsStyle>
+		<StatsStyle ref={props.tourRef}>
 			<Row className="stat-row">
 				<Col lg={12} md={12} sm={12} xs={12}>
 					<p className="points">{props.selectedPlayers}/{props.totalPlayers}</p>

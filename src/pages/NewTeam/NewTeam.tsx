@@ -4,7 +4,7 @@ import { Team } from "@/components/Team/Team";
 import { startingListToPositionsList } from "@/lib/helpers";
 import { useAuth } from "@/lib/stores/AuthContext";
 import { useLazyGetTeamQuery } from "@/services/teamsApi";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
@@ -15,7 +15,7 @@ import { NewTeamStyle } from "./NewTeamStyle";
 import { Button } from "@/components/UI/Button/Button";
 import { SaveOutlined } from "@ant-design/icons";
 import { useAppSelector } from "@/reducers";
-import { Grid, Tag } from "antd";
+import { Grid, Tag, Tour, TourProps } from "antd";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { NewGameStats } from "@/components/Stats/NewGameStats";
 import { Input } from "@/components/UI/Input/Input";
@@ -103,13 +103,46 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const totalPlayersPicked = useMemo(() => (startingPicked?.length || 0) + (benchPicked?.length || 0), [startingPicked, benchPicked]);
 	const team = user && user.teams && user.teams[0];
 
-	const screens = useBreakpoint();
+	const nameRef = useRef(null);
+	const playerListRef = useRef(null);
+	const specificPlayerRef = useRef(null);
+	const statsRef = useRef(null);
+	const steps: TourProps["steps"] = [
+		{
+			title: t("tour.newTeam.pickTeamName.title"),
+			target: nameRef.current,
+		},
+		{
+			title: t("tour.newTeam.specificPlayer.title"),
+			description: t("tour.newTeam.specificPlayer.description"),
+			target: specificPlayerRef.current,
+			placement: "bottom",
+		},
+		{
+			title: t("tour.newTeam.pickPlayer.title"),
+			description: t("tour.newTeam.pickPlayer.description"),
+			target: playerListRef.current,
+			placement: "left",
+		},
+		{
+			title: t("tour.newTeam.stats.title"),
+			description: t("tour.newTeam.stats.description"),
+			target: statsRef.current,
+			placement: "top",
+		},
+		{
+			title: t("tour.newTeam.end.title"),
+			target: null
+		},
+	];
+	const [tourOpen, setTourOpen] = useState<boolean>(true);
 	return (
 		<NewTeamStyle>
 			{team && team.id && hasPlayers && <Navigate to={{ pathname: `/team/${team.id}` }} />}
 
 			{players && clubs &&
 				<>
+					<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
 					<Row>
 						<Col lg={12} md={24} sm={24} xs={24} className="left">
 							<Title level={2}>{t("general.footballLineup")}</Title>
@@ -119,12 +152,14 @@ const _NewTeam = (props: AbstractTeamType) => {
 								placeholder={t("team.newTeamNameInput")}
 								value={teamName}
 								maxLength={55}
+								tourRef={nameRef}
 							/>
 
 							<NewGameStats
 								budget={budget}
 								totalPlayers={totalPlayersToPick}
 								selectedPlayers={totalPlayersPicked}
+								tourRef={statsRef}
 							/>
 							<Team
 								widthRatio={15}
@@ -148,7 +183,9 @@ const _NewTeam = (props: AbstractTeamType) => {
 								playerBadgeColor={"#fff"}
 								playerBadgeBgColor={theme.primaryContrast}
 								playerPointsColor={"#000"}
-								playerPointsBgColor={theme.primaryColor} />
+								playerPointsBgColor={theme.primaryColor} 
+								tourRef={specificPlayerRef}
+							/>
 
 							<Row>
 								{(team && !hasPlayers &&
@@ -192,6 +229,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 									isPickable={props.isPickAble}
 									onPick={props.pickPlayer}
 									assetsCdn={competition.assetsCdn}
+									tourRef={playerListRef}
 								/>
 							</Element>
 						</Col>

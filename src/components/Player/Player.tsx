@@ -64,6 +64,8 @@ declare type PlayerProps = {
 
 	className?: string
 	motm?: boolean
+
+	tourRef?: any
 }
 
 export const Player = (props: PlayerProps) => {
@@ -97,6 +99,7 @@ export const Player = (props: PlayerProps) => {
 		replacePlayerPointsWithStatsPoints,
 		type,
 		motm,
+		tourRef,
 	} = props;
 
 	const [state, setState] = useState<PlayerState>({
@@ -197,7 +200,11 @@ export const Player = (props: PlayerProps) => {
 	};
 	
 	return (
-		<PlayerStyle onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} className={`position_${player.positionId}` && props.className}>
+		<PlayerStyle 
+			onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} 
+			className={`position_${player.positionId}` && props.className}
+			ref={tourRef}
+		>
 			{
 				player && player.id &&
 				<PlayerBg src={state.face} onError={onBgLoadError} inactive={hasInactiveOverlay} />

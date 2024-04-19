@@ -306,5 +306,27 @@
     "confirmMsg": "Als je deze booster activeert is er <b>geen mogelijkheid om dit ongedaan te maken</b>. Ben je zeker dat je deze wilt activeren?",
     "affectedPlayer": "Geselecteerde speler",
     "noPlayerSelected": "Je moet een speler selecteren voor deze booster!"
+  },
+  "tour": {
+    "newTeam": {
+      "pickTeamName": {
+        "title": "Kies een leuke teamnaam"
+      },
+      "specificPlayer": {
+        "title": "Kies een speler voor een specifieke positie",
+        "description": "Indien je op het \"+\"-teken klikt, wordt de spelerslijst gefilterd op spelers die op deze positie kunnen spelen."
+      },
+      "pickPlayer": {
+        "title": "Kies een speler uit de lijst",
+        "description": "Nog genoeg budget? Nog een vrije plek op de positie van deze speler? Prima, dan kun je deze speler toevoegen aan je team! Wanneer je deze speler niet meer kunt toevoegen, heb je mogelijks al het maximaal aantal spelers van dezelfde ploeg bereikt, is je budget op of heb je geen plekjes meer over op deze positie!"
+      },
+      "stats": {
+        "title": "Bekijk je statistieken",
+        "description": "Check of je nog genoeg budget over hebt en hoeveel spelers je nog moet selecteren in één oogopslag!"
+      },
+      "end": {
+        "title": "Veel succes!"
+      }
+    }
   }
 }

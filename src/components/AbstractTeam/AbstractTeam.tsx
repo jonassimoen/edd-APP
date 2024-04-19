@@ -736,7 +736,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 					pastTransfers={state.pastTransfers}
 					teamPointsInfo={state.teamPointsInfo}
 					{...props}
-
 				/> : null}
 		</React.Fragment>
 	);
