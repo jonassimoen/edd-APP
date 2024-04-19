@@ -30,24 +30,6 @@ export default {
 					short: "O",
 					type: "number",
 				},
-			],
-		},
-		{
-			name: "Other",
-			positions: [0,1,2,3,4],
-			inputs: [
-				{
-					full: "YELLOW CARD",
-					slug: "yellow",
-					short: "Y",
-					type: "bool",
-				},
-				{
-					full: "RED CARD",
-					slug: "red",
-					short: "R",
-					type: "bool",
-				},
 				{
 					full: "Man of the Match",
 					slug: "motm",
@@ -57,7 +39,7 @@ export default {
 			],
 		},
 		{
-			name: "Attacking",
+			name: "Important",
 			positions: [0,1,2,3,4],
 			inputs: [
 				{
@@ -73,15 +55,63 @@ export default {
 					type: "number",
 				},
 				{
-					full: "SHOTS",
-					slug: "shots",
-					short: "SH",
+					full: "YELLOW CARD",
+					slug: "yellow",
+					short: "Y",
+					type: "bool",
+				},
+				{
+					full: "RED CARD",
+					slug: "red",
+					short: "R",
+					type: "bool",
+				},
+			],
+		},
+		{
+			name: "Goalkeeper",
+			positions: [1],
+			inputs: [
+				{
+					full: "PENALTY SAVED",
+					slug: "penaltySaved",
+					short: "PSa",
+					type: "number",
+				},
+				{
+					full: "SAVES",
+					slug: "saves",
+					short: "S",
+					type: "number",
+				},
+				{
+					full: "HIGH CLAIMS",
+					slug: "highClaims",
+					short: "HC",
+					type: "number",
+				},
+			],
+		},
+		{
+			name: "Attacking",
+			positions: [0,1,2,3,4],
+			inputs: [
+				{
+					full: "SHOTS BLOCKED",
+					slug: "shotsBlocked",
+					short: "SB",
 					type: "number",
 				},
 				{
 					full: "SHOTS ON TARGET",
 					slug: "shotsOnTarget",
 					short: "ST",
+					type: "number",
+				},
+				{
+					full: "SHOTS OFF TARGET",
+					slug: "shotsOffTarget",
+					short: "STX",
 					type: "number",
 				},
 			],
@@ -108,6 +138,18 @@ export default {
 					short: "PT",
 					type: "number",
 				},
+				{
+					full: "CROSSES",
+					slug: "crosses",
+					short: "C",
+					type: "number",
+				},
+				{
+					full: "ACCURATE CROSSES",
+					slug: "accurateCrosses",
+					short: "PT",
+					type: "number",
+				},
 			],
 		},
 		{
@@ -115,13 +157,13 @@ export default {
 			positions: [0,1,2,3,4],
 			inputs: [
 				{
-					full: "TACKLES",
-					slug: "tackles",
-					short: "T",
+					full: "CLEARANCES",
+					slug: "clearances",
+					short: "C",
 					type: "number",
 				},
 				{
-					full: "BLOCKS",
+					full: "BLOCKED SHOTS",
 					slug: "blocks",
 					short: "B",
 					type: "number",
@@ -132,6 +174,12 @@ export default {
 					short: "IC",
 					type: "number",
 				},
+				{
+					full: "TACKLES",
+					slug: "tackles",
+					short: "T",
+					type: "number",
+				}
 			],
 		},
 		{
@@ -177,24 +225,6 @@ export default {
 			],
 		},
 		{
-			name: "Goalkeeper",
-			positions: [1],
-			inputs: [
-				{
-					full: "PENALTY SAVED",
-					slug: "penaltySaved",
-					short: "PSa",
-					type: "number",
-				},
-				{
-					full: "SAVES",
-					slug: "saves",
-					short: "S",
-					type: "number",
-				},
-			],
-		},
-		{
 			name: "Penalty's",
 			positions: [0,1,2,3,4],
 			inputs: [
@@ -229,15 +259,51 @@ export default {
 			positions: [0,1,2,3,4],
 			inputs: [
 				{
+					full: "DUELS TOTAL",
+					slug: "duelsTotal",
+					short: "DT",
+					type: "number",
+				},
+				{
 					full: "DUELS WON",
 					slug: "duelsWon",
 					short: "DW",
 					type: "number",
 				},
 				{
-					full: "DUELS TOTAL",
-					slug: "duelsTotal",
-					short: "DT",
+					full: "AERIAL DUELS TOTAL",
+					slug: "aerialDuelsTotal",
+					short: "ADT",
+					type: "number",
+				},
+				{
+					full: "AERIAL DUELS WON",
+					slug: "aerialDuelsWon",
+					short: "ADW",
+					type: "number",
+				},
+			],
+		},
+		{
+			name: "Magic",
+			positions: [0,1,2,3,4],
+			inputs: [
+				{
+					full: "ERROR LEADING TO GOAL",
+					slug: "errorLeadingGoal",
+					short: "EG",
+					type: "number",
+				},
+				{
+					full: "BIG CHANCES CREATED",
+					slug: "bigChancesCreated",
+					short: "BCC",
+					type: "number",
+				},
+				{
+					full: "BIG CHANCES MISSED",
+					slug: "bigChancesMissed",
+					short: "BCM",
 					type: "number",
 				},
 			],

@@ -24,7 +24,6 @@ import {
 } from "@ant-design/icons";
 import {
 	Alert,
-	Button,
 	Flex,
 	Skeleton,
 	Tag,
@@ -40,10 +39,24 @@ import { useSelector } from "react-redux";
 import { PlayerStatsModal } from "./PlayerStatsModal";
 import styled from "@/styles/styled-components";
 import { ScoreStatsModal } from "./ScoreStatsModal";
+import { Button } from "@/components/UI/Button/Button";
 
 const GameStatsManagementStyle = styled.div`
 	.ant-table-tbody > tr > td{
 		padding: 0 !important;
+	}
+
+	.ant-table-row {
+		&.split {
+			.ant-table-cell {
+				border-top: 3px solid ${theme.primaryContrast};
+				padding-top: 3px !important;
+			}
+		} 
+		.ant-btn {
+			width: 100%;
+			padding: 0;
+		}
 	}
 `;
 
@@ -153,6 +166,8 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 				})),
 		[players, match]
 	);
+
+	const playerSplit = useMemo(() => playersReduced?.findIndex((p: Partial<Player>) => p.clubId != playersReduced[0].clubId), [playersReduced]);
 
 	useEffect(() => {
 		const playersWithStats = playersReduced?.map((p: any) => {
@@ -334,12 +349,15 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 					rowKey={"playerId"}
 					pagination={false}
 					sticky={true}
+					rowClassName={(record: any, index: any) => index == playerSplit ? "split" :  "" }
 				/>
 				<Row justify="center" align="middle">
 					<Col span={24}>
 						<Button 
 							onClick={() => onFormSubmit()}
 							disabled={!goalMinutesEntered}
+							type="primary"
+							style={{width: "100%", marginTop: "2rem"}}
 						>
 							Opslaan
 						</Button>
