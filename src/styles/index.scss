@@ -99,20 +99,10 @@ p {
 		&.ant-btn-primary {
 			color: #FFF;
 			background-color: $primaryContrast;
-			
-			&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
-				background-color: $primaryColor;
-				color: $primaryContrast;
-			}
 		}
 
 		&.ant-btn-default {
 			color: $primaryContrast;
-			
-			&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
-				background-color: $primaryContrast;
-				color: $primaryColor;
-			}
 		}
 	}
 }
