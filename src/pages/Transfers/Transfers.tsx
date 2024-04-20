@@ -200,7 +200,7 @@ const _Transfers = (props: AbstractTeamType) => {
 
 	const team = useMemo(() => teamResult && teamResult.team, [teamResult]);
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
-	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek > competition.officialStartWeek, [deadlineInfo]);
+	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek >= competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	// TODO
 	const enabledWildOrFreeHit = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [boosters]);
