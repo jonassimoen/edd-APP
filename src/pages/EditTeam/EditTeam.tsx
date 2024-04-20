@@ -199,13 +199,15 @@ const _EditTeam = (props: AbstractTeamType) => {
 									{t("team.saveTeam")}
 								</Button>)
 							}
-							<Alert
-								message="Tips"
-								description="Selecteer 15 spelers"
-								type="info"
-								showIcon
-								style={{margin: "10px auto"}}
-							/>
+							{!gameOfficialyStarted && 
+								<Alert
+									message={t("editPage.hint.title")}
+									description={t("editPage.hint.description")}
+									type="info"
+									showIcon
+									style={{margin: "10px auto"}}
+								/>
+							}
 						</Block>
 					</Col>
 					<Col md={12} sm={12} xs={24} className="right">

@@ -344,5 +344,11 @@
         "title": "Veel succes!"
       }
     }
+  },
+  "editPage": {
+    "hint": {
+      "title": "Ongelimiteerde wijzigingen",
+      "description": "Tot het begin van het EK kun je ongelimiteerd (en zonder minpunten) je team wijzigen."
+    }
   }
 }
