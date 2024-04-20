@@ -20,7 +20,7 @@ export const Rules = () => {
 	useEffect(() => {
 		const body = page && page[0] && page[0].translation && page[0].translation
 			.find((tl: PageTranslation) => tl.langCode == i18next.resolvedLanguage)?.body;
-		setState({ ...state, text: body });
+		setState({ ...state, text: body || "" });
 	}, [page]);
 
 	return (
