@@ -1,7 +1,7 @@
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { useGetPageQuery } from "@/services/pagesApi";
 import Title from "antd/es/typography/Title";
-import { t } from "i18next";
+import i18next, { t } from "i18next";
 import { useEffect, useState } from "react";
 import { RulesStyles } from "./RulesStyle";
 import { Block } from "@/components/Block/Block";
@@ -14,11 +14,13 @@ type RulesState = {
 export const Rules = () => {
 	const { data: page, isLoading: pageLoading } = useGetPageQuery("rules");
 	const [state, setState] = useState<RulesState>({
-		text: "<p>Geen rules.</p>",
+		text: "",
 	});
+	
 	useEffect(() => {
-		const body = page && page[0] && page[0].translation && page[0].translation[0] && page[0].translation[0].body;
-		setState({ ...state, text: body || "<p>Geen rules.</p>" });
+		const body = page && page[0] && page[0].translation && page[0].translation
+			.find((tl: PageTranslation) => tl.langCode == i18next.resolvedLanguage)?.body;
+		setState({ ...state, text: body });
 	}, [page]);
 
 	return (
