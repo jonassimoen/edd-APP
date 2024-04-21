@@ -89,7 +89,8 @@
       "quantityColumnName": "Aantal",
       "pointsColumnName": "Punten",
       "selectionActions": "Selectie acties",
-      "boosterActions": "Booster acties"
+      "boosterActions": "Booster acties",
+      "totalRegularPoints": "Reguliere punten"
     },
     "assistsLabel": "Assist",
     "goalsLabel": "Doelpunt",

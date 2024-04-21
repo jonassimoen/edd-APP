@@ -1,34 +1,11 @@
-import {
-	ClubBadgeBg,
-	ClubName,
-} from "@/components/Calendar/CalendarStyle";
+import { ClubBadgeBg, ClubName } from "@/components/Calendar/CalendarStyle";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import config from "@/config";
-import {
-	getPlayerPositionHexColor,
-	openErrorNotification,
-	openSuccessNotification,
-} from "@/lib/helpers";
-import {
-	useGetMatchQuery,
-	useGetMatchStatisticsQuery,
-	useLazyImportMatchStatisticsQuery,
-	useUpdateMatchStatisticsMutation,
-} from "@/services/matchesApi";
+import { getPlayerPositionHexColor, openErrorNotification, openSuccessNotification } from "@/lib/helpers";
+import { useGetMatchQuery, useGetMatchStatisticsQuery, useLazyImportMatchStatisticsQuery, useUpdateMatchStatisticsMutation } from "@/services/matchesApi";
 import { useGetPlayersQuery } from "@/services/playersApi";
-import {
-	CheckOutlined,
-	CloseOutlined,
-	DownloadOutlined,
-	HistoryOutlined,
-} from "@ant-design/icons";
-import {
-	Alert,
-	Flex,
-	Skeleton,
-	Tag,
-	Tooltip,
-} from "antd";
+import { CheckOutlined, CloseOutlined, DownloadOutlined, HistoryOutlined } from "@ant-design/icons";
+import { Alert, Flex, Skeleton, Tag, Tooltip } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -117,34 +94,10 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	});
 	const [spinning, setSpinning] = useState<boolean>(true);
 
-	const {
-		data: match,
-		isFetching: matchLoading,
-		isError: matchError,
-		isSuccess: matchSuccess,
-	} = useGetMatchQuery(+(id || 0));
-	const {
-		data: players,
-		isLoading: playersLoading,
-		isError: playersError,
-		isSuccess: playersSucces,
-	} = useGetPlayersQuery();
-	const {
-		data: stats,
-		isLoading: statsLoading,
-		isError: statsError,
-		isSuccess: statsStucces,
-	} = useGetMatchStatisticsQuery(+(id || 0));
-	const [
-		importMatchStatistics,
-		{
-			data: importedStats,
-			isLoading: matchStatisticsImportLoading,
-			isSuccess: matchStatisticsImportSuccess,
-			isError: matchStatisticsImportError,
-			error: matchStatisticsImportErrorData,
-		},
-	] = useLazyImportMatchStatisticsQuery();
+	const { data: match, isFetching: matchLoading, isError: matchError, isSuccess: matchSuccess } = useGetMatchQuery(+(id || 0));
+	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSucces } = useGetPlayersQuery();
+	const { data: stats, isLoading: statsLoading, isError: statsError, isSuccess: statsStucces } = useGetMatchStatisticsQuery(+(id || 0));
+	const [ importMatchStatistics, { data: importedStats, isLoading: matchStatisticsImportLoading, isSuccess: matchStatisticsImportSuccess, isError: matchStatisticsImportError, error: matchStatisticsImportErrorData} ] = useLazyImportMatchStatisticsQuery();
 
 	useEffect(() => {
 		setSpinning(matchLoading || playersLoading || statsLoading);
@@ -171,6 +124,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	useEffect(() => {
 		const playersWithStats = playersReduced?.map((p: any) => {
+			console.log(p);
 			const statsPlayer = stats?.find(
 				(s: Statistic) => s.playerId == p.playerId
 			);
@@ -186,9 +140,11 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	useEffect(() => {
 		if(matchStatisticsImportSuccess) {
+			console.log(playersReduced);
+			console.log(importedStats);
 			const playersWithImportedStats = playersReduced?.map((p: any) => {
 				const importedStatsPlayer = importedStats?.find(
-					(s: Statistic) => s.playerId == p.playerId
+					(s: Statistic) => s.id == p.playerId
 				);
 				return importedStatsPlayer ? { ...p, ...importedStatsPlayer } : p;
 			});

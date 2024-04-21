@@ -208,7 +208,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 								)
 							}
 							<tr className='points-total'>
-								<td><b>{t("pointsPage.totalRegularPoints")}</b></td>
+								<td><b>{t("player.modal.totalRegularPoints")}</b></td>
 								<td></td>
 								<td><b>{pointsOverviewList.reduce((acc: number, v: any) => acc + v.points, 0)}</b></td>
 							</tr>

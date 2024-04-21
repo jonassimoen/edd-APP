@@ -41,7 +41,7 @@ export const ScoreStatsModal = (props: ScoreStatsProps) => {
 				cancelText={t("cancelBtn")}
 				onOk={() => Promise
 					.all([formH.validateFields(), formA.validateFields()])
-					.then(([home, away]: number[][]) => props.onConfirm({home, away}))
+					.then(([home, away]: {[key: string]: number}[]) => props.onConfirm({home: Object.values(home), away: Object.values(away)}))
 				}
 				onCancel={props.onCancel}
 			>

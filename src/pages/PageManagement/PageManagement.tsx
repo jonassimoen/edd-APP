@@ -80,7 +80,7 @@ export const PageManagement = () => {
 									</Col>
 									<Divider />
 								</Row>
-							))};
+							))}
 
 						<Button
 							icon={<PlusOutlined />}

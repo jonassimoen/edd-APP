@@ -140,14 +140,14 @@ export default {
 				},
 				{
 					full: "CROSSES",
-					slug: "crosses",
-					short: "C",
+					slug: "totalCrosses",
+					short: "X",
 					type: "number",
 				},
 				{
 					full: "ACCURATE CROSSES",
 					slug: "accurateCrosses",
-					short: "PT",
+					short: "AX",
 					type: "number",
 				},
 			],
