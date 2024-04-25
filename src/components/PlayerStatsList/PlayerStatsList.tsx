@@ -7,7 +7,7 @@ import { Select } from "../UI/Select/Select";
 import { useEffect, useMemo, useState } from "react";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { useGetWeeksQuery } from "@/services/weeksApi";
-import { useGetPlayerStatsQuery } from "@/services/statisticsApi";
+import { useLazyGetPlayerStatsQuery } from "@/services/statisticsApi";
 
 type PlayerStatsListProps = {
 	size: number
@@ -24,7 +24,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	const { t } = useTranslation();
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
-	const { data: stats, isLoading: statsLoading, isError: statsError, isSuccess: statsSucces } = useGetPlayerStatsQuery();
+	const [getPlayerStats, { data: stats, isLoading: statsLoading, isError: statsError, isSuccess: statsSucces }] = useLazyGetPlayerStatsQuery();
 
 	const [state, setState] = useState<PlayerStatsListState>({
 		filters: {
@@ -42,6 +42,13 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			showSizeChanger: false
 		},
 	});
+
+	useEffect(() => {
+		if(state.filters.weekId != -1)
+			getPlayerStats({matchday: state.filters.weekId});
+		else 
+			getPlayerStats({});
+	}, [state.filters.weekId]);
 
 	const clubsList = useMemo(() => ([{
 		id: -1,
@@ -243,9 +250,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		const newPagination = { ...state.pagination, current: pagination.current };
 		setState({ ...state, pagination: newPagination });
 	};
-
-	
-
 
 	return (
 		<ContainerStyle>
