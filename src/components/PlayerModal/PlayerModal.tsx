@@ -92,7 +92,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		),
 		[props]);
 
-	const showPointsOverview = player && player.pointsOverview && (!!player.played || player.points);
+	const showPointsOverview = player && player.pointsOverview && (!!player.played || player.points !== null);
 	const pointsOverviewList = useMemo(() => getPointsOverviewList(player, t), [player]);
 		
 
