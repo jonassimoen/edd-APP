@@ -218,7 +218,7 @@ export const Player = (props: PlayerProps) => {
 			}
 
 			{
-				showPoints && hasStats && (!!player.played || player.points != null) &&
+				showPoints && hasStats && (player.played != null ? !!player.played : player.points != null) &&
 				<Points color={"#000"} bgColor={(isCaptain && captainHasPlayed) || (!captainHasPlayed && isViceCaptain) ? "#ffc422" : props.pointsBgColor}>{player.points}</Points>
 			}
 

@@ -28,6 +28,14 @@ export const matchesApi = createApi({
 			invalidatesTags: (res, err, arg) => [{ type: "Match", id: arg.id }],
 		}),
 
+		recalculateMatchPoints: builder.mutation<{msg: string}, number>({
+			query: (id: number) => ({
+				url: `${id}/recalculate`,
+				method: "POST",
+			}),
+			invalidatesTags: (res, err, arg) => ["PlayerStats", "MatchStatistics"],
+		}),
+
 		createMatch: builder.mutation<Match, Partial<Match>>({
 			query: ({ ...post }) => ({
 				url: "",
@@ -125,6 +133,7 @@ export const {
 	useGetMatchQuery,
 	useGetMatchesQuery,
 	useUpdateMatchMutation,
+	useRecalculateMatchPointsMutation,
 	useCreateMatchMutation,
 	useGetMatchEventsQuery,
 	useUpdateMatchEventsMutation,
