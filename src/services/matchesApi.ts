@@ -32,6 +32,7 @@ export const matchesApi = createApi({
 			query: (id: number) => ({
 				url: `${id}/recalculate`,
 				method: "POST",
+				body: {},
 			}),
 			invalidatesTags: (res, err, arg) => ["PlayerStats", "MatchStatistics"],
 		}),
