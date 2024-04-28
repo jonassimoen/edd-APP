@@ -88,7 +88,6 @@ export const GameManagement = () => {
 						<DatePicker
 							showTime={true}
 							locale={locale}
-							defaultPickerValue={dayjs()}
 							allowClear={false}
 						// format={["DD/MM/YYYY HH:mm", "YYYY-MM-DD\THH:mm:ss.SSS\Z"]}
 						/>

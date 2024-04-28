@@ -79,7 +79,6 @@ export const WeekManagement = () => {
 					<DatePicker
 						showTime={true}
 						locale={locale}
-						defaultPickerValue={dayjs()}
 						allowClear={false} />
 				</FormItem>
 			</Col>
