@@ -69,7 +69,9 @@
     "cancel": "Annuleer",
     "next": "Volgende",
     "previous": "Vorige",
-    "finish": "Afsluiten"
+    "finish": "Afsluiten",
+    "confirmModalYesBtn": "Ja",
+    "confirmModalNoBtn": "Neen"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -292,10 +294,14 @@
     "rankingsNotAvailableYet": "Ranking niet beschikbaar"
   },
   "transfersPage": {
-    "transfersBlockTitle": "Transfers"
+    "transfersBlockTitle": "Transfers",
+    "transferConfirmTitle": "Bevestig je transfers",
+    "transferConfirmMessage": "Ben je zeker dat je je gemaakte transfers wilt bevestigen? Deze kunnen niet meer ongedaan gemaakt worden!"
   },
   "transferPage": {
-    "noTransfersTableMessage": "Geen transfers"
+    "noTransfersTableMessage": "Geen transfers",
+    "confirmTransfers": "Bevestig transfers",
+    "transferButtonLabel": "Transfereer"
   },
   "pageNotFound": {
     "title": "Pagina niet gevonden!",
@@ -352,5 +358,8 @@
       "title": "Ongelimiteerde wijzigingen",
       "description": "Tot het begin van het EK kun je ongelimiteerd (en zonder minpunten) je team wijzigen."
     }
+  },
+  "transferpage": {
+    "clearTransfers": "Verwijder transfers"
   }
 }

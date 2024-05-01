@@ -1,15 +1,18 @@
 import styled from "@/styles/styled-components";
+import { theme } from "@/styles/theme";
 import { Modal } from "antd";
 
 export const ConfirmModalStyle = styled(Modal)`
 .ant-modal-content {
     border-radius: 0px;
     max-width: 575px;
+    padding: 0;
 
     .ant-modal-title {
-        font-family: "C-Bold";
+        background-color: ${theme.primaryContrast};
+        padding: 5px 30px;
         text-transform: uppercase;
-        background: #000;
+        color: #fff;
         padding: 5px 5px 5px 36.5px;
     }
 
