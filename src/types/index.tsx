@@ -130,6 +130,7 @@ type User = {
 	email?: string
 	country?: any
 	role: number
+	payed?: boolean
 	teams?: Team[]
 }
 

@@ -35,7 +35,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
 	const players = JSON.parse(localStorage.getItem("_static_players"));
 	const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
-	const [getTeam, { data: teamData, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess }] = useLazyGetTeamQuery();
+	const [getTeam, { data: teamData, isSuccess: teamSuccess }] = useLazyGetTeamQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
 	// add team
 	// drop team
@@ -58,7 +58,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 		if (teamSuccess && teamData) {
 			setState({ ...state, hasPlayers: (teamData.players.length !== 0) });
 			props.setTeamName(teamData.team.name);
-		}
+		} 
 	}, [teamData]);
 
 	const onPlaceHolderClick = (player: Player) => {
@@ -148,105 +148,106 @@ const _NewTeam = (props: AbstractTeamType) => {
 		},
 	];
 	const [tourOpen, setTourOpen] = useState<boolean>(true);
+
 	return (
 		<NewTeamStyle>
-			{team && team.id && hasPlayers && <Navigate to={{ pathname: `/team/${team.id}` }} />}
+			{team && team.id && hasPlayers ? <Navigate to={{ pathname: `/team/${team.id}` }} /> :
 
-			{players && clubs &&
-				<>
-					<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
-					<Row>
-						<Col lg={12} md={24} sm={24} xs={24} className="left">
-							<Title level={2}>{t("general.lineup")}</Title>
-							<Input
-								onChange={props.onTeamNameChange}
-								style={{ maxWidth: "100%" }}
-								placeholder={t("team.newTeamNameInput")}
-								value={teamName}
-								maxLength={55}
-								tourRef={nameRef}
-							/>
+				(players && clubs) &&
+					<>
+						<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
+						<Row>
+							<Col lg={12} md={24} sm={24} xs={24} className="left">
+								<Title level={2}>{t("general.lineup")}</Title>
+								<Input
+									onChange={props.onTeamNameChange}
+									style={{ maxWidth: "100%" }}
+									placeholder={t("team.newTeamNameInput")}
+									value={teamName}
+									maxLength={55}
+									tourRef={nameRef}
+								/>
 
-							<NewGameStats
-								budget={budget}
-								totalPlayers={totalPlayersToPick}
-								selectedPlayers={totalPlayersPicked}
-								tourRef={statsRef}
-							/>
-							<Team
-								widthRatio={15}
-								heightRatio={10}
-								clubs={clubs}
-								bg={""}
-								assetsCdn={competition.assetsCdn}
-								selection={startingByPositions}
-								showCaptainBadge={true}
-								showPlayerValue={true}
-								// playerType={}
-								playerType={PlayerType.SoccerPortrait}
-								captainId={captainId}
-								viceCaptainId={viceCaptainId}
-								onPlaceholderClick={onPlaceHolderClick}
-								showPlayerValueInsteadOfPoints={true}
-								onCaptainSelect={props.onCaptainSelect}
-								onViceCaptainSelect={props.onViceCaptainSelect}
-								onRemove={(player: Player) => props.removePlayer(player)}
-								modalEnabled={true}
-								playerBadgeColor={"#fff"}
-								playerBadgeBgColor={theme.primaryContrast}
-								playerPointsColor={"#000"}
-								playerPointsBgColor={theme.primaryColor} 
-								tourRef={specificPlayerRef}
-							/>
+								<NewGameStats
+									budget={budget}
+									totalPlayers={totalPlayersToPick}
+									selectedPlayers={totalPlayersPicked}
+									tourRef={statsRef}
+								/>
+								<Team
+									widthRatio={15}
+									heightRatio={10}
+									clubs={clubs}
+									bg={""}
+									assetsCdn={competition.assetsCdn}
+									selection={startingByPositions}
+									showCaptainBadge={true}
+									showPlayerValue={true}
+									// playerType={}
+									playerType={PlayerType.SoccerPortrait}
+									captainId={captainId}
+									viceCaptainId={viceCaptainId}
+									onPlaceholderClick={onPlaceHolderClick}
+									showPlayerValueInsteadOfPoints={true}
+									onCaptainSelect={props.onCaptainSelect}
+									onViceCaptainSelect={props.onViceCaptainSelect}
+									onRemove={(player: Player) => props.removePlayer(player)}
+									modalEnabled={true}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
+									playerPointsColor={"#000"}
+									playerPointsBgColor={theme.primaryColor} 
+									tourRef={specificPlayerRef}
+								/>
 
-							<Row>
-								{(team && !hasPlayers &&
-									<Button
-										onClick={(e: any) => onTeamReset(team)}
+								<Row>
+									{(team && !hasPlayers &&
+										<Button
+											onClick={(e: any) => onTeamReset(team)}
+											type="primary"
+											disabled={savingTeamPending}
+											loading={savingTeamPending}
+											style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+											size="large">
+											<SaveOutlined />
+											{t("team.saveTeam")}
+										</Button>
+									) || <Button
+										onClick={onTeamSave}
 										type="primary"
 										disabled={savingTeamPending}
 										loading={savingTeamPending}
 										style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 										size="large">
-										<SaveOutlined />
+										<SaveOutlined style={{ marginRight: "10px" }} />
 										{t("team.saveTeam")}
 									</Button>
-								) || <Button
-									onClick={onTeamSave}
-									type="primary"
-									disabled={savingTeamPending}
-									loading={savingTeamPending}
-									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-									size="large">
-									<SaveOutlined style={{ marginRight: "10px" }} />
-									{t("team.saveTeam")}
-								</Button>
-								}
-							</Row>
-						</Col>
-						<Col lg={12} md={24} sm={24} xs={24} className="right">
+									}
+								</Row>
+							</Col>
+							<Col lg={12} md={24} sm={24} xs={24} className="right">
 
-							<Title level={2}>{t("general.allPlayers")}</Title>
-							<Element name="all-players">
-								<PlayerList
-									data={players}
-									clubs={clubs}
-									isLoading={playersLoading}
-									playerType={PlayerType.SoccerPortrait}
-									size={10}
-									activePositionFilter={activePositionFilter}
-									showHeader={false}
-									hidePositions={false}
-									action={true}
-									isPickable={props.isPickAble}
-									onPick={props.pickPlayer}
-									assetsCdn={competition.assetsCdn}
-									tourRef={playerListRef}
-								/>
-							</Element>
-						</Col>
-					</Row>
-				</>
+								<Title level={2}>{t("general.allPlayers")}</Title>
+								<Element name="all-players">
+									<PlayerList
+										data={players}
+										clubs={clubs}
+										isLoading={playersLoading}
+										playerType={PlayerType.SoccerPortrait}
+										size={10}
+										activePositionFilter={activePositionFilter}
+										showHeader={false}
+										hidePositions={false}
+										action={true}
+										isPickable={props.isPickAble}
+										onPick={props.pickPlayer}
+										assetsCdn={competition.assetsCdn}
+										tourRef={playerListRef}
+									/>
+								</Element>
+							</Col>
+						</Row>
+					</>
 			}
 		</NewTeamStyle>
 	);

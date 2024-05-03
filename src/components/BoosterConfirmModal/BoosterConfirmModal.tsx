@@ -39,6 +39,10 @@ export const BoosterConfirmModal = (props: BoosterConfirmModalProps) => {
 		}
 	};
 
+	const selectOptions = useMemo(() => 
+		props.possiblePlayers.map((p: any) => ({label: `${p.short} (€ ${p.value}M)`, value: p.id}))
+	, [props.possiblePlayers]);
+
 	return (
 		<BoosterConfirmModalStyle
 			title={t("boosters.activate") + " " + t(`boosters.${props.type}`)}
@@ -57,9 +61,9 @@ export const BoosterConfirmModal = (props: BoosterConfirmModalProps) => {
 					<Select
 						className="player-booster"
 						placeholder={t("boosters.affectedPlayer")}
-						values={props.possiblePlayers}
-						keyProperty={"id"}
-						textProperty={"name"}
+						values={selectOptions}
+						keyProperty={"value"}
+						textProperty={"label"}
 						value={selectedPlayerId}
 						onChange={(value: number) => {
 							setSelectedPlayerId(value);

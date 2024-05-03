@@ -13,6 +13,13 @@ export const usersApi = createApi({
 				method: "POST"
 			}),
 		}),
+		
+		paymentIntent: builder.mutation<void,void>({
+			query: () => ({
+				url: "pay",
+				method: "POST"
+			}),
+		}),
 
 		getProfile: builder.query<User, void>({
 			query: () => "profile",
@@ -41,4 +48,4 @@ export const usersApi = createApi({
 	})
 });
 
-export const { useGetProfileQuery, useLazyGetProfileQuery, useGetTeamsQuery, useLazyGetTeamsQuery, useLogoutMutation } = usersApi;
+export const { useGetProfileQuery, useLazyGetProfileQuery, useGetTeamsQuery, useLazyGetTeamsQuery, useLogoutMutation, usePaymentIntentMutation } = usersApi;

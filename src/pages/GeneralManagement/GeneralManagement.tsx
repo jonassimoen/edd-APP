@@ -4,7 +4,7 @@ import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Select } from "@/components/UI/Select/Select";
 import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { useGetGeneralInfoQuery, usePostClubWinnerMutation } from "@/services/generalApi";
-import { Form, Modal } from "antd";
+import { Form, List, Modal } from "antd";
 import Title from "antd/lib/typography/Title";
 import { title } from "process";
 import { useState } from "react";
@@ -36,9 +36,7 @@ export const GeneralManagement = () => {
 	return (
 		<>
 			<Row align='middle'>
-				<Title level={2}>Pages management</Title>
-			</Row>
-			<Row align='middle'>
+				<Title level={2}>General management</Title>
 				<Col md={18}>
 					<table>
 						<tbody>
@@ -65,6 +63,19 @@ export const GeneralManagement = () => {
 						Update winnaar
 					</Button>
 				</Col>
+			</Row>
+			<Row align='middle'>
+				<Title level={2}>User management</Title>
+				<Col md={18}>
+					<ul>
+						{
+							data?.users?.filter((u: any) => !u?.payed)
+								.map((u: any) => <li key={u.email}>{u.email}</li>)
+						}
+					</ul>
+				</Col>
+			</Row>
+			<Row align='middle'>
 			</Row>
 			<Modal 
 				open={open}

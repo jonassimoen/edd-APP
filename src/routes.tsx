@@ -20,7 +20,6 @@ import { Footer } from "./components/Footer/Footer";
 import { TransfersPage } from "./pages/Transfers/Transfers";
 import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
-import { Welcome } from "./pages/Welcome/Welcome";
 import { PageManagement } from "./pages/PageManagement/PageManagement";
 import { GeneralManagement } from "./pages/GeneralManagement/GeneralManagement";
 import { Rankings } from "./pages/Rankings/Rankings";
@@ -30,6 +29,8 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { useEffect } from "react";
 import * as Cronitor from "@cronitorio/cronitor-rum";
 import { useTranslation } from "react-i18next";
+import { PaymentResult } from "./components/Payment/PaymentResult";
+import { PaymentEnvironment } from "./pages/Payment/PaymentEnvironment";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
@@ -46,6 +47,7 @@ const Layout = ({ children }: any) => {
 		}
 		Cronitor.track("Pageview");
 	}, [location.pathname]);
+
 	return (
 		<>
 			<Header />
@@ -157,8 +159,8 @@ export const router = createBrowserRouter([
 					element: <LoginCallback />,
 				},
 				{
-					path: "welcome",
-					element: <ProtectedRoute access={true} redirectPath="/home"><Welcome /></ProtectedRoute>,
+					path: "payment/*",
+					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
 				},
 				{
 					path: "*",

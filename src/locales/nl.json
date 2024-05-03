@@ -71,7 +71,8 @@
     "previous": "Vorige",
     "finish": "Afsluiten",
     "confirmModalYesBtn": "Ja",
-    "confirmModalNoBtn": "Neen"
+    "confirmModalNoBtn": "Neen",
+    "notPayed": "<b>Opgelet!</b><br>Om deel te kunnen nemen aan European Dream Draft is een instapkost van € 5 vereist, die u kan betalen in het menu 'Inschrijving'. Gelieve bij problemen een berichtje te sturen via de knop onderaan de website."
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -361,5 +362,16 @@
   },
   "transferpage": {
     "clearTransfers": "Verwijder transfers"
+  },
+  "payment": {
+    "failedTitle": "Betaling ging mis",
+    "failedDescription": "Er is iets misgegaan met je betaling. Je kan hieronder opnieuw proberen. Als we merken dat deze betaling toch is doorgekomen, betalen we je de tweede betaling terug!",
+    "successTitle": "Betaling geslaagd",
+    "successDescription": "De betaling is geslaagd. U kunt nu gebruikmaken van alle functies.",
+    "processingTitle": "Betaling wordt verwerkt",
+    "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
+    "tryAgain": "Probeer opnieuw te betalen",
+    "manuelVerification": "Er is iets misgegaan met de automatische verificatie. Totdat de betaling manueel is geverifieerd krijgt u een melding om de betaling in orde te maken, die u mag negeren.",
+    "payNow": "Betaal nu"
   }
 }

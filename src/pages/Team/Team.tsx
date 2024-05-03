@@ -96,7 +96,7 @@ export const _Team = (props: AbstractTeamType) => {
 	if(teamError) {
 		return (
 			<Alert
-				description={(teamErrorData as any).data.message}
+				description={(teamErrorData as any)?.data?.message}
 				type="error"
 				showIcon
 			/>
