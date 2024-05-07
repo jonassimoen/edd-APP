@@ -9,6 +9,7 @@ import Title from "antd/lib/typography/Title";
 import { title } from "process";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { GeneralManagementStyle } from "./GeneralManagementStyle";
 
 export const GeneralManagement = () => {
 	const {data} = useGetGeneralInfoQuery() as any;
@@ -34,10 +35,10 @@ export const GeneralManagement = () => {
 	};
 
 	return (
-		<>
+		<GeneralManagementStyle>
 			<Row align='middle'>
-				<Title level={2}>General management</Title>
 				<Col md={18}>
+					<Title level={2}>General management</Title>
 					<table>
 						<tbody>
 							<tr>
@@ -65,12 +66,13 @@ export const GeneralManagement = () => {
 				</Col>
 			</Row>
 			<Row align='middle'>
-				<Title level={2}>User management</Title>
 				<Col md={18}>
+					<Title level={2}>User management</Title>
 					<ul>
 						{
-							data?.users?.filter((u: any) => !u?.payed)
-								.map((u: any) => <li key={u.email}>{u.email}</li>)
+							data?.users?.map((u: any) => 
+								<li key={u.email} className={`${u.payed?"payed":"non-payed"}`}>{u.firstName} {u.lastName} ({u.email})</li>
+							)
 						}
 					</ul>
 				</Col>
@@ -102,6 +104,6 @@ export const GeneralManagement = () => {
 					</FormItem>
 				</Form>
 			</Modal>
-		</>
+		</GeneralManagementStyle>
 	);
 };
