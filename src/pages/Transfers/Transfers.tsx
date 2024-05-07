@@ -24,7 +24,7 @@ import { theme } from "@/styles/theme";
 import { TransfersList } from "@/components/TransfersList/TransfersList";
 import { Button } from "@/components/UI/Button/Button";
 import { CloseCircleFilled, SaveFilled } from "@ant-design/icons";
-import { Element } from "react-scroll";
+import { Element, scroller } from "react-scroll";
 import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { notification } from "antd";
@@ -182,6 +182,18 @@ const _Transfers = (props: AbstractTeamType) => {
 		props.onTransferPlayerIn(player);
 	};
 
+	const onPlaceHolderClick = (player: Player) => {
+		if (player && player.positionId) {
+			props.setActivePositionFilter(player.positionId);
+		}
+		scroller.scrollTo("all-players", {
+			duration: 1000,
+			delay: 100,
+			smooth: true,
+			offset: 50
+		});
+	};
+
 	const {
 		starting, bench, boosters, initializedExternally, captainId,
 		viceCaptainId, deadlineWeekTransfers, draftTransfers, activePositionFilter,
@@ -311,7 +323,7 @@ const _Transfers = (props: AbstractTeamType) => {
 									viceCaptainId={viceCaptainId}
 									showPlayerValueInsteadOfPoints={true}
 									onRemove={canTransferOut && ((player: Player) => props.onTransferPlayerOut(player))}
-									onPlaceholderClick={null}
+									onPlaceholderClick={onPlaceHolderClick}
 									actionLessPlayerIds={null}
 									assetsCdn={competition.assetsCdn}
 								/>

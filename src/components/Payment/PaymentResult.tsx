@@ -46,9 +46,6 @@ export const PaymentResult = (props: PaymentResultProps) => {
 			<Col md={6}>
 				<Title level={2}>{t(`payment.${code}Title`)}</Title>
 				<p>{t(`payment.${code}Description`)}</p>
-
-				{(!profile.data.payed && code === "success") && <p>{t("payment.manualVerification")}</p>}
-
 				{
 					(profile.data.payed && code === "success") || (code === "processing") ?
 						(

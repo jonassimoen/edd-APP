@@ -9,7 +9,8 @@
     "logout": "Uitloggen",
     "points": "Punten",
     "edit": "Wijzig team",
-    "transfers": "Transfers"
+    "transfers": "Transfers",
+    "payment": "Inschrijving"
   },
   "home": {
     "title": "EDD 2024, speel mee!",
@@ -371,7 +372,6 @@
     "processingTitle": "Betaling wordt verwerkt",
     "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
     "tryAgain": "Probeer opnieuw te betalen",
-    "manuelVerification": "Er is iets misgegaan met de automatische verificatie. Totdat de betaling manueel is geverifieerd krijgt u een melding om de betaling in orde te maken, die u mag negeren.",
     "payNow": "Betaal nu"
   }
 }
