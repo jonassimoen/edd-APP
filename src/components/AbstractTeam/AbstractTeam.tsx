@@ -42,6 +42,7 @@ declare type AbstractTeamState = {
 	captainId: number | undefined
 	viceCaptainId: number | undefined
 	teamName: string
+	teamId: number
 	initialTeamName: string
 	teamNameChanged: boolean
 	swapPlayerId: number | null
@@ -98,6 +99,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		captainId: undefined,
 		viceCaptainId: undefined,
 		teamName: "",
+		teamId: undefined,
 		initialTeamName: "",
 		teamNameChanged: false,
 		swapPlayerId: null,
@@ -161,6 +163,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		starting: any[],
 		bench: any[],
 		teamName: string,
+		teamId: number,
 		captainId: number,
 		budget: number,
 		leagues?: any[] | undefined,
@@ -185,6 +188,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			bench,
 			budget,
 			teamName,
+			teamId,
 			captainId,
 			viceCaptainId,
 			initialTeamName: teamName,
@@ -708,6 +712,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 					captainId={state.captainId}
 					viceCaptainId={state.viceCaptainId}
 					teamName={state.teamName}
+					teamId={state.teamId}
 					budget={state.budget}
 					swapPlayerId={state.swapPlayerId}
 					swappedFrom={state.swappedFrom}

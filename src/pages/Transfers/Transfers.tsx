@@ -79,6 +79,7 @@ const _Transfers = (props: AbstractTeamType) => {
 				});
 
 			const teamName = teamResult.team.name;
+			const teamId = teamResult.team.id;
 
 			const captainPlayer = teamResult.players.find((player: any) => player.selection.captain === 1);
 			const captainId = captainPlayer && captainPlayer.id;
@@ -111,12 +112,12 @@ const _Transfers = (props: AbstractTeamType) => {
 			const boosters = {
 				tripleCaptain: teamResult.team.tripleCaptain,
 				viceVictory: teamResult.team.viceVictory,
-				superSub: teamResult.team.superSub,
+				superSubs: teamResult.team.superSubs,
 				hiddenGem: teamResult.team.hiddenGem,
 				goalRush: teamResult.team.goalRush,
 			};
 
-			props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, teamResult.transfers, deadlineWeekTransfers, pastTransfers, viceCaptainId, boosters);
+			props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, undefined, undefined, teamResult.transfers, deadlineWeekTransfers, pastTransfers, viceCaptainId, boosters);
 		}
 		if (teamError) {
 			console.error(teamError);
@@ -215,7 +216,7 @@ const _Transfers = (props: AbstractTeamType) => {
 	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek >= competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	// TODO
-	const enabledWildOrFreeHit = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [boosters]);
+	const enabledWildOrFreeHit = useMemo(() => boosters.superSubs == deadlineWeek/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [boosters]);
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]), [starting, bench]);
 	const remainingTransfers = useMemo(() => {
 		let remainingTransfers = null;

@@ -109,7 +109,7 @@ type Team = {
 	// Boosters
 	tripleCaptain?: number
 	viceVictory?: number
-	superSub?: number
+	superSubs?: number
 	hiddenGem?: number
 	goalRush?: number
 }
@@ -117,7 +117,7 @@ type Team = {
 type Boosters = {
 	tripleCaptain?: number
 	viceVictory?: number
-	superSub?: number
+	superSubs?: number
 	hiddenGem?: number
 	goalRush?: number
 }

@@ -58,6 +58,7 @@ export const _Team = (props: AbstractTeamType) => {
 			});
 
 		const teamName = teamResult.team?.name;
+		const teamId = teamResult.team?.id;
 		const captainPlayer = teamResult.players.find((p: any) => p && p.selection && p.selection.captain === 1);
 		const captainId = captainPlayer && captainPlayer.id;
 
@@ -71,12 +72,12 @@ export const _Team = (props: AbstractTeamType) => {
 		const boosters = {
 			tripleCaptain: teamResult.team.tripleCaptain,
 			viceVictory: teamResult.team.viceVictory,
-			superSub: teamResult.team.superSub,
+			superSubs: teamResult.team.superSubs,
 			hiddenGem: teamResult.team.hiddenGem,
 			goalRush: teamResult.team.goalRush,
 		};
 
-		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters, isTeamOwner);
+		props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters, isTeamOwner);
 	};
 
 	useEffect(() => {
@@ -187,9 +188,10 @@ export const _Team = (props: AbstractTeamType) => {
 							{t("team.saveTeam")}
 						</Button>
 						<BoosterList 
+							teamId={props.teamId}
 							tripleCaptain={props.boosters.tripleCaptain}
 							viceVictory={props.boosters.viceVictory}
-							superSub={props.boosters.superSub}
+							superSubs={props.boosters.superSubs}
 							deadlineWeek={deadlineWeek}
 							assetsCdn={application.competition.assetsCdn}
 							playersWithBoosters={boostedPlayers}

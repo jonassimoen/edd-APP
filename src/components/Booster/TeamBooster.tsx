@@ -10,7 +10,8 @@ declare type TeamBoosterProps = {
 	activatedWeek?: number
 	deadlineWeek?: number
 	boosterLimit: boolean
-	onActivation: (type: string) => any;
+	onActivation: (type: string) => any
+	onUse?: () => any
 }
 
 export const TeamBooster = (props: TeamBoosterProps) => {
@@ -23,6 +24,9 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 		if(!boosterActive && !props.boosterLimit && !boosterUsed) {
 			props.onActivation(props.type);
 		}
+		if(boosterActive && props.onUse) {
+			props.onUse();
+		}
 	};
 
 	return (
@@ -33,13 +37,13 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 				style={{display: "block", fontSize: 50, marginBottom: 20}}
 			/>
 			<Button
-				disabled={boosterUsed || props.boosterLimit}
+				disabled={(boosterUsed || props.boosterLimit) && !props.onUse}
 				onClick={onActivateClick}
 				type="primary"
 				className={boosterActive?"activeBooster":null}
 			>
 				{boosterActive ?
-					t("boosters.active") 
+					(props.onUse ? t("boosters.use") : t("boosters.active") )
 					: 
 					boosterUsed ? 
 						`${t("boosters.used")}: \n ${t("general.matchday")} ${props.activatedWeek}`

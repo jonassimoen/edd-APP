@@ -119,6 +119,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					});
 				const teamName = result.team?.name;
 				const teamUser = result.user;
+				const teamId = result.team.id;
 
 				const captainPlayer = result.players.find((player: any) => player.selections[0].captain === 1);
 				const captainId = captainPlayer && captainPlayer.id;
@@ -133,14 +134,14 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					viceVictory: result.team.viceVictory,
 					goalRush: result.team.goalRush,
 					hiddenGem: result.team.hiddenGem,
-					superSub: result.team.superSub,
+					superSubs: result.team.superSub,
 				};
 
 				const isTeamOwner = !!(result.team.userId === user.id);
 
 				props.loadAllMatches();
 
-				props.initTeamState(starting, bench, teamName, captainId, budget, undefined, weekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
+				props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, weekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
 			})
 			.catch(err => {
 				console.log(err);
@@ -161,7 +162,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		viceVictory: boosters.viceVictory === visibleWeekId,
 		goalRush: boosters.goalRush === visibleWeekId,
 		hiddenGem: boosters.hiddenGem === visibleWeekId,
-		superSub: boosters.superSub === visibleWeekId,
+		superSubs: boosters.superSubs === visibleWeekId,
 	};
 
 	const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);

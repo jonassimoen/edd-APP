@@ -51,6 +51,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 			.filter((player: any) => player.selection.starting === 0)
 			.map((player: any) => Object.assign({ inStarting: false }, pick(player, playerProps), pick(player.selection, selectionProps)));
 		const teamName = result.team.name;
+		const teamId = result.team.id;
 		let captainId = null;
 		let viceCaptainId = null;
 
@@ -64,7 +65,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		const boosters = {
 			tripleCaptain: teamResult.team.tripleCaptain,
 			viceVictory: teamResult.team.viceVictory,
-			superSub: teamResult.team.superSub,
+			superSubs: teamResult.team.superSubs,
 			hiddenGem: teamResult.team.hiddenGem,
 			goalRush: teamResult.team.goalRush,
 		};
@@ -74,7 +75,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 
 		// }
 
-		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
+		props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
 	};
 
 	const updateTeam = (teamId: number) => {

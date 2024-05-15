@@ -342,7 +342,7 @@ function DaySvg() {
 	</svg>;
 }
 
-function PowerSubSvg() {
+function SuperSubsSvg() {
 	return <svg height="1em" viewBox="0 0 96 86">
 		<g id="Page-1" stroke="none" fill="none">
 			<g id="noun_strong_1830768" fill="#000000">
@@ -479,7 +479,7 @@ export {
 	WildcardSvg,
 	BenchSvg,
 	DaySvg,
-	PowerSubSvg,
+	SuperSubsSvg,
 	CaptainSvg,
 	SetPiecesSvg,
 	StarSvg,

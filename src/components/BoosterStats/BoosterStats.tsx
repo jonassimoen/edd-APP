@@ -3,7 +3,7 @@ import { Col, Row } from "../UI/Grid/Grid";
 import { BoosterStatsTable, PlayerBg } from "./BoosterStatsStyle";
 import { useMemo, useState } from "react";
 import Icon from "@ant-design/icons";
-import { GoalRushSvg, HiddenGemSvg, TripleCaptSvg } from "@/styles/custom-icons";
+import { GoalRushSvg, HiddenGemSvg, SuperSubsSvg, TripleCaptSvg } from "@/styles/custom-icons";
 
 declare type BoosterStatsProps = {
 	boosterWeekStatus: BoostersWeekStatus;
@@ -18,7 +18,7 @@ export const BoosterStats = (props: BoosterStatsProps) => {
 		"viceVictory": TripleCaptSvg,
 		"goalRush": GoalRushSvg,
 		"hiddenGem": HiddenGemSvg,
-		"superSub": TripleCaptSvg,
+		"superSubs": SuperSubsSvg,
 	};
 
 	const usedBoosterTypes = useMemo(() => Object.entries(props.boosterWeekStatus)

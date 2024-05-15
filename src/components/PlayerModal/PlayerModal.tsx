@@ -8,7 +8,7 @@ import { theme } from "@/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import Icon from "@ant-design/icons";
-import { CaptainButtonSvg, DeleteButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { CaptainButtonSvg, DeleteButtonSvg, RollBackSvg, SuperSubsSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 import { GoalRushSvg, HiddenGemSvg, TripleCaptSvg } from "@/styles/custom-icons";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
@@ -40,7 +40,7 @@ const BoosterIcons: {[type: string]: () => JSX.Element} = {
 	"ViceVictory": TripleCaptSvg,
 	"GoalRush": GoalRushSvg,
 	"HiddenGem": HiddenGemSvg,
-	"SuperSub": TripleCaptSvg,
+	"superSubs": SuperSubsSvg,
 };
 
 export const PlayerModal = (props: PlayerModalProps) => {
