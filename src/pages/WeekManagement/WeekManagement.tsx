@@ -36,7 +36,7 @@ export const WeekManagement = () => {
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
 	const [updateWeek] = useUpdateWeekMutation();
 	const [createWeek] = useCreateWeekMutation();
-	const [validateWeek] = useValidateWeekMutation();
+	const [validateWeek, { isLoading: validatingWeek }] = useValidateWeekMutation();
 
 	const numberMatchesByStateByWeekId = useMemo(() => matches?.reduce((group: { [key: number]: { [key: string]: number } }, match: Match) => {
 		if (!group[match.weekId]) {
@@ -79,7 +79,6 @@ export const WeekManagement = () => {
 					<DatePicker
 						showTime={true}
 						locale={locale}
-						defaultPickerValue={dayjs()}
 						allowClear={false} />
 				</FormItem>
 			</Col>
@@ -98,7 +97,7 @@ export const WeekManagement = () => {
 			</Row>
 			{weeks && (
 				<Table
-					loading={weeksLoading}
+					loading={weeksLoading || validatingWeek}
 					dataSource={weeks}
 					rowKey={"id"}
 					size="small"
@@ -130,9 +129,9 @@ export const WeekManagement = () => {
 							dataIndex: "name",
 							width: "35%",
 							render: (name: string, record: any) => {
-								return (
+								return name ? (
 									<p>{t(`general.weeks.${name}`)}</p>
-								);
+								) : "-";
 							}
 						},
 						{

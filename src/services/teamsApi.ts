@@ -6,6 +6,7 @@ import { url } from "inspector";
 export const teamsApi = createApi({
 	reducerPath: "teamsApi",
 	tagTypes: ["userTeam", "userTeamPoints"],
+	keepUnusedDataFor: 60*3,
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/teams`, credentials: "include" }),
 	endpoints: (builder) => ({
 
@@ -40,6 +41,15 @@ export const teamsApi = createApi({
 				body: data,
 			})
 		}),
+		
+		activateBooster: builder.mutation<{message: string}, { teamId: number, type: string, playerId: number }>({
+			invalidatesTags: ["userTeam"],
+			query: ({ teamId, ...data }) => ({
+				url: `${teamId}/booster`,
+				method: "POST",
+				body: data
+			}),
+		}),
 
 		getPoints: builder.query<{team:Team, players:Player[]}, {teamId: number, weekId: number}>({
 			query: ({teamId, weekId}) => `${teamId}/points/${weekId}`,
@@ -49,15 +59,6 @@ export const teamsApi = createApi({
 		getTeamRankings: builder.query<{team: Team, user: User}, void>({
 			query: () => "/rankings"
 		}) 
-
-		// updatePlayer: builder.mutation<Player, Partial<Player> & Pick<Player, 'id'>>({
-		// 	query: ({ id, ...put }) => ({
-		// 		url: `${id}`,
-		// 		method: 'PUT',
-		// 		body: put,
-		// 	}),
-		// 	invalidatesTags: (result, error, arg) => [{ type: 'Player', id: arg.id }],
-		// }),
 	})
 });
 
@@ -68,5 +69,6 @@ export const {
 	useUpdateTeamSelectionMutation, 
 	useLazyGetPointsQuery, 
 	useSubmitTransfersMutation,
-	useGetTeamRankingsQuery
+	useGetTeamRankingsQuery,
+	useActivateBoosterMutation,
 } = teamsApi;

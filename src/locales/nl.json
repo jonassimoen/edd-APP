@@ -9,7 +9,8 @@
     "logout": "Uitloggen",
     "points": "Punten",
     "edit": "Wijzig team",
-    "transfers": "Transfers"
+    "transfers": "Transfers",
+    "payment": "Inschrijving"
   },
   "home": {
     "title": "EDD 2024, speel mee!",
@@ -18,19 +19,20 @@
     "howDoesItWork": "Hoe werkt het?"
   },
   "general": {
-    "footballLineup": "Opstelling",
-    "footballAllPlayers": "Spelers",
+    "lineup": "Opstelling",
+    "allPlayers": "Spelers",
     "pick": "Kies",
     "choosePlayer": "Kies speler",
-    "footballCalendar": "Wedstrijden",
+    "calendar": "Wedstrijden",
     "budgetFilterPrefix": "Max. €",
     "budgetFilterSuffix": "miljoen",
-    "footballAllBudget": "Onbeperkt budget",
-    "footballAllPositions": "Alle posities",
-    "footballAllClubs": "Alle landen",
+    "allBudget": "Onbeperkt budget",
+    "allPositions": "Alle posities",
+    "allClubs": "Alle ploegen",
     "playersListSearchInputPlaceholder": "Zoek speler op naam",
-    "footballWeek": "Speeldag",
+    "matchday": "Speeldag",
     "week": "Week",
+    "allWeeks": "Alle speeldagen",
     "weeks": {
       "quarterfinal": "Kwartfinale",
       "semifinal": "Halve finale",
@@ -59,7 +61,19 @@
     "team": {
       "tobedetermined": "Nog te bepalen",
       "tbd": "N.t.b."
-    }
+    },
+    "teamBoosters": "Team boosters",
+    "teamBooster": "Team booster",
+    "activated": "geactiveerd",
+    "playerBoosters": "Speler boosters",
+    "confirm": "Bevestig",
+    "cancel": "Annuleer",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "finish": "Afsluiten",
+    "confirmModalYesBtn": "Ja",
+    "confirmModalNoBtn": "Neen",
+    "notPayed": "<b>Opgelet!</b><br>Om deel te kunnen nemen aan European Dream Draft is een instapkost van € 5 vereist, die u kan betalen in het menu 'Inschrijving'. Gelieve bij problemen een berichtje te sturen via de knop onderaan de website."
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -69,15 +83,20 @@
     "goalkeeperShort": "DM",
     "opponentHome": "T",
     "opponentAway": "U",
-    "captainBadgeLabel": "Maak aanvoerder",
-    "viceCaptainBadgeLabel": "Maak vice-aanvoerder",
+    "btnCaptainBadgeLabel": "Maak aanvoerder",
+    "btnViceCaptainBadgeLabel": "Maak vice-aanvoerder",
+    "captainBadgeLabel": "Aanvoerder",
+    "viceCaptainBadgeLabel": "Vice-aanvoerder",
     "swapBadgeLabel": "Wissel",
     "undoBadgeLabel": "Annuleer",
     "removeBadgeLabel": "Verwijder",
     "modal": {
       "actionColumnName": "Actie",
       "quantityColumnName": "Aantal",
-      "pointsColumnName": "Punten"
+      "pointsColumnName": "Punten",
+      "selectionActions": "Selectie acties",
+      "boosterActions": "Booster acties",
+      "totalRegularPoints": "Reguliere punten"
     },
     "assistsLabel": "Assist",
     "goalsLabel": "Doelpunt",
@@ -100,7 +119,8 @@
     "dribblesSuccessPerTwoLabel": "Per 2 succesvolle dribbels",
     "duelsWonMoreThanLostLabel": "Meer gewonnen dan verloren duels",
     "interceptionsPerSevenLabel": "Intercepties per zeven",
-    "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3"
+    "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3",
+    "endWinnerSelectionsLabel": "Eindwinnaar (per speeldagselectie)"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {
@@ -139,7 +159,7 @@
   },
   "form": {
     "positionId": {
-      "tooltip": ""
+      "tooltip": "Positie"
     }
   },
   "editBtn": "Wijzig",
@@ -212,9 +232,21 @@
     "interceptionsColumnForAllPlayersTable": "Intercepties",
     "againstColumnForAllPlayersTable": "Tegendoelpunten",
     "cleanColumnForAllPlayersTable": "Geen tegendoelpunten",
+    "yellowColumnForAllPlayersTable": "Gele kaarten",
+    "redColumnForAllPlayersTable": "Rode kaarten",
     "dribbleAccuracyColumnForAllPlayersTable": "Percentage succesvolle dribbels",
     "timePlayedColumnForAllPlayersTable": "Minuten gespeeld",
-    "matchPlayedColumnForAllPlayersTable": "Matches gespeeld"
+    "matchPlayedColumnForAllPlayersTable": "Matches gespeeld",
+    "percentageInTeamForAllPlayersTable": "% in team",
+    "percentageCaptainForAllPlayersTable": "% kapitein",
+    "roiForAllPlayersTable": "ROI",
+    "playersGeneralStatsTitle": "Spelers statistieken",
+    "attackingStats": "Aanvallend",
+    "defendingStats": "Verdedigend",
+    "cardStats": "Kaarten",
+    "playStats": "Speeltijd",
+    "userStats": "Gebruikers",
+    "percentageViceCaptainForAllPlayersTable": "% vice"
   },
   "team": {
     "saveTeam": "Team opslaan",
@@ -248,7 +280,15 @@
     "yourPoints": "jouw punten",
     "weekWinnerPoints": "winnaar",
     "statsBlockTitle": "Statistieken",
-    "overviewBlockTitle": "Overzicht"
+    "overviewBlockTitle": "Overzicht",
+    "overviewBoosters": "Boosters speeldag",
+    "boostersUsed": "Gebruikte boosters",
+    "boosterStats": {
+      "type": "Booster type",
+      "player": "Speler",
+      "extraPoints": "Extra punten"
+    },
+    "noBoostersUsed": "Geen boosters gebruikt deze speeldag."
   },
   "pageTitle": "Pagina",
   "rankingsPage": {
@@ -258,10 +298,14 @@
     "rankingsNotAvailableYet": "Ranking niet beschikbaar"
   },
   "transfersPage": {
-    "transfersBlockTitle": "Transfers"
+    "transfersBlockTitle": "Transfers",
+    "transferConfirmTitle": "Bevestig je transfers",
+    "transferConfirmMessage": "Ben je zeker dat je je gemaakte transfers wilt bevestigen? Deze kunnen niet meer ongedaan gemaakt worden!"
   },
   "transferPage": {
-    "noTransfersTableMessage": "Geen transfers"
+    "noTransfersTableMessage": "Geen transfers",
+    "confirmTransfers": "Bevestig transfers",
+    "transferButtonLabel": "Transfereer"
   },
   "pageNotFound": {
     "title": "Pagina niet gevonden!",
@@ -276,5 +320,62 @@
   },
   "errorPage": {
     "processing": "Bedankt voor het melden! Wij onderzoeken de oorzaak van deze foutmelding zo snel mogelijk."
+  },
+  "boosters": {
+    "tripleCaptain": "Driedubbele kapitein",
+    "viceVictory": "Vice overwinning",
+    "hiddenGem": "Verborgen diamant",
+    "goalRush": "Goal rush",
+    "superSubs": "Super subs",
+    "activate": "Activeer",
+    "active": "Nu actief",
+    "usedPlayer": "Gebruikte speler",
+    "used": "Reeds gebruikt",
+    "available": "Beschikbaar",
+    "confirmMsg": "Als je deze booster activeert is er <b>geen mogelijkheid om dit ongedaan te maken</b>. Ben je zeker dat je deze wilt activeren?",
+    "affectedPlayer": "Geselecteerde speler",
+    "noPlayerSelected": "Je moet een speler selecteren voor deze booster!",
+    "use": "Gebruik"
+  },
+  "tour": {
+    "newTeam": {
+      "pickTeamName": {
+        "title": "Kies een leuke teamnaam"
+      },
+      "specificPlayer": {
+        "title": "Kies een speler voor een specifieke positie",
+        "description": "Indien je op het \"+\"-teken klikt, wordt de spelerslijst gefilterd op spelers die op deze positie kunnen spelen."
+      },
+      "pickPlayer": {
+        "title": "Kies een speler uit de lijst",
+        "description": "Kies hier een speler (eventueel gefilterd op positie door de vorige step) volgens de regels van het spel (binnen het budget en max. aantal spelers per club)."
+      },
+      "stats": {
+        "title": "Bekijk je statistieken",
+        "description": "Check of je nog genoeg budget over hebt en hoeveel spelers je nog moet selecteren in één oogopslag!"
+      },
+      "end": {
+        "title": "Veel succes!"
+      }
+    }
+  },
+  "editPage": {
+    "hint": {
+      "title": "Ongelimiteerde wijzigingen",
+      "description": "Tot het begin van het EK kun je ongelimiteerd (en zonder minpunten) je team wijzigen."
+    }
+  },
+  "transferpage": {
+    "clearTransfers": "Verwijder transfers"
+  },
+  "payment": {
+    "failedTitle": "Betaling ging mis",
+    "failedDescription": "Er is iets misgegaan met je betaling. Je kan hieronder opnieuw proberen. Als we merken dat deze betaling toch is doorgekomen, betalen we je de tweede betaling terug!",
+    "successTitle": "Betaling geslaagd",
+    "successDescription": "De betaling is geslaagd. U kunt nu gebruikmaken van alle functies.",
+    "processingTitle": "Betaling wordt verwerkt",
+    "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
+    "tryAgain": "Probeer opnieuw te betalen",
+    "payNow": "Betaal nu"
   }
 }

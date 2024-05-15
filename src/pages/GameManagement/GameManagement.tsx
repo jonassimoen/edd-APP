@@ -6,9 +6,9 @@ import { Input } from "@/components/UI/Input/Input";
 import { Select } from "@/components/UI/Select/Select";
 import { openErrorNotification, openSuccessNotification, statusToIconColor } from "@/lib/helpers";
 import { useGetClubsQuery } from "@/services/clubsApi";
-import { useCreateMatchMutation, useGetMatchesQuery, useImportMatchesMutation, useUpdateMatchMutation } from "@/services/matchesApi";
+import { useCreateMatchMutation, useGetMatchesQuery, useImportMatchesMutation, useRecalculateMatchPointsMutation, useUpdateMatchMutation } from "@/services/matchesApi";
 import { useGetWeeksQuery } from "@/services/weeksApi";
-import { CloseOutlined, DownloadOutlined, EditOutlined, PlusOutlined, QuestionOutlined, SkinOutlined } from "@ant-design/icons";
+import { CloseOutlined, DownloadOutlined, EditOutlined, PlusOutlined, QuestionOutlined, RedoOutlined, SkinOutlined } from "@ant-design/icons";
 import { DatePicker, InputNumber, Modal, Table, Tag } from "antd";
 import locale from "antd/es/date-picker/locale/nl_BE";
 import Title from "antd/es/typography/Title";
@@ -31,6 +31,7 @@ export const GameManagement = () => {
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
 	const [importMatches, { data: imports, isLoading: isImportMatchesLoading, isError: isImportMatchesError, error: importMatchesError, isSuccess: isImportMatchesSuccess }] = useImportMatchesMutation();
+	const [recalculate, { isLoading: recalculatingPoints } ] = useRecalculateMatchPointsMutation();
 
 	const [createMatch] = useCreateMatchMutation();
 	const [updateMatch] = useUpdateMatchMutation();
@@ -87,7 +88,6 @@ export const GameManagement = () => {
 						<DatePicker
 							showTime={true}
 							locale={locale}
-							defaultPickerValue={dayjs()}
 							allowClear={false}
 						// format={["DD/MM/YYYY HH:mm", "YYYY-MM-DD\THH:mm:ss.SSS\Z"]}
 						/>
@@ -197,7 +197,7 @@ export const GameManagement = () => {
 			</Row>
 			{matches && (
 				<Table
-					loading={matchesLoading}
+					loading={matchesLoading || recalculatingPoints}
 					dataSource={matches}
 					rowKey={"id"}
 					size="small"
@@ -223,7 +223,7 @@ export const GameManagement = () => {
 								const week = weeks && weeks.find((week: Week) => week.id === weekId);
 								console.log(week);
 								if(week) {
-									return (<p>{week && week?.name ? t(`general.weeks.${week?.name}`) : `${t("general.footballWeek")} ${weekId}`}</p>);
+									return (<p>{week && week?.name ? t(`general.weeks.${week?.name}`) : `${t("general.matchday")} ${weekId}`}</p>);
 								} else {
 									return (<p>-</p>);
 								}
@@ -293,13 +293,34 @@ export const GameManagement = () => {
 							align: "center",
 							render: (_: any, record: any) => {
 								if (new Date(record.date).getTime() < Date.now() && record.home?.id && record.away?.id) {
-									return (<Link to={`events/${record.id}`}>
-										<Button
-											icon={<SkinOutlined />}
-											shape={"circle"}
-											type="primary"
-										/>
-									</Link>);
+									return (
+										<Row>
+											<Col span={12}>
+												<Link to={`events/${record.id}`}>
+													<Button
+														icon={<SkinOutlined />}
+														shape={"circle"}
+														type="primary"
+													/>
+												</Link>
+											</Col>
+											{record.status != "VALIDATED" && (
+												<Col span={12}>
+													<Button
+														icon={<RedoOutlined />}
+														shape={"circle"}
+														type="primary"
+														onClick={() => 
+															recalculate(record.id).unwrap()
+																.then((v: any) => openSuccessNotification({title: "Recalculation successfull", message: v.msg}))
+																.catch((v: any) => openErrorNotification({title: "Recalculation failed."}))
+														}
+													/>
+												</Col>
+											)}
+											
+										</Row>
+									);
 								} else {
 									return (<Button
 										icon={<EditOutlined />}

@@ -1,5 +1,5 @@
 import { defaultUser, useAuth } from "@/lib/stores/AuthContext";
-import { useGetProfileQuery, useGetTeamsQuery } from "@/services/usersApi";
+import { useGetProfileQuery, useGetTeamsQuery, useLazyGetProfileQuery, useLogoutMutation } from "@/services/usersApi";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,8 @@ import { logout } from "@/features/userSlice";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { theme } from "@/styles/theme";
 import { Crisp } from "crisp-sdk-web";
+import { Alert } from "../UI/Alert/Alert";
+import parseHTML from "html-react-parser";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -31,10 +33,13 @@ export const Header = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { authenticated, user } = useAppSelector((state) => state.userState);
+	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
+	const [teamVerification, setTeamVerification] = useState(false);
+
 
 	const [state, setState] = useState({
 		windowWidth: window.innerWidth,
@@ -48,19 +53,22 @@ export const Header = () => {
 	const allMenuItems: string[] = ["home", "stats", "rules", "rankings"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;
 	const isActive = (match: string) => location.pathname.indexOf(match) !== -1;
-	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId), [userTeam, deadlineInfo]);
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const gameEnded = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek == 0, [deadlineInfo]);
+	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && (gameEnded || (gameInProgress && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId))), [userTeam, gameEnded, gameInProgress, deadlineInfo]);
 	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId) && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [userTeam, deadlineInfo]);
+	const userHasPayed = useMemo(() => (user && user.payed) || !authenticated, [user, authenticated]);
+	const wildCardOrFreeHitEnabled = useMemo(() => deadlineInfo?.deadlineInfo?.deadlineWeek && userTeam && (deadlineInfo?.deadlineInfo.deadlineWeek === userTeam.superSubs), [userTeam, deadlineInfo]);
 
 	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
-		if (allMenuItems.indexOf(item) === -1) {
+		if (allMenuItems.indexOf(item) === -1)
 			allMenuItems.splice(positionIndex, 0, item);
-		}
 	};
 
 	useEffect(() => {
 		if (teams) {
 			setUserTeam(teams.teams[0]);
+			setTeamVerification(true);
 		}
 	}, [teams]);
 
@@ -69,6 +77,9 @@ export const Header = () => {
 
 		if (user.role === 7) {
 			allMenuItems.push("admin");
+		}
+		if(!userHasPayed) {
+			allMenuItems.push("pay");
 		}
 		
 		Crisp.user.setEmail(user.email);
@@ -97,7 +108,11 @@ export const Header = () => {
 		}
 	}
 
-	if (authenticated && showTransfers && gameInProgress) {
+	if (wildCardOrFreeHitEnabled) {
+		insertToMenuAtPosition(3, "edit");
+	}
+
+	if (authenticated && showTransfers && gameInProgress && !wildCardOrFreeHitEnabled) {
 		if (showTransfers) {
 			insertToMenuAtPosition(4, "transfers");
 		} else {
@@ -109,8 +124,9 @@ export const Header = () => {
 		setState({ ...state, menuToggled: !state.menuToggled });
 	};
 	const onLogout = (e: any) => {
-		secureLocalStorage.removeItem("token");
+		logoutRequest();
 		secureLocalStorage.removeItem("user");
+
 		dispatch(logout);
 		window.location.reload();
 	};
@@ -126,6 +142,17 @@ export const Header = () => {
 								<Link to="/"><h1 className="c-logo" style={{ backgroundImage: "url('/euro_DD_HOR.png')" }}>Fantasy League</h1></Link>
 								<nav className="c-nav-main js-nav" role="navigation">
 									<ul className="c-nav-main__list">
+										{(isVisible("pay") && 
+											<li className={`c-nav_item ${(isActive("payment")) ? "is-selected" : " "}`}>
+												<Link
+													className="c-nav-main__link"
+													to={"payment"}
+												>
+													{t("menu.payment")}
+												</Link>
+											</li>
+										) || null
+										}
 										{(userTeam && isVisible("team") && 
 											<li className={`c-nav_item ${(isActive("team")) ? "is-selected" : " "}`}>
 												<Link
@@ -137,7 +164,7 @@ export const Header = () => {
 											</li>
 										) || null
 										}
-										{(!userTeam && isVisible("new") &&
+										{(teamVerification && !userTeam && isVisible("new") &&
 											<li className={`c-nav-main__item ${(isActive("new")) ? "is-selected" : ""}`}>
 												<Link
 													className="c-nav-main__link"
@@ -186,7 +213,7 @@ export const Header = () => {
 						</Layout>
 					</div>
 				</div>
-				{isVisible("team") &&
+				{(isVisible("team") || isVisible("points")) &&
 					<div className="c-row c-row--sm c-row--alpha" style={{ marginBottom: "15px" }}>
 						<Layout>
 							<ul className="o-list c-nav-tabs">
@@ -217,6 +244,10 @@ export const Header = () => {
 				<nav className="c-nav-mobile js-nav-mobile">
 					<div className="c-nav-mobile__main">
 						<ul className="o-list c-nav-mobile__list">
+							{((userTeam && isVisible("pay")) &&
+								<li className={`c-nav-mobile__item ${isActive("payment") ? "active" : ""}`}>
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={"payment"}>{t("menu.pay")}</Link></li>) || null}
+
 							{((userTeam && isVisible("points")) &&
 								<li className={`c-nav-mobile__item ${isActive("points") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/points/${userTeam.id}`}>{t("menu.points")}</Link></li>) || null}
@@ -230,7 +261,7 @@ export const Header = () => {
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/edit/${userTeam.id}`}>{t("menu.edit")}</Link>
 								</li>) || null}
 
-							{(!userTeam && isVisible("new") &&
+							{(teamVerification && !userTeam && isVisible("new") &&
 								<li className={`c-nav-mobile__item ${isActive("new") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/new">{t("menu.newTeam")}</Link></li>) || null
 							}
@@ -272,6 +303,16 @@ export const Header = () => {
 				</nav>
 			</HeaderStyle >
 			<Layout>
+				{
+					(!userHasPayed && !window.location.href.includes("payment")) ? 
+						<Alert
+							description={parseHTML(t("general.notPayed"))}
+							type="warning"
+							className="warning-not-payed"
+							showIcon
+						/> 
+						: null
+				}
 				<Outlet />
 			</Layout>
 		</>

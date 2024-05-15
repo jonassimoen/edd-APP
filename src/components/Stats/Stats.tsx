@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { StatsStyle } from "./StatsStyle";
 import { Col, Row } from "../UI/Grid/Grid";
 import { useTranslation } from "react-i18next";
@@ -50,6 +50,8 @@ export const Stats = (props: StatsOverviewProps) => {
 		setState(state => ({ ...state, transfersModalEnabled: false }));
 	};
 
+
+
 	return (
 		<StatsStyle>
 			<Row className="stat">
@@ -68,24 +70,24 @@ export const Stats = (props: StatsOverviewProps) => {
 				</Col>
 			</Row>
 			<Row className="stat">
-				<Col lg={18} md={18} sm={18} xs={18} className="label">{`${t("pointsPage.overviewWeekPoints")} ${props.weekId}`}</Col>
-				<Col lg={6} md={6} sm={6} xs={6} className="points">{props.visibleWeekPoints}</Col>
+				<Col lg={15} md={15} sm={15} xs={15} className="label">{`${t("pointsPage.overviewWeekPoints")} ${props.weekId}`}</Col>
+				<Col lg={9} md={9} sm={9} xs={9}  className="points">{props.visibleWeekPoints}</Col>
 			</Row>
 			<Row className="stat">
-				<Col lg={18} md={18} sm={18} xs={18} className="label">{`${t("pointsPage.overviewWeekRank")} ${props.weekId}`}</Col>
-				<Col lg={6} md={6} sm={6} xs={6} className="points">{props.visibleWeekRank}</Col>
+				<Col lg={15} md={15} sm={15} xs={15} className="label">{`${t("pointsPage.overviewWeekRank")} ${props.weekId}`}</Col>
+				<Col lg={9} md={9} sm={9} xs={9}  className="points">{props.visibleWeekRank}</Col>
 			</Row>
 			<Row className="stat">
-				<Col lg={18} md={18} sm={18} xs={18} className="label">{t("pointsPage.overviewGeneralPoints")}</Col>
-				<Col lg={6} md={6} sm={6} xs={6} className="points">{props.generalPoints}</Col>
+				<Col lg={15} md={15} sm={15} xs={15} className="label">{t("pointsPage.overviewGeneralPoints")}</Col>
+				<Col lg={9} md={9} sm={9} xs={9}  className="points">{props.generalPoints}</Col>
 			</Row>
 			<Row className="stat">
-				<Col lg={18} md={18} sm={18} xs={18} className="label">{t("pointsPage.overviewGeneralRank")}</Col>
-				<Col lg={6} md={6} sm={6} xs={6} className="points">{props.generalRank}</Col>
+				<Col lg={15} md={15} sm={15} xs={15} className="label">{t("pointsPage.overviewGeneralRank")}</Col>
+				<Col lg={9} md={9} sm={9} xs={9}  className="points">{props.generalRank}</Col>
 			</Row>
 			<Row className="stat">
-				<Col lg={18} md={18} sm={18} xs={18} className="label">{`${t("pointsPage.overviewWeekTotalTransfers")} ${props.weekId}`}</Col>
-				<Col lg={6} md={6} sm={6} xs={6} className={`points ${props.transfers.length ? "has-transfers" : ""}`}>
+				<Col lg={15} md={15} sm={15} xs={15} className="label">{`${t("pointsPage.overviewWeekTotalTransfers")} ${props.weekId}`}</Col>
+				<Col lg={9} md={9} sm={9} xs={9}  className={`points ${props.transfers.length ? "has-transfers" : ""}`}>
 					<span onClick={props.transfers.length ? showTransfersModal: () => null}>{props.transfers.length}</span>
 				</Col>
 			</Row>

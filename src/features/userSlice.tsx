@@ -7,8 +7,6 @@ type userAuthState = {
     teams: Team[]
 }
 
-const userToken = secureLocalStorage.getItem("userToken") ? secureLocalStorage.getItem("userToken") : null;
-
 const initialState: userAuthState = {
 	user: secureLocalStorage.getItem("user") ? JSON.parse(secureLocalStorage.getItem("user") as string) : null,
 	authenticated: secureLocalStorage.getItem("user") ? true : false,

@@ -50,7 +50,7 @@ export const Badge = styled.div`
     background-color: ${(props: any) => props.bgColor};
 	color: ${(props: any) => props.color};
     position: absolute;
-    top: 75%;
+    top: 74%;
     bottom: 0;
     left: 0;
     right: 0;
@@ -65,7 +65,7 @@ export const Badge = styled.div`
 		white-space: nowrap;
 		overflow: hidden;
 		font-size: 12px;
-		line-height: 1.1;
+		line-height: normal;
 		padding: 5px;
 
 		@media ${mediaQueries.mobileM} {
@@ -89,10 +89,14 @@ export const OpponentBadge = styled.div`
 	
 	background: ${(props: any) => props.bgColor};
 	color:  ${(props: any) => props.color};
-	padding: 3px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+
+    p {
+        text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		line-height: 0.9em;
+		padding: 3px;
+    }
 
 	@media ${mediaQueries.tablet} {
 		overflow: hidden;
@@ -101,6 +105,15 @@ export const OpponentBadge = styled.div`
 
 export const NoPlayer = styled.div`
 	margin: 0 auto;
+	position: absolute;
+	left:0;right:0;
+	top:25%;
+
+	.add-icon {
+		fontSize: 2em;
+		color: ${theme.primaryContrast};
+		cursor: pointer;
+	}
 ` as any;
 
 export const Value = styled.div`

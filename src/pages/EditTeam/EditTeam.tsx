@@ -19,24 +19,22 @@ import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { PlayerType } from "@/types/PlayerTypes";
 import { theme } from "@/styles/theme";
 import { Element, scroller } from "react-scroll";
-import { useGetClubsQuery } from "@/services/clubsApi";
 import { SaveOutlined } from "@ant-design/icons";
 import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { useGetMatchesQuery } from "@/services/matchesApi";
-import { useGetPlayersQuery } from "@/services/playersApi";
 import { Button } from "@/components/UI/Button/Button";
 import { Alert } from "@/components/UI/Alert/Alert";
 
 const _EditTeam = (props: AbstractTeamType) => {
 	const { user, teams } = useAppSelector((state) => state.userState);
-	const application = useSelector((state: StoreState) => state.application);
 	const [t] = useTranslation();
 	const { id } = useParams();
 	const { data: teamResult, isSuccess: teamSucces, isError: teamError, error: teamErrorData } = useGetTeamQuery(+id || 0);
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const { data: matches, isSuccess: matchesSuccess, isLoading: matchesLoading } = useGetMatchesQuery();
-	const { data: clubs, isSuccess: clubsSuccess, isLoading: clubsLoading } = useGetClubsQuery();
-	const { data: players, isSuccess: playersSuccess, isLoading: playersLoading } = useGetPlayersQuery();
+	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	const players = JSON.parse(localStorage.getItem("_static_players"));
+	const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
 
 	const getTeamInfo = () => {
 		if (!teamSucces) {
@@ -53,6 +51,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 			.filter((player: any) => player.selection.starting === 0)
 			.map((player: any) => Object.assign({ inStarting: false }, pick(player, playerProps), pick(player.selection, selectionProps)));
 		const teamName = result.team.name;
+		const teamId = result.team.id;
 		let captainId = null;
 		let viceCaptainId = null;
 
@@ -61,13 +60,14 @@ const _EditTeam = (props: AbstractTeamType) => {
 
 		const budget = result.team.budget !== null
 			? result.team.budget
-			: result.players.reduce((acc: any, player: any) => acc - player.value, application.competition.budget);
+			: result.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
 
 		const boosters = {
-			freeHit: result.team.freeHit,
-			bank: result.team.bank,
-			tripleCaptain: result.team.tripleCaptain,
-			wildCard: result.team.wildCard,
+			tripleCaptain: teamResult.team.tripleCaptain,
+			viceVictory: teamResult.team.viceVictory,
+			superSubs: teamResult.team.superSubs,
+			hiddenGem: teamResult.team.hiddenGem,
+			goalRush: teamResult.team.goalRush,
 		};
 
 		// const deadlineWeek = (deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek) || 0;
@@ -75,7 +75,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 
 		// }
 
-		props.initTeamState(starting, bench, teamName, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
+		props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
 	};
 
 	const updateTeam = (teamId: number) => {
@@ -112,7 +112,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		activePositionFilter,
 	} = props;
 
-	const totalPlayersToPick = application.competition.lineupSize + application.competition.benchSize;
+	const totalPlayersToPick = competition.lineupSize + competition.benchSize;
 	const startingPicked = starting.filter(player => !!player);
 	const benchPicked = bench.filter(player => !!player);
 	const totalPlayersPicked = startingPicked.length + benchPicked.length;
@@ -125,10 +125,11 @@ const _EditTeam = (props: AbstractTeamType) => {
 		[team, deadlineInfo]);
 	const gameOfficialyStarted = useMemo(
 		() => team && team.id && deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek
-			&& deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek,
+			&& deadlineInfo.deadlineInfo.deadlineWeek > competition.officialStartWeek,
 		[team, deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
-	const wildCardOrFreeHitEnabled = useMemo(() => boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek, [deadlineInfo]);
+	// TODO
+	const wildCardOrFreeHitEnabled = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [deadlineInfo]);
 	const startingByPositions = startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]);
 
 	if(teamError) {
@@ -149,15 +150,15 @@ const _EditTeam = (props: AbstractTeamType) => {
 			{
 				team && starting && starting.length === 0 && <Navigate to={{ pathname: "/new" }} />
 			}
-			{
+			{/* {
 				deadlineWeek && team && (firstPlayingWeekPassed && gameOfficialyStarted && !wildCardOrFreeHitEnabled)
 				&& <Navigate to={{ pathname: `/transfers/${team.id}` }} />
-			}
+			} */}
 			{
 				team && initializedExternally && players && clubs &&
 				<Row>
 					<Col md={12} sm={12} xs={24} className="left">
-						<Title level={2}>{t("general.footballLineup")}</Title>
+						<Title level={2}>{t("general.lineup")}</Title>
 						<Block>
 							<NewGameStats
 								budget={budget}
@@ -169,7 +170,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 								heightRatio={10}
 								bg={teamBackground}
 								selection={startingByPositions}
-								assetsCdn={application.competition.assetsCdn}
+								assetsCdn={competition.assetsCdn}
 								playerType={PlayerType.SoccerPortrait}
 								captainId={captainId}
 								viceCaptainId={viceCaptainId}
@@ -199,18 +200,20 @@ const _EditTeam = (props: AbstractTeamType) => {
 									{t("team.saveTeam")}
 								</Button>)
 							}
-							<Alert
-								message="Tips"
-								description="Selecteer 15 spelers"
-								type="info"
-								showIcon
-								style={{margin: "10px auto"}}
-							/>
+							{!gameOfficialyStarted && 
+								<Alert
+									message={t("editPage.hint.title")}
+									description={t("editPage.hint.description")}
+									type="info"
+									showIcon
+									style={{margin: "10px auto"}}
+								/>
+							}
 						</Block>
 					</Col>
 					<Col md={12} sm={12} xs={24} className="right">
 						<Block>
-							<Title level={2}>{t("general.footballAllPlayers")}</Title>
+							<Title level={2}>{t("general.allPlayers")}</Title>
 							<Element name="all-players">
 								<PlayerList
 									data={players}
@@ -221,7 +224,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 									matches={matches}
 									deadlineWeek={deadlineWeek}
 									hidePositions={false}
-									assetsCdn={application.competition.assetsCdn}
+									assetsCdn={competition.assetsCdn}
 									activePositionFilter={activePositionFilter}
 									isPickable={props.isPickAble}
 									onPick={props.pickPlayer}

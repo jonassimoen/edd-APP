@@ -6,7 +6,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 const detectOptions = {
 	// order and from where user language should be detected
-	order: ["querystring", "cookie", "localStorage", "sessionStorage", "navigator", "htmlTag", "path", "subdomain"],
+	order: [ "cookie", "localStorage", "sessionStorage", "querystring", "path", "navigator", "htmlTag", "subdomain"],
   
 	// keys or params to lookup language from
 	lookupQuerystring: "lng",
@@ -39,7 +39,7 @@ i18next
 		interpolation: {
 			escapeValue: false,
 		},
-		// lng: 'nl',
+		// lng: "nl",
 		fallbackLng: "nl",
 		resources: {
 			nl: { translation: nl },

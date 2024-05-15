@@ -41,8 +41,10 @@ type Player = {
 	squadStatus: string
 	clubId: number
 	inStarting?: boolean
+	played?: boolean
 	points: number
-	pointsOverview: boolean
+	pointsOverview: any
+	booster: string
 
 	stats?: Statistic[]
 	selections?: PlayerSelection[]
@@ -91,6 +93,7 @@ type PlayerSelection = {
 	teamId: number
 	playerId: number
 	value: number
+	booster?: string
 }
 
 type Team = {
@@ -100,19 +103,23 @@ type Team = {
 	userId: number
 	weekId: number
 	budget: number
-	freeHit: number
-	bank: number
-	tripleCaptain: number
-	wildCard: number
 	rank: number
 	points: number
+	
+	// Boosters
+	tripleCaptain?: number
+	viceVictory?: number
+	superSubs?: number
+	hiddenGem?: number
+	goalRush?: number
 }
 
 type Boosters = {
-	freeHit?: number
-	bank?: number
 	tripleCaptain?: number
-	wildCard?: number
+	viceVictory?: number
+	superSubs?: number
+	hiddenGem?: number
+	goalRush?: number
 }
 
 type User = {
@@ -123,6 +130,7 @@ type User = {
 	email?: string
 	country?: any
 	role: number
+	payed?: boolean
 	teams?: Team[]
 }
 
@@ -154,6 +162,12 @@ type PageTranslation = {
 type ApplicationState = {
 	competition: Competition
 	title: string
+	clubs: Club[]
+	players: Player[]
+	playersLoading: boolean
+	clubsLoading: boolean
+	playersSuccess: boolean
+	clubsSuccess: boolean
 }
 
 type Competition = {
@@ -245,4 +259,12 @@ type DeadlineInfo = {
 	deadlineWeek: number
 	deadlineDate: string
 	endWeek: number
+}
+
+type BoostersWeekStatus = {
+	tripleCaptain: boolean,
+	viceVictory: boolean,
+	goalRush: boolean,
+	hiddenGem: boolean,
+	superSub: boolean,
 }

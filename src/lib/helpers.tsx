@@ -126,7 +126,7 @@ export const openErrorNotification = (config: NotificationConfig) => {
 export const openSuccessNotification = (config: NotificationConfig) => {
 	toast.success(({ closeToast }) => (
 		<React.Fragment>
-			{config.icon} <b>{config.title}</b><br />
+			<b>{config.title}</b><br />
 			{config.message}
 		</React.Fragment>
 	));
@@ -153,27 +153,55 @@ export const statusToIconColor = (status: string) => {
 };
 
 const PlayerActionsPoints: any = {
-	playedUpTo60Min: { 1: 1, 2: 1, 3: 1, 4: 1 },
-	playedMoreThan60Min: { 1: 2, 2: 2, 3: 2, 4: 2 },
-	goals: { 1: 6, 2: 6, 3: 5, 4: 4 },
-	assists: { 1: 3, 2: 3, 3: 3, 4: 3 },
-	yellow: { 1: -1, 2: -1, 3: -1, 4: -1 },
-	red: { 1: -3, 2: -3, 3: -3, 4: -3 },
-	cleanSheet: { 1: 4, 2: 4, 3: 1, 4: 0 },
-	ownGoal: { 1: -2, 2: -2, 3: -2, 4: -2 },
-	penaltyMissed: { 1: -5, 2: -2, 3: -2, 4: -2 },
-	penaltySaved: { 1: 5, 2: 15, 3: 15, 4: 15 },
-	stoppedPenalty: { 1: 5, 2: 0, 3: 0, 4: 0 },
-	savesPerTwo: { 1: 1, 2: 0, 3: 0, 4: 0 },
-	motm: { 1: 5, 2: 5, 3: 5, 4: 5 },
-	concededTwo: {1: -2, 2: -1, 3: 0, 4: 0},
-	passAccMore85: {1: 2, 2: 3, 3: 4, 4: 3},
-	keyPassPerTwo: {1: 5, 2: 3, 3: 3, 4: 3},
-	successDribblesPerFive: {1: 5, 2: 3, 3: 3, 4: 3},
-	moreDuelsWon: {1: 1, 2: 1, 3: 1, 4: 1},
-	interceptionsPerSeven: {1: 2, 2: 2, 3: 2, 4: 2},
-	commitedFoulsPerThree: {1:-2, 2:-2, 3: -2, 4: -2},
-	bonus: {}
+	// General
+	playedUpTo60Min: [0, 1, 1, 1, 1],
+	playedMoreThan60Min: [0, 2, 2, 2, 2],
+	motm: [0, 5, 5, 5, 5],
+	// Important
+	goals: [0, 7, 6, 5, 4],
+	assists: [0, 3, 3, 3, 3],
+	yellow: [0, -1, -1, -1, -1],
+	red: [0, -3, -3, -3, -3],
+	ownGoals: [0, -2, -2, -2, -2],
+	// Goalkeeper
+	savesPerTwo: [0, 1, 0, 0, 0],
+	highClaimsPerTwo: [0, 1, 0, 0, 0],
+	penaltySaved: [0, 5, 15, 15, 15],
+	// Attacking
+	shotsOffTargetPerTwo: [0, -1, -1, -1, -1],
+	shotsOnTargetPerTwo: [0, 1, 1, 1, 1],
+	// Passing
+	passAccMore85: [0, 2, 2, 3, 2],
+	keyPassPerTwo: [0, 2, 2, 2, 2],
+	accCrossesPerTwo: [0, 1, 1, 1, 1],
+	// Defending
+	clearancesPerFive: [0, 1, 1, 1, 1],
+	blocksPerThree: [0, 1, 1, 1, 1],
+	interceptionsPerFive: [0, 1, 1, 1, 1],
+	tacklesPerThree: [0, 1, 1, 1, 1],
+	lineClearance: [0, 3, 3, 3, 3],
+	// Dribbles
+	successDribblesPerThree: [0, 1, 1, 1, 1],
+	pastDribblesPerThree: [0, -1, -1, -1, -1],
+	// Fouls
+	commitedFoulsPerThree: [0, -1, -1, -1, -1],
+	drawnFoulsPerThree: [0, 1, 1, 1, 1],
+	// Duels
+	groundMoreDuelsWon: [0, 1, 1, 1, 1],
+	aerialMoreDuelsWon: [0, 1, 1, 1, 1],
+	// Magic
+	errorLeadingToShot: [0, -1, -1, -1, -1],
+	errorLeadingToGoal: [0, -3, -3, -3, -3],
+	bigChancesCreated: [0, 2, 2, 2, 2],
+	bigChancesMissed: [0, -2, -2, -2, -2],
+	// Penalty's
+	penaltyMissed: [0, -3, -3, -3, -3],
+	penaltyWon: [0, 1, 1, 1, 1],
+	penaltyCommited: [0, -2, -2, -2, -2],
+	// Calculated
+	cleanSheet: [0, 4, 4, 1, 0],
+	concededTwo: [0, -2, -1, 0, 0],
+	endWinnerSelections: [0, 1, 1, 1, 1],
 };
 
 export const getPointsOverviewList = (player: any, t: TFunction<"translation", undefined, "translation">) => {
@@ -198,26 +226,10 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "savesPerTwo": {
-				const saves = player.pointsOverview && player.pointsOverview.saves;
-				const savesPerTwo = Math.floor(saves / 2);
-
-				if (savesPerTwo) {
-					pointsOverview.push({ action: t("player.savedPerTwoLabel"), quantity: saves, points: savesPerTwo * actionPoints });
-				}
-				break;
-			}
-			case "goals": {
-				const goals = player.pointsOverview && player.pointsOverview.goals || 0;
-				if (goals) {
-					pointsOverview.push({ action: t("player.goalsLabel"), quantity: goals, points: goals * actionPoints });
-				}
-				break;
-			}
-			case "assists": {
-				const assists = player.pointsOverview && player.pointsOverview.assists || 0;
-				if (assists) {
-					pointsOverview.push({ action: t("player.assistsLabel"), quantity: assists, points: assists * actionPoints });
+			case "motm" : {
+				const motm = player.pointsOverview && player.pointsOverview.motm;
+				if (motm) {
+					pointsOverview.push({ action: t("player.motmLabel"), quantity: 1, points: motm * actionPoints });
 				}
 				break;
 			}
@@ -235,39 +247,39 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "penaltyMissed" : {
-				const penaltyMissed = player.pointsOverview && player.pointsOverview.penaltyMissed || 0;
-				if (penaltyMissed) {
-					pointsOverview.push({ action: t("player.penaltyMissedLabel"), quantity: penaltyMissed, points: penaltyMissed * actionPoints });
+			case "savesPerTwo": {
+				const saves = player.pointsOverview && player.pointsOverview.saves;
+				const savesPerTwo = Math.floor(saves / 2);
+
+				if (savesPerTwo) {
+					pointsOverview.push({ action: t("player.savedPerTwoLabel"), quantity: saves, points: savesPerTwo * actionPoints });
 				}
 				break;
 			}
-			case "penaltySaved" : {
-				const penaltySaved = player.pointsOverview && player.pointsOverview.penaltySaved || 0;
-				if (penaltySaved) {
-					pointsOverview.push({ action: t("player.penaltySavedLabel"), quantity: penaltySaved, points: penaltySaved * actionPoints });
+			case "highClaimsPerTwo": {
+				const highClaims = player.pointsOverview && player.pointsOverview.highClaims;
+				const highClaimsPerTwo = Math.floor(highClaims / 2);
+
+				if (highClaimsPerTwo) {
+					pointsOverview.push({ action: t("player.savedPerTwoLabel"), quantity: highClaims, points: highClaimsPerTwo * actionPoints });
 				}
 				break;
 			}
-			case "stoppedPenalty" : {
-				const stoppedPenalty = player.pointsOverview && player.pointsOverview.stoppedPenalty || 0;
-				if (stoppedPenalty) {
-					stoppedPenalty.push({ action: t("player.stoppedPenaltyLabel"), quantity: stoppedPenalty, points: stoppedPenalty * actionPoints });
+			case "shotsOffTargetPerTwo": {
+				const shotsOffTarget = player.pointsOverview && player.pointsOverview.shotsOffTarget;
+				const shotsOffTargetPerTwo = Math.floor(shotsOffTarget / 2);
+
+				if (shotsOffTargetPerTwo) {
+					pointsOverview.push({ action: t("player.shotsOffTargetPerTwoLabel"), quantity: shotsOffTarget, points: shotsOffTargetPerTwo * actionPoints });
 				}
 				break;
 			}
-			case "concededTwo": {
-				const goalsAgainst = player.pointsOverview && player.pointsOverview.goalsAgainst || 0;
-				const goalsAgainstPerTwo = Math.floor(goalsAgainst / 2);
-				if(goalsAgainstPerTwo && actionPoints) {
-					pointsOverview.push({action: t("player.concededTwoLabel"), quantity: goalsAgainst, points: goalsAgainstPerTwo * actionPoints});
-				}
-				break;
-			}
-			case "cleanSheet": {
-				const cleanSheet = (player.pointsOverview && !player.pointsOverview.red && player.pointsOverview.minutesPlayed >= 60 && player.pointsOverview.goalsAgainst == 0) || 0;
-				if(cleanSheet && actionPoints) {
-					pointsOverview.push({action: t("player.cleanSheetLabel"), quantity: 1, points: actionPoints});
+			case "shotsOnTargetPerTwo": {
+				const shotsOnTarget = player.pointsOverview && player.pointsOverview.shotsOnTarget;
+				const shotsOnTargetPerTwo = Math.floor(shotsOnTarget / 2);
+
+				if (shotsOnTargetPerTwo) {
+					pointsOverview.push({ action: t("player.shotsOnTargetPerTwoLabel"), quantity: shotsOnTarget, points: shotsOnTargetPerTwo * actionPoints });
 				}
 				break;
 			}
@@ -286,26 +298,59 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "successDribblesPerFive": {
-				const dribblesSuccess = player.pointsOverview && player.pointsOverview.dribblesSuccess || 0;
-				const dribblesSuccessPerTwo = Math.floor(dribblesSuccess / 5);
-				if(dribblesSuccessPerTwo) {
-					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: dribblesSuccess, points: dribblesSuccessPerTwo * actionPoints});
+			case "accCrossesPerTwo": {
+				const accCrosses = player.pointsOverview && player.pointsOverview.accurateCrosses || 0;
+				const accCrossesPerTwo = Math.floor(accCrosses / 2);
+				if(accCrossesPerTwo) {
+					pointsOverview.push({action: t("player.accCrossesPerTwoLabel"), quantity: accCrosses, points: accCrossesPerTwo * actionPoints});
 				}
 				break;
 			}
-			case "moreDuelsWon": {
-				const duelsDiff = player.pointsOverview && player.pointsOverview.duelsWon - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
-				if(duelsDiff && duelsDiff > 0) {
-					pointsOverview.push({action: t("player.duelsWonMoreThanLostLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
+			case "clearancesPerFive": {
+				const clearances = player.pointsOverview && player.pointsOverview.clearances || 0;
+				const clearancesPerFive = Math.floor(clearances / 5);
+				if(clearancesPerFive) {
+					pointsOverview.push({action: t("player.clearancesPerFiveLabel"), quantity: clearances, points: clearancesPerFive * actionPoints});
 				}
 				break;
 			}
-			case "interceptionsPerSeven": {
+			case "blocksPerThree": {
+				const blocks = player.pointsOverview && player.pointsOverview.blocks || 0;
+				const blocksPerThree = Math.floor(blocks / 3);
+				if(blocksPerThree) {
+					pointsOverview.push({action: t("player.blocksPerThreeLabel"), quantity: blocks, points: blocksPerThree * actionPoints});
+				}
+				break;
+			}
+			case "interceptionsPerFive": {
 				const interceptions = player.pointsOverview && player.pointsOverview.interceptions || 0;
-				const interceptionsPerSeven = Math.floor(interceptions / 7);
-				if(interceptionsPerSeven) {
-					pointsOverview.push({action: t("player.interceptionsPerSevenLabel"), quantity: interceptions, points: interceptionsPerSeven * actionPoints});
+				const interceptionsPerFive = Math.floor(interceptions / 5);
+				if(interceptionsPerFive) {
+					pointsOverview.push({action: t("player.interceptionsPerFiveLabel"), quantity: interceptions, points: interceptionsPerFive * actionPoints});
+				}
+				break;
+			}
+			case "tacklesPerThree": {
+				const tackles = player.pointsOverview && player.pointsOverview.tackles || 0;
+				const tacklesPerThree = Math.floor(tackles / 3);
+				if(tacklesPerThree) {
+					pointsOverview.push({action: t("player.tacklesPerThreeLabel"), quantity: tackles, points: tacklesPerThree * actionPoints});
+				}
+				break;
+			}
+			case "successDribblesPerThree": {
+				const dribblesSuccess = player.pointsOverview && player.pointsOverview.dribblesSuccess || 0;
+				const successDribblesPerThree = Math.floor(dribblesSuccess / 3);
+				if(successDribblesPerThree) {
+					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: dribblesSuccess, points: successDribblesPerThree * actionPoints});
+				}
+				break;
+			}
+			case "pastDribblesPerThree": {
+				const pastDribbles = player.pointsOverview && player.pointsOverview.dribblesPast || 0;
+				const pastDribblesPerThree = Math.floor(pastDribbles / 3);
+				if(pastDribblesPerThree) {
+					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: pastDribbles, points: pastDribblesPerThree * actionPoints});
 				}
 				break;
 			}
@@ -317,15 +362,56 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "motm" : {
-				const motm = player.pointsOverview && player.pointsOverview.motm;
-				if (motm) {
-					pointsOverview.push({ action: t("player.motmLabel"), quantity: 1, points: motm * actionPoints });
+			case "drawnFoulsPerThree": {
+				const drawnFouls = player.pointsOverview && player.pointsOverview.foulsDrawn || 0;
+				const drawnFoulsPerThree = Math.floor(drawnFouls / 3);
+				if(drawnFoulsPerThree) {
+					pointsOverview.push({action: t("player.commitedFoulsPerThreeLabel"), quantity: drawnFouls, points: drawnFoulsPerThree * actionPoints});
+				}
+				break;
+			}
+			case "groundMoreDuelsWon": {
+				const duelsDiff = player.pointsOverview && player.pointsOverview.duelsWon - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
+				if(duelsDiff && duelsDiff > 0) {
+					pointsOverview.push({action: t("player.groundDuelsWonMoreThanLostLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
+				}
+				break;
+			}
+			// // TEMPORARY NOT INCLUDED
+			// // case "aerialMoreDuelsWon": {
+			// // 	const duelsDiff = player.pointsOverview && player.pointsOverview.duelsWon - (player.pointsOverview.duelsTotal - player.pointsOverview.duelsWon) || 0;
+			// // 	if(duelsDiff && duelsDiff > 0) {
+			// // 		pointsOverview.push({action: t("player.groundDuelsWonMoreThanLostLabel"), quantity: duelsDiff, points: duelsDiff ? actionPoints : 0});
+			// // 	}
+			// // 	break;
+			// // }
+			case "cleanSheet": {
+				const cleanSheet = (player.pointsOverview && !player.pointsOverview.red && player.pointsOverview.minutesPlayed >= 60 && player.pointsOverview.goalsAgainst == 0) || 0;
+				if(cleanSheet && actionPoints) {
+					pointsOverview.push({action: t("player.cleanSheetLabel"), quantity: 1, points: actionPoints});
+				}
+				break;
+			}
+			case "concededTwo": {
+				const goalsAgainst = player.pointsOverview && player.pointsOverview.goalsAgainst || 0;
+				const goalsAgainstPerTwo = Math.floor(goalsAgainst / 2);
+				if(goalsAgainstPerTwo && actionPoints) {
+					pointsOverview.push({action: t("player.concededTwoLabel"), quantity: goalsAgainst, points: goalsAgainstPerTwo * actionPoints});
+				}
+				break;
+			}
+			case "endWinnerSelections" : {
+				const ews = player.pointsOverview && player.pointsOverview.endWinnerSelections;
+				if (ews) {
+					pointsOverview.push({ action: t("player.endWinnerSelectionsLabel"), quantity: ews, points: ews });
 				}
 				break;
 			}
 
 			default: {
+				// When points = points_per_stat * stat_amount
+				// This is the case for the following stats
+				//	GOALS - ASSISTS - OWN GOALS - PEN. SAVED - LINE CLEARANCE - ERR. SHOT - ERR. GOAL - BC MISSED - BC CREATED - PEN. MISSED - PEN. WON - PEN. COMMITED
 				const amount = player.pointsOverview && player.pointsOverview[actionName] || 0;
 				if (amount) {
 					pointsOverview.push({ action: t(`player.${actionName}Label`), quantity: amount, points: amount * actionPoints });

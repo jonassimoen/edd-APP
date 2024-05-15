@@ -6,12 +6,13 @@ import { theme } from "@/styles/theme";
 
 export const ButtonStyle = styled(Button)`
 	border-radius: 0px !important;
+	line-height: normal;
 
 	&.ant-btn-primary {
 		color: #FFF;
 		background-color: ${theme.primaryContrast};
-
-		&:hover {
+		
+		&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
 			background-color: ${theme.primaryColor};
 			color: ${theme.primaryContrast};
 		}

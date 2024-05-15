@@ -8,7 +8,8 @@ import { theme } from "@/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import Icon from "@ant-design/icons";
-import { CaptainButtonSvg, DeleteButtonSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { CaptainButtonSvg, DeleteButtonSvg, RollBackSvg, SuperSubsSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { GoalRushSvg, HiddenGemSvg, TripleCaptSvg } from "@/styles/custom-icons";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
 const ViceCaptainIcon = (props: any) => <Icon component={ViceCaptainButtonSvg} {...props} />;
@@ -29,12 +30,23 @@ type PlayerModalProps = {
 	isSwapAble?: any
 	onSwap?: any
 	swapPlayerId?: number | null
+	boosters?: boolean
+	isCaptain?: boolean
+	isViceCaptain?: boolean
 }
+
+const BoosterIcons: {[type: string]: () => JSX.Element} = {
+	"TripleCaptain": TripleCaptSvg,
+	"ViceVictory": TripleCaptSvg,
+	"GoalRush": GoalRushSvg,
+	"HiddenGem": HiddenGemSvg,
+	"superSubs": SuperSubsSvg,
+};
 
 export const PlayerModal = (props: PlayerModalProps) => {
 	const { t } = useTranslation();
 
-	const { player, isSwapAble, swapPlayerId } = props;
+	const { player, isSwapAble, swapPlayerId, boosters } = props;
 
 	const playerPositionColor = getPlayerPositionHexColor(player, theme);
 	const PositionLabels: any = {
@@ -71,11 +83,20 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		props.onCancel(event);
 	};
 
+	const hasSelectionActions = useMemo(
+		() => !!(props.onCaptainSelect || props.onViceCaptainSelect || (props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId)) || (props.onRemove && !swapPlayerId) ), 
+		[props]
+	);
+
 	const actionColumnSize = useMemo(
 		() => Math.floor(24 / (+!!onCaptainSelect + +!!onViceCaptainSelect + +(!!onSwap && (player.id !== swapPlayerId))
 			+ +(!!onSwap && (player.id === swapPlayerId)) + +!!props.onRemove)
 		),
 		[props]);
+
+	const showPointsOverview = player && player.pointsOverview && !!player.pointsOverview.minutesPlayed;
+	const pointsOverviewList = useMemo(() => getPointsOverviewList(player, t), [player]);
+		
 
 	return (
 		<PlayerModalStyle
@@ -97,7 +118,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 
 				</Col>
 				{
-					player && player.points ?
+					player && player.points && showPointsOverview ?
 						<Col md={6} sm={6} xs={6}>
 							<span className="points">
 								<span className="value">{player.points}</span>
@@ -108,11 +129,15 @@ export const PlayerModal = (props: PlayerModalProps) => {
 			</Row>
 			<Row className="player-actions">
 				{
+					hasSelectionActions && 
+						<div className="title">{t("player.modal.selectionActions")}</div>
+				}
+				{
 					props.onCaptainSelect ?
 						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
 							<div className="action" onClick={onCaptainSelect}>
 								<CaptainIcon />
-								{t("player.captainBadgeLabel")}
+								{t("player.btnCaptainBadgeLabel")}
 							</div>
 						</Col> :
 						null
@@ -122,7 +147,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
 							<div className="action" onClick={onViceCaptainSelect}>
 								<ViceCaptainIcon />
-								{t("player.viceCaptainBadgeLabel")}
+								{t("player.btnViceCaptainBadgeLabel")}
 							</div>
 						</Col> :
 						null
@@ -160,9 +185,12 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						</Col> :
 						null
 				}
+				{
+					boosters && <div className="title">{t("player.modal.boosterActions")}</div>
+				}
 			</Row>
 			{
-				player && player.pointsOverview && player.points !== null && player.points !== undefined ?
+				player && player.pointsOverview && showPointsOverview ?
 					<PointsOverviewTable>
 						<thead>
 							<tr>
@@ -173,13 +201,45 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						</thead>
 						<tbody>
 							{
-								getPointsOverviewList(player, t).map((category: any, index: number) =>
+								pointsOverviewList.map((category: any, index: number) =>
 									<tr key={`overview-${index}`}>
 										<td>{category.action}</td>
 										<td>{category.quantity}</td>
 										<td>{category.points}</td>
 									</tr>
 								)
+							}
+							<tr className='points-total'>
+								<td><b>{t("player.modal.totalRegularPoints")}</b></td>
+								<td></td>
+								<td><b>{pointsOverviewList.reduce((acc: number, v: any) => acc + v.points, 0)}</b></td>
+							</tr>
+							{
+								player.booster ? (
+									<tr className="booster">
+										<td>
+											<Icon component={BoosterIcons[player.booster]} style={{fontSize: 20}} />
+											{t(`boosters.${player.booster.charAt(0).toLowerCase() + player.booster.slice(1)}`)}
+										</td>
+										<td></td>
+										<td>{(player.points - player.stats[0].points) || 0}</td>
+									</tr>
+								) : null
+							}
+							{
+								(props.isCaptain || props.isViceCaptain) ? (
+									<tr className="booster">
+										<td>
+											{props.isCaptain && t("player.captainBadgeLabel")}
+											{props.isViceCaptain && t("player.viceCaptainBadgeLabel")}
+										</td>
+										<td>
+											{props.isCaptain && "x 2"}
+											{props.isViceCaptain && "x 1.5"}
+										</td>
+										<td>{(player.stats[0].points) || 0}</td>
+									</tr>
+								) : null
 							}
 						</tbody>
 					</PointsOverviewTable> : null

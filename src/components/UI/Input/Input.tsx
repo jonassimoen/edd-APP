@@ -1,8 +1,8 @@
 import { InputProps } from "antd";
 import { InputStyle } from "./InputStyle";
 
-type MyInputProps = InputProps
+type MyInputProps = InputProps & {tourRef?: any}
 export const Input = (props: MyInputProps) => {
-	const { ...rest } = props;
-	return (<InputStyle {...rest} />);
+	const { tourRef, ...rest } = props;
+	return (<div ref={tourRef}><InputStyle {...rest}/></div>);
 };

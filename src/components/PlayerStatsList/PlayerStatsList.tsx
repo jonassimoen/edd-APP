@@ -4,10 +4,10 @@ import { ContainerStyle, TableStyle } from "./PlayerStatsListStyle";
 import { useTranslation } from "react-i18next";
 import { SelectGroupStyle } from "../PlayerList/PlayerListStyle";
 import { Select } from "../UI/Select/Select";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGetClubsQuery } from "@/services/clubsApi";
 import { useGetWeeksQuery } from "@/services/weeksApi";
-import { useGetPlayerStatsQuery } from "@/services/statisticsApi";
+import { useLazyGetPlayerStatsQuery } from "@/services/statisticsApi";
 
 type PlayerStatsListProps = {
 	size: number
@@ -18,14 +18,13 @@ type PlayerStatsListProps = {
 type PlayerStatsListState = {
 	filters: any
 	pagination: any
-	sorter: string
 }
 
 export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	const { t } = useTranslation();
 	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
-	const { data: stats, isLoading: statsLoading, isError: statsError, isSuccess: statsSucces } = useGetPlayerStatsQuery();
+	const [getPlayerStats, { data: stats, isLoading: statsLoading, isError: statsError, isSuccess: statsSucces }] = useLazyGetPlayerStatsQuery();
 
 	const [state, setState] = useState<PlayerStatsListState>({
 		filters: {
@@ -37,12 +36,19 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			stat: 0
 		},
 		pagination: {
-			page: 1,
-			pageRecords: props.size,
-			totalRecords: 0
+			current: 1,
+			total: 0,
+			pageSize: props.size,
+			showSizeChanger: false
 		},
-		sorter: "total DESC"
 	});
+
+	useEffect(() => {
+		if(state.filters.weekId != -1)
+			getPlayerStats({matchday: state.filters.weekId});
+		else 
+			getPlayerStats({});
+	}, [state.filters.weekId]);
 
 	const clubsList = useMemo(() => ([{
 		id: -1,
@@ -61,7 +67,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	})) || []), [weeks]);
 
 	const budgetsList = [
-		{ name: <span className={"prefixed-label"}> <EuroOutlined /> {t("general.footballAllBudget")} </span>, value: 100 },
+		{ name: <span className={"prefixed-label"}> <EuroOutlined /> {t("general.allBudget")} </span>, value: 100 },
 		{ name: `${t("general.budgetFilterPrefix")} 10 ${t("general.budgetFilterSuffix")}`, value: 10 },
 		{ name: `${t("general.budgetFilterPrefix")} 9.5 ${t("general.budgetFilterSuffix")}`, value: 9.5 },
 		{ name: `${t("general.budgetFilterPrefix")} 9 ${t("general.budgetFilterSuffix")}`, value: 9 },
@@ -79,8 +85,8 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 	];
 
 	const positionsList = [
-		{ id: -1, name: <span className={"prefixed-label"}> {t("general.footballAllPositions")} </span> },
-		{ id: 0, name: t("player.coach") },
+		{ id: -1, name: <span className={"prefixed-label"}> {t("general.allPositions")} </span> },
+		// { id: 0, name: t("player.coach") },
 		{ id: 1, name: t("player.goalkeeper") },
 		{ id: 2, name: t("player.defender") },
 		{ id: 3, name: t("player.midfielder") },
@@ -130,19 +136,21 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			id: 4,
 			name: `${t("stats.userStats")}`,
 			value: [
-				{ value: "statTimePlayed", label: t("stats.timePlayedColumnForAllPlayersTable") },
-				{ value: "statMatchPlayed", label: t("stats.matchPlayedColumnForAllPlayersTable") }
+				{ value: "statInTeam", label: t("stats.percentageInTeamForAllPlayersTable") },
+				{ value: "statCaptain", label: t("stats.percentageCaptainForAllPlayersTable") },
+				{ value: "statViceCaptain", label: t("stats.percentageViceCaptainForAllPlayersTable") },
+				{ value: "statROI", label: t("stats.roiForAllPlayersTable") }
 			]
 		},//points per min //selection %// pickorder//
 	];
-
+	
 	const columns: any[] = [
 		{
 			key: "rank",
 			title: "#",
 			dataIndex: "generalInfo",
 			render: (text: string, record: any, index: number) => {
-				const rank = ((state.pagination.page - 1) * state.pagination.pageRecords) + index + 1;
+				const rank = ((state.pagination.current - 1) * state.pagination.pageSize) + index + 1;
 
 				return (<span>{rank}</span>);
 			},
@@ -226,7 +234,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		const filters: any = Object.assign({}, state.filters, {
 			[name]: value,
 		});
-		console.log("filters", filters);
 		setState({ ...state, filters });
 	};
 
@@ -239,19 +246,10 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 		return show;
 	};
 
-	const handleTableChange = (pagination: any, filters: any, sorter: any) => {
-		const newPagination = { ...state.pagination, page: pagination.current };
-		const sorterString = sorter && sorter.columnKey ? `${sorter.columnKey} ${sorter.order === "descend" ? "DESC" : "ASC"}` : "total DESC";
-		setState({ ...state, pagination: newPagination, sorter: sorterString });
+	const handleTableChange = (pagination: any, filters: any, sorter: any, extra: {currentDataSource: any}) => {		
+		const newPagination = { ...state.pagination, current: pagination.current };
+		setState({ ...state, pagination: newPagination });
 	};
-
-	const pagination = {
-		current: state.pagination.page,
-		total: state.pagination.totalRecords,
-		pageSize: state.pagination.pageSize,
-		showSizeChanger: false
-	};
-
 
 	return (
 		<ContainerStyle>
@@ -320,8 +318,9 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				showHeader={props.showHeader}
 				locale={{ emptyText: t("general.playersListEmpty") }}
 				loading={statsLoading}
-				pagination={{ showSizeChanger: false }}
+				pagination={state.pagination}
 				onRow={tableEventHandler}
+				onChange={handleTableChange}
 				rowKey="playerId"
 				rowClassName={(record: object, index: number) =>
 					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"} ${props.onSelect ? "cursor-pointer" : ""}`

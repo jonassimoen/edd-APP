@@ -52,7 +52,7 @@ export const tablePagination = `
 
 export const TableStyle = styled(Table)`
 	.ant-table-content {
-		overflow-x: scroll;
+		overflow-x: auto;
 	}
 
 	.ant-table-thead {

@@ -1,5 +1,5 @@
 
-import { Navigate, Outlet, createBrowserRouter, useLocation } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Header } from "@/components/Header/Header";
 import { LoginCallback } from "./pages/LoginCallback";
@@ -20,20 +20,34 @@ import { Footer } from "./components/Footer/Footer";
 import { TransfersPage } from "./pages/Transfers/Transfers";
 import { PointsPage } from "./pages/Points/Points";
 import { MatchContainer } from "./pages/Match/Match";
-import { Welcome } from "./pages/Welcome/Welcome";
 import { PageManagement } from "./pages/PageManagement/PageManagement";
+import { GeneralManagement } from "./pages/GeneralManagement/GeneralManagement";
 import { Rankings } from "./pages/Rankings/Rankings";
 import { EditTeam } from "./pages/EditTeam/EditTeam";
 import { PageNotFound } from "./pages/PageNotFound";
 import { ErrorPage } from "./pages/ErrorPage";
 import { useEffect } from "react";
 import * as Cronitor from "@cronitorio/cronitor-rum";
+import { useTranslation } from "react-i18next";
+import { PaymentResult } from "./components/Payment/PaymentResult";
+import { PaymentEnvironment } from "./pages/Payment/PaymentEnvironment";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
+	const {i18n} = useTranslation();
+	const navigate = useNavigate();
+
 	useEffect(() => {
+		if(location.pathname.includes("/en")) {
+			i18n.changeLanguage("en");
+			navigate(window.location.pathname.replace("/en",""));
+		} else if(location.pathname.includes("/nl")) {
+			i18n.changeLanguage("nl");
+			navigate(window.location.pathname.replace("/nl",""));
+		}
 		Cronitor.track("Pageview");
 	}, [location.pathname]);
+
 	return (
 		<>
 			<Header />
@@ -51,65 +65,69 @@ export const router = createBrowserRouter([
 			errorElement: <ErrorPage />,
 			children: [
 				{
-					path: "/",
+					path: "",
 					element: <Navigate to={{ pathname: "/home" }} />,
 				},
 				{
-					path: "/home",
+					path: "home",
 					element: <Home />
 				},
 				{
-					path: "/new",
+					path: "new",
 					element: <ProtectedRoute access={true} redirectPath="/home"><NewTeam /></ProtectedRoute>
 				},
 				{
-					path: "/points/:id", 
-					element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
+					path: "points/:id", 
+					element: <ProtectedRoute access={true} redirectPath="home"><PointsPage /></ProtectedRoute>
 				},
 				{
-					path: "/public/:id", //todo
-					element: <ProtectedRoute access={true} redirectPath="/home"><PointsPage /></ProtectedRoute>
+					path: "public/:id", //todo
+					element: <ProtectedRoute access={true} redirectPath="home"><PointsPage /></ProtectedRoute>
 				},
 				{
-					path: "/team/:id",
+					path: "team/:id",
 					element: <ProtectedRoute access={true} redirectPath="/home"><TeamPage /></ProtectedRoute>
 				},
 				{
-					path: "/transfers/:id", 
+					path: "transfers/:id", 
 					element: <ProtectedRoute access={true} redirectPath="/home"><TransfersPage /></ProtectedRoute>
 				},
 				{
-					path: "/edit/:id",
+					path: "edit/:id",
 					element: <ProtectedRoute access={true} redirectPath="/home"><EditTeam /></ProtectedRoute>
 				},
 				{
-					path: "/profile",
+					path: "profile",
 					element: <ProtectedRoute access={true} redirectPath="/home"><Profile /></ProtectedRoute>
 				},
 				{
-					path: "/deadlines", //todo
+					path: "deadlines", //todo
 					element: <ProtectedRoute access={true} redirectPath="/home"><Deadlines /></ProtectedRoute>
 				},
 				{
-					path: "/stats",
+					path: "stats",
 					element: <ProtectedRoute access={true} redirectPath="/home"><Stats /></ProtectedRoute>
 				},
 				{
-					path: "/match/:id", 
+					path: "match/:id", 
 					element: <ProtectedRoute access={true} redirectPath="/home"><MatchContainer /></ProtectedRoute>
 				},
 				{
-					path: "/rankings",
+					path: "rankings",
 					element: <Rankings />
 				},
 				{
-					path: "/rules", 
+					path: "rules", 
 					element: <Rules />,
 				},
 				{
-					path: "/admin",
+					path: "admin",
 					element: <ProtectedRoute access={true} redirectPath='/home'><Admin redirectPath='/home' /></ProtectedRoute>,
 					children: [
+						{
+							path: "",
+							element: <GeneralManagement />
+						},
 						{
 							path: "pages",
 							element: <PageManagement />
@@ -137,16 +155,16 @@ export const router = createBrowserRouter([
 					]
 				},
 				{
-					path: "/login/callback",
+					path: "login/callback",
 					element: <LoginCallback />,
 				},
 				{
-					path: "/welcome",
-					element: <ProtectedRoute access={true} redirectPath="/home"><Welcome /></ProtectedRoute>,
+					path: "payment/*",
+					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
 				},
 				{
 					path: "*",
-					element: <PageNotFound />
+					element: <Home />
 				}
 			]
 		}

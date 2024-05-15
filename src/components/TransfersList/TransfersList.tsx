@@ -62,7 +62,7 @@ export const TransfersList = (props: TransfersListProps) => {
 	if(showWeek) {
 		columns.push({
 			key: "weeId",
-			title: t("general.footballWeek"),
+			title: t("general.matchday"),
 			width: "20%",
 			dataIndex: "weekId",
 			render: (text: string, team: any) => {
@@ -80,7 +80,7 @@ export const TransfersList = (props: TransfersListProps) => {
 				locale={{emptyText: t("transferPage.noTransfersTableMessage")}}
 				loading={isLoading}
 				pagination={data.length > size ? { pageSize: size } : false}
-				rowKey={(rec: any, idx: number) => `record-${idx+1}`}
+				rowKey={(rec: any) => `record-${rec.id+1}`}
 				rowClassName={(rec: object, idx: number) => idx%2 ? "ant-table-row--odd" : "ant-table-row--even"}
 			/>
 		</ContainerStyle>

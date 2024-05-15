@@ -7,8 +7,11 @@ export const playerStatsApi = createApi({
 	tagTypes: ["PlayerStats"],
 	endpoints: (builder) => ({
 
-		getPlayerStats: builder.query<Statistic[], void>({
-			query: () => "",
+		getPlayerStats: builder.query<Statistic[], {matchday?: number}>({
+			query: (arg: any) => ({
+				url: "",
+				params: {matchday: arg?.matchday}
+			}),
 			providesTags: (result, error, arg) =>
 				result
 					? [...result.map(({ id }) => ({ type: "PlayerStats" as const, id })), "PlayerStats"]
@@ -39,4 +42,4 @@ export const playerStatsApi = createApi({
 	})
 });
 
-export const { useGetPlayerStatsQuery } = playerStatsApi;
+export const { useLazyGetPlayerStatsQuery } = playerStatsApi;

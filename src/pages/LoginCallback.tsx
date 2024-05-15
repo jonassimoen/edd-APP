@@ -25,7 +25,6 @@ export const LoginCallback = () => {
 
 	useEffect(() => {
 		if (access_token) {
-			secureLocalStorage.setItem("token", access_token as string);
 			getProfile();
 			getTeams();
 		} else {
@@ -36,7 +35,7 @@ export const LoginCallback = () => {
 	if (profileSuccess && teamSuccess) {
 		return (
 			<>
-				{userState.authenticated && redirectToWelcome && <Navigate to={{ pathname: "/welcome" }} />}
+				{userState.authenticated && redirectToWelcome && <Navigate to={{ pathname: "/payment" }} />}
 
 				{userState.authenticated && !redirectToWelcome && userState.teams && userState.teams.length !== 0 && <Navigate to={{ pathname: `/team/${userState.teams[0].id}` }} />}
 

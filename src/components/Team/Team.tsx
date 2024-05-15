@@ -33,11 +33,12 @@ export declare type TeamProps = {
     captainId?: number;
     captainHasPlayed?: boolean;
     showCaptainBadge?: boolean;
+	showBoosterBadge?: boolean
     // boosterWeekStatus?: BoostersWeekStatus;
     viceCaptainId?: number;
     centerAligned?: boolean | undefined;
 	motmId?: number
-    // t: i18next.TFunction;
+	tourRef?: any
 };
 
 export const Team = (props: TeamProps) => {
@@ -70,13 +71,15 @@ export const Team = (props: TeamProps) => {
 		isSwapAble, 
 		captainHasPlayed, 
 		viceCaptainId, 
-		showCaptainBadge, 
+		showCaptainBadge,
+		showBoosterBadge,
 		onViceCaptainSelect,
 		motmId,
+		tourRef,
 	} = props;
 
 	return (
-		<TeamStyle bg={bg} widthRatio={widthRatio} heightRatio={heightRatio} centerAligned={centerAligned}>
+		<TeamStyle bg={bg} widthRatio={widthRatio} heightRatio={heightRatio} centerAligned={centerAligned} >
 			{selection ? selection.map((position: any, positionIdx: number) => {
 				const imgProps: {
 					shirt?: string,
@@ -101,6 +104,7 @@ export const Team = (props: TeamProps) => {
 
 								return (
 									<Player
+										tourRef={(positionIdx==2&&playerIdx==2)?tourRef:null}
 										key={`player-${positionIdx}-${playerIdx}`}
 										pointsColor={playerPointsColor}
 										pointsBgColor={playerPointsBgColor}
@@ -115,6 +119,7 @@ export const Team = (props: TeamProps) => {
 										replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
 										showPlayerValue={showPlayerValue}
 										showCaptainBadge={showCaptainBadge}
+										showBoosterBadge={showBoosterBadge}
 										onRemove={onRemove}
 										showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
 										onSwap={onSwap}

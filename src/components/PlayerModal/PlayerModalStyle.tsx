@@ -64,6 +64,19 @@ export const PlayerModalStyle = styled(Modal)`
 				margin-bottom: 10px;
 			}
 
+			.player-actions {
+				margin-top: 2rem;
+				.title {
+					width: 100%;
+					background-color: ${theme.primaryColor};
+					color: ${theme.primaryContrast};
+					padding: 2px 10px;
+					line-height: 1.75;
+					margin: 0;
+					font-size: 14px;
+				}
+			}
+
 			.player-body {
 				margin: 0;
 			}
@@ -94,8 +107,8 @@ export const PointsOverviewTable = styled.table`
 	border-collapse: collapse;
 
 	thead {
-		background: ${theme.primaryColor};
-		color: #000;
+		background: ${theme.primaryContrast};
+		color: #fff;
 		text-align: center;
 	}
 
@@ -106,6 +119,18 @@ export const PointsOverviewTable = styled.table`
 
 			&:nth-child(1) {
 				text-align: left;
+			}
+		}
+
+		&.points-total {
+			background: ${theme.primaryColor};
+		}
+
+		&.booster td {
+			padding-top: 1.5rem;
+
+			.anticon {
+				margin-right: 1rem;
 			}
 		}
 	}

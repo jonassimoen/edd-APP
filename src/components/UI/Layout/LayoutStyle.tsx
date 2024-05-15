@@ -12,7 +12,7 @@ export const LayoutStyle = styled(Layout)`
     &.ant-layout {		
 		background: transparent;
 		margin: 0 auto;
-		width: 100%;
+		width: 90%;
 		@media ${mediaQueries.laptop} {
 			width: 80%;
 		}

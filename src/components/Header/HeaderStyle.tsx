@@ -17,6 +17,11 @@ export const HeaderStyle = styled.header`
             clip-path: inset(0 0 0 0);
             pointer-events: auto;
         }
+
+        & .c-nav-mobile__list {
+            opacity: 1;
+            transform: translateY(0);
+        }
     
         & .c-nav-trigger__top {
             -webkit-transform: translateY(8px) rotate(135deg);
@@ -174,20 +179,20 @@ export const HeaderStyle = styled.header`
     }
 
     .c-nav-mobile {
+        display: flex;
         
-        @media ${mediaQueries.laptop} {
+        @media (min-width: 64em) {
             display: none
         }
-        display: flex;
         flex-wrap: wrap;
         position: fixed;
         z-index: 3;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
+        width: 100vw;
+        height: 100vh;
         padding: 6rem 1.5rem 4rem;
-        background: ${theme.primaryContrast};
+        background-color: ${theme.primaryContrast};
         -webkit-clip-path: inset(0 0 100% 0);
         clip-path: inset(0 0 100% 0);
         -webkit-transition: -webkit-clip-path .5s cubic-bezier(0, .5, 0, 1);
@@ -209,9 +214,12 @@ export const HeaderStyle = styled.header`
         }
 
         &__list {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
+            .has-open-nav {
+                opacity: 1;
+            }
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all .5s ease-out;
         }
 
         &__item {

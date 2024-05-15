@@ -1,35 +1,11 @@
-import {
-	ClubBadgeBg,
-	ClubName,
-} from "@/components/Calendar/CalendarStyle";
+import { ClubBadgeBg, ClubName } from "@/components/Calendar/CalendarStyle";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import config from "@/config";
-import {
-	getPlayerPositionHexColor,
-	openErrorNotification,
-	openSuccessNotification,
-} from "@/lib/helpers";
-import {
-	useGetMatchQuery,
-	useGetMatchStatisticsQuery,
-	useLazyImportMatchStatisticsQuery,
-	useUpdateMatchStatisticsMutation,
-} from "@/services/matchesApi";
+import { getPlayerPositionHexColor, openErrorNotification, openSuccessNotification } from "@/lib/helpers";
+import { useGetMatchQuery, useGetMatchStatisticsQuery, useLazyImportMatchStatisticsQuery, useUpdateMatchStatisticsMutation } from "@/services/matchesApi";
 import { useGetPlayersQuery } from "@/services/playersApi";
-import {
-	CheckOutlined,
-	CloseOutlined,
-	DownloadOutlined,
-	HistoryOutlined,
-} from "@ant-design/icons";
-import {
-	Alert,
-	Button,
-	Flex,
-	Skeleton,
-	Tag,
-	Tooltip,
-} from "antd";
+import { CheckOutlined, CloseOutlined, DownloadOutlined, HistoryOutlined } from "@ant-design/icons";
+import { Alert, Flex, Skeleton, Tag, Tooltip } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -40,10 +16,24 @@ import { useSelector } from "react-redux";
 import { PlayerStatsModal } from "./PlayerStatsModal";
 import styled from "@/styles/styled-components";
 import { ScoreStatsModal } from "./ScoreStatsModal";
+import { Button } from "@/components/UI/Button/Button";
 
 const GameStatsManagementStyle = styled.div`
 	.ant-table-tbody > tr > td{
 		padding: 0 !important;
+	}
+
+	.ant-table-row {
+		&.split {
+			.ant-table-cell {
+				border-top: 3px solid ${theme.primaryContrast};
+				padding-top: 3px !important;
+			}
+		} 
+		.ant-btn {
+			width: 100%;
+			padding: 0;
+		}
 	}
 `;
 
@@ -104,34 +94,10 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	});
 	const [spinning, setSpinning] = useState<boolean>(true);
 
-	const {
-		data: match,
-		isFetching: matchLoading,
-		isError: matchError,
-		isSuccess: matchSuccess,
-	} = useGetMatchQuery(+(id || 0));
-	const {
-		data: players,
-		isLoading: playersLoading,
-		isError: playersError,
-		isSuccess: playersSucces,
-	} = useGetPlayersQuery();
-	const {
-		data: stats,
-		isLoading: statsLoading,
-		isError: statsError,
-		isSuccess: statsStucces,
-	} = useGetMatchStatisticsQuery(+(id || 0));
-	const [
-		importMatchStatistics,
-		{
-			data: importedStats,
-			isLoading: matchStatisticsImportLoading,
-			isSuccess: matchStatisticsImportSuccess,
-			isError: matchStatisticsImportError,
-			error: matchStatisticsImportErrorData,
-		},
-	] = useLazyImportMatchStatisticsQuery();
+	const { data: match, isFetching: matchLoading, isError: matchError, isSuccess: matchSuccess } = useGetMatchQuery(+(id || 0));
+	const { data: players, isLoading: playersLoading, isError: playersError, isSuccess: playersSucces } = useGetPlayersQuery();
+	const { data: stats, isLoading: statsLoading, isError: statsError, isSuccess: statsStucces } = useGetMatchStatisticsQuery(+(id || 0));
+	const [ importMatchStatistics, { data: importedStats, isLoading: matchStatisticsImportLoading, isSuccess: matchStatisticsImportSuccess, isError: matchStatisticsImportError, error: matchStatisticsImportErrorData} ] = useLazyImportMatchStatisticsQuery();
 
 	useEffect(() => {
 		setSpinning(matchLoading || playersLoading || statsLoading);
@@ -154,8 +120,11 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		[players, match]
 	);
 
+	const playerSplit = useMemo(() => playersReduced?.findIndex((p: Partial<Player>) => p.clubId != playersReduced[0].clubId), [playersReduced]);
+
 	useEffect(() => {
 		const playersWithStats = playersReduced?.map((p: any) => {
+			console.log(p);
 			const statsPlayer = stats?.find(
 				(s: Statistic) => s.playerId == p.playerId
 			);
@@ -171,9 +140,11 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	useEffect(() => {
 		if(matchStatisticsImportSuccess) {
+			console.log(playersReduced);
+			console.log(importedStats);
 			const playersWithImportedStats = playersReduced?.map((p: any) => {
 				const importedStatsPlayer = importedStats?.find(
-					(s: Statistic) => s.playerId == p.playerId
+					(s: Statistic) => s.id == p.playerId
 				);
 				return importedStatsPlayer ? { ...p, ...importedStatsPlayer } : p;
 			});
@@ -190,7 +161,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		if (matchStatisticsImportSuccess) {
 			openSuccessNotification({
 				title: "Matchdata is geïmporteerd.",
-				icon: <CheckOutlined />,
 				message: "Check de data grondig!",
 			});
 		} else if(matchStatisticsImportError) {
@@ -247,7 +217,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			),
 		},
 	].concat(
-		config.STATISTICS.flat().map((stat: any) => ({
+		config.STATISTICS.map((stat: any) => stat.inputs).flat().map((stat: any) => ({
 			title: () => (
 				<Tooltip
 					placement="top"
@@ -335,12 +305,15 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 					rowKey={"playerId"}
 					pagination={false}
 					sticky={true}
+					rowClassName={(record: any, index: any) => index == playerSplit ? "split" :  "" }
 				/>
 				<Row justify="center" align="middle">
 					<Col span={24}>
 						<Button 
 							onClick={() => onFormSubmit()}
 							disabled={!goalMinutesEntered}
+							type="primary"
+							style={{width: "100%", marginTop: "2rem"}}
 						>
 							Opslaan
 						</Button>
@@ -357,8 +330,10 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 								...ps,
 							};
 						}
-						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0);
-						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0);
+						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0) + 
+									playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.ownGoals || 0), 0);
+						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0) + 
+							playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.ownGoals || 0), 0);
 						setState((state: GameStatsManagementState) => ({ ...state, playerStats, awayScore, homeScore }));
 						setPlayerState({ index: 0, open: false });
 					}}

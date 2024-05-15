@@ -51,10 +51,10 @@ export const PlayerManagement = () => {
 
 	const { t } = useTranslation();
 	const positionsName = [
-		t("positions.player.goalkeeper"),
-		t("positions.player.defender"),
-		t("positions.player.midfielder"),
-		t("positions.player.attacker"),
+		t("player.goalkeeper"),
+		t("player.defender"),
+		t("player.midfielder"),
+		t("player.attacker"),
 	];
 
 	const PlayerForm =
@@ -206,10 +206,6 @@ export const PlayerManagement = () => {
 					<FormItem
 						name={"portraitUrl"}
 						label={"Picture URL"}
-						rules={([{
-							required: true,
-							message: t("property.player.portraitUrl.required").toString()
-						}])}
 					>
 						<Input />
 					</FormItem>

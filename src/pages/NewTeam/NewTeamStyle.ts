@@ -6,4 +6,8 @@ export const NewTeamStyle = styled.div`
             width: 100%;
         }
     }
+
+    .ant-tour {
+        background-color: red;
+    }
 ` as any;
