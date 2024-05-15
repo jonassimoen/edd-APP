@@ -31,6 +31,8 @@ type PlayerModalProps = {
 	onSwap?: any
 	swapPlayerId?: number | null
 	boosters?: boolean
+	isCaptain?: boolean
+	isViceCaptain?: boolean
 }
 
 const BoosterIcons: {[type: string]: () => JSX.Element} = {
@@ -92,7 +94,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		),
 		[props]);
 
-	const showPointsOverview = player && player.pointsOverview && (!!player.played || player.points !== null);
+	const showPointsOverview = player && player.pointsOverview && !!player.pointsOverview.minutesPlayed;
 	const pointsOverviewList = useMemo(() => getPointsOverviewList(player, t), [player]);
 		
 
@@ -135,7 +137,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
 							<div className="action" onClick={onCaptainSelect}>
 								<CaptainIcon />
-								{t("player.captainBadgeLabel")}
+								{t("player.btnCaptainBadgeLabel")}
 							</div>
 						</Col> :
 						null
@@ -145,7 +147,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
 							<div className="action" onClick={onViceCaptainSelect}>
 								<ViceCaptainIcon />
-								{t("player.viceCaptainBadgeLabel")}
+								{t("player.btnViceCaptainBadgeLabel")}
 							</div>
 						</Col> :
 						null
@@ -217,10 +219,25 @@ export const PlayerModal = (props: PlayerModalProps) => {
 									<tr className="booster">
 										<td>
 											<Icon component={BoosterIcons[player.booster]} style={{fontSize: 20}} />
-											{t(`boosters.${player.booster}`)}
+											{t(`boosters.${player.booster.charAt(0).toLowerCase() + player.booster.slice(1)}`)}
 										</td>
 										<td></td>
 										<td>{(player.points - player.stats[0].points) || 0}</td>
+									</tr>
+								) : null
+							}
+							{
+								(props.isCaptain || props.isViceCaptain) ? (
+									<tr className="booster">
+										<td>
+											{props.isCaptain && t("player.captainBadgeLabel")}
+											{props.isViceCaptain && t("player.viceCaptainBadgeLabel")}
+										</td>
+										<td>
+											{props.isCaptain && "x 2"}
+											{props.isViceCaptain && "x 1.5"}
+										</td>
+										<td>{(player.stats[0].points) || 0}</td>
 									</tr>
 								) : null
 							}

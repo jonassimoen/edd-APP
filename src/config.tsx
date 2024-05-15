@@ -31,7 +31,7 @@ export default {
 					type: "number",
 				},
 				{
-					full: "Man of the Match",
+					full: "MAN OF THE MATCH",
 					slug: "motm",
 					short: "MOTM",
 					type: "bool",
@@ -66,18 +66,18 @@ export default {
 					short: "R",
 					type: "bool",
 				},
+				{
+					full: "OWN GOALS",
+					slug: "ownGoals",
+					short: "OG",
+					type: "number",
+				},
 			],
 		},
 		{
 			name: "Goalkeeper",
 			positions: [1],
 			inputs: [
-				{
-					full: "PENALTY SAVED",
-					slug: "penaltySaved",
-					short: "PSa",
-					type: "number",
-				},
 				{
 					full: "SAVES",
 					slug: "saves",
@@ -90,18 +90,18 @@ export default {
 					short: "HC",
 					type: "number",
 				},
+				{
+					full: "PENALTY SAVED",
+					slug: "penaltySaved",
+					short: "PSa",
+					type: "number",
+				},
 			],
 		},
 		{
 			name: "Attacking",
 			positions: [0,1,2,3,4],
 			inputs: [
-				{
-					full: "SHOTS BLOCKED",
-					slug: "shotsBlocked",
-					short: "SB",
-					type: "number",
-				},
 				{
 					full: "SHOTS ON TARGET",
 					slug: "shotsOnTarget",
@@ -112,6 +112,12 @@ export default {
 					full: "SHOTS OFF TARGET",
 					slug: "shotsOffTarget",
 					short: "STX",
+					type: "number",
+				},
+				{
+					full: "SHOTS BLOCKED",
+					slug: "shotsBlocked",
+					short: "SB",
 					type: "number",
 				},
 			],
@@ -141,7 +147,7 @@ export default {
 				{
 					full: "CROSSES",
 					slug: "totalCrosses",
-					short: "X",
+					short: "TX",
 					type: "number",
 				},
 				{
@@ -179,6 +185,12 @@ export default {
 					slug: "tackles",
 					short: "T",
 					type: "number",
+				},
+				{
+					full: "CLEARANCE OFF THE LINE",
+					slug: "lineClearances",
+					short: "LC",
+					type: "number",
 				}
 			],
 		},
@@ -211,15 +223,75 @@ export default {
 			positions: [0,1,2,3,4],
 			inputs: [
 				{
-					full: "FOULS DRAWN",
+					full: "FOULS",
+					slug: "foulsCommited",
+					short: "FC",
+					type: "number",
+				},
+				{
+					full: "WAS FOULED",
 					slug: "foulsDrawn",
 					short: "FD",
 					type: "number",
 				},
+			],
+		},
+		{
+			name: "Duels",
+			positions: [0,1,2,3,4],
+			inputs: [
 				{
-					full: "FOULS COMMITED",
-					slug: "foulsCommited",
-					short: "FC",
+					full: "GR. DUELS TOTAL",
+					slug: "duelsTotal",
+					short: "DT",
+					type: "number",
+				},
+				{
+					full: "GR. DUELS WON",
+					slug: "duelsWon",
+					short: "DW",
+					type: "number",
+				},
+				{
+					full: "AER. DUELS TOTAL",
+					slug: "aerialDuelsTotal",
+					short: "ADT",
+					type: "number",
+				},
+				{
+					full: "AER. DUELS WON",
+					slug: "aerialDuelsWon",
+					short: "ADW",
+					type: "number",
+				},
+			],
+		},
+		{
+			name: "Magic",
+			positions: [0,1,2,3,4],
+			inputs: [
+				{
+					full: "ERROR LEADING TO SHOT",
+					slug: "errorLeadingShot",
+					short: "ES",
+					type: "number",
+				},
+				{
+					full: "ERROR LEADING TO GOAL",
+					slug: "errorLeadingGoal",
+					short: "EG",
+					type: "number",
+				},
+				{
+					full: "BIG CHANCES CREATED",
+					slug: "bigChancesCreated",
+					short: "BCC",
+					type: "number",
+				},
+				{
+					full: "BIG CHANCES MISSED",
+					slug: "bigChancesMissed",
+					short: "BCM",
 					type: "number",
 				},
 			],
@@ -250,60 +322,6 @@ export default {
 					full: "PENALTY MISSED",
 					slug: "penaltyMissed",
 					short: "PM",
-					type: "number",
-				},
-			],
-		},
-		{
-			name: "Duels",
-			positions: [0,1,2,3,4],
-			inputs: [
-				{
-					full: "DUELS TOTAL",
-					slug: "duelsTotal",
-					short: "DT",
-					type: "number",
-				},
-				{
-					full: "DUELS WON",
-					slug: "duelsWon",
-					short: "DW",
-					type: "number",
-				},
-				{
-					full: "AERIAL DUELS TOTAL",
-					slug: "aerialDuelsTotal",
-					short: "ADT",
-					type: "number",
-				},
-				{
-					full: "AERIAL DUELS WON",
-					slug: "aerialDuelsWon",
-					short: "ADW",
-					type: "number",
-				},
-			],
-		},
-		{
-			name: "Magic",
-			positions: [0,1,2,3,4],
-			inputs: [
-				{
-					full: "ERROR LEADING TO GOAL",
-					slug: "errorLeadingGoal",
-					short: "EG",
-					type: "number",
-				},
-				{
-					full: "BIG CHANCES CREATED",
-					slug: "bigChancesCreated",
-					short: "BCC",
-					type: "number",
-				},
-				{
-					full: "BIG CHANCES MISSED",
-					slug: "bigChancesMissed",
-					short: "BCM",
 					type: "number",
 				},
 			],

@@ -5,7 +5,7 @@ import config from "@/config";
 export const weeksApi = createApi({
 	reducerPath: "weeksApi",
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/weeks`, credentials: "include" }),
-	tagTypes: ["Week"],
+	tagTypes: ["Week", "Match"],
 	endpoints: (builder) => ({
 		getWeeks: builder.query<Week[], void>({
 			query: () => "",
@@ -38,7 +38,7 @@ export const weeksApi = createApi({
 				url: `${id}/validate`,
 				method: "POST",
 			}),
-			invalidatesTags: (res, err, arg) => [{ type: "Week", id: arg.id }],
+			invalidatesTags: (res, err, arg) => [{ type: "Week", id: arg.id }, "Match"],
 		}),
 
 		getDeadlineInfo: builder.query<{ deadlineInfo: DeadlineInfo, weeks: Week[], rft: string }, void>({

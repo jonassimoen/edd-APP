@@ -53,7 +53,6 @@ declare type AbstractTeamState = {
 	activePositionFilter: number
 	teamUser?: any
 	validator?: any
-	savingTeamPending?: any
 	visibleWeekId: number | null
 	initializedExternally: boolean
 	boosters: Boosters
@@ -80,7 +79,7 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 };
 
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
-	const [addTeam] = useAddTeamMutation();
+	const [addTeam, {isLoading: savingTeamPending}] = useAddTeamMutation();
 	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
@@ -437,7 +436,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			const startingIds = starting.map(player => player && player.id);
 			const benchIds = bench.map(player => player && player.id);
 
-			setState({ ...state, savingTeamPending: true });
+			setState({ ...state });
 
 			// create function: POST /team/:id
 			return Promise.resolve();
@@ -735,6 +734,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 					deadlineWeekTransfers={state.deadlineWeekTransfers}
 					pastTransfers={state.pastTransfers}
 					teamPointsInfo={state.teamPointsInfo}
+					savingTeamPending={savingTeamPending}
 					{...props}
 				/> : null}
 		</React.Fragment>

@@ -149,10 +149,10 @@ const _EditTeam = (props: AbstractTeamType) => {
 			{
 				team && starting && starting.length === 0 && <Navigate to={{ pathname: "/new" }} />
 			}
-			{
+			{/* {
 				deadlineWeek && team && (firstPlayingWeekPassed && gameOfficialyStarted && !wildCardOrFreeHitEnabled)
 				&& <Navigate to={{ pathname: `/transfers/${team.id}` }} />
-			}
+			} */}
 			{
 				team && initializedExternally && players && clubs &&
 				<Row>

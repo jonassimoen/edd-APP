@@ -43,7 +43,7 @@ type Player = {
 	inStarting?: boolean
 	played?: boolean
 	points: number
-	pointsOverview: boolean
+	pointsOverview: any
 	booster: string
 
 	stats?: Statistic[]

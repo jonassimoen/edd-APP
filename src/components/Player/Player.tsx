@@ -308,6 +308,8 @@ export const Player = (props: PlayerProps) => {
 						onRemove={onRemove}
 						isSwapAble={isSwapable}
 						onSwap={onSwap}
+						isCaptain={isCaptain}
+						isViceCaptain={isViceCaptain}
 					/> :
 					null
 			}

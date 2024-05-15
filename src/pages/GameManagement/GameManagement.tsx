@@ -31,7 +31,7 @@ export const GameManagement = () => {
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSucces } = useGetMatchesQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
 	const [importMatches, { data: imports, isLoading: isImportMatchesLoading, isError: isImportMatchesError, error: importMatchesError, isSuccess: isImportMatchesSuccess }] = useImportMatchesMutation();
-	const [recalculate] = useRecalculateMatchPointsMutation();
+	const [recalculate, { isLoading: recalculatingPoints } ] = useRecalculateMatchPointsMutation();
 
 	const [createMatch] = useCreateMatchMutation();
 	const [updateMatch] = useUpdateMatchMutation();
@@ -197,7 +197,7 @@ export const GameManagement = () => {
 			</Row>
 			{matches && (
 				<Table
-					loading={matchesLoading}
+					loading={matchesLoading || recalculatingPoints}
 					dataSource={matches}
 					rowKey={"id"}
 					size="small"
