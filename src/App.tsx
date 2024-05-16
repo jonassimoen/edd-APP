@@ -1,6 +1,6 @@
 import { withTranslation } from "react-i18next";
 import { RouterProvider } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { router } from "./routes";
 import { ConfigProvider } from "antd";
 import * as dayjs from "dayjs";
@@ -19,6 +19,7 @@ import { useLazyGetPlayersQuery } from "./services/playersApi";
 import { useLazyGetClubsQuery } from "./services/clubsApi";
 import { clubsLoading, playersLoading, setClubs, setPlayers } from "./reducers/application";
 import { useDispatch } from "react-redux";
+import { fetchToken, onMessageListener } from "./firebase";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -32,13 +33,25 @@ const App = () => {
 	const [getClubs] = useLazyGetClubsQuery();
 	const dispatch = useDispatch();
 
+	const [isTokenFound, setTokenFound] = useState(false);
+
 	useEffect(() => {
 		Crisp.configure(config.CHAT_API);
 
 		Cronitor.load(config.CRONITOR_KEY, {
 			debug: false, 
 		});
-
+		
+		if (Notification.permission !== "granted") {
+			Notification.requestPermission().then((permission: NotificationPermission) => {
+				if(permission === "granted") {
+					fetchToken(setTokenFound);
+				}
+			});
+		}
+		onMessageListener().then((payload: any) => {
+			console.log(payload);
+		}).catch((err: any) => console.log("failed: ", err));
 	}, []);
 
 	useEffect(() => {

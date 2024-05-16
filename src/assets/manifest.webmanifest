@@ -1,0 +1,19 @@
+{
+	"name": "European Dream Draft",
+	"short_name": "EDD",
+	"icons": [
+	  {
+		"src": "https://staging.dreamdraft.be/logo_512.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	  }
+	],
+	"theme_color": "#000d40",
+	"background_color": "#000d40",
+	"display": "standalone",
+	"id": "european-dream-draft",
+	"description": "Fantasy Draft for Euro 2024",
+	"start_url": "https://staging.dreamdraft.be",
+	"dir": "ltr",
+	"lang": "nl"
+  }

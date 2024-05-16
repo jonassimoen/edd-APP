@@ -1,5 +1,37 @@
 {
+	"headers": [
+		{
+			"source": "/manifest.webmanifest",
+			"headers": [
+				{
+					"key": "Content-Type",
+					"value": "application/manifest+json"
+				}
+			]
+		},
+		{
+			"source": "/manifest.json",
+			"headers": [
+				{
+					"key": "Content-Type",
+					"value": "application/manifest+json"
+				}
+			]
+		}
+	],
 	"rewrites": [
+		{
+			"source": "/firebase-messaging-sw.js",
+			"destination": "/firebase-messaging-sw.js"
+		},
+		{
+			"source": "/manifest.json",
+			"destination": "/manifest.json"
+		},
+		{
+			"source": "/manifest.webmanifest",
+			"destination": "/manifest.webmanifest"
+		},
 		{
 			"source": "/(.*)",
 			"destination": "/index.html"
