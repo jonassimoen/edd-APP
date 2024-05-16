@@ -80,6 +80,7 @@ const App = () => {
 			<ToastContainer
 				autoClose={7500}
 			/>
+				{isTokenFound}
 			<RouterProvider router={router} />
 		</ConfigProvider>
 	);
