@@ -46,7 +46,7 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 					(props.onUse ? t("boosters.use") : t("boosters.active") )
 					: 
 					boosterUsed ? 
-						`${t("boosters.used")}: \n ${t("general.matchday")} ${props.activatedWeek}`
+						`${t("general.matchday")} ${props.activatedWeek}`
 						: t("boosters.activate")}
 			</Button>
 		</TeamBoosterStyle>

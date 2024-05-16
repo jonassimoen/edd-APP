@@ -66,6 +66,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 			tripleCaptain: teamResult.team.tripleCaptain,
 			viceVictory: teamResult.team.viceVictory,
 			superSubs: teamResult.team.superSubs,
+			freeHit: teamResult.team.freeHit,
 			hiddenGem: teamResult.team.hiddenGem,
 			goalRush: teamResult.team.goalRush,
 		};
@@ -78,8 +79,8 @@ const _EditTeam = (props: AbstractTeamType) => {
 		props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, undefined, undefined, [], [], [], viceCaptainId, boosters);
 	};
 
-	const updateTeam = (teamId: number) => {
-		props.onTeamEdit(teamId);
+	const updateTeam = () => {
+		props.onTeamEdit(props.teamId);
 	};
 
 	useEffect(() => {
@@ -110,6 +111,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		captainId,
 		viceCaptainId,
 		activePositionFilter,
+		editTeamPending,
 	} = props;
 
 	const totalPlayersToPick = competition.lineupSize + competition.benchSize;
@@ -189,11 +191,11 @@ const _EditTeam = (props: AbstractTeamType) => {
 							/>
 							{
 								(team && <Button
-									onClick={(e: any) => updateTeam}
+									onClick={updateTeam}
 									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 									type="primary"
-									disabled={false}
-									loading={false}
+									disabled={editTeamPending}
+									loading={editTeamPending}
 									size="large">
 									{/* TODO: get updating state to disable button */}
 									<SaveOutlined style={{ marginRight: "10px" }} />

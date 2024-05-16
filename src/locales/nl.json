@@ -255,7 +255,8 @@
     "newTeamNameInput": "Kies een teamnaam",
     "transferOut": "Uit",
     "transferIn": "In",
-    "newTeam": "Maak een nieuw team"
+    "newTeam": "Maak een nieuw team",
+    "saveTeamFailed": "Opslaan van je team is mislukt."
   },
   "players": {
     "noneFound": "Geen spelers gevonden"
@@ -330,7 +331,6 @@
     "activate": "Activeer",
     "active": "Nu actief",
     "usedPlayer": "Gebruikte speler",
-    "used": "Reeds gebruikt",
     "available": "Beschikbaar",
     "confirmMsg": "Als je deze booster activeert is er <b>geen mogelijkheid om dit ongedaan te maken</b>. Ben je zeker dat je deze wilt activeren?",
     "affectedPlayer": "Geselecteerde speler",

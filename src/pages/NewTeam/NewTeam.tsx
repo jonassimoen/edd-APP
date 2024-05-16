@@ -201,28 +201,18 @@ const _NewTeam = (props: AbstractTeamType) => {
 								/>
 
 								<Row>
-									{(team && !hasPlayers &&
+									{(team && hasPlayers &&
 										<Button
-											onClick={(e: any) => onTeamReset(team)}
+											onClick={onTeamSave}
 											type="primary"
 											disabled={savingTeamPending}
 											loading={savingTeamPending}
 											style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 											size="large">
-											<SaveOutlined />
+											<SaveOutlined style={{ marginRight: "10px" }} />
 											{t("team.saveTeam")}
 										</Button>
-									) || <Button
-										onClick={onTeamSave}
-										type="primary"
-										disabled={savingTeamPending}
-										loading={savingTeamPending}
-										style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-										size="large">
-										<SaveOutlined style={{ marginRight: "10px" }} />
-										{t("team.saveTeam")}
-									</Button>
-									}
+									)}
 								</Row>
 							</Col>
 							<Col lg={12} md={24} sm={24} xs={24} className="right">

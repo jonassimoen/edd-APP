@@ -13,11 +13,7 @@ import { redirect } from "react-router-dom";
 
 declare type BoosterListProps = {
 	teamId?: number
-	goalRush?: number,
-	hiddenGem?: number,
-	tripleCaptain?: number
-	viceVictory?: number
-	superSubs?: number
+	boosters?: Boosters
 	
 	possiblePlayers: Player[]
 	assetsCdn?: string
@@ -40,15 +36,18 @@ export const BoosterList = (props: BoosterListProps) => {
 
 	const {
 		teamId,
+		assetsCdn,
+		deadlineWeek,
+		possiblePlayers,
+	} = props;
+
+	const {
 		goalRush,
 		hiddenGem,
 		tripleCaptain,
 		viceVictory,
 		superSubs,
-		assetsCdn,
-		deadlineWeek,
-		possiblePlayers,
-	} = props;
+	} = props.boosters;
 
 	const onBoosterActivation = (type: string) => {
 		setState((state) => ({...state, open: true, type }));

@@ -110,6 +110,7 @@ type Team = {
 	tripleCaptain?: number
 	viceVictory?: number
 	superSubs?: number
+	freeHit?: number
 	hiddenGem?: number
 	goalRush?: number
 }
@@ -118,6 +119,7 @@ type Boosters = {
 	tripleCaptain?: number
 	viceVictory?: number
 	superSubs?: number
+	freeHit?: number
 	hiddenGem?: number
 	goalRush?: number
 }

@@ -3,13 +3,15 @@ import { useSelector } from "react-redux";
 import { FootballPicker } from "@/lib/football-picker";
 import { FootballMaxPositionsPicks, FootballPositionIds } from "@/lib/constants";
 import Decimal from "decimal.js";
-import { useAddTeamMutation, useSubmitTransfersMutation, useUpdateTeamSelectionMutation } from "@/services/teamsApi";
+import { useAddTeamMutation, useEditTeamMutation, useSubmitTransfersMutation, useUpdateTeamSelectionMutation } from "@/services/teamsApi";
 import { openErrorNotification, openSuccessNotification } from "@/lib/helpers";
 import { t } from "i18next";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { pick } from "lodash";
 import React from "react";
+import { message } from "antd";
+import { FetchBaseQueryError, fetchBaseQuery } from "@reduxjs/toolkit/query";
 
 declare type AbstractTeamProps = {
 	matches?: any;
@@ -80,7 +82,8 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 };
 
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
-	const [addTeam, {isLoading: savingTeamPending}] = useAddTeamMutation();
+	const [addTeam, {isLoading: savingTeamPending, error: savingTeamError}] = useAddTeamMutation();
+	const [editTeam, {isLoading: editTeamPending, error: editTeamError}] = useEditTeamMutation();
 	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [getTeams] = useLazyGetTeamsQuery();
@@ -132,6 +135,15 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	useEffect(() => {
 		setState((state: any) => ({ ...state, visibleWeekId: (options && options.mode === "points" ? deadlineInfo?.deadlineInfo.displayWeek : deadlineInfo?.deadlineInfo.deadlineWeek) }));
 	}, [deadlineInfo]);
+
+	useEffect(() => {
+		if(editTeamError || savingTeamError) {
+			openErrorNotification({
+				title: t("team.saveTeamFailed"),
+				message: (((editTeamError || savingTeamError) as FetchBaseQueryError).data as any).message
+			});
+		}
+	}, [editTeamError, savingTeamError]);
 
 	const setStarting = (starting: any[]) => {
 		setState({ ...state, starting });
@@ -426,9 +438,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				viceCaptainId: state.viceCaptainId
 			});
 		} else {
-			return Promise.reject(
-				openErrorNotification({ title: t("team.teamSaveFailed") })
-			);
+			openErrorNotification({
+				title: t("team.invalidTeamTitle"),
+				message: t("team.invalidTeamDescription")
+			});
 		}
 	};
 
@@ -436,29 +449,33 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		const valid = validateTeam(true);
 
 		if (valid) {
-			const { starting, bench } = getStartingAndBenchIdsWithCaptainCheck();
-			const startingIds = starting.map(player => player && player.id);
-			const benchIds = bench.map(player => player && player.id);
-
 			setState({ ...state });
 
 			// create function: POST /team/:id
-			return Promise.resolve();
 		} else {
-			return Promise.reject(
-				// notifications.show({ color: "orange", message: t("team.teamInvalid") })
-			);
+			return Promise.reject();
 		}
 	};
 
-	const onTeamEdit = (team: any) => {
+	const onTeamEdit = () => {
 		const valid = validateTeam(true);
 
 		if (valid) {
-			const startingIds = state.starting.map((player: any) => player.id);
-			const benchIds = state.bench.map((player: any) => player.id);
-
+			const { starting, bench } = getStartingAndBenchIdsWithCaptainCheck();
 			// create function: POST /team/:id
+			return editTeam({
+				teamId: state.teamId,
+				starting: starting.map((p: any) => p.id),
+				bench: bench.map((p: any) => p.id),
+				teamName: state.teamName,
+				captainId: state.captainId,
+				viceCaptainId: state.viceCaptainId
+			});
+		} else {
+			openErrorNotification({
+				title: t("team.invalidTeamTitle"),
+				message: t("team.invalidTeamDescription")
+			});
 		}
 	};
 
@@ -626,7 +643,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 
 	const onTransferPlayerOut = (player: Player, extra?: boolean) => {
 		removePlayer(player);
-
 		const draftTransfers = state.draftTransfers
 			.concat([{
 				inId: null,
@@ -684,7 +700,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		setState({ ...state, activePositionFilter: positionId });
 	};
 
-
 	return (
 		<React.Fragment>
 			{deadlineInfoSuccess ?
@@ -740,6 +755,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 					pastTransfers={state.pastTransfers}
 					teamPointsInfo={state.teamPointsInfo}
 					savingTeamPending={savingTeamPending}
+					editTeamPending={editTeamPending}
 					{...props}
 				/> : null}
 		</React.Fragment>

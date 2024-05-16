@@ -58,7 +58,7 @@ export const Header = () => {
 	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && (gameEnded || (gameInProgress && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId))), [userTeam, gameEnded, gameInProgress, deadlineInfo]);
 	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId) && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [userTeam, deadlineInfo]);
 	const userHasPayed = useMemo(() => (user && user.payed) || !authenticated, [user, authenticated]);
-	const wildCardOrFreeHitEnabled = useMemo(() => deadlineInfo?.deadlineInfo?.deadlineWeek && userTeam && (deadlineInfo?.deadlineInfo.deadlineWeek === userTeam.superSubs), [userTeam, deadlineInfo]);
+	const wildCardOrFreeHitEnabled = useMemo(() => deadlineInfo?.deadlineInfo?.deadlineWeek && userTeam && (deadlineInfo?.deadlineInfo.deadlineWeek === userTeam.freeHit), [userTeam, deadlineInfo]);
 
 	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
 		if (allMenuItems.indexOf(item) === -1)
