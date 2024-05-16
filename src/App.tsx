@@ -42,9 +42,10 @@ const App = () => {
 			debug: false, 
 		});
 		
-		if (Notification.permission !== "granted") {
-			Notification.requestPermission().then((permission: NotificationPermission) => {
+		if ("Notification" in window && Notification.permission !== "granted") {
+			window.Notification.requestPermission().then((permission: NotificationPermission) => {
 				if(permission === "granted") {
+					console.log("Notifications enabled");
 					fetchToken(setTokenFound);
 				}
 			});
@@ -80,7 +81,6 @@ const App = () => {
 			<ToastContainer
 				autoClose={7500}
 			/>
-				{isTokenFound}
 			<RouterProvider router={router} />
 		</ConfigProvider>
 	);
