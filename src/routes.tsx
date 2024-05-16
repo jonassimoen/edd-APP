@@ -31,6 +31,7 @@ import * as Cronitor from "@cronitorio/cronitor-rum";
 import { useTranslation } from "react-i18next";
 import { PaymentResult } from "./components/Payment/PaymentResult";
 import { PaymentEnvironment } from "./pages/Payment/PaymentEnvironment";
+import { UserManagement } from "./pages/UserManagement/UserManagement";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
@@ -127,6 +128,10 @@ export const router = createBrowserRouter([
 						{
 							path: "",
 							element: <GeneralManagement />
+						},
+						{
+							path: "users",
+							element: <UserManagement />
 						},
 						{
 							path: "pages",

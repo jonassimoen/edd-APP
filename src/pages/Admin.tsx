@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/reducers";
-import { CalendarOutlined, CopyOutlined, HomeOutlined, SkinOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
+import { CalendarOutlined, CopyOutlined, HomeOutlined, SkinOutlined, StarOutlined, UserOutlined, UserSwitchOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import Title from "antd/es/typography/Title";
 import { useState } from "react";
@@ -12,6 +12,11 @@ const items: MenuProps["items"] = [
 		label: (<Link to={{ pathname: "" }}>Home</Link>),
 		key: "admin",
 		icon: <HomeOutlined />,
+	},
+	{
+		label: (<Link to={{ pathname: "users" }}>Users</Link>),
+		key: "users",
+		icon: <UserSwitchOutlined />,
 	},
 	{
 		label: (<Link to={{ pathname: "pages" }}>Pages</Link>),
