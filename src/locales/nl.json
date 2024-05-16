@@ -328,6 +328,7 @@
     "hiddenGem": "Verborgen diamant",
     "goalRush": "Goal rush",
     "superSubs": "Super subs",
+    "freeHit": "Eéndagsvlieg",
     "activate": "Activeer",
     "active": "Nu actief",
     "usedPlayer": "Gebruikte speler",
@@ -335,7 +336,7 @@
     "confirmMsg": "Als je deze booster activeert is er <b>geen mogelijkheid om dit ongedaan te maken</b>. Ben je zeker dat je deze wilt activeren?",
     "affectedPlayer": "Geselecteerde speler",
     "noPlayerSelected": "Je moet een speler selecteren voor deze booster!",
-    "use": "Gebruik"
+    "use": "Gebruiken"
   },
   "tour": {
     "newTeam": {

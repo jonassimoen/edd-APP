@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { TeamBoosterStyle } from "./TeamBoosterStyle";
+import { BoosterStyle } from "./BoosterStyle";
 import Icon from "@ant-design/icons";
 import { Button } from "../UI/Button/Button";
 import { ComponentType, SVGProps, useMemo } from "react";
@@ -30,7 +30,7 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 	};
 
 	return (
-		<TeamBoosterStyle className="booster">
+		<BoosterStyle className="booster">
 			<p className="booster-type">{t(`boosters.${props.type}`)}</p>
 			<Icon 
 				component={props.iconSvg} 
@@ -49,6 +49,6 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 						`${t("general.matchday")} ${props.activatedWeek}`
 						: t("boosters.activate")}
 			</Button>
-		</TeamBoosterStyle>
+		</BoosterStyle>
 	);
 };

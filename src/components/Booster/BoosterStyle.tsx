@@ -1,20 +1,25 @@
+import { mediaQueries } from "@/styles/media-queries";
 import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
 
-export const PlayerBoosterStyle = styled.div`
+export const BoosterStyle = styled.div`
 	text-align: center;
 	font-size: 16px;
 	padding: 1rem 0.25rem;
+
+	.booster-type {
+		height: 3rem;
+		@media ${mediaQueries.desktop} {
+			height: 4rem;
+		}
+	}
+	
 	.booster-icon {
 		vertical-align: middle;
 		height: 6rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-
-	p {
-		padding: 0.75rem;
 	}
 
 	.booster-player {
@@ -29,6 +34,10 @@ export const PlayerBoosterStyle = styled.div`
 			color: #fff;
 			font-size: 12px;
 		}
+	}
+
+	p {
+		padding: 0.75rem;
 	}
 
 	.ant-btn-primary {
