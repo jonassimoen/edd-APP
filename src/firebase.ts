@@ -1,15 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
-const firebaseConfig = {
-	apiKey: "AIzaSyDU584rAo7HT4uMtse1IxctnInbCkwBSDs",
-	authDomain: "european-dream-draft.firebaseapp.com",
-	projectId: "european-dream-draft",
-	storageBucket: "european-dream-draft.appspot.com",
-	messagingSenderId: "601486102170",
-	appId: "1:601486102170:web:3ac5ff18c3687f5bdfd923",
-	measurementId: "G-JXEPSCE8K5"
-};
+const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 
 let messaging: any;
 try {
@@ -20,7 +12,7 @@ try {
 }
 
 export const fetchToken = (setTokenFound: any, pushNotification: any) => {
-	return getToken(messaging, { vapidKey: "BKTXfGcEVAbAVyPPdP2zb0APYHrcYJXgtq5qr6ivL5r2E2FKlRvbEkSBTms0V4VS432fVKRLZgs8dC3BtFCmri0" })
+	return getToken(messaging, { vapidKey: import.meta.env.VITE_VAPID })
 		.then((currentToken) => {
 			if (currentToken) {
 				console.log("current token for client: ", currentToken);
