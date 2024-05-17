@@ -11,15 +11,21 @@ const firebaseConfig = {
 	measurementId: "G-JXEPSCE8K5"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const messaging = getMessaging(firebaseApp);
+let messaging: any;
+try {
+	const firebaseApp = initializeApp(firebaseConfig);
+	messaging = getMessaging(firebaseApp);
+} catch(err) {
+	console.error("Failed in init Firebase");
+}
 
-export const fetchToken = (setTokenFound: any) => {
+export const fetchToken = (setTokenFound: any, pushNotification: any) => {
 	return getToken(messaging, { vapidKey: "BKTXfGcEVAbAVyPPdP2zb0APYHrcYJXgtq5qr6ivL5r2E2FKlRvbEkSBTms0V4VS432fVKRLZgs8dC3BtFCmri0" })
 		.then((currentToken) => {
 			if (currentToken) {
 				console.log("current token for client: ", currentToken);
 				setTokenFound(true);
+				pushNotification(currentToken);
 				// Track the token -> client mapping, by sending to backend server
 				// show on the UI that permission is secured
 			} else {

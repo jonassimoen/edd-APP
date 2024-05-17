@@ -378,5 +378,10 @@
     "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
     "tryAgain": "Probeer opnieuw te betalen",
     "payNow": "Betaal nu"
+  },
+  "notifications": {
+    "modalTitle": "Notificaties inschakelen",
+    "modalDescription": "Om je op de hoogte te houden van de nieuwste updates rond European Dream Draft, is het handig om deze in te schakelen.",
+    "modalEnable": "Nu inschakelen"
   }
 }

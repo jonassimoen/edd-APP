@@ -19,7 +19,8 @@ import { useLazyGetPlayersQuery } from "./services/playersApi";
 import { useLazyGetClubsQuery } from "./services/clubsApi";
 import { clubsLoading, playersLoading, setClubs, setPlayers } from "./reducers/application";
 import { useDispatch } from "react-redux";
-import { fetchToken, onMessageListener } from "./firebase";
+import { onMessageListener } from "@/firebase";
+import { NotificationPrompt } from "./components/NotificationPrompt/NotificationPrompt";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -33,26 +34,19 @@ const App = () => {
 	const [getClubs] = useLazyGetClubsQuery();
 	const dispatch = useDispatch();
 
-	const [isTokenFound, setTokenFound] = useState(false);
-
 	useEffect(() => {
 		Crisp.configure(config.CHAT_API);
 
 		Cronitor.load(config.CRONITOR_KEY, {
 			debug: false, 
 		});
-		
-		if ("Notification" in window && Notification.permission !== "granted") {
-			window.Notification.requestPermission().then((permission: NotificationPermission) => {
-				if(permission === "granted") {
-					console.log("Notifications enabled");
-					fetchToken(setTokenFound);
-				}
-			});
-		}
 		onMessageListener().then((payload: any) => {
 			console.log(payload);
 		}).catch((err: any) => console.log("failed: ", err));
+
+		navigator.serviceWorker.onmessage = (event) => {
+			console.log(event);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -78,6 +72,7 @@ const App = () => {
 				fontFamily: "UEFAEuro",
 			}
 		}}>
+			<NotificationPrompt />
 			<ToastContainer
 				autoClose={7500}
 			/>

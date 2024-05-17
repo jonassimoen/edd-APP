@@ -30,8 +30,15 @@ export const generalApi = createApi({
 			params: string,
 		}, number>({
 			query: (id) => `/audit/${id}`,
-		})
+		}),
+		postToken: builder.mutation<any, string>({
+			query: (token) => ({
+				url: `${config.API_URL}/notifications/registration`,
+				method: "POST",
+				body: {token},
+			}),
+		}),
 	})
 });
 
-export const { useGetGeneralInfoQuery, usePostClubWinnerMutation, useGetUsersListQuery, useLazyGetAuditQuery } = generalApi;
+export const { useGetGeneralInfoQuery, usePostClubWinnerMutation, useGetUsersListQuery, useLazyGetAuditQuery, usePostTokenMutation } = generalApi;
