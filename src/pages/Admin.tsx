@@ -64,8 +64,9 @@ export const Admin = (props: { redirectPath: string }) => {
 	}
 
 	if (isAdmin()) {
-		return (
+		return  (
 			<>
+				{window.location.pathname.includes("localhost") && <Title color={"red"}>NOT RUNNING ON LOCALHOST</Title>}
 				<Title>{t("admin.welcome", { name: user?.firstName })}</Title>
 				<Menu style={{ backgroundColor: "#f2f0f4" }} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
 				<Outlet />

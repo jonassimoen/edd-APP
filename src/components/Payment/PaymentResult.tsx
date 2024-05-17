@@ -25,8 +25,8 @@ export const PaymentResult = (props: PaymentResultProps) => {
 
 	useEffect(() => {
 		if (!props.clientSecret || !stripe) { return;}
-	
 		stripe.retrievePaymentIntent(props.clientSecret).then(({ paymentIntent }) => {
+			console.log(paymentIntent);
 			switch (paymentIntent.status) {
 			case "succeeded":
 				setCode("success");
@@ -42,7 +42,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 	}, [props.clientSecret, stripe]);
 
 	return (
-		(!profile.isLoading && code) && (
+		(!profile.isLoading && code) ? (
 			<Col md={6}>
 				<Title level={2}>{t(`payment.${code}Title`)}</Title>
 				<p>{t(`payment.${code}Description`)}</p>
@@ -73,8 +73,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 						)
 				}
 			</Col>
-		)
-		
+		) : null
 	);
 };
 

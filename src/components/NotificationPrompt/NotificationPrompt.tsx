@@ -15,10 +15,8 @@ export const NotificationPrompt = () => {
 	const onNotificationRequest = () => {
 		setRequestModalOpen(false);
 		if ("Notification" in window && Notification.permission !== "granted") {
-			console.log("request notif");
 			Notification.requestPermission().then((permission: NotificationPermission) => {
 				if(permission === "granted") {
-					console.log("Notifications enabled");
 					fetchToken(setTokenFound, pushNotif);
 				} 
 			});
@@ -44,6 +42,7 @@ export const NotificationPrompt = () => {
 			okText={(t("notifications.modalEnable"))}
 			cancelButtonProps={{style: {display: "none"}}}
 			onOk={onNotificationRequest}
+			onCancel={() => setRequestModalOpen(false)}
 		>
 			{t("notifications.modalDescription")}
 		</NotificationPromptStyle>
