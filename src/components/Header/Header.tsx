@@ -36,6 +36,7 @@ export const Header = () => {
 	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
+	const [getProfile, { isLoading: loadingProfile }] = useLazyGetProfileQuery();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
 	const [teamVerification, setTeamVerification] = useState(false);
@@ -50,7 +51,7 @@ export const Header = () => {
 
 	const { t, i18n } = useTranslation();
 	const application = useSelector((state: StoreState) => state.application);
-	const allMenuItems: string[] = ["home", "stats", "rules", "rankings"];
+	const allMenuItems: string[] = ["home", "stats", "rules", "rankings", "news"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;
 	const isActive = (match: string) => location.pathname.indexOf(match) !== -1;
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
@@ -58,7 +59,7 @@ export const Header = () => {
 	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && (gameEnded || (gameInProgress && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId))), [userTeam, gameEnded, gameInProgress, deadlineInfo]);
 	const showTransfers = useMemo(() => userTeam && deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId) && deadlineInfo.deadlineInfo.deadlineWeek > application.competition.officialStartWeek, [userTeam, deadlineInfo]);
 	const userHasPayed = useMemo(() => (user && user.payed) || !authenticated, [user, authenticated]);
-	const wildCardOrFreeHitEnabled = useMemo(() => deadlineInfo?.deadlineInfo?.deadlineWeek && userTeam && (deadlineInfo?.deadlineInfo.deadlineWeek === userTeam.superSubs), [userTeam, deadlineInfo]);
+	const wildCardOrFreeHitEnabled = useMemo(() => deadlineInfo?.deadlineInfo?.deadlineWeek && userTeam && (deadlineInfo?.deadlineInfo.deadlineWeek === userTeam.freeHit), [userTeam, deadlineInfo]);
 
 	const insertToMenuAtPosition = (positionIndex: number, item: string) => {
 		if (allMenuItems.indexOf(item) === -1)
@@ -71,6 +72,12 @@ export const Header = () => {
 			setTeamVerification(true);
 		}
 	}, [teams]);
+
+	useEffect(() => {
+		if(user) {
+			getProfile();
+		}
+	}, [user]);
 
 	if (user) {
 		allMenuItems.push("logout");
@@ -193,6 +200,12 @@ export const Header = () => {
 											</li>
 										) || null
 										}
+										{(isVisible("news") &&
+											<li className={`c-nav-main__item${(isActive("news")) ? "is-selected" : ""}`}>
+												<Link className="c-nav-main__link" to="/news">{t("menu.news")}</Link>
+											</li>
+										) || null
+										}
 										{(isVisible("admin") &&
 											<li className={`c-nav-main__item${(isActive("admin")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/admin">{t("menu.admin")}</Link>
@@ -246,7 +259,7 @@ export const Header = () => {
 						<ul className="o-list c-nav-mobile__list">
 							{((userTeam && isVisible("pay")) &&
 								<li className={`c-nav-mobile__item ${isActive("payment") ? "active" : ""}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={"payment"}>{t("menu.pay")}</Link></li>) || null}
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={"payment"}>{t("menu.payment")}</Link></li>) || null}
 
 							{((userTeam && isVisible("points")) &&
 								<li className={`c-nav-mobile__item ${isActive("points") ? "active" : ""}`}>
@@ -288,6 +301,10 @@ export const Header = () => {
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/rules">{t("menu.rules")}</Link>
 								</li>) || null}
 
+							{(isVisible("news") &&
+							<li className={`c-nav-mobile__item ${isActive("news") ? "active" : ""}`}>
+								<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/news">{t("menu.news")}</Link>
+							</li>) || null}
 
 							{(isVisible("admin") &&
 								<li className={`c-nav-mobile__item ${(isActive("admin")) ? "active" : ""}`}>
@@ -303,16 +320,16 @@ export const Header = () => {
 				</nav>
 			</HeaderStyle >
 			<Layout>
-				{
-					(!userHasPayed && !window.location.href.includes("payment")) ? 
+				{		
+					(!loadingProfile && !userHasPayed && !window.location.href.includes("payment")) ? 
 						<Alert
 							description={parseHTML(t("general.notPayed"))}
 							type="warning"
 							className="warning-not-payed"
 							showIcon
 						/> 
-						: null
-				}
+						: null				
+				}				
 				<Outlet />
 			</Layout>
 		</>

@@ -66,18 +66,6 @@ export const GeneralManagement = () => {
 				</Col>
 			</Row>
 			<Row align='middle'>
-				<Col md={18}>
-					<Title level={2}>User management</Title>
-					<ul>
-						{
-							data?.users?.map((u: any) => 
-								<li key={u.email} className={`${u.payed?"payed":"non-payed"}`}>{u.firstName} {u.lastName} ({u.email})</li>
-							)
-						}
-					</ul>
-				</Col>
-			</Row>
-			<Row align='middle'>
 			</Row>
 			<Modal 
 				open={open}

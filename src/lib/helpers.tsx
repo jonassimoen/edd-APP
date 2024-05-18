@@ -120,6 +120,7 @@ export const openErrorNotification = (config: NotificationConfig) => {
 	toast.error(({ closeToast }) => (
 		<React.Fragment>
 			<b>{config.title}</b>
+			{/* <br />{config.message} */}
 		</React.Fragment>
 	));
 };

@@ -19,13 +19,12 @@ export const PaymentResult = (props: PaymentResultProps) => {
 	const profile = useGetProfileQuery();
 	const stripe = useStripe();
 	const {t} = useTranslation();
-	const navigator = useNavigate();
+	const navigate = useNavigate();
 	const [code, setCode] = useState("");
 	
 
 	useEffect(() => {
 		if (!props.clientSecret || !stripe) { return;}
-	
 		stripe.retrievePaymentIntent(props.clientSecret).then(({ paymentIntent }) => {
 			switch (paymentIntent.status) {
 			case "succeeded":
@@ -42,27 +41,29 @@ export const PaymentResult = (props: PaymentResultProps) => {
 	}, [props.clientSecret, stripe]);
 
 	return (
-		(!profile.isLoading && code) && (
+		(!profile.isLoading && code) ? (
 			<Col md={6}>
 				<Title level={2}>{t(`payment.${code}Title`)}</Title>
 				<p>{t(`payment.${code}Description`)}</p>
 				{
-					(profile.data.payed && code === "success") || (code === "processing") ?
+					(code === "success") || (code === "processing") ?
 						(
-							<Button
-								onClick={(e: any) => navigator("/new")}
-								type="primary"
-								style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-								size="large"
-							>
-								<PlusOutlined style={{ marginRight: "10px" }} />
-								{t("team.newTeam")}
-							</Button>
+							<>
+								<Button
+									onClick={(e: any) => navigate("/new")}
+									type="primary"
+									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+									size="large"
+								>
+									<PlusOutlined style={{ marginRight: "10px" }} />
+									{t("team.newTeam")}
+								</Button>
+							</>
 						)
 						:
 						(
 							<Button
-								onClick={(e: any) => { navigator("/payment"); props.onReload(); }}
+								onClick={(e: any) => { navigate("/payment"); props.onReload(); }}
 								type="primary"
 								style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 								size="large"
@@ -73,21 +74,6 @@ export const PaymentResult = (props: PaymentResultProps) => {
 						)
 				}
 			</Col>
-		)
-		
+		) : null
 	);
 };
-
-
-// (
-// 	(profile.data.payed && code === 'success') || (code === 'processing') && 
-// 		<Button
-// 			onClick={(e: any) => navigator("/new")}
-// 			type="primary"
-// 			style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-// 			size="large"
-// 		>
-// 			<PlusOutlined style={{ marginRight: "10px" }} />
-// 			{t("team.newTeam")}
-// 		</Button>
-// )

@@ -31,6 +31,9 @@ import * as Cronitor from "@cronitorio/cronitor-rum";
 import { useTranslation } from "react-i18next";
 import { PaymentResult } from "./components/Payment/PaymentResult";
 import { PaymentEnvironment } from "./pages/Payment/PaymentEnvironment";
+import { UserManagement } from "./pages/UserManagement/UserManagement";
+import { News } from "./pages/News/News";
+import { NewsArticle } from "./pages/News/NewsArticle";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
@@ -129,6 +132,10 @@ export const router = createBrowserRouter([
 							element: <GeneralManagement />
 						},
 						{
+							path: "users",
+							element: <UserManagement />
+						},
+						{
 							path: "pages",
 							element: <PageManagement />
 						},
@@ -161,6 +168,14 @@ export const router = createBrowserRouter([
 				{
 					path: "payment/*",
 					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
+				},
+				{
+					path: "news",
+					element: <ProtectedRoute access={true} redirectPath="/home"><News /></ProtectedRoute>,
+				},
+				{
+					path: "news/*",
+					element: <ProtectedRoute access={true} redirectPath="/home"><NewsArticle /></ProtectedRoute>,
 				},
 				{
 					path: "*",

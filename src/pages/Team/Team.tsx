@@ -73,6 +73,7 @@ export const _Team = (props: AbstractTeamType) => {
 			tripleCaptain: teamResult.team.tripleCaptain,
 			viceVictory: teamResult.team.viceVictory,
 			superSubs: teamResult.team.superSubs,
+			freeHit: teamResult.team.freeHit,
 			hiddenGem: teamResult.team.hiddenGem,
 			goalRush: teamResult.team.goalRush,
 		};
@@ -189,14 +190,10 @@ export const _Team = (props: AbstractTeamType) => {
 						</Button>
 						<BoosterList 
 							teamId={props.teamId}
-							tripleCaptain={props.boosters.tripleCaptain}
-							viceVictory={props.boosters.viceVictory}
-							superSubs={props.boosters.superSubs}
+							boosters={props.boosters}
 							deadlineWeek={deadlineWeek}
 							assetsCdn={application.competition.assetsCdn}
 							playersWithBoosters={boostedPlayers}
-							goalRush={props.boosters.goalRush}
-							hiddenGem={props.boosters.hiddenGem}
 							possiblePlayers={unboostedPlayers}
 						/>
 					</Col>

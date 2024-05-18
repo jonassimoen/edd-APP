@@ -1,8 +1,8 @@
 import Title from "antd/es/typography/Title";
-import { BoosterListStyle } from "./TeamBoosterListStyle";
+import { BoosterListStyle } from "./BoosterListStyle";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "../UI/Grid/Grid";
-import { TripleCaptSvg, BenchSvg, HiddenGemSvg, GoalRushSvg, SuperSubsSvg } from "@/styles/custom-icons";
+import { TripleCaptSvg, BenchSvg, HiddenGemSvg, GoalRushSvg, SuperSubsSvg, WildcardSvg } from "@/styles/custom-icons";
 import { TeamBooster } from "./TeamBooster";
 import { useNavigate, useParams } from "react-router";
 import { useMemo, useState } from "react";
@@ -13,11 +13,7 @@ import { redirect } from "react-router-dom";
 
 declare type BoosterListProps = {
 	teamId?: number
-	goalRush?: number,
-	hiddenGem?: number,
-	tripleCaptain?: number
-	viceVictory?: number
-	superSubs?: number
+	boosters?: Boosters
 	
 	possiblePlayers: Player[]
 	assetsCdn?: string
@@ -40,26 +36,29 @@ export const BoosterList = (props: BoosterListProps) => {
 
 	const {
 		teamId,
-		goalRush,
-		hiddenGem,
-		tripleCaptain,
-		viceVictory,
-		superSubs,
 		assetsCdn,
 		deadlineWeek,
 		possiblePlayers,
 	} = props;
 
+	const {
+		goalRush,
+		hiddenGem,
+		tripleCaptain,
+		viceVictory,
+		superSubs,
+		freeHit
+	} = props.boosters;
+
 	const onBoosterActivation = (type: string) => {
 		setState((state) => ({...state, open: true, type }));
 	};
-	const onPowerSubsBoosterUse = () => {
+	const onFreeHitBoosterUse = () => {
 		navigate(`/edit/${teamId}`);
 	};
 
-
 	const boosterLimitReached = useMemo(() => 
-		[goalRush, hiddenGem, viceVictory, tripleCaptain].filter((v: number) => v == deadlineWeek).length >= 2
+		[goalRush, hiddenGem, viceVictory, tripleCaptain, freeHit, superSubs].filter((v: number) => v == deadlineWeek).length >= 2
 	, [props]);
 
 	const hiddenGemPlayer = useMemo(() => 
@@ -100,7 +99,7 @@ export const BoosterList = (props: BoosterListProps) => {
 			</Row>
 			<Title level={2}>{t("general.teamBoosters")}</Title>
 			<Row>
-				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
 					<TeamBooster 
 						iconSvg={TripleCaptSvg}
 						type="tripleCaptain" 
@@ -110,7 +109,7 @@ export const BoosterList = (props: BoosterListProps) => {
 						boosterLimit={boosterLimitReached}
 					/>
 				</Col>
-				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
 					<TeamBooster 
 						iconSvg={BenchSvg}
 						type="viceVictory" 
@@ -120,7 +119,7 @@ export const BoosterList = (props: BoosterListProps) => {
 						boosterLimit={boosterLimitReached}
 					/>
 				</Col>
-				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
 					<TeamBooster 
 						iconSvg={SuperSubsSvg}
 						type="superSubs" 
@@ -128,7 +127,17 @@ export const BoosterList = (props: BoosterListProps) => {
 						activatedWeek={superSubs}
 						deadlineWeek={deadlineWeek}
 						boosterLimit={boosterLimitReached}
-						onUse={onPowerSubsBoosterUse}
+					/>
+				</Col>
+				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
+					<TeamBooster 
+						iconSvg={WildcardSvg}
+						type="freeHit" 
+						onActivation={onBoosterActivation}
+						activatedWeek={freeHit}
+						deadlineWeek={deadlineWeek}
+						boosterLimit={boosterLimitReached}
+						onUse={onFreeHitBoosterUse}
 					/>
 				</Col>
 			</Row>

@@ -110,6 +110,7 @@ type Team = {
 	tripleCaptain?: number
 	viceVictory?: number
 	superSubs?: number
+	freeHit?: number
 	hiddenGem?: number
 	goalRush?: number
 }
@@ -118,6 +119,7 @@ type Boosters = {
 	tripleCaptain?: number
 	viceVictory?: number
 	superSubs?: number
+	freeHit?: number
 	hiddenGem?: number
 	goalRush?: number
 }
@@ -267,4 +269,16 @@ type BoostersWeekStatus = {
 	goalRush: boolean,
 	hiddenGem: boolean,
 	superSub: boolean,
+}
+
+type Article = {
+	id: number,
+	slug: string,
+	title: string,
+	description: string,
+	timestampCreated: Date,
+	timestampUpdated: Date,
+	readMore: boolean,
+	imageUrl: string,
+	author: {firstName: string},
 }

@@ -132,9 +132,10 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				const boosters = {
 					tripleCaptain: result.team.tripleCaptain,
 					viceVictory: result.team.viceVictory,
+					superSubs: result.team.superSub,
+					freeHit: result.team.freeHit,
 					goalRush: result.team.goalRush,
 					hiddenGem: result.team.hiddenGem,
-					superSubs: result.team.superSub,
 				};
 
 				const isTeamOwner = !!(result.team.userId === user.id);
@@ -163,6 +164,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 		goalRush: boosters.goalRush === visibleWeekId,
 		hiddenGem: boosters.hiddenGem === visibleWeekId,
 		superSubs: boosters.superSubs === visibleWeekId,
+		freeHit: boosters.freeHit === visibleWeekId,
 	};
 
 	const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);

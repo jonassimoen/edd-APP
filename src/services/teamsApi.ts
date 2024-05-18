@@ -24,6 +24,15 @@ export const teamsApi = createApi({
 			}),
 		}),
 
+		editTeam: builder.mutation<{ team: Team }, { teamId: number, bench: number[], starting: number[], teamName: string, captainId: number, viceCaptainId: number }>({
+			invalidatesTags: ["userTeam"],
+			query: ({ teamId, ...data }) => ({
+				url: `${teamId}`,
+				method: "POST",
+				body: data
+			}),
+		}),
+
 		updateTeamSelection: builder.mutation<{ msg: string }, { teamId: number, bench: number[], starting: number[], teamName: string, captainId: number, viceCaptainId: number }>({
 			invalidatesTags: ["userTeam"],
 			query: ({ teamId, ...data }) => ({
@@ -66,6 +75,7 @@ export const {
 	useGetTeamQuery, 
 	useLazyGetTeamQuery,
 	useAddTeamMutation, 
+	useEditTeamMutation,
 	useUpdateTeamSelectionMutation, 
 	useLazyGetPointsQuery, 
 	useSubmitTransfersMutation,

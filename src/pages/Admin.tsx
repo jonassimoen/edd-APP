@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/reducers";
-import { CalendarOutlined, CopyOutlined, HomeOutlined, SkinOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
-import { Menu, MenuProps } from "antd";
+import { CalendarOutlined, CopyOutlined, HomeOutlined, SkinOutlined, StarOutlined, UserOutlined, UserSwitchOutlined } from "@ant-design/icons";
+import { Alert, Menu, MenuProps } from "antd";
 import Title from "antd/es/typography/Title";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,11 @@ const items: MenuProps["items"] = [
 		label: (<Link to={{ pathname: "" }}>Home</Link>),
 		key: "admin",
 		icon: <HomeOutlined />,
+	},
+	{
+		label: (<Link to={{ pathname: "users" }}>Users</Link>),
+		key: "users",
+		icon: <UserSwitchOutlined />,
 	},
 	{
 		label: (<Link to={{ pathname: "pages" }}>Pages</Link>),
@@ -59,8 +64,16 @@ export const Admin = (props: { redirectPath: string }) => {
 	}
 
 	if (isAdmin()) {
-		return (
+		return  (
 			<>
+				{!window.location.hostname.includes("localhost") &&
+					<Alert
+						message="Not on localhost"
+						description="To get the best performance, please run the localhost version with Docker."
+						type="error"
+						showIcon
+					/>
+				}
 				<Title>{t("admin.welcome", { name: user?.firstName })}</Title>
 				<Menu style={{ backgroundColor: "#f2f0f4" }} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
 				<Outlet />

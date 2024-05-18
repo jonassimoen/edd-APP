@@ -113,6 +113,7 @@ const _Transfers = (props: AbstractTeamType) => {
 				tripleCaptain: teamResult.team.tripleCaptain,
 				viceVictory: teamResult.team.viceVictory,
 				superSubs: teamResult.team.superSubs,
+				freeHit: teamResult.team.freeHit,
 				hiddenGem: teamResult.team.hiddenGem,
 				goalRush: teamResult.team.goalRush,
 			};
@@ -215,8 +216,8 @@ const _Transfers = (props: AbstractTeamType) => {
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
 	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek >= competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
-	// TODO
-	const enabledWildOrFreeHit = useMemo(() => boosters.superSubs == deadlineWeek/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [boosters]);
+	
+	const enabledWildOrFreeHit = useMemo(() => boosters.freeHit == deadlineWeek, [boosters]);
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]), [starting, bench]);
 	const remainingTransfers = useMemo(() => {
 		let remainingTransfers = null;

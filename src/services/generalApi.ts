@@ -18,7 +18,27 @@ export const generalApi = createApi({
 			}),
 			invalidatesTags: ["General"]
 		}),
+		getUsersList: builder.query<{
+			users: User[], 
+			activeBoosters: {user: string, boosters: string[]}[],
+			audits: {id: number, user: {email: string}, action: string, params: string, timestamp: string }[]
+		}, void>({
+			query: () => "/users",
+		}),
+		getAudit: builder.query<{
+			action: string,
+			params: string,
+		}, number>({
+			query: (id) => `/audit/${id}`,
+		}),
+		postToken: builder.mutation<any, string>({
+			query: (token) => ({
+				url: `${config.API_URL}/notifications/registration`,
+				method: "POST",
+				body: {token},
+			}),
+		}),
 	})
 });
 
-export const { useGetGeneralInfoQuery, usePostClubWinnerMutation } = generalApi;
+export const { useGetGeneralInfoQuery, usePostClubWinnerMutation, useGetUsersListQuery, useLazyGetAuditQuery, usePostTokenMutation } = generalApi;

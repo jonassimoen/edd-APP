@@ -10,7 +10,8 @@
     "points": "Punten",
     "edit": "Wijzig team",
     "transfers": "Transfers",
-    "payment": "Inschrijving"
+    "payment": "Inschrijving",
+    "news": "Nieuws"
   },
   "home": {
     "title": "EDD 2024, speel mee!",
@@ -34,6 +35,11 @@
     "week": "Week",
     "allWeeks": "Alle speeldagen",
     "weeks": {
+      "firstgroupround": "Groepsfase 1",
+      "secgroupround": "Groepsfase 2",
+      "thirdgroupround": "Groepsfase 3",
+      "fourthgroupround": "Groepsfase 4",
+      "eightfinal": "Achtste finale",
       "quarterfinal": "Kwartfinale",
       "semifinal": "Halve finale",
       "final": "Finale"
@@ -255,7 +261,8 @@
     "newTeamNameInput": "Kies een teamnaam",
     "transferOut": "Uit",
     "transferIn": "In",
-    "newTeam": "Maak een nieuw team"
+    "newTeam": "Maak een nieuw team",
+    "saveTeamFailed": "Opslaan van je team is mislukt."
   },
   "players": {
     "noneFound": "Geen spelers gevonden"
@@ -327,15 +334,15 @@
     "hiddenGem": "Verborgen diamant",
     "goalRush": "Goal rush",
     "superSubs": "Super subs",
+    "freeHit": "Eéndagsvlieg",
     "activate": "Activeer",
     "active": "Nu actief",
     "usedPlayer": "Gebruikte speler",
-    "used": "Reeds gebruikt",
     "available": "Beschikbaar",
     "confirmMsg": "Als je deze booster activeert is er <b>geen mogelijkheid om dit ongedaan te maken</b>. Ben je zeker dat je deze wilt activeren?",
     "affectedPlayer": "Geselecteerde speler",
     "noPlayerSelected": "Je moet een speler selecteren voor deze booster!",
-    "use": "Gebruik"
+    "use": "Gebruiken"
   },
   "tour": {
     "newTeam": {
@@ -377,5 +384,13 @@
     "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
     "tryAgain": "Probeer opnieuw te betalen",
     "payNow": "Betaal nu"
+  },
+  "notifications": {
+    "modalTitle": "Notificaties inschakelen",
+    "modalDescription": "Om je op de hoogte te houden van de nieuwste updates rond European Dream Draft, is het handig om deze in te schakelen.",
+    "modalEnable": "Nu inschakelen"
+  },
+  "news": {
+    "readMore": "Lees verder"
   }
 }
