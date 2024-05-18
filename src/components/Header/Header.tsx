@@ -36,7 +36,7 @@ export const Header = () => {
 	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
-	const { isLoading: loadingProfile } = useGetProfileQuery();
+	const [getProfile, { isLoading: loadingProfile }] = useLazyGetProfileQuery();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
 	const [teamVerification, setTeamVerification] = useState(false);
@@ -72,6 +72,12 @@ export const Header = () => {
 			setTeamVerification(true);
 		}
 	}, [teams]);
+
+	useEffect(() => {
+		if(user) {
+			getProfile();
+		}
+	}, [user]);
 
 	if (user) {
 		allMenuItems.push("logout");
