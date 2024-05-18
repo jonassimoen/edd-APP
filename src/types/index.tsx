@@ -270,3 +270,15 @@ type BoostersWeekStatus = {
 	hiddenGem: boolean,
 	superSub: boolean,
 }
+
+type Article = {
+	id: number,
+	slug: string,
+	title: string,
+	description: string,
+	timestampCreated: Date,
+	timestampUpdated: Date,
+	readMore: boolean,
+	imageUrl: string,
+	author: {firstName: string},
+}

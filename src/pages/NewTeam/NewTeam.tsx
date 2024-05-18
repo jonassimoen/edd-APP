@@ -28,6 +28,7 @@ const { useBreakpoint } = Grid;
 declare type NewTeamState = {
 	redirectToPayments: boolean;
 	hasPlayers: boolean
+	checkedHasPlayers: boolean
 }
 
 const _NewTeam = (props: AbstractTeamType) => {
@@ -45,6 +46,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const [state, setState] = useState<NewTeamState>({
 		redirectToPayments: false,
 		hasPlayers: false,
+		checkedHasPlayers: false,
 	});
 
 	useEffect(() => {
@@ -56,7 +58,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 	useEffect(() => {
 		if (teamSuccess && teamData) {
-			setState({ ...state, hasPlayers: (teamData.players.length !== 0) });
+			setState({ ...state, hasPlayers: (teamData.players.length !== 0), checkedHasPlayers: true });
 			props.setTeamName(teamData.team.name);
 		} 
 	}, [teamData]);
@@ -95,7 +97,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 	// matches from props/state
 	const { starting, bench, captainId, viceCaptainId, teamName, budget, savingTeamPending, activePositionFilter } = props;
-	const { redirectToPayments, hasPlayers } = state;
+	const { redirectToPayments, hasPlayers, checkedHasPlayers } = state;
 
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(props.starting as any, props.bench as any), [2, 5, 5, 3]), [props.starting, props.bench]);
 	const totalPlayersToPick = competition.lineupSize + competition.benchSize;
@@ -153,7 +155,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 		<NewTeamStyle>
 			{team && team.id && hasPlayers ? <Navigate to={{ pathname: `/team/${team.id}` }} /> :
 
-				(players && clubs) &&
+				(checkedHasPlayers && players && clubs) &&
 					<>
 						<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
 						<Row>

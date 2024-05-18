@@ -12,6 +12,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { playerStatsApi } from "@/services/statisticsApi";
 import { pagesApi } from "@/services/pagesApi";
 import { generalApi } from "@/services/generalApi";
+import { newsApi } from "@/services/newsApi";
 
 const reducer = combineReducers({
 	[generalApi.reducerPath]: generalApi.reducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
 	[weeksApi.reducerPath]: weeksApi.reducer,
 	[playerStatsApi.reducerPath]: playerStatsApi.reducer,
 	[pagesApi.reducerPath]: pagesApi.reducer,
+	[newsApi.reducerPath]: newsApi.reducer,
 	application: applicationReducer,
 	userState: userReducer,
 });
@@ -52,6 +54,7 @@ export const store = configureStore({
 		weeksApi.middleware,
 		playerStatsApi.middleware,
 		pagesApi.middleware,
+		newsApi.middleware,
 	]
 });
 

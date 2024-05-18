@@ -3,10 +3,8 @@ import { theme } from "@/styles/theme";
 
 export const FooterStyle = styled.footer`
 margin-top: 40px;
-padding: 1rem 6.25rem;
+padding: 1rem 3rem;
 background-color: ${theme.primaryContrast};
-position: sticky; 
-bottom: 0;
 
 a {
     cursor: pointer; 

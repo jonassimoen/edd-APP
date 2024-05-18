@@ -19,7 +19,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 	const profile = useGetProfileQuery();
 	const stripe = useStripe();
 	const {t} = useTranslation();
-	const navigator = useNavigate();
+	const navigate = useNavigate();
 	const [code, setCode] = useState("");
 	
 
@@ -51,7 +51,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 						(
 							<>
 								<Button
-									onClick={(e: any) => navigator("/new")}
+									onClick={(e: any) => navigate("/new")}
 									type="primary"
 									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 									size="large"
@@ -64,7 +64,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 						:
 						(
 							<Button
-								onClick={(e: any) => { navigator("/payment"); props.onReload(); }}
+								onClick={(e: any) => { navigate("/payment"); props.onReload(); }}
 								type="primary"
 								style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 								size="large"
@@ -83,7 +83,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 // (
 // 	(profile.data.payed && code === 'success') || (code === 'processing') && 
 // 		<Button
-// 			onClick={(e: any) => navigator("/new")}
+// 			onClick={(e: any) => navigate("/new")}
 // 			type="primary"
 // 			style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
 // 			size="large"

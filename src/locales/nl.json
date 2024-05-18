@@ -10,7 +10,8 @@
     "points": "Punten",
     "edit": "Wijzig team",
     "transfers": "Transfers",
-    "payment": "Inschrijving"
+    "payment": "Inschrijving",
+    "news": "Nieuws"
   },
   "home": {
     "title": "EDD 2024, speel mee!",
@@ -383,5 +384,8 @@
     "modalTitle": "Notificaties inschakelen",
     "modalDescription": "Om je op de hoogte te houden van de nieuwste updates rond European Dream Draft, is het handig om deze in te schakelen.",
     "modalEnable": "Nu inschakelen"
+  },
+  "news": {
+    "readMore": "Lees verder"
   }
 }
