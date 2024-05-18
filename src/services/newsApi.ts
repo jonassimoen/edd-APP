@@ -8,10 +8,6 @@ export const newsApi = createApi({
 	endpoints: (builder) => ({
 		getNews: builder.query<{articles: Article[], count: number}, number | void>({
 			query: (page: number) => {
-				console.log("API Calling", !page ?  "" : {
-					url: "",
-					params: {page: page}
-				});
 				return !page ?  "" : {
 					url: "",
 					params: {page: page}

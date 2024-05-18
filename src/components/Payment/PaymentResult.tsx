@@ -26,7 +26,6 @@ export const PaymentResult = (props: PaymentResultProps) => {
 	useEffect(() => {
 		if (!props.clientSecret || !stripe) { return;}
 		stripe.retrievePaymentIntent(props.clientSecret).then(({ paymentIntent }) => {
-			console.log(paymentIntent);
 			switch (paymentIntent.status) {
 			case "succeeded":
 				setCode("success");

@@ -172,7 +172,7 @@ export const PageManagement = () => {
 			<EditModal
 				object={state.editObject}
 				open={state.openEditModal}
-				onCreate={(page: any) => { console.log(page); updatePage(page); setState({ ...state, openEditModal: false }); }}
+				onCreate={(page: any) => { updatePage(page); setState({ ...state, openEditModal: false }); }}
 				onCancel={() => setState({ ...state, openEditModal: false })}
 				type='page'
 				action='edit'

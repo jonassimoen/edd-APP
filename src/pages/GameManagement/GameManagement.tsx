@@ -221,7 +221,7 @@ export const GameManagement = () => {
 							width: "5%",
 							render: (weekId: number, record: any) => {
 								const week = weeks && weeks.find((week: Week) => week.id === weekId);
-								console.log(week);
+								
 								if(week) {
 									return (<p>{week && week?.name ? t(`general.weeks.${week?.name}`) : `${t("general.matchday")} ${weekId}`}</p>);
 								} else {
@@ -375,7 +375,6 @@ export const GameManagement = () => {
 					} catch(err) {
 						toast.dismiss("loading-importing-games");
 						openErrorNotification({ title: "Importing games failed" });
-						console.log(err);
 					}
 					setState({ ...state, openImportModal: false });
 				}}

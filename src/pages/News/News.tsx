@@ -25,7 +25,6 @@ export const News = () => {
 
 	useEffect(() => {
 		if(news) {
-			console.log(news);
 			setState({
 				...state,
 				numberArticles: news.count,
@@ -39,7 +38,6 @@ export const News = () => {
 			...state,
 			currentPage: page,
 		});
-		console.log(page);
 	};
 
 	return (

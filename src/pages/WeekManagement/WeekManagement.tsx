@@ -181,7 +181,6 @@ export const WeekManagement = () => {
 							width: "10%",
 							align: "left",
 							render: (_: any, record: any) => {
-								// console.log(`Week ${record.id}: ${matches?.filter((m: Match) => m.weekId === record.id).length} matches, ${matches?.filter((m: Match) => m.status === "STATS_UPDATED").length} updated stats`)
 								const isReadyToProcess = matches?.filter((m: Match) => m.weekId === record.id).reduce((statsUpdated: boolean, currentMatch: Match) => statsUpdated && currentMatch.status === "STATS_UPDATED", true);
 								return <>
 									{!record.validated &&
