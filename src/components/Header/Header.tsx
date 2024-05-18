@@ -36,6 +36,7 @@ export const Header = () => {
 	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
+	useGetProfileQuery();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
 	const [teamVerification, setTeamVerification] = useState(false);
@@ -246,7 +247,7 @@ export const Header = () => {
 						<ul className="o-list c-nav-mobile__list">
 							{((userTeam && isVisible("pay")) &&
 								<li className={`c-nav-mobile__item ${isActive("payment") ? "active" : ""}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={"payment"}>{t("menu.pay")}</Link></li>) || null}
+									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={"payment"}>{t("menu.payment")}</Link></li>) || null}
 
 							{((userTeam && isVisible("points")) &&
 								<li className={`c-nav-mobile__item ${isActive("points") ? "active" : ""}`}>
