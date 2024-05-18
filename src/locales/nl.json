@@ -35,6 +35,11 @@
     "week": "Week",
     "allWeeks": "Alle speeldagen",
     "weeks": {
+      "firstgroupround": "Groepsfase 1",
+      "secgroupround": "Groepsfase 2",
+      "thirdgroupround": "Groepsfase 3",
+      "fourthgroupround": "Groepsfase 4",
+      "eightfinal": "Achtste finale",
       "quarterfinal": "Kwartfinale",
       "semifinal": "Halve finale",
       "final": "Finale"
