@@ -36,7 +36,7 @@ export const Header = () => {
 	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
-	const [getProfile, { isLoading: loadingProfile }] = useLazyGetProfileQuery();
+	const [getProfile, { isSuccess: profileFetched, isLoading: loadingProfile }] = useLazyGetProfileQuery();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
 	const [teamVerification, setTeamVerification] = useState(false);
@@ -73,11 +73,11 @@ export const Header = () => {
 		}
 	}, [teams]);
 
-	useEffect(() => {
-		if(user) {
-			getProfile();
-		}
-	}, [user]);
+	// useEffect(() => {
+	// 	if(user && !profileFetched) {
+	// 		getProfile();
+	// 	}
+	// }, [user]);
 
 	if (user) {
 		allMenuItems.push("logout");
@@ -321,7 +321,7 @@ export const Header = () => {
 			</HeaderStyle >
 			<Layout>
 				{		
-					(!loadingProfile && !userHasPayed && !window.location.href.includes("payment")) ? 
+					(profileFetched && !loadingProfile && !userHasPayed && !window.location.href.includes("payment")) ? 
 						<Alert
 							description={parseHTML(t("general.notPayed"))}
 							type="warning"
