@@ -77,17 +77,3 @@ export const PaymentResult = (props: PaymentResultProps) => {
 		) : null
 	);
 };
-
-
-// (
-// 	(profile.data.payed && code === 'success') || (code === 'processing') && 
-// 		<Button
-// 			onClick={(e: any) => navigate("/new")}
-// 			type="primary"
-// 			style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-// 			size="large"
-// 		>
-// 			<PlusOutlined style={{ marginRight: "10px" }} />
-// 			{t("team.newTeam")}
-// 		</Button>
-// )

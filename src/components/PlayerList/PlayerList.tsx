@@ -313,6 +313,12 @@ export const PlayerList = (props: PlayerListProps) => {
 				rowClassName={(record: object, index: number) =>
 					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"}`
 				}
+				onRow={(_: any, index: number) => {
+					if(index==0) {
+						console.log(index, _, tourRef);
+						return {ref: tourRef};
+					}
+				}}
 				pagination={{ position: ["bottomCenter"], pageSize: 9, showLessItems: true, showSizeChanger: false }}
 				locale={{
 					emptyText: t("players.noneFound")
