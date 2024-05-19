@@ -257,7 +257,7 @@ export const Header = () => {
 				<nav className="c-nav-mobile js-nav-mobile">
 					<div className="c-nav-mobile__main">
 						<ul className="o-list c-nav-mobile__list">
-							{((userTeam && isVisible("pay")) &&
+							{((isVisible("pay")) &&
 								<li className={`c-nav-mobile__item ${isActive("payment") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={"payment"}>{t("menu.payment")}</Link></li>) || null}
 
