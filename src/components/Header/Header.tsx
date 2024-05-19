@@ -73,11 +73,11 @@ export const Header = () => {
 		}
 	}, [teams]);
 
-	// useEffect(() => {
-	// 	if(user && !profileFetched) {
-	// 		getProfile();
-	// 	}
-	// }, [user]);
+	useEffect(() => {
+		if(user && !profileFetched) {
+			getProfile();
+		}
+	}, [user]);
 
 	if (user) {
 		allMenuItems.push("logout");
