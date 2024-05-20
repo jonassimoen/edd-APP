@@ -13,6 +13,7 @@ import { theme } from "@/styles/theme";
 import { Crisp } from "crisp-sdk-web";
 import { Alert } from "../UI/Alert/Alert";
 import parseHTML from "html-react-parser";
+import { NotificationPrompt } from "../NotificationPrompt/NotificationPrompt";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -138,6 +139,9 @@ export const Header = () => {
 
 	return (
 		<>
+			{
+				authenticated && user && <NotificationPrompt />
+			}
 			<HeaderStyle className={state.menuToggled ? "has-open-nav" : ""}>
 				<div className="js-nav-holder c-header">
 					<div className="c-header__nav">

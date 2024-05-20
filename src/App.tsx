@@ -15,7 +15,6 @@ import config from "./config";
 import { Crisp } from "crisp-sdk-web";
 import * as Cronitor from "@cronitorio/cronitor-rum";
 import { onMessageListener } from "@/firebase";
-import { NotificationPrompt } from "./components/NotificationPrompt/NotificationPrompt";
 import { useGetDeadlineInfoQuery } from "./services/weeksApi";
 import { useLazyGetPlayersQuery } from "./services/playersApi";
 import { useLazyGetClubsQuery } from "./services/clubsApi";
@@ -72,7 +71,6 @@ const App = () => {
 				fontFamily: "UEFAEuro",
 			}
 		}}>
-			<NotificationPrompt />
 			<ToastContainer
 				autoClose={7500}
 			/>
