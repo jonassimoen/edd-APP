@@ -1,9 +1,6 @@
 import { Link, Navigate } from "react-router-dom";
 
-import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useContext } from "react";
-import { useAuth } from "@/lib/stores/AuthContext";
 import { CardStyle, HomeStyle } from "./HomeStyle";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Button } from "@/components/UI/Button/Button";

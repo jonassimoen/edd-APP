@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { StatsStyle } from "./StatsStyle";
 import { Col, Row } from "../UI/Grid/Grid";
 import { useTranslation } from "react-i18next";

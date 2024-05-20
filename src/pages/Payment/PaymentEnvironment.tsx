@@ -9,12 +9,12 @@ import { useAppSelector } from "@/reducers";
 import { Navigate } from "react-router";
 import { Block } from "@/components/Block/Block";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PKEY);
-
 export const PaymentEnvironment = () => {
 	const [clientSecret, setClientSecret] = useState("");
 	const [showResult, setShowResult] = useState(false);
 	const [isLoading, setLoading] = useState(true);
+
+	const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PKEY);
 
 	const [createPaymentIntent] = usePaymentIntentMutation();
 

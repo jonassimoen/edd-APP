@@ -11,7 +11,7 @@ declare type ConfirmModalProps = {
     onConfirm: any
 }
 
-export const ConfirmModal = (props: any) => {
+export const ConfirmModal = (props: ConfirmModalProps) => {
 	const { visible, onCancel, onConfirm, text, title } = props;
 	const { t } = useTranslation();
 

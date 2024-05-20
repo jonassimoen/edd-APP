@@ -1,10 +1,8 @@
-import { defaultUser, useAuth } from "@/lib/stores/AuthContext";
-import { useGetProfileQuery, useGetTeamsQuery, useLazyGetProfileQuery, useLogoutMutation } from "@/services/usersApi";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useGetTeamsQuery, useLazyGetProfileQuery, useLogoutMutation } from "@/services/usersApi";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Outlet, redirect, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Layout } from "../UI/Layout/Layout";
 import { Hamburger, HeaderStyle } from "./HeaderStyle";
 import secureLocalStorage from "react-secure-storage";
@@ -31,7 +29,6 @@ export const staticPagesTitleMap: { [key: string]: string } = {
 
 export const Header = () => {
 	const location = useLocation();
-	const navigate = useNavigate();
 	const { authenticated, user } = useAppSelector((state) => state.userState);
 	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
@@ -49,7 +46,7 @@ export const Header = () => {
 		showTeams: false,
 	});
 
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const application = useSelector((state: StoreState) => state.application);
 	const allMenuItems: string[] = ["home", "stats", "rules", "rankings", "news"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;

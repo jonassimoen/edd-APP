@@ -2,7 +2,6 @@ import { Image, Row } from "antd";
 import { PlayerModalStyle, PointsOverviewTable } from "./PlayerModalStyle";
 import { Col } from "../UI/Grid/Grid";
 import { PlayerStyle } from "../PlayerList/PlayerListStyle";
-import { PlayerBg } from "../Player/PlayerStyle";
 import { getPlayerPositionHexColor, getPointsOverviewList } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { useTranslation } from "react-i18next";

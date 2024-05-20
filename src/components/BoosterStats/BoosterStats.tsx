@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { Col, Row } from "../UI/Grid/Grid";
 import { BoosterStatsTable, PlayerBg } from "./BoosterStatsStyle";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Icon from "@ant-design/icons";
 import { GoalRushSvg, HiddenGemSvg, SuperSubsSvg, TripleCaptSvg } from "@/styles/custom-icons";
 

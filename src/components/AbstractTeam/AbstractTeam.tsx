@@ -10,8 +10,7 @@ import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { pick } from "lodash";
 import React from "react";
-import { message } from "antd";
-import { FetchBaseQueryError, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 declare type AbstractTeamProps = {
 	matches?: any;
@@ -86,7 +85,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const [editTeam, {isLoading: editTeamPending, error: editTeamError}] = useEditTeamMutation();
 	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
-	const [getTeams] = useLazyGetTeamsQuery();
 	const [submitTransfers, { isSuccess: submitTransfersSucces, data: submitTransfersResult }] = useSubmitTransfersMutation();
 
 	const application = useSelector((state: StoreState) => state.application);

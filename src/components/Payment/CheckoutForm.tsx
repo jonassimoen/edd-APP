@@ -1,7 +1,7 @@
 import config from "@/config";
 import { openErrorNotification } from "@/lib/helpers";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Row } from "../UI/Grid/Grid";
 import { Button } from "../UI/Button/Button";
 import { EuroOutlined } from "@ant-design/icons";

@@ -1,7 +1,7 @@
 import { AbstractTeam } from "@/components/AbstractTeam/AbstractTeam";
 import { useGetMatchQuery } from "@/services/matchesApi";
 import { Spin } from "antd";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MatchStyles } from "./MatchStyles";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Block } from "@/components/Block/Block";

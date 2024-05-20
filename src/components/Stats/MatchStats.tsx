@@ -1,7 +1,6 @@
 import { useGetMatchQuery } from "@/services/matchesApi";
 import { ClubBadgeBg, ClubDetails, ClubName } from "../Calendar/CalendarStyle";
 import { MatchStatsStyle } from "./StatsStyle";
-import config from "@/config";
 
 declare type MatchStatsProps = {
     matchId: number

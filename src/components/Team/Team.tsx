@@ -1,7 +1,6 @@
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
 import { TeamStyle } from "./TeamStyle";
-import { useEffect } from "react";
 
 export declare type TeamProps = {
     bg: string;

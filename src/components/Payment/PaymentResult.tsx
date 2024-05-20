@@ -1,8 +1,6 @@
 import { useGetProfileQuery } from "@/services/usersApi";
 import Title from "antd/lib/typography/Title";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
-import { Block } from "../Block/Block";
 import { useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import { Button } from "../UI/Button/Button";

@@ -273,6 +273,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					onSelect={(value: any) => onFilterChange("clubId", value)}
 					placeholder={clubsList[0].name}
 					style={{ marginLeft: 0 }}
+					loading={clubsLoading}
 				/>
 				<Select
 					$block
@@ -291,6 +292,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					values={weeksList}
 					onSelect={(value: any) => onFilterChange("weekId", value)}
 					placeholder={weeksList[0].name}
+					loading={weeksLoading}
 				/>
 				<Select
 					$block

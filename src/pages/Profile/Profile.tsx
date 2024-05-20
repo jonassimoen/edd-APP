@@ -1,11 +1,8 @@
 import { TableStyle } from "@/components/PlayerList/PlayerListStyle";
 import { Col, Row } from "@/components/UI/Grid/Grid";
-import { useAuth } from "@/lib/stores/AuthContext";
 import { useAppSelector } from "@/reducers";
-import { Table } from "antd";
 import Title from "antd/es/typography/Title";
-import React, { useMemo } from "react";
-import { useContext } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 export const Profile = () => {

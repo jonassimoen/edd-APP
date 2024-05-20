@@ -5,10 +5,9 @@ import { Badge, NoPlayer, OpponentBadge, PlayerBg, PlayerStyle, Points, TopLeftA
 import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
-import Icon, { ArrowDownOutlined, CloseCircleFilled, CloseOutlined, RightSquareFilled, RollbackOutlined, UndoOutlined } from "@ant-design/icons";
+import Icon, { CloseCircleFilled } from "@ant-design/icons";
 import { CaptainButtonSvg, RacketSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 import { PlayerModal } from "../PlayerModal/PlayerModal";
-import config from "@/config";
 
 const AddIcon = (props: any) => <IconPlus {...props} />;
 const DeleteIcon = (props: any) => <CloseCircleFilled {...props} style={{ color: "red" }} shape="circle" />;

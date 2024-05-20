@@ -105,110 +105,107 @@ export const _Team = (props: AbstractTeamType) => {
 		);
 	}
 	return (
-		(clubs && teamResult && matches && deadlineInfo) && (
-			<React.Fragment>
+		<React.Fragment>
+			{
+				teamResult && (
+					!teamResult.team && <Navigate to="/home" /> ||
+					teamResult.team && notTeamOwner && <Navigate to={`/public/${id}`} /> ||
+					teamResult.team && teamResult.team.players && teamResult.team.players.length === 0 && <Navigate to="/new" /> ||	
+					!gameInProgress && <Navigate to={`/points/${id}`} />
+					
+				)
+			}
+			<Row>
 				{
-					!teamResult.team &&
-						<Navigate to="/home" />
+					(props.visibleWeekId && deadlineWeek && deadlineDate &&
+						<Col lg={24} md={24} sm={24} xs={24}>
+							<Block>
+								<DeadlineBar>
+									<p>{`${t("general.matchday")} ${deadlineWeek} deadline:`} <span className="deadline-date">{dayjs(deadlineDate).format("dddd DD MMMM HH:mm")}</span></p>
+								</DeadlineBar>
+							</Block>
+						</Col>)
+					|| null
 				}
+				
 				{
-					teamResult.team && notTeamOwner &&
-						<Navigate to={`/public/${id}`} />
+					clubs && matches && (
+						<Col lg={12} md={12} sm={24} xs={24}>
+							<Title level={2}>{t("general.lineup")}</Title>
+							<Team
+								widthRatio={15}
+								heightRatio={10}
+								bg={teamBackground}
+								clubs={clubs || []}
+								centerAligned={true}
+								captainId={props.captainId}
+								viceCaptainId={props.viceCaptainId}
+								modalEnabled={true}
+								selection={startingByPositions}
+								assetsCdn={application.competition.assetsCdn}
+								playerType={PlayerType.SoccerPortrait}
+								onCaptainSelect={props.onCaptainSelect}
+								onViceCaptainSelect={props.onViceCaptainSelect}
+								onSwap={props.onPlayerSwap}
+								showCaptainBadge={true}
+								isSwapAble={props.isSwapAble}
+								swapPlayerId={props.swapPlayerId}
+								swappedFrom={props.swappedFrom}
+								playerBadgeColor={"#fff"}
+								playerBadgeBgColor={theme.primaryContrast}
+								playerPointsColor={"#000"}
+								playerPointsBgColor={theme.primaryColor}
+							/>
+							<Substitutes
+								selection={props.bench || []}
+								title={"De Bank"}
+								clubs={clubs}
+								bgImage={benchBackground}
+								modalEnabled={true}
+								showPositionNumber={true}
+								playerType={PlayerType.SoccerPortrait}
+								assetsCdn={application.competition.assetsCdn}
+								onSwap={props.onPlayerSwap}
+								isSwapAble={props.isSwapAble}
+								swapPlayerId={props.swapPlayerId}
+								swappedFrom={props.swappedFrom}
+								playerBadgeColor={"#fff"}
+								playerBadgeBgColor={theme.primaryContrast}
+								playerPointsColor={"#000"}
+								playerPointsBgColor={theme.primaryColor}
+							/>
+							<Button
+								onClick={(e: any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
+								type="primary"
+								disabled={teamLoading || clubsLoading}
+								style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+								size="large">
+								<SaveOutlined style={{ marginRight: "10px" }} />
+								{t("team.saveTeam")}
+							</Button>
+							<BoosterList 
+								teamId={props.teamId}
+								boosters={props.boosters}
+								deadlineWeek={deadlineWeek}
+								assetsCdn={application.competition.assetsCdn}
+								playersWithBoosters={boostedPlayers}
+								possiblePlayers={unboostedPlayers}
+							/>
+						</Col>
+					)
 				}
-				{
-					teamResult.team && teamResult.team.players && teamResult.team.players.length === 0 && 
-						<Navigate to="/new" />
-				}
-				{
-					!gameInProgress && 
-						<Navigate to={`/points/${id}`} />
-				}
-				<Row>
-					{
-						(props.visibleWeekId && deadlineWeek && deadlineDate &&
-							<Col lg={24} md={24} sm={24} xs={24}>
-								<Block>
-									<DeadlineBar>
-										<p>{`${t("general.matchday")} ${deadlineWeek} deadline:`} <span className="deadline-date">{dayjs(deadlineDate).format("dddd DD MMMM HH:mm")}</span></p>
-									</DeadlineBar>
-								</Block>
-							</Col>)
-						|| null
-					}
-					<Col lg={12} md={12} sm={24} xs={24}>
-						<Title level={2}>{t("general.lineup")}</Title>
-						<Team
-							widthRatio={15}
-							heightRatio={10}
-							bg={teamBackground}
-							clubs={clubs || []}
-							centerAligned={true}
-							captainId={props.captainId}
-							viceCaptainId={props.viceCaptainId}
-							modalEnabled={true}
-							selection={startingByPositions}
-							assetsCdn={application.competition.assetsCdn}
-							playerType={PlayerType.SoccerPortrait}
-							onCaptainSelect={props.onCaptainSelect}
-							onViceCaptainSelect={props.onViceCaptainSelect}
-							onSwap={props.onPlayerSwap}
-							showCaptainBadge={true}
-							isSwapAble={props.isSwapAble}
-							swapPlayerId={props.swapPlayerId}
-							swappedFrom={props.swappedFrom}
-							playerBadgeColor={"#fff"}
-							playerBadgeBgColor={theme.primaryContrast}
-							playerPointsColor={"#000"}
-							playerPointsBgColor={theme.primaryColor}
-						/>
-						<Substitutes
-							selection={props.bench || []}
-							title={"De Bank"}
-							clubs={clubs}
-							bgImage={benchBackground}
-							modalEnabled={true}
-							showPositionNumber={true}
-							playerType={PlayerType.SoccerPortrait}
-							assetsCdn={application.competition.assetsCdn}
-							onSwap={props.onPlayerSwap}
-							isSwapAble={props.isSwapAble}
-							swapPlayerId={props.swapPlayerId}
-							swappedFrom={props.swappedFrom}
-							playerBadgeColor={"#fff"}
-							playerBadgeBgColor={theme.primaryContrast}
-							playerPointsColor={"#000"}
-							playerPointsBgColor={theme.primaryColor}
-						/>
-						<Button
-							onClick={(e: any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
-							type="primary"
-							disabled={teamLoading || clubsLoading}
-							style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-							size="large">
-							<SaveOutlined style={{ marginRight: "10px" }} />
-							{t("team.saveTeam")}
-						</Button>
-						<BoosterList 
-							teamId={props.teamId}
-							boosters={props.boosters}
-							deadlineWeek={deadlineWeek}
-							assetsCdn={application.competition.assetsCdn}
-							playersWithBoosters={boostedPlayers}
-							possiblePlayers={unboostedPlayers}
-						/>
-					</Col>
-					<Col lg={12} md={12} sm={24} xs={24}>
-						<Title level={2}>{t("general.calendar")}</Title>
-						<Calendar
-							assetsCdn={application.competition.assetsCdn}
-							weekId={props.visibleWeekId}
-							showHeader={false}
-							size={30}
-						/>
-					</Col>
-				</Row>
-			</React.Fragment>
-		)
+				
+				<Col lg={12} md={12} sm={24} xs={24}>
+					<Title level={2}>{t("general.calendar")}</Title>
+					<Calendar
+						assetsCdn={application.competition.assetsCdn}
+						weekId={props.visibleWeekId}
+						showHeader={false}
+						size={30}
+					/>
+				</Col>
+			</Row>
+		</React.Fragment>
 	);
 };
 

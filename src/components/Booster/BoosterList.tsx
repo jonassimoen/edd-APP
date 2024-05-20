@@ -9,7 +9,6 @@ import { useMemo, useState } from "react";
 import { BoosterConfirmModal } from "../BoosterConfirmModal/BoosterConfirmModal";
 import { PlayerBooster } from "./PlayerBooster";
 import { pick } from "lodash";
-import { redirect } from "react-router-dom";
 
 declare type BoosterListProps = {
 	teamId?: number

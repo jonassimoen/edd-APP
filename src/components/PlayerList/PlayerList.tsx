@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContainerStyle, PlayerStyle, SelectGroupStyle, TableStyle } from "./PlayerListStyle";
 import Icon, { EuroOutlined, SearchOutlined, StarOutlined, TagsOutlined } from "@ant-design/icons";
-import { CaptainSvg, FootballShoeSvg, FootballSvg, GreenSvg, OrangeSvg, PlusSvg, RacketSvg, RedSvg, SetPiecesSvg, StarSvg, StarterSvg } from "@/styles/custom-icons";
+import { CaptainSvg, PlusSvg, RacketSvg, SetPiecesSvg, StarSvg } from "@/styles/custom-icons";
 import { getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { Input } from "@/components/UI/Input/Input";
@@ -10,8 +10,7 @@ import { Button } from "../UI/Button/Button";
 import { Select } from "../UI/Select/Select";
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
-import { Empty, Tooltip } from "antd";
-import config from "@/config";
+import { Tooltip } from "antd";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainSvg} {...props} />;
 const SetPiecesIcon = (props: any) => <Icon component={SetPiecesSvg} {...props} />;

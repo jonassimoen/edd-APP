@@ -7,12 +7,8 @@ import dayjs from "dayjs";
 import "dayjs/locale/nl-be";
 import { ClubBadgeBg, ClubDetails, ClubName, ContainerStyle, FiltersArea } from "./CalendarStyle";
 import { useTranslation } from "react-i18next";
-import Icon from "@ant-design/icons";
-import { Button } from "@/components/UI/Button/Button";
 import { Select } from "../UI/Select/Select";
 import { Navigate } from "react-router-dom";
-import config from "@/config";
-import { LiveIcon } from "../UI/AnimatedIcon/AnimatedIcon";
 import { calendarLiveScoreComponent } from "@/lib/helpers";
 
 type CalendarProps = {
@@ -117,7 +113,7 @@ export const Calendar = (props: CalendarProps) => {
 		}
 	];
 
-	return (
+	return matchesSuccess && (
 		<ContainerStyle>
 			{
 				state.navigateToMatchId && <Navigate to={{ pathname: `/match/${state.navigateToMatchId}` }} />

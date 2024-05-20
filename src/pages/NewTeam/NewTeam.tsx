@@ -2,9 +2,8 @@ import { AbstractTeam } from "@/components/AbstractTeam/AbstractTeam";
 import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { Team } from "@/components/Team/Team";
 import { startingListToPositionsList } from "@/lib/helpers";
-import { useAuth } from "@/lib/stores/AuthContext";
 import { useLazyGetTeamQuery } from "@/services/teamsApi";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
@@ -15,14 +14,12 @@ import { NewTeamStyle } from "./NewTeamStyle";
 import { Button } from "@/components/UI/Button/Button";
 import { SaveOutlined } from "@ant-design/icons";
 import { useAppSelector } from "@/reducers";
-import { Grid, Tag, Tour, TourProps } from "antd";
+import { Grid, Tour, TourProps } from "antd";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { NewGameStats } from "@/components/Stats/NewGameStats";
 import { Input } from "@/components/UI/Input/Input";
-import { setTeams } from "@/features/userSlice";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { theme } from "@/styles/theme";
-import { ButtonStyle } from "@/components/UI/Button/ButtonStyle";
 const { useBreakpoint } = Grid;
 
 declare type NewTeamState = {
