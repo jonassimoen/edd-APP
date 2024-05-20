@@ -133,6 +133,7 @@ type User = {
 	country?: any
 	role: number
 	payed?: boolean
+	banned?: boolean
 	teams?: Team[]
 }
 

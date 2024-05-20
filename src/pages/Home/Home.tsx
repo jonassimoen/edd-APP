@@ -56,7 +56,6 @@ export const Home = (props: HomeProps) => {
 					</Row>
 					: null
 			}
-
 			<Row gutter={32}>
 				<Col span={24}>
 					<Title level={2}>{t("home.howDoesItWork")}</Title>

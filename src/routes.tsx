@@ -35,6 +35,7 @@ import { UserManagement } from "./pages/UserManagement/UserManagement";
 import { News } from "./pages/News/News";
 import { NewsArticle } from "./pages/News/NewsArticle";
 import { NewsManagement } from "./pages/NewsManagement/NewsManagement";
+import { Denied } from "./pages/Denied";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
@@ -181,6 +182,10 @@ export const router = createBrowserRouter([
 				{
 					path: "login/callback",
 					element: <LoginCallback />,
+				},
+				{
+					path: "denied",
+					element: <Denied />
 				},
 				{
 					path: "*",

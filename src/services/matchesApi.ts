@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const matchesApi = createApi({
 	reducerPath: "matchesApi",
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.API_URL}/matches`, credentials: "include" }),
-	tagTypes: ["Match", "MatchEvents", "MatchStatistics", "PlayerStats", "ImportedMatchStatistics"],
+	tagTypes: ["Match", "MatchStatistics", "PlayerStats", "ImportedMatchStatistics"],
 	endpoints: (builder) => ({
 
 		getMatches: builder.query<Match[], void>({
@@ -54,46 +54,6 @@ export const matchesApi = createApi({
 			invalidatesTags: ["Match"]
 		}),
 
-
-
-		getMatchEvents: builder.query<MatchEvent[], number>({
-			query: (matchId) => `${matchId}/events`,
-			providesTags: (res, err, arg) =>
-				res
-					? [...res.map(({ matchId }) => ({ type: "MatchEvents" as const, matchId })), "MatchEvents"]
-					: ["MatchEvents"],
-		}),
-
-		updateMatchEvents: builder.mutation<MatchEvent, Partial<MatchEvent> & Pick<MatchEvent, "matchId">>({
-			query: ({ matchId, ...put }) => ({
-				url: `${matchId}/events`,
-				method: "PUT",
-				body: put,
-			}),
-			invalidatesTags: (res, err, arg) => [{ type: "MatchEvents", id: arg.matchId }, { type: "Match", id: arg.matchId }],
-		}),
-
-		createMatchEvents: builder.mutation<MatchEvent, { events: Partial<MatchEvent>[], matchId: number }>({
-			query: ({ matchId, events }) => ({
-				url: `${matchId}/events`,
-				method: "POST",
-				body: [...events],
-			}),
-			invalidatesTags: (res, err, arg) => [{ type: "MatchEvents", id: arg.matchId }, { type: "Match", id: arg.matchId }],
-		}),
-
-		createMatchStarting: builder.mutation<MatchEvent, { startingIds: number[], matchId: number }>({
-			query: ({ matchId, startingIds }) => ({
-				url: `${matchId}/events/starting`,
-				method: "POST",
-				body: [...startingIds],
-			}),
-			invalidatesTags: (res, err, arg) => [{ type: "MatchEvents", id: arg.matchId }, { type: "Match", id: arg.matchId }],
-		}),
-
-
-
-
 		getMatchStatistics: builder.query<Statistic[], number>({
 			query: (matchId) => `${matchId}/stats`,
 			providesTags: (res, err, arg) =>
@@ -136,10 +96,6 @@ export const {
 	useUpdateMatchMutation,
 	useRecalculateMatchPointsMutation,
 	useCreateMatchMutation,
-	useGetMatchEventsQuery,
-	useUpdateMatchEventsMutation,
-	useCreateMatchEventsMutation,
-	useCreateMatchStartingMutation,
 	useGetMatchStatisticsQuery,
 	useCreateMatchStatisticsMutation,
 	useUpdateMatchStatisticsMutation,

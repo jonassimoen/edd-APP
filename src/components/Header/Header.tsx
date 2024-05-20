@@ -2,7 +2,7 @@ import { useGetTeamsQuery, useLazyGetProfileQuery, useLogoutMutation } from "@/s
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Layout } from "../UI/Layout/Layout";
 import { Hamburger, HeaderStyle } from "./HeaderStyle";
 import secureLocalStorage from "react-secure-storage";
@@ -15,6 +15,7 @@ import { Alert } from "../UI/Alert/Alert";
 import parseHTML from "html-react-parser";
 import { NotificationPrompt } from "../NotificationPrompt/NotificationPrompt";
 import { PWAPrompt } from "../PWAPrompt/PWAPrompt";
+import qs from "qs";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -334,7 +335,7 @@ export const Header = () => {
 							showIcon
 						/> 
 						: null				
-				}				
+				}
 				<Outlet />
 			</Layout>
 		</>
