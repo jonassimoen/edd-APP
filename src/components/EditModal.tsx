@@ -13,13 +13,14 @@ declare type EditModalProps<T> = {
     open: boolean
     action: string
     type: string
+	width?: number
     onCreate: (object: any) => void
     onCancel: () => void
 }
 
 export const EditModal = <T,>(props: React.PropsWithChildren<EditModalProps<T>>) => {
 	const { t } = useTranslation();
-	const { object, open, action, type, onCreate, onCancel } = props;
+	const { object, open, action, type, width, onCreate, onCancel } = props;
 	const [form] = Form.useForm();
 
 	useEffect(() => {
@@ -31,6 +32,7 @@ export const EditModal = <T,>(props: React.PropsWithChildren<EditModalProps<T>>)
 	return (
 		<Modal 
 			open={open}
+			width={width}
 			title={`${t(`modal.${action}`)} ${type}`}
 			okText={t(`${action}Btn`)}
 			cancelText={t("cancelBtn")}

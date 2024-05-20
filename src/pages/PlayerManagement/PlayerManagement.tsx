@@ -415,7 +415,7 @@ export const PlayerManagement = () => {
 			<CreateModal
 				open={state.openCreateModal}
 				object={{} as Player}
-				onCreate={(player: Player) => { createPlayer(player); setState({ ...state, openCreateModal: false }); }}
+				onCreate={(player: Partial<Player>) => { createPlayer(player); setState({ ...state, openCreateModal: false }); }}
 				onCancel={() => setState({ ...state, openCreateModal: false })}
 				title={t("playerTitle")}
 			>

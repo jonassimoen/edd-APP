@@ -64,7 +64,6 @@ export const Article = (props: ArticleProps) => {
 				size="small"
 				title={title.toUpperCase()}
 			>
-
 				<FullArticleTextStyle gap={12}>
 					{
 						imageUrl && <Image src={`${application.competition.assetsCdn}/news/${imageUrl}?w=1280`} preview={false} />

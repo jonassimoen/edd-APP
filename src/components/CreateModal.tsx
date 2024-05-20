@@ -4,26 +4,22 @@ import { useTranslation } from "react-i18next";
 
 declare type CreateModalProps<T> = {
     object: T
-    // properties: {
-    //     key: keyof T
-    //     type: string
-    //     label: string
-    //     required?: boolean
-    // }[]
-    open: boolean;
+    open: boolean
     title: string
+	width?: number
     onCreate: (object: T) => void
     onCancel: () => void
 }
 
 export const CreateModal = <T,>(props: React.PropsWithChildren<CreateModalProps<T>>) => {
 	const { t } = useTranslation();
-	const { object, open, title, onCreate, onCancel } = props;
+	const { object, open, title, width, onCreate, onCancel } = props;
 	const [form] = Form.useForm();
 
 	return (
 		<Modal
-			open={props.open}
+			open={open}
+			width={width}
 			title={`${t("createTitle")} ${title}`}
 			okText={t("createBtn")}
 			cancelText={t("cancelBtn")}

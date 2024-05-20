@@ -7,10 +7,10 @@ export const newsApi = createApi({
 	tagTypes: ["Article"],
 	endpoints: (builder) => ({
 		getNews: builder.query<{articles: Article[], count: number}, number | void>({
-			query: (page: number) => {
-				return !page ?  "" : {
+			query: (Article: number) => {
+				return !Article ?  "" : {
 					url: "",
-					params: {page: page}
+					params: {Article: Article}
 				};
 			},
 			providesTags: (res, err, arg) =>
@@ -23,7 +23,33 @@ export const newsApi = createApi({
 			query: (slug) => `${slug}`
 		}),
 
+		createArticle: builder.mutation<{ msg: string }, Article>({
+			invalidatesTags: ["Article"],
+			query: (args) => ({
+				url: "",
+				method: "POST",
+				body: args
+			}),
+		}),
+
+		updateArticle: builder.mutation<{ msg: string }, Article>({
+			query: ({ id, ...data }) => ({
+				url: `${id}`,
+				method: "PUT",
+				body: data
+			}),
+			invalidatesTags: (res, err, arg) => [{ type: "Article", id: arg.id }]
+		}),
+
+		deleteArticle: builder.mutation<{ msg: string }, Partial<Article> & Pick<Article, "id">>({
+			invalidatesTags: (res, err, arg) => [{ type: "Article", id: arg.id }],
+			query: ({ id }) => ({
+				url: `${id}`,
+				method: "DELETE",
+			}),
+		})
+
 	})
 });
 
-export const { useGetArticleQuery, useGetNewsQuery, useLazyGetNewsQuery, useLazyGetArticleQuery } = newsApi;
+export const { useGetArticleQuery, useGetNewsQuery, useLazyGetNewsQuery, useLazyGetArticleQuery, useCreateArticleMutation, useDeleteArticleMutation, useUpdateArticleMutation } = newsApi;

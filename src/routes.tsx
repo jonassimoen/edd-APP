@@ -34,6 +34,7 @@ import { PaymentEnvironment } from "./pages/Payment/PaymentEnvironment";
 import { UserManagement } from "./pages/UserManagement/UserManagement";
 import { News } from "./pages/News/News";
 import { NewsArticle } from "./pages/News/NewsArticle";
+import { NewsManagement } from "./pages/NewsManagement/NewsManagement";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
@@ -138,6 +139,10 @@ export const router = createBrowserRouter([
 						{
 							path: "pages",
 							element: <PageManagement />
+						},
+						{
+							path: "news",
+							element: <NewsManagement />
 						},
 						{
 							path: "players",

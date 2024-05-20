@@ -14,6 +14,7 @@ import { Crisp } from "crisp-sdk-web";
 import { Alert } from "../UI/Alert/Alert";
 import parseHTML from "html-react-parser";
 import { NotificationPrompt } from "../NotificationPrompt/NotificationPrompt";
+import { PWAPrompt } from "../PWAPrompt/PWAPrompt";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -141,6 +142,9 @@ export const Header = () => {
 		<>
 			{
 				authenticated && user && <NotificationPrompt />
+			}
+			{
+				authenticated && user && <PWAPrompt />
 			}
 			<HeaderStyle className={state.menuToggled ? "has-open-nav" : ""}>
 				<div className="js-nav-holder c-header">

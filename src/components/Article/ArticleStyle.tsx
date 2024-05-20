@@ -17,6 +17,8 @@ export const ArticleStyle = styled(Card)`
 
 export const ArticleTextStyle = styled(Flex)`
 	flex-direction: column;
+    justify-content: space-between;
+
 	.text {
 		order: 2;
 		flex-direction: column;
@@ -67,7 +69,10 @@ export const ArticleTextStyle = styled(Flex)`
 
 export const FullArticleTextStyle = styled(Flex)`
 	flex-direction: column;
+    justify-content: space-between;
+	
 	.text {
+		order: 2;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -85,6 +90,7 @@ export const FullArticleTextStyle = styled(Flex)`
 
 	.ant-image {
 		width: 100%;
+		order: 1;
 
 		img {
 			border-radius: 5px;
@@ -93,6 +99,14 @@ export const FullArticleTextStyle = styled(Flex)`
 
 	@media ${mediaQueries.tablet} {
 		flex-direction: row;
+		.text {
+			order: 1;
+		}
+		.ant-image {
+			min-width: 30%;
+			max-width: 30%;
+			order: 2;
+		}
 	}
 `;
 

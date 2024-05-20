@@ -43,9 +43,11 @@ const App = () => {
 			console.log(payload);
 		}).catch((err: any) => console.log("failed: ", err));
 
-		navigator.serviceWorker.onmessage = (event) => {
-			console.log(event);
-		};
+		if(navigator.serviceWorker) {
+			navigator.serviceWorker.onmessage = (event) => {
+				console.log(event);
+			};
+		}
 	}, []);
 
 	useEffect(() => {
