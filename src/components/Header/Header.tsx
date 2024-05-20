@@ -201,19 +201,19 @@ export const Header = () => {
 										) || null
 										}
 										{(isVisible("rules") &&
-											<li className={`c-nav-main__item${(isActive("rules")) ? "is-selected" : ""}`}>
+											<li className={`c-nav-main__item ${(isActive("rules")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/rules">{t("menu.rules")}</Link>
 											</li>
 										) || null
 										}
 										{(isVisible("news") &&
-											<li className={`c-nav-main__item${(isActive("news")) ? "is-selected" : ""}`}>
+											<li className={`c-nav-main__item ${(isActive("news")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/news">{t("menu.news")}</Link>
 											</li>
 										) || null
 										}
 										{(isVisible("admin") &&
-											<li className={`c-nav-main__item${(isActive("admin")) ? "is-selected" : ""}`}>
+											<li className={`c-nav-main__item ${(isActive("admin")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/admin">{t("menu.admin")}</Link>
 											</li>
 										) || null
