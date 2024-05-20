@@ -117,6 +117,18 @@ export const router = createBrowserRouter([
 					element: <ProtectedRoute access={true} redirectPath="/home"><MatchContainer /></ProtectedRoute>
 				},
 				{
+					path: "payment/*",
+					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
+				},
+				{
+					path: "news",
+					element: <News />,
+				},
+				{
+					path: "news/*",
+					element: <NewsArticle />,
+				},
+				{
 					path: "rankings",
 					element: <Rankings />
 				},
@@ -169,18 +181,6 @@ export const router = createBrowserRouter([
 				{
 					path: "login/callback",
 					element: <LoginCallback />,
-				},
-				{
-					path: "payment/*",
-					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
-				},
-				{
-					path: "news",
-					element: <ProtectedRoute access={true} redirectPath="/home"><News /></ProtectedRoute>,
-				},
-				{
-					path: "news/*",
-					element: <ProtectedRoute access={true} redirectPath="/home"><NewsArticle /></ProtectedRoute>,
 				},
 				{
 					path: "*",
