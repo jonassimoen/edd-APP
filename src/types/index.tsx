@@ -108,20 +108,20 @@ type Team = {
 	
 	// Boosters
 	tripleCaptain?: number
-	viceVictory?: number
 	superSubs?: number
 	freeHit?: number
 	hiddenGem?: number
 	goalRush?: number
+	fanFavourite?: number
 }
 
 type Boosters = {
 	tripleCaptain?: number
-	viceVictory?: number
 	superSubs?: number
 	freeHit?: number
 	hiddenGem?: number
 	goalRush?: number
+	fanFavourite?: number
 }
 
 type User = {
@@ -265,10 +265,11 @@ type DeadlineInfo = {
 
 type BoostersWeekStatus = {
 	tripleCaptain: boolean,
-	viceVictory: boolean,
+	fanFavourite: boolean,
 	goalRush: boolean,
 	hiddenGem: boolean,
 	superSub: boolean,
+	freeHit: boolean,
 }
 
 type Article = {

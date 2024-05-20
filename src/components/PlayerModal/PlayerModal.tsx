@@ -36,10 +36,10 @@ type PlayerModalProps = {
 
 const BoosterIcons: {[type: string]: () => JSX.Element} = {
 	"TripleCaptain": TripleCaptSvg,
-	"ViceVictory": TripleCaptSvg,
 	"GoalRush": GoalRushSvg,
 	"HiddenGem": HiddenGemSvg,
-	"superSubs": SuperSubsSvg,
+	"SuperSubs": SuperSubsSvg,
+	"FanFavourite": TripleCaptSvg,
 };
 
 export const PlayerModal = (props: PlayerModalProps) => {

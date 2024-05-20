@@ -64,11 +64,11 @@ const _EditTeam = (props: AbstractTeamType) => {
 
 		const boosters = {
 			tripleCaptain: teamResult.team.tripleCaptain,
-			viceVictory: teamResult.team.viceVictory,
 			superSubs: teamResult.team.superSubs,
 			freeHit: teamResult.team.freeHit,
 			hiddenGem: teamResult.team.hiddenGem,
 			goalRush: teamResult.team.goalRush,
+			fanFavourite: teamResult.team.fanFavourite,
 		};
 
 		// const deadlineWeek = (deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek) || 0;

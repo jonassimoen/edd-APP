@@ -63,7 +63,7 @@ export const Home = (props: HomeProps) => {
 				</Col>
 			</Row>
 			<Row gutter={32}>
-				<Col xs={24} md={12}>
+				<Col xs={24} md={12} lg={6}>
 					<CardStyle>
 						<Card
 							hoverable
@@ -82,7 +82,7 @@ export const Home = (props: HomeProps) => {
 						</Card>
 					</CardStyle>
 				</Col>
-				<Col xs={24} md={12}>
+				<Col xs={24} md={12} lg={6}>
 					<CardStyle>
 						<Card
 							hoverable
@@ -101,9 +101,7 @@ export const Home = (props: HomeProps) => {
 						</Card>
 					</CardStyle>
 				</Col>
-			</Row>
-			<Row gutter={32}>
-				<Col xs={24} md={12}>
+				<Col xs={24} md={12} lg={6}>
 					<CardStyle>
 						<Card
 							hoverable
@@ -122,7 +120,7 @@ export const Home = (props: HomeProps) => {
 						</Card>
 					</CardStyle>
 				</Col>
-				<Col xs={24} md={12}>
+				<Col xs={24} md={12} lg={6}>
 					<CardStyle>
 						<Card
 							hoverable

@@ -40,7 +40,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 
 	return (
 		(!profile.isLoading && code) ? (
-			<Col md={6}>
+			<Col span={6}>
 				<Title level={2}>{t(`payment.${code}Title`)}</Title>
 				<p>{t(`payment.${code}Description`)}</p>
 				{

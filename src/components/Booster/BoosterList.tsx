@@ -2,7 +2,7 @@ import Title from "antd/es/typography/Title";
 import { BoosterListStyle } from "./BoosterListStyle";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "../UI/Grid/Grid";
-import { TripleCaptSvg, BenchSvg, HiddenGemSvg, GoalRushSvg, SuperSubsSvg, WildcardSvg } from "@/styles/custom-icons";
+import { TripleCaptSvg, HiddenGemSvg, GoalRushSvg, SuperSubsSvg, WildcardSvg, FanFavouriteSvg } from "@/styles/custom-icons";
 import { TeamBooster } from "./TeamBooster";
 import { useNavigate, useParams } from "react-router";
 import { useMemo, useState } from "react";
@@ -41,12 +41,12 @@ export const BoosterList = (props: BoosterListProps) => {
 	} = props;
 
 	const {
+		tripleCaptain,
+		superSubs,
+		freeHit,
 		goalRush,
 		hiddenGem,
-		tripleCaptain,
-		viceVictory,
-		superSubs,
-		freeHit
+		fanFavourite,
 	} = props.boosters;
 
 	const onBoosterActivation = (type: string) => {
@@ -57,7 +57,7 @@ export const BoosterList = (props: BoosterListProps) => {
 	};
 
 	const boosterLimitReached = useMemo(() => 
-		[goalRush, hiddenGem, viceVictory, tripleCaptain, freeHit, superSubs].filter((v: number) => v == deadlineWeek).length >= 2
+		[tripleCaptain, freeHit, superSubs, goalRush, hiddenGem, fanFavourite].filter((v: number) => v == deadlineWeek).length >= 2
 	, [props]);
 
 	const hiddenGemPlayer = useMemo(() => 
@@ -66,12 +66,15 @@ export const BoosterList = (props: BoosterListProps) => {
 	const goalRushPlayer = useMemo(() => 
 		pick(props.playersWithBoosters.filter((p: any) => p.booster == "GoalRush")[0], ["id","short"]),
 	[props.playersWithBoosters]);
+	const fanFavouritePlayer = useMemo(() => 
+		pick(props.playersWithBoosters.filter((p: any) => p.booster == "FanFavourite")[0], ["id","short"]),
+	[props.playersWithBoosters]);
 
 	return (
 		<BoosterListStyle>
 			<Title level={2}>{t("general.playerBoosters")}</Title>
-			<Row>
-				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+			<Row justify={"center"}>
+				<Col span={8}>
 					<PlayerBooster
 						type={"hiddenGem"}
 						player={hiddenGemPlayer}
@@ -83,7 +86,7 @@ export const BoosterList = (props: BoosterListProps) => {
 						boosterLimit={boosterLimitReached}
 					/>
 				</Col>
-				<Col xl={8} lg={12} md={12} sm={12} xs={12}>
+				<Col span={8}>
 					<PlayerBooster
 						type={"goalRush"}
 						player={goalRushPlayer}
@@ -95,10 +98,22 @@ export const BoosterList = (props: BoosterListProps) => {
 						boosterLimit={boosterLimitReached}
 					/>
 				</Col>
+				<Col span={8}>
+					<PlayerBooster
+						type={"fanFavourite"}
+						player={fanFavouritePlayer}
+						iconSvg={FanFavouriteSvg}
+						activatedWeek={fanFavourite}
+						deadlineWeek={deadlineWeek}
+						onBoosterActivation={onBoosterActivation}
+						assetsCdn={assetsCdn}
+						boosterLimit={boosterLimitReached}
+					/>
+				</Col>
 			</Row>
 			<Title level={2}>{t("general.teamBoosters")}</Title>
-			<Row>
-				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
+			<Row justify={"center"}>
+				<Col span={8}>
 					<TeamBooster 
 						iconSvg={TripleCaptSvg}
 						type="tripleCaptain" 
@@ -108,17 +123,7 @@ export const BoosterList = (props: BoosterListProps) => {
 						boosterLimit={boosterLimitReached}
 					/>
 				</Col>
-				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
-					<TeamBooster 
-						iconSvg={BenchSvg}
-						type="viceVictory" 
-						onActivation={onBoosterActivation}
-						activatedWeek={viceVictory}
-						deadlineWeek={deadlineWeek}
-						boosterLimit={boosterLimitReached}
-					/>
-				</Col>
-				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
+				<Col span={8}>
 					<TeamBooster 
 						iconSvg={SuperSubsSvg}
 						type="superSubs" 
@@ -128,7 +133,7 @@ export const BoosterList = (props: BoosterListProps) => {
 						boosterLimit={boosterLimitReached}
 					/>
 				</Col>
-				<Col xl={6} lg={12} md={12} sm={12} xs={12}>
+				<Col span={8}>
 					<TeamBooster 
 						iconSvg={WildcardSvg}
 						type="freeHit" 
