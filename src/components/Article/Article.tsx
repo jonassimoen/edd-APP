@@ -73,7 +73,7 @@ export const Article = (props: ArticleProps) => {
 							<p className="meta">
 								{author.firstName} - {dayjs(timestampCreated).format("D MMM [om] HH:MM")} {timestampUpdated?`(update: ${dayjs(timestampUpdated).format("D MMM YYYY [om] HH:MM")})`:null}
 							</p>
-							{(parseHTML(description) as JSX.Element[])[0]}
+							{parseHTML(description) as JSX.Element[]}
 						</div>
 					</div>
 				</FullArticleTextStyle>
