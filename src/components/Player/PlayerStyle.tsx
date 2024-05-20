@@ -20,12 +20,10 @@ export const PlayerStyle = styled.div`
     }
 
     .position-label {
-        position: absolute;
-        top: 125%;
-        margin: 0 auto;
+		position: relative;
+		top: 125%;
         text-align: center;
         color: white;
-		left: 40%;
     }
 
     margin: auto;

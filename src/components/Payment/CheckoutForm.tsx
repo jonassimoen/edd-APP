@@ -40,7 +40,7 @@ export const CheckoutForm = () => {
 	return (
 		<form id="payment-form" onSubmit={handleSubmit}>
 			<Row>
-				<Col md={8}>
+				<Col span={8}>
 					<PaymentElement id="payment-element" options={{layout: "tabs"}} />
 					<Button
 						type="primary"

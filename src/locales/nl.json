@@ -46,21 +46,21 @@
     },
     "points": "punten",
     "home": {
-      "step3": {
-        "title": "Wissel spelers",
-        "description": "Naast het wisselen van spelers tussen je basiself en je bank, kun je ook spelers transfereren. Doet een speler het onverwacht slecht? Wissel hem met een speler die plots in vorm is. Per speeldag krijg je een maximaal aantal transfers, die je meteen kan gebruiken of kan opsparen."
-      },
-      "step4": {
-        "title": "Win prijzen",
-        "description": "De spelers met de meeste punten over het hele EK krijgen een deeltje uit de prijzenpot."
+      "step1": {
+        "title": "Kies wijs",
+        "description": "Selecteer 15 EK-spelers. Stel per speeldag je best mogelijke elftal op met spelers die in vorm zijn en veel punten kunnen scoren. Zorg ervoor dat je voldoende wisselmogelijkheden hebt, om je 15 spelers optimaal te kunnen benutten: je basisspelers worden namelijk gewisseld voor je bankzitters indien ze niet spelen."
       },
       "step2": {
         "title": "Verdien punten",
-        "description": "Per speeldag krijgen je 11 basisspelers punten. Je kapitein pakt dubbele punten."
+        "description": "Per speeldag krijgen je 11 basisspelers punten. Je kapitein pakt dubbele punten. Indien je kapitein niet speelt, pakt je vice-kapitein anderhalf keer zijn punten. Daarnaast heb je nog enkele boosters die je extra punten kunnen opleveren."
       },
-      "step1": {
-        "title": "Kies wijs",
-        "description": "Selecteer 15 EK-spelers. Stel per speeldag je best mogelijke elftal op met spelers die in vorm zijn en veel punten kunnen scoren. Zorg ervoor dat je voldoende wisselmogelijkheden hebt, om je 15 spelers optimaal te kunnen benutten."
+      "step3": {
+        "title": "Wissel spelers",
+        "description": "Naast het wisselen van spelers tussen je basiself en je bank, kun je ook spelers transfereren. Doet een speler het onverwacht slecht? Wissel hem met een speler die plots in vorm is. Per speeldag krijg je een maximaal aantal transfers."
+      },
+      "step4": {
+        "title": "Win prijzen",
+        "description": "De spelers met de meeste punten over het hele EK krijgen een deeltje uit de prijzenpot, die werd samengesteld uit de inschrijvingsbedragen van alle spelers. Hoe eerder je een eindwinnaar hebt geselecteerd, hoe meer extra punten je verdient door de eindwinst."
       }
     },
     "rules": "Spelregels",
@@ -333,7 +333,7 @@
   },
   "boosters": {
     "tripleCaptain": "Driedubbele kapitein",
-    "viceVictory": "Vice overwinning",
+    "fanFavourite": "Publiekslieveling",
     "hiddenGem": "Verborgen diamant",
     "goalRush": "Goal rush",
     "superSubs": "Super subs",

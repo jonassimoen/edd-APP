@@ -32,12 +32,14 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 	return (
 		<BoosterStyle className="booster">
 			<p className="booster-type">{t(`boosters.${props.type}`)}</p>
-			<Icon 
-				component={props.iconSvg} 
-				style={{display: "block", fontSize: 50, marginBottom: 20}}
-			/>
+			<div className="booster-icon">
+				<Icon 
+					component={props.iconSvg} 
+					className={`booster ${boosterActive ? "boosterActive" : ""}`}
+				/>
+			</div>
 			<Button
-				disabled={(boosterUsed || props.boosterLimit) && !props.onUse}
+				disabled={(!boosterActive && (boosterUsed || props.boosterLimit)) || (boosterUsed && !props.onUse)}
 				onClick={onActivateClick}
 				type="primary"
 				className={boosterActive?"activeBooster":null}

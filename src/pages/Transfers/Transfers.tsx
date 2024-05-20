@@ -111,11 +111,11 @@ const _Transfers = (props: AbstractTeamType) => {
 
 			const boosters = {
 				tripleCaptain: teamResult.team.tripleCaptain,
-				viceVictory: teamResult.team.viceVictory,
 				superSubs: teamResult.team.superSubs,
 				freeHit: teamResult.team.freeHit,
 				hiddenGem: teamResult.team.hiddenGem,
 				goalRush: teamResult.team.goalRush,
+				fanFavourite: teamResult.team.fanFavourite,
 			};
 
 			props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, undefined, undefined, teamResult.transfers, deadlineWeekTransfers, pastTransfers, viceCaptainId, boosters);

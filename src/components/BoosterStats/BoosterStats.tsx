@@ -14,10 +14,10 @@ export const BoosterStats = (props: BoosterStatsProps) => {
 	const { t } = useTranslation();
 	const BoosterIcons: {[type: string]: () => JSX.Element} = {
 		"tripleCaptain": TripleCaptSvg,
-		"viceVictory": TripleCaptSvg,
 		"goalRush": GoalRushSvg,
 		"hiddenGem": HiddenGemSvg,
 		"superSubs": SuperSubsSvg,
+		"fanFavourite": TripleCaptSvg,
 	};
 
 	const usedBoosterTypes = useMemo(() => Object.entries(props.boosterWeekStatus)

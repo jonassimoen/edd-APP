@@ -54,7 +54,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 						:
 						<Icon 
 							component={props.iconSvg} 
-							style={{display: "block", fontSize: 50}}
+							className={`booster ${boosterActive ? "boosterActive" : ""}`}
 						/>
 				}
 			</div>

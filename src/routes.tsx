@@ -35,6 +35,7 @@ import { UserManagement } from "./pages/UserManagement/UserManagement";
 import { News } from "./pages/News/News";
 import { NewsArticle } from "./pages/News/NewsArticle";
 import { NewsManagement } from "./pages/NewsManagement/NewsManagement";
+import { Denied } from "./pages/Denied";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
@@ -117,6 +118,18 @@ export const router = createBrowserRouter([
 					element: <ProtectedRoute access={true} redirectPath="/home"><MatchContainer /></ProtectedRoute>
 				},
 				{
+					path: "payment/*",
+					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
+				},
+				{
+					path: "news",
+					element: <News />,
+				},
+				{
+					path: "news/*",
+					element: <NewsArticle />,
+				},
+				{
 					path: "rankings",
 					element: <Rankings />
 				},
@@ -171,16 +184,8 @@ export const router = createBrowserRouter([
 					element: <LoginCallback />,
 				},
 				{
-					path: "payment/*",
-					element: <ProtectedRoute access={true} redirectPath="/home"><PaymentEnvironment /></ProtectedRoute>,
-				},
-				{
-					path: "news",
-					element: <ProtectedRoute access={true} redirectPath="/home"><News /></ProtectedRoute>,
-				},
-				{
-					path: "news/*",
-					element: <ProtectedRoute access={true} redirectPath="/home"><NewsArticle /></ProtectedRoute>,
+					path: "denied",
+					element: <Denied />
 				},
 				{
 					path: "*",
