@@ -4,18 +4,17 @@ import { Button } from "@/components/UI/Button/Button";
 import { FormItem } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
-import { CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Checkbox, Input, Table } from "antd";
+import { CheckOutlined, CloseOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import Title from "antd/lib/typography/Title";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TranslationStyle } from "./NewsManagementStyle";
-import ReactQuill from "react-quill";
-import { Image } from "antd";
+import { Image, Table } from "antd";
 import { useCreateArticleMutation, useDeleteArticleMutation, useGetNewsQuery, useUpdateArticleMutation } from "@/services/newsApi";
 import { useSelector } from "react-redux";
-import "react-quill/dist/quill.snow.css";
 import dayjs from "dayjs";
+import { Input } from "@/components/UI/Input/Input";
+import { Checkbox } from "@/components/UI/Checkbox/Checkbox";
+import JoditEditor from "jodit-react";
 
 declare type NewsManagementState = {
 	openEditModal: boolean
@@ -35,8 +34,21 @@ export const NewsManagement = () => {
 		openCreateModal: false,
 	});
 	const application = useSelector((state: StoreState) => state.application);
+	const configEditor = useMemo(() => ({
+		readonly: false, 
+		placeholder: "Start met het schrijven van artikel",
+	}), []);
 
 	const { t } = useTranslation();
+
+	const onArticleCreate = (article: Article) => { 
+		setState((state) => ({ ...state, openCreateModal: false, editorValue: "" })); 
+		createArticle(article); 
+	};
+	const onArticleUpdate = (article: Article) => { 
+		setState((state) => ({ ...state, openEditModal: false, editorValue: "" })); 
+		updateArticle(article); 
+	};
 	
 	const ArticleForm =
 		<>
@@ -74,6 +86,7 @@ export const NewsManagement = () => {
 						name={"readMore"}
 						label={"Read more"}
 						tooltip={"Zorgt voor redirect naar /news/<slug>"}
+						valuePropName="checked"
 					>
 						<Checkbox />
 					</FormItem>
@@ -86,24 +99,15 @@ export const NewsManagement = () => {
 					style={{width: "100%"}}
 					required
 				>
-					<ReactQuill 
-						theme="snow" 
-						value={state.editorValue} 
-						onChange={(value: string) => setState({...state, editorValue: value})}
+					<JoditEditor
+						value={state.editorValue}
+						config={configEditor}
+						onBlur={newContent => setState((state) => ({...state, editorValue: newContent}))} // preferred to use only this option to update the content for performance reasons
+						onChange={null}
 					/>
 				</FormItem>
 			</Row>
 		</>;
-
-	const onEditArticle = (article: Article) => {
-		updateArticle(article); 
-		setState({ ...state, openEditModal: false, editorValue: "" }); 
-	};
-
-	const onCreateArticle = (article: Article) => { 
-		createArticle(article); 
-		setState({ ...state, openCreateModal: false, editorValue: "" }); 
-	};
 
 	return (
 		<>
@@ -199,7 +203,7 @@ export const NewsManagement = () => {
 			<EditModal
 				open={state.openEditModal}
 				object={state.editObject}
-				onCreate={onEditArticle}
+				onCreate={onArticleUpdate}
 				onCancel={() => setState({ ...state, openEditModal: false })}
 				type='article'
 				action='edit'
@@ -217,7 +221,7 @@ export const NewsManagement = () => {
 			<CreateModal
 				open={state.openCreateModal}
 				object={{} as Article}
-				onCreate={onCreateArticle}
+				onCreate={onArticleCreate}
 				onCancel={() => setState({ ...state, openCreateModal: false })}
 				title={t("articleTitle")}
 				width={1000}

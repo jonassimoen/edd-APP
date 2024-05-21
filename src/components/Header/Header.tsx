@@ -54,6 +54,10 @@ export const Header = () => {
 	const allMenuItems: string[] = ["home", "stats", "rules", "rankings", "news"];
 	const isVisible = (menuItem: string) => allMenuItems.indexOf(menuItem) !== -1;
 	const isActive = (match: string) => location.pathname.indexOf(match) !== -1;
+	const isExactActive = (match: string) => location.pathname.slice(1) === match;
+	const isActiveWithin = (possible: string[]) => {
+		return !!possible.filter((p) => location.pathname.indexOf(p) !== -1).length;
+	};
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const gameEnded = useMemo(() => deadlineInfoSuccess && deadlineInfo.deadlineInfo.deadlineWeek == 0, [deadlineInfo]);
 	const showPoints = useMemo(() => userTeam && deadlineInfoSuccess && (gameEnded || (gameInProgress && (deadlineInfo.deadlineInfo.deadlineWeek > userTeam.weekId))), [userTeam, gameEnded, gameInProgress, deadlineInfo]);
@@ -167,7 +171,7 @@ export const Header = () => {
 										) || null
 										}
 										{(userTeam && isVisible("team") && 
-											<li className={`c-nav_item ${(isActive("team")) ? "is-selected" : " "}`}>
+											<li className={`c-nav_item ${(isActiveWithin(["edit","team","points","transfers"])) ? "is-selected" : " "}`}>
 												<Link
 													className="c-nav-main__link"
 													to={`/team/${userTeam.id}`}
@@ -178,7 +182,7 @@ export const Header = () => {
 										) || null
 										}
 										{(teamVerification && !userTeam && isVisible("new") &&
-											<li className={`c-nav-main__item ${(isActive("new")) ? "is-selected" : ""}`}>
+											<li className={`c-nav-main__item ${(isExactActive("new")) ? "is-selected" : ""}`}>
 												<Link
 													className="c-nav-main__link"
 													to={"/new"}
@@ -281,7 +285,7 @@ export const Header = () => {
 								</li>) || null}
 
 							{(teamVerification && !userTeam && isVisible("new") &&
-								<li className={`c-nav-mobile__item ${isActive("new") ? "active" : ""}`}>
+								<li className={`c-nav-mobile__item ${isExactActive("new") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/new">{t("menu.newTeam")}</Link></li>) || null
 							}
 
