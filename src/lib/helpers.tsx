@@ -7,6 +7,9 @@ import { UserOutlined, DownloadOutlined, SyncOutlined, CheckCircleOutlined, Cloc
 import { TFunction } from "i18next";
 import dayjs from "dayjs";
 import { LiveIcon } from "@/components/UI/AnimatedIcon/AnimatedIcon";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/UI/Button/Button";
+import { theme } from "@/styles/theme";
 
 declare type RowToPos = {
 	rowNumber: number,
@@ -114,6 +117,8 @@ type NotificationConfig = {
 	title: string
 	icon?: ReactNode
 	message?: string
+	readMore?: string
+	onClick?: () => any
 }
 
 export const openErrorNotification = (config: NotificationConfig) => {
@@ -131,6 +136,17 @@ export const openSuccessNotification = (config: NotificationConfig) => {
 			{config.message}
 		</React.Fragment>
 	));
+};
+export const openInfoNotification = (config: NotificationConfig) => {
+	toast.info(({ closeToast }) => 
+		(<div onClick={config.onClick}>
+			<b style={{color: theme.primaryContrast}}>{config.title.toUpperCase()}</b><br />
+			{config.message}<br /><br />
+			<b style={{color: theme.primaryColor}}>{config.readMore}</b>
+		</div>), {
+		position: "top-center",
+		autoClose: 500000,
+	});
 };
 
 export const statusToIconColor = (status: string) => {

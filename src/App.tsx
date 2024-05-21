@@ -1,5 +1,5 @@
 import { withTranslation } from "react-i18next";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { router } from "./routes";
 import { ConfigProvider } from "antd";
@@ -14,7 +14,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import config from "./config";
 import { Crisp } from "crisp-sdk-web";
 import * as Cronitor from "@cronitorio/cronitor-rum";
-import { onMessageListener } from "@/firebase";
 import { useGetDeadlineInfoQuery } from "./services/weeksApi";
 import { useLazyGetPlayersQuery } from "./services/playersApi";
 import { useLazyGetClubsQuery } from "./services/clubsApi";
@@ -39,15 +38,6 @@ const App = () => {
 		Cronitor.load(config.CRONITOR_KEY, {
 			debug: false, 
 		});
-		onMessageListener().then((payload: any) => {
-			console.log(payload);
-		}).catch((err: any) => console.log("failed: ", err));
-
-		if(navigator.serviceWorker) {
-			navigator.serviceWorker.onmessage = (event) => {
-				console.log(event);
-			};
-		}
 	}, []);
 
 	useEffect(() => {

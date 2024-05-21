@@ -47,26 +47,26 @@ $primaryColor: #A1B2F8;
 $primaryContrast: #000d40;
 
 html {
-		font-family:	UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
-		-webkit-overflow-scrolling: touch;
+	font-family:	UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
+	-webkit-overflow-scrolling: touch;
 
-		::-webkit-scrollbar {
-				width: 5px;
-				height: 0;
-		}
+	::-webkit-scrollbar {
+			width: 5px;
+			height: 0;
+	}
 
-		::-webkit-scrollbar-track {
-				background: #f1f1f1;
-		}
+	::-webkit-scrollbar-track {
+			background: #f1f1f1;
+	}
 
-		::-webkit-scrollbar-thumb {
-				background: $primaryColor;
-				border-radius: 50px;
-		}
+	::-webkit-scrollbar-thumb {
+			background: $primaryColor;
+			border-radius: 50px;
+	}
 
-		::-webkit-scrollbar-thumb:hover {
-				background: theme;
-		}
+	::-webkit-scrollbar-thumb:hover {
+			background: theme;
+	}
 }
 
 body {
@@ -116,4 +116,23 @@ p {
 
 #crisp-chatbox a[role="button"][data-visible="false"], a[role="button"][data-maximized="false"] {
 	display: none !important;
+}
+
+
+.Toastify__toast-container--top-center {
+	top: 1em;
+	width: 95vw;
+	left: 2.5vw;
+    transform: none;
+	@media (min-width: 1200px) {
+		width: 50vw;
+		left: 25vw;
+	}
+	.Toastify__toast-icon svg {
+		fill: $primaryContrast;
+	}
+}
+
+.Toastify__progress-bar--info {
+	background: $primaryContrast;
 }

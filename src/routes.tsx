@@ -36,10 +36,12 @@ import { News } from "./pages/News/News";
 import { NewsArticle } from "./pages/News/NewsArticle";
 import { NewsManagement } from "./pages/NewsManagement/NewsManagement";
 import { Denied } from "./pages/Denied";
+import { onMessageListener } from "@/firebase";
+import { openInfoNotification } from "./lib/helpers";
 
 const Layout = ({ children }: any) => {
 	const location = useLocation();
-	const {i18n} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -52,6 +54,29 @@ const Layout = ({ children }: any) => {
 		}
 		Cronitor.track("Pageview");
 	}, [location.pathname]);
+
+	useEffect(() => {
+		onMessageListener().then((payload: any) => {
+			openInfoNotification({
+				title: payload.notification.title,
+				message: payload.notification.body,
+				readMore: t("news.readMoreNotification"),
+				onClick: () => navigate(payload.fcmOptions.link)
+			});
+		}).catch((err: any) => console.error("Receiving message failed: ", err));
+
+		if(navigator.serviceWorker) {
+			navigator.serviceWorker.onmessage = (event) => {
+				if(event.data.messageType === "notification-clicked") {
+					if(event.data.notification.click_action && event.data.notification.click_action != location.pathname) {
+						navigate(event.data.notification.click_action);
+					} else if(location.pathname === "/news") {
+						navigate("/news");
+					}
+				}
+			};
+		}
+	}, []);
 
 	return (
 		<>
