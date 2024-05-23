@@ -148,9 +148,7 @@ export const Header = () => {
 			{
 				authenticated && user && <NotificationPrompt />
 			}
-			{
-				authenticated && user && <PWAPrompt />
-			}
+			<PWAPrompt />
 			<HeaderStyle className={state.menuToggled ? "has-open-nav" : ""}>
 				<div className="js-nav-holder c-header">
 					<div className="c-header__nav">
