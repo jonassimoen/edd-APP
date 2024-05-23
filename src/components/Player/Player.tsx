@@ -158,6 +158,10 @@ export const Player = (props: PlayerProps) => {
 	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
 	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
 	const hasBooster = useMemo(() => player && !!player.booster, [player]);
+	const isActionLess = useMemo(() => {
+		console.log(actionLessPlayerIds, player?.id, actionLessPlayerIds?.indexOf(player?.id) >= 0);
+		return actionLessPlayerIds?.indexOf(player?.id) >= 0;
+	}, [actionLessPlayerIds, player]);
 
 	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints || replacePlayerPointsWithStatsPoints;
 	const showPlayerName = !avatarOnly;
@@ -309,6 +313,7 @@ export const Player = (props: PlayerProps) => {
 						onSwap={onSwap}
 						isCaptain={isCaptain}
 						isViceCaptain={isViceCaptain}
+						noActions={isActionLess}
 					/> :
 					null
 			}

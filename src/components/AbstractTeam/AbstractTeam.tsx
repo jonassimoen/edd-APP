@@ -677,10 +677,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			budget: state.initialBudget
 		});
 	};
+
 	const onTransfersSubmit = (teamId: number) => {
 		const transfers = state.draftTransfers
 			.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
-
 		submitTransfers({ teamId, transfers }).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t("team.transfers.failed") }));
 	};
 

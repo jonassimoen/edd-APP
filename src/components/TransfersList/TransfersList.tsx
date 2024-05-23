@@ -77,10 +77,10 @@ export const TransfersList = (props: TransfersListProps) => {
 				columns={columns}
 				dataSource={data}
 				showHeader={showHeader}
-				locale={{emptyText: t("transferPage.noTransfersTableMessage")}}
+				locale={{emptyText: t("transfersPage.noTransfersTableMessage")}}
 				loading={isLoading}
 				pagination={data.length > size ? { pageSize: size } : false}
-				rowKey={(rec: any) => `record-${rec.id+1}`}
+				rowKey={(rec: any) => `record-${rec.outId}`}
 				rowClassName={(rec: object, idx: number) => idx%2 ? "ant-table-row--odd" : "ant-table-row--even"}
 			/>
 		</ContainerStyle>

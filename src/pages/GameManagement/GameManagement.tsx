@@ -75,15 +75,12 @@ export const GameManagement = () => {
 	const MatchCreateForm =
 		<>
 			<Row gutter={16}>
-				<Col span={12}>
+				<Col span={6}>
 					<FormItem
 						name={"date"}
 						label={"Date"}
 						getValueProps={(i: string) => ({ value: dayjs(i) || dayjs("") })}
-						rules={([{
-							required: true,
-							message: t("property.match.date.required")
-						}])}
+						required
 					>
 						<DatePicker
 							showTime={true}
@@ -93,14 +90,11 @@ export const GameManagement = () => {
 						/>
 					</FormItem>
 				</Col>
-				<Col span={12}>
+				<Col span={6}>
 					<FormItem
 						name={"weekId"}
 						label={"Week"}
-						rules={([{
-							required: true,
-							message: t("property.match.week.required").toString()
-						}])}
+						required
 					>
 						<Select
 							keyProperty="id"
@@ -109,6 +103,25 @@ export const GameManagement = () => {
 							values={weeks || []}
 							onChange={(value: number) => setState({ ...state, selectedAwayId: value })}
 						/>
+					</FormItem>
+				</Col>
+				<Col span={6}>
+					<FormItem
+						name={"maxTransfers"}
+						label={"Max. transfers"}
+						tooltip='-1 = unlimited'
+						required
+					>
+						<Input min={-1} max={6}/>
+					</FormItem>
+				</Col>
+				<Col span={6}>
+					<FormItem
+						name={"maxSameClub"}
+						label={"Max. same club"}
+						required
+					>
+						<Input min={3} max={6}/>
 					</FormItem>
 				</Col>
 			</Row>

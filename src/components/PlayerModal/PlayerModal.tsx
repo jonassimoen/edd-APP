@@ -29,9 +29,9 @@ type PlayerModalProps = {
 	isSwapAble?: any
 	onSwap?: any
 	swapPlayerId?: number | null
-	boosters?: boolean
 	isCaptain?: boolean
 	isViceCaptain?: boolean
+	noActions?: boolean
 }
 
 const BoosterIcons: {[type: string]: () => JSX.Element} = {
@@ -45,7 +45,7 @@ const BoosterIcons: {[type: string]: () => JSX.Element} = {
 export const PlayerModal = (props: PlayerModalProps) => {
 	const { t } = useTranslation();
 
-	const { player, isSwapAble, swapPlayerId, boosters } = props;
+	const { player, isSwapAble, swapPlayerId, noActions } = props;
 
 	const playerPositionColor = getPlayerPositionHexColor(player, theme);
 	const PositionLabels: any = {
@@ -83,7 +83,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 	};
 
 	const hasSelectionActions = useMemo(
-		() => !!(props.onCaptainSelect || props.onViceCaptainSelect || (props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId)) || (props.onRemove && !swapPlayerId) ), 
+		() => !noActions && !!(props.onCaptainSelect || props.onViceCaptainSelect || (props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId)) || (props.onRemove && !swapPlayerId) ), 
 		[props]
 	);
 
@@ -126,68 +126,67 @@ export const PlayerModal = (props: PlayerModalProps) => {
 						</Col> : null
 				}
 			</Row>
-			<Row className="player-actions">
-				{
-					hasSelectionActions && 
+			{
+				hasSelectionActions && (
+					<Row className="player-actions">
 						<div className="title">{t("player.modal.selectionActions")}</div>
-				}
-				{
-					props.onCaptainSelect ?
-						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
-							<div className="action" onClick={onCaptainSelect}>
-								<CaptainIcon />
-								{t("player.btnCaptainBadgeLabel")}
-							</div>
-						</Col> :
-						null
-				}
-				{
-					props.onViceCaptainSelect ?
-						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
-							<div className="action" onClick={onViceCaptainSelect}>
-								<ViceCaptainIcon />
-								{t("player.btnViceCaptainBadgeLabel")}
-							</div>
-						</Col> :
-						null
-				}
+						{
+							props.onCaptainSelect ?
+								<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
+									<div className="action" onClick={onCaptainSelect}>
+										<CaptainIcon />
+										{t("player.btnCaptainBadgeLabel")}
+									</div>
+								</Col> :
+								null
+						}
+						{
+							props.onViceCaptainSelect ?
+								<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
+									<div className="action" onClick={onViceCaptainSelect}>
+										<ViceCaptainIcon />
+										{t("player.btnViceCaptainBadgeLabel")}
+									</div>
+								</Col> :
+								null
+						}
 
-				{
-					props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId) ?
-						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
-							<div className="action" onClick={onSwap}>
-								<SwapIcon />
-								{t("player.swapBadgeLabel")}
-							</div>
-						</Col> :
-						null
-				}
+						{
+							props.onSwap && isSwapAble && props.isSwapAble(player) && (player.id !== swapPlayerId) ?
+								<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
+									<div className="action" onClick={onSwap}>
+										<SwapIcon />
+										{t("player.swapBadgeLabel")}
+									</div>
+								</Col> :
+								null
+						}
 
-				{
-					props.onSwap && (player.id === swapPlayerId) ?
-						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
-							<div className="action" onClick={onSwap}>
-								<UndoIcon />
-								{t("player.undoBadgeLabel")}
-							</div>
-						</Col> :
-						null
-				}
+						{
+							props.onSwap && (player.id === swapPlayerId) ?
+								<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
+									<div className="action" onClick={onSwap}>
+										<UndoIcon />
+										{t("player.undoBadgeLabel")}
+									</div>
+								</Col> :
+								null
+						}
 
-				{
-					props.onRemove && !swapPlayerId ?
-						<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
-							<div className="action" onClick={onRemove}>
-								<DeleteIcon />
-								{t("player.removeBadgeLabel")}
-							</div>
-						</Col> :
-						null
-				}
-				{
-					boosters && <div className="title">{t("player.modal.boosterActions")}</div>
-				}
-			</Row>
+						{
+							props.onRemove && !swapPlayerId ?
+								<Col md={actionColumnSize} sm={actionColumnSize} xs={actionColumnSize}>
+									<div className="action" onClick={onRemove}>
+										<DeleteIcon />
+										{t("player.removeBadgeLabel")}
+									</div>
+								</Col> :
+								null
+						}
+					</Row>
+				)
+			}
+			
 			{
 				player && player.pointsOverview && showPointsOverview ?
 					<PointsOverviewTable>

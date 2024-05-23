@@ -216,13 +216,14 @@ const _Transfers = (props: AbstractTeamType) => {
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
 	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek >= competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const deadlineFreeTransfers = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo  && deadlineInfo.deadlineInfo.freeTransfers, [deadlineInfo]);
 	
 	const enabledWildOrFreeHit = useMemo(() => boosters.freeHit == deadlineWeek, [boosters]);
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]), [starting, bench]);
 	const remainingTransfers = useMemo(() => {
 		let remainingTransfers = null;
 		if (competition.weeklyTransfers) {
-			remainingTransfers = competition.transfersAllowed - deadlineWeekTransfersFormattedWithoutExtra.length;
+			remainingTransfers = deadlineFreeTransfers - deadlineWeekTransfersFormattedWithoutExtra.length;
 		} else if (competition.transferCanBeSaved) {
 			remainingTransfers = competition.transfersAllowed * (deadlineWeek - 1) - (deadlineWeekTransfersFormattedWithoutExtra.length + pastTransfersFormatted.length);
 		} else {
@@ -230,10 +231,14 @@ const _Transfers = (props: AbstractTeamType) => {
 		}
 		return remainingTransfers;
 	}, [competition, deadlineWeekTransfersFormattedWithoutExtra, pastTransfersFormatted, deadlineWeek]);
-	const canTransferOut = useMemo(() => remainingTransfers > 0, [remainingTransfers]);
+	// const canTransferOut = useMemo(() => remainingTransfers > 0, [remainingTransfers]);
+	const canTransferOut = useMemo(() => true, []);
+
+	const minusPoints = useMemo(() => (remainingTransfers < 0) ? remainingTransfers  * -5 : 0, [remainingTransfers]);
 
 	const startingPicked = useMemo(() => starting.filter(player => player && player.id), [starting]);
 	const benchPicked = useMemo(() => bench.filter(player => player && player.id), [bench]);
+	const draftPlayerInIds = useMemo(() => draftTransfers.map(transfer => transfer.inId).filter(inId => inId !== null), [draftTransfers]);
 
 	if (teamError) {
 		return (
@@ -278,7 +283,7 @@ const _Transfers = (props: AbstractTeamType) => {
 													loading={state.performingTransfer}
 												>
 													{(!state.performingTransfer && <SaveFilled />) || null}
-													{t("transferPage.confirmTransfers")}
+													{t("transfersPage.confirmTransfers")}
 												</Button>
 											</span>
 										)) || null}
@@ -289,7 +294,7 @@ const _Transfers = (props: AbstractTeamType) => {
 													type="primary"
 												>
 													<CloseCircleFilled />
-													{t("transferpage.clearTransfers")}
+													{t("transfersPage.clearTransfers")}
 												</Button>
 											</span>
 										)) || null}
@@ -300,7 +305,7 @@ const _Transfers = (props: AbstractTeamType) => {
 										budget={budget}
 										totalPlayers={ competition.lineupSize + competition.benchSize}
 										totalPlayersSelected={ startingPicked.length + benchPicked.length }
-										minusPoints={0}
+										minusPoints={minusPoints}
 										remainingFreeTransfers={remainingTransfers}
 									/>
 								</div>
@@ -324,9 +329,9 @@ const _Transfers = (props: AbstractTeamType) => {
 									showPlayerValue={true}
 									viceCaptainId={viceCaptainId}
 									showPlayerValueInsteadOfPoints={true}
-									onRemove={canTransferOut && ((player: Player) => props.onTransferPlayerOut(player))}
+									onRemove={canTransferOut && ((player: Player) => onPlayerOut(player, true, false, []))}
 									onPlaceholderClick={onPlaceHolderClick}
-									actionLessPlayerIds={null}
+									actionLessPlayerIds={draftPlayerInIds}
 									assetsCdn={competition.assetsCdn}
 								/>
 							</Block>
@@ -344,7 +349,7 @@ const _Transfers = (props: AbstractTeamType) => {
 										activePositionFilter={activePositionFilter}
 										isPickable={(player: Player) => props.isPickAble(player, false, true)}
 										playerType={PlayerType.SoccerPortrait}
-										actionLabel={t("transferPage.transferButtonLabel")}
+										actionLabel={t("transfersPage.transferButtonLabel")}
 										data={players}
 										playerTax={competition.transferTaxPercentage}
 										onPick={onPlayerIn}

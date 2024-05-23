@@ -15,17 +15,21 @@ export const TransfersOverview = (props: TransfersOverviewProps) => {
 	return (
 		<StatsStyle>
 			<Row className="stat-row">
-				<Col lg={8} md={8} sm={8} xs={8}>
+				<Col lg={6} md={6} sm={6} xs={6}>
 					<p className="points">{props.budget.toFixed(2)}M</p>
-					<p className="label">{t("TransfersPage.overviewBudget")}</p>
+					<p className="label">{t("transfersPage.overviewBudget")}</p>
 				</Col>
-				<Col lg={8} md={8} sm={8} xs={8}>
+				<Col lg={6} md={6} sm={6} xs={6}>
 					<p className="points">{props.totalPlayersSelected}/{props.totalPlayers}</p>
-					<p className="label">{t("TransfersPage.overviewPlayers")}</p>
+					<p className="label">{t("transfersPage.overviewPlayers")}</p>
 				</Col>
-				<Col lg={8} md={8} sm={8} xs={8}>
+				<Col lg={6} md={6} sm={6} xs={6}>
+					<p className="points">{props.minusPoints}</p>
+					<p className="label">{t("transfersPage.minusPoints")}</p>
+				</Col>
+				<Col lg={6} md={6} sm={6} xs={6}>
 					<p className="points">{props.remainingFreeTransfers < 0 ? 0 : props.remainingFreeTransfers}</p>
-					<p className="label">{t("TransfersPage.overviewTransfers")}</p>
+					<p className="label">{t("transfersPage.overviewFreeTransfers")}</p>
 				</Col>
 			</Row>
 		</StatsStyle>
