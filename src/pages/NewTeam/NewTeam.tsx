@@ -20,7 +20,7 @@ import { NewGameStats } from "@/components/Stats/NewGameStats";
 import { Input } from "@/components/UI/Input/Input";
 import { useLazyGetTeamsQuery } from "@/services/usersApi";
 import { theme } from "@/styles/theme";
-const { useBreakpoint } = Grid;
+import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 
 declare type NewTeamState = {
 	redirectToPayments: boolean;
@@ -173,7 +173,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 									widthRatio={15}
 									heightRatio={10}
 									clubs={clubs}
-									bg={""}
+									bg={teamBackground}
 									assetsCdn={competition.assetsCdn}
 									selection={startingByPositions}
 									showCaptainBadge={true}
