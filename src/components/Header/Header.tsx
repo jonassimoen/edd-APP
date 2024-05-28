@@ -13,9 +13,6 @@ import { theme } from "@/styles/theme";
 import { Crisp } from "crisp-sdk-web";
 import { Alert } from "../UI/Alert/Alert";
 import parseHTML from "html-react-parser";
-import { NotificationPrompt } from "../NotificationPrompt/NotificationPrompt";
-import { PWAPrompt } from "../PWAPrompt/PWAPrompt";
-import qs from "qs";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -145,10 +142,6 @@ export const Header = () => {
 
 	return (
 		<>
-			{
-				authenticated && user && <NotificationPrompt />
-			}
-			<PWAPrompt />
 			<HeaderStyle className={state.menuToggled ? "has-open-nav" : ""}>
 				<div className="js-nav-holder c-header">
 					<div className="c-header__nav">
@@ -205,12 +198,6 @@ export const Header = () => {
 										{(isVisible("rules") &&
 											<li className={`c-nav-main__item ${(isActive("rules")) ? "is-selected" : ""}`}>
 												<Link className="c-nav-main__link" to="/rules">{t("menu.rules")}</Link>
-											</li>
-										) || null
-										}
-										{(isVisible("news") &&
-											<li className={`c-nav-main__item ${(isActive("news")) ? "is-selected" : ""}`}>
-												<Link className="c-nav-main__link" to="/news">{t("menu.news")}</Link>
 											</li>
 										) || null
 										}
@@ -308,11 +295,6 @@ export const Header = () => {
 								<li className={`c-nav-mobile__item ${isActive("rules") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/rules">{t("menu.rules")}</Link>
 								</li>) || null}
-
-							{(isVisible("news") &&
-							<li className={`c-nav-mobile__item ${isActive("news") ? "active" : ""}`}>
-								<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/news">{t("menu.news")}</Link>
-							</li>) || null}
 
 							{(isVisible("admin") &&
 								<li className={`c-nav-mobile__item ${(isActive("admin")) ? "active" : ""}`}>

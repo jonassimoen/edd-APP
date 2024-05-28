@@ -381,22 +381,5 @@
     "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
     "tryAgain": "Probeer opnieuw te betalen",
     "payNow": "Betaal nu"
-  },
-  "notifications": {
-    "modalTitle": "Notificaties inschakelen",
-    "modalDescription": "Om je op de hoogte te houden van de nieuwste updates rond European Dream Draft, is het handig om deze in te schakelen.",
-    "modalEnable": "Nu inschakelen"
-  },
-  "news": {
-    "readMore": "Lees verder",
-    "readMoreNotification": "Klik hier om meer te lezen",
-    "backToOverview": "Terug naar nieuwsoverzicht"
-  },
-  "promptPWA": {
-    "step1": "Klik onderaan op  <img src=\"https://help.apple.com/assets/65E21662495F1A6C8701F50A/65E21663EF8273BE1D0C2734/nl_NL/748a151e2276ad5df4d03ec8d4506bf7.png\" alt=\"de deelknop\" height=\"30\" width=\"25\" originalimagename=\"GlobalArt/IL_Share.png\">.",
-    "step2": "Klik op <b>Zet op beginscherm</b>",
-    "modalTitle": "Voeg deze app toe aan je beginscherm",
-    "step3": "Klik op <b>Voeg toe</b>"
-  },
-  "articleTitle": "Artikel"
+  }
 }
