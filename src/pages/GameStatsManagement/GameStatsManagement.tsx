@@ -72,7 +72,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 		4: t("player.attackerShort"),
 	};
 
-	const [updateMatchStats] = useUpdateMatchStatisticsMutation();
+	const [updateMatchStats, {isLoading: updatingMatchStats, error: updatingError}] = useUpdateMatchStatisticsMutation();
 
 	const [state, setState] = useState<GameStatsManagementState>({
 		playerStats: [],
@@ -250,10 +250,9 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 			stats: state.playerStats,
 			score: { home: state.homeScore, away: state.awayScore },
 			goalMinutes: state.goalMinutes,
-		});
-		navigate("/admin/games");
+		}).unwrap().then(() =>navigate("/admin/games"));
 	};
-
+	console.log(updatingError);
 	return (
 		<GameStatsManagementStyle>
 			<Skeleton loading={spinning} style={{ padding: "2rem 0" }}>
@@ -305,6 +304,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 					rowKey={"playerId"}
 					pagination={false}
 					sticky={true}
+					loading={updatingMatchStats}
 					rowClassName={(record: any, index: any) => index == playerSplit ? "split" :  "" }
 				/>
 				<Row justify="center" align="middle">
@@ -312,6 +312,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 						<Button 
 							onClick={() => onFormSubmit()}
 							disabled={!goalMinutesEntered}
+							loading={updatingMatchStats}
 							type="primary"
 							style={{width: "100%", marginTop: "2rem"}}
 						>
@@ -319,6 +320,13 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 						</Button>
 					</Col>
 				</Row>
+				{ updatingError && (
+					<Alert 
+						showIcon
+						type={"error"}
+						message={`(${(updatingError as any)?.data?.statusCode}) ${(updatingError as any)?.data?.message}`}
+					/>
+				)}
 				<PlayerStatsModal
 					open={playerState.open}
 					playerStats={state.playerStats?.at(playerState.index)}
