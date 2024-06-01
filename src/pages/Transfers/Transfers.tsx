@@ -223,7 +223,7 @@ const _Transfers = (props: AbstractTeamType) => {
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
 	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId && props.visibleWeekId >= competition.officialStartWeek, [deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId, [deadlineInfo]);
-	const deadlineFreeTransfers = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo  && deadlineInfo.deadlineInfo.freeTransfers, [deadlineInfo]);
+	const deadlineFreeTransfers = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo  && deadlineInfo.deadlineInfo.fT, [deadlineInfo]);
 	
 	const enabledWildOrFreeHit = useMemo(() => boosters.freeHit == deadlineWeek, [boosters]);
 	const startingByPositions = useMemo(() => startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]), [starting, bench]);

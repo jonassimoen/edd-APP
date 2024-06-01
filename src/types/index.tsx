@@ -263,7 +263,8 @@ type DeadlineInfo = {
 	deadlineWeek: number
 	deadlineDate: string
 	endWeek: number
-	freeTransfers: number
+	fT: number
+	sC: number
 }
 
 type BoostersWeekStatus = {

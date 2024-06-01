@@ -35,6 +35,7 @@ declare type PlayerListProps = {
 	isLoading?: boolean
 	playerType: PlayerType
 	deadlineWeek?: any;
+	maxSameClub?: number
 	playerTax?: number | undefined;
 	assetsCdn: string
 	tourRef?: any

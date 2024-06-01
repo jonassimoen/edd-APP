@@ -602,7 +602,8 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			state.starting.filter(startingPlayer => startingPlayer && startingPlayer.clubId === player.clubId).length +
 			state.bench.filter(benchPlayer => benchPlayer && benchPlayer.clubId === player.clubId).length;
 
-		const underClubLimit = pickerSoFarFromSameClub < application.competition.teamSameClubPlayersLimit;
+		const underClubLimit = pickerSoFarFromSameClub < deadlineInfo.deadlineInfo.sC;
+		console.log("Picking player ", player.short, "(", player.clubId,") ==> ", underClubLimit);
 
 		const playerPositionMaxPicks = [].concat(state.starting as any, state.bench as any)
 			.filter((p: Player) => p.positionId === player.positionId).length;
