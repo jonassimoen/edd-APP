@@ -9,11 +9,6 @@ export const ContainerStyle = styled.div<any>`
         overflow-y: auto;
     }
     .gameday {
-        &:first-child {
-            .date {
-                border-radius: 1rem 1rem 0 0;
-            }
-        }
         
         &:not(:last-child) {
             .ant-table {
@@ -22,6 +17,8 @@ export const ContainerStyle = styled.div<any>`
         }
         
         .date {
+            border: 1px solid rgba(255 255 255 / 0.15);
+            border-bottom: none;
             padding: 1rem 0 0 0;
             background: ${theme.primaryColor};
 
@@ -30,6 +27,12 @@ export const ContainerStyle = styled.div<any>`
                 padding: 0.5rem 0;
                 color: white;
 
+            }
+        }
+        &:first-child {
+            .date {
+                border-radius: 1rem 1rem 0 0;
+                border-bottom: none;
             }
         }
 

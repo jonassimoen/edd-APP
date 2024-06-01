@@ -30,6 +30,11 @@ export const TransferListStyle = styled(Table)`
 					background: none;
 				}
 				&>.ant-table-cell {
+					.player-name {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+					}
 					&:nth-child(1) {
 						text-align: left;
 					}

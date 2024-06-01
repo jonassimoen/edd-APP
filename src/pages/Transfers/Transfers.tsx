@@ -187,6 +187,10 @@ const _Transfers = (props: AbstractTeamType) => {
 	};
 
 	const onPlayerIn = (player: Player) => {
+		player = {
+			...player,
+			upcomingMatches: matches.filter((match: any) => match.weekId >= props.visibleWeekId && ([match.home?.id, match.away?.id].includes(player.clubId))),
+		};
 		props.pickPlayer(player, false);
 		props.onTransferPlayerIn(player);
 	};
@@ -221,8 +225,8 @@ const _Transfers = (props: AbstractTeamType) => {
 
 	const team = useMemo(() => teamResult && teamResult.team, [teamResult]);
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
-	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId && props.visibleWeekId >= competition.officialStartWeek, [deadlineInfo]);
-	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId, [deadlineInfo]);
+	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId && props.visibleWeekId >= competition.officialStartWeek, [deadlineInfo, props.visibleWeekId]);
+	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId, [deadlineInfo, props.visibleWeekId]);
 	const deadlineFreeTransfers = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo  && deadlineInfo.deadlineInfo.fT, [deadlineInfo]);
 	
 	const enabledWildOrFreeHit = useMemo(() => boosters.freeHit == deadlineWeek, [boosters]);
@@ -257,14 +261,8 @@ const _Transfers = (props: AbstractTeamType) => {
 		);
 	}
 
-	useEffect(() => {
-		document.body.classList.add("color-background-main");
-		return () => { document.body.classList.remove("color-background-main"); };
-	},[]);
-
-
 	return (
-		clubs && teamResult && matches && players && deadlineInfo && (
+		clubs && teamResult && matches && players && deadlineInfo && initializedExternally && (
 			<TransfersStyle>
 				{(notTeamOwner || state.notFound) && <Navigate to={"/home"} />}
 				{/* {team && props.visibleWeekId &&
@@ -347,6 +345,7 @@ const _Transfers = (props: AbstractTeamType) => {
 					<Col md={12} sm={12} xs={24}>
 						<Element name="all-players">
 							<PlayerList
+								data={players}
 								clubs={clubs}
 								matches={matches}
 								deadlineWeek={deadlineWeek}
@@ -356,7 +355,6 @@ const _Transfers = (props: AbstractTeamType) => {
 								isPickable={(player: Player) => props.isPickAble(player, false, true) && draftTransfers.filter((tf: Transfer) => tf.outId !== player.id).length === draftTransfers.length}
 								playerType={PlayerType.SoccerPortrait}
 								actionLabel={t("transfersPage.transferButtonLabel")}
-								data={players}
 								playerTax={competition.transferTaxPercentage}
 								onPick={onPlayerIn}
 								action

@@ -65,12 +65,10 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	const getTeamInfo = (weekId: number) => {
 		// const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId", "pSelections"];
 		const selectionProps: any[] = ["booster", "played", "points"];
-		console.log("[TP] getTeamInfo called");
 		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId })])
 			.then(([result]: any[]) => {
-				console.log("[TP] promise resolved", new Date());
 				result = result.data;
 				const pointsConfirmation: any[] = [];
 				const weekStat = result.weekStat.find((stat: any) => stat.weekId === weekId);
@@ -85,8 +83,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const points = player.selections[0].captain ? statsTotalPoints * 2 : statsTotalPoints;
 						return acc + points + player.selections[0].endWinnerSelections;
 					}, 0);
-
-				console.log("[TP] provisional points", new Date());
 
 				const teamPointsInfo = {
 					generalPoints: result.team.points !== null ? result.team.points : "-",
@@ -104,7 +100,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					}),
 					weekAveragePoints: (weekStat && weekStat.average) || "-"
 				};
-				console.log("[TP] teamPointsInfo", new Date());
 
 				const starting = result.players
 					.filter((player: any) => player.selections[0].starting === 1)
@@ -126,7 +121,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					}).sort((first: any, second: any) => {
 						return (first.positionId === 1) ? -1 : 0;
 					});
-				console.log("[TP] starting & bench", new Date());
 				const teamName = result.team?.name;
 				const teamUser = result.user;
 				const teamId = result.team.id;
@@ -150,11 +144,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 				const isTeamOwner = !!(result.team.userId === user.id);
 
-				console.log("[TP] call loading all matches", new Date());
 				props.loadAllMatches();
-				console.log("[TP] loaded all matches", new Date());
-
-				console.log("[TP] calling init team state", new Date());
 				props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, weekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
 			})
 			.catch(err => {
@@ -188,11 +178,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const startingByPositions = startingListToPositionsList(starting, competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");
-
-	useEffect(() => {
-		document.body.classList.add("color-background-main");
-		return () => { document.body.classList.remove("color-background-main"); };
-	},[]);
 
 	return (
 		<Spin spinning={!initializedExternally || !teamLoaded} delay={0}>

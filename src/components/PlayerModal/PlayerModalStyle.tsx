@@ -210,7 +210,7 @@ export const PlayerModalStyle = styled(Modal)<any>`
 			}
 		}
 		.player-body {
-			margin-bottom: 120px;
+			margin-bottom: 150px;
 		}
 	}
 `;

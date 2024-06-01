@@ -2,6 +2,10 @@ import { Col, Row } from "../UI/Grid/Grid";
 import { useTranslation } from "react-i18next";
 import React from "react";
 import { StatsStyle, TransferListStyle, TransfersOverviewStyle } from "./TransfersOverviewStyle";
+import Icon from "@ant-design/icons";
+import { TransferIconSvg } from "@/styles/custom-icons";
+
+const TransferIcon = (props: any) => <Icon component={TransferIconSvg} {...props} />;
 
 type TransfersOverviewProps = {
 	budget: number
@@ -22,31 +26,6 @@ export const TransfersOverview = (props: TransfersOverviewProps) => {
 	const {data,size, isLoading, showWeek} = props;
 	const columns = [
 		{
-			title: t("team.transferOut"),
-			key: "outPlayer",
-			dataIndex: "outPlayer",
-			width: showWeek ? "30%" : "40%",
-			render: (txt: string, rec: any, idx: number) => {
-				const playerName = (rec.outPlayer && `${rec.outPlayer.short}`) || "";
-				return (
-					<React.Fragment>
-						<span style={{display: "block", fontSize: "12px"}}>
-							{playerName}
-						</span>
-					</React.Fragment>
-				);
-			},
-		},
-		{
-			title: "#",
-			key: "number",
-			dataIndex: "number",
-			width: "20%",
-			render: (txt: string, rec: any, idx: number) => {
-				return <b>{idx + 1}</b>;
-			},
-		},
-		{
 			title: t("team.transferIn"),
 			key: "inPlayer",
 			dataIndex: "inPlayer",
@@ -54,11 +33,31 @@ export const TransfersOverview = (props: TransfersOverviewProps) => {
 			render: (txt: string, rec: any, idx: number) => {
 				const playerName = (rec.inPlayer && `${rec.inPlayer.short}`) || "";
 				return (
-					<React.Fragment>
-						<span style={{ fontSize: "12px"}}>
-							{playerName}
-						</span>
-					</React.Fragment>
+					<div className="player-name">
+						<p>{playerName}</p>
+						<p>{t("general.transfer.in").toUpperCase()}</p>
+					</div>
+				);
+			},
+		},
+		{
+			key: "outPlayer",
+			dataIndex: "outPlayer",
+			width: "20%",
+			render: () => <TransferIcon />,
+		},
+		{
+			title: t("team.transferOut"),
+			key: "outPlayer",
+			dataIndex: "outPlayer",
+			width: showWeek ? "30%" : "40%",
+			render: (txt: string, rec: any, idx: number) => {
+				const playerName = (rec.outPlayer && `${rec.outPlayer.short}`) || "";
+				return (
+					<div className="player-name">
+						<p>{t("general.transfer.out").toUpperCase()}</p>
+						<p>{playerName}</p>
+					</div>
 				);
 			},
 		},

@@ -45,15 +45,21 @@ const _EditTeam = (props: AbstractTeamType) => {
 			return;
 		}
 		const playerProps =
-			["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
+			["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "pSelections", "points"];
 		const selectionProps: any[] = [];
 		const result = teamResult;
 		const starting = result.players
 			.filter((player: any) => player.selection.starting === 1)
-			.map((player: any) => Object.assign({ inStarting: true }, pick(player, playerProps), pick(player.selection, selectionProps)));
+			.map((player: any) => {
+				const upcomingMatches = matches.filter((match: any) => match.weekId >= props.visibleWeekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
+				return Object.assign({ inStarting: true, upcomingMatches}, pick(player, playerProps), pick(player.selection, selectionProps));
+			});
 		const bench = result.players
 			.filter((player: any) => player.selection.starting === 0)
-			.map((player: any) => Object.assign({ inStarting: false }, pick(player, playerProps), pick(player.selection, selectionProps)));
+			.map((player: any) => {
+				const upcomingMatches = matches.filter((match: any) => match.weekId >= props.visibleWeekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
+				return Object.assign({ inStarting: false, upcomingMatches }, pick(player, playerProps), pick(player.selection, selectionProps));
+			});
 		const teamName = result.team.name;
 		const teamId = result.team.id;
 		let captainId = null;
@@ -85,6 +91,14 @@ const _EditTeam = (props: AbstractTeamType) => {
 
 	const updateTeam = () => {
 		props.onTeamEdit(props.teamId);
+	};
+
+	const onPlayerIn = (player: Player) => {
+		player = {
+			...player,
+			upcomingMatches: matches.filter((match: any) => match.weekId >= props.visibleWeekId && ([match.home?.id, match.away?.id].includes(player.clubId))),
+		};
+		props.pickPlayer(player, false);
 	};
 
 	useEffect(() => {
@@ -147,12 +161,6 @@ const _EditTeam = (props: AbstractTeamType) => {
 			/>
 		);
 	}
-
-	useEffect(() => {
-		document.body.classList.add("color-background-main");
-		return () => { document.body.classList.remove("color-background-main"); };
-	},[]);
-
 
 	return (
 		<NewTeamStyle>
@@ -230,7 +238,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 								assetsCdn={competition.assetsCdn}
 								activePositionFilter={activePositionFilter}
 								isPickable={props.isPickAble}
-								onPick={props.pickPlayer}
+								onPick={onPlayerIn}
 								action
 								showHeader={false}
 							/>

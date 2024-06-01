@@ -39,14 +39,14 @@ export const _Team = (props: AbstractTeamType) => {
 	const application = useSelector((state: StoreState) => state.application);
 
 	const getTeamInfo = (weekId: number) => {
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "pSelections"];
 		const selectionProps: any[] = ["booster"];
 		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
 			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
 					(match: Match) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(p.clubId))
 				);
-				return Object.assign({ inStarting: true, currentMatch: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
+				return Object.assign({ inStarting: true, currentMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 			});
 
 		const bench = teamResult.players.filter((p: any) => p.selection.starting === 0)
@@ -54,7 +54,7 @@ export const _Team = (props: AbstractTeamType) => {
 				const displayWeekMatches: any[] = matches.filter(
 					(match: Match) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(p.clubId))
 				);
-				return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
+				return Object.assign({ inStarting: false, currentMatches: displayWeekMatches }, pick(p, playerProps), pick(p.selection, selectionProps));
 			});
 
 		const teamName = teamResult.team?.name;
@@ -104,11 +104,6 @@ export const _Team = (props: AbstractTeamType) => {
 			/>
 		);
 	}
-
-	useEffect(() => {
-		document.body.classList.add("color-background-main");
-		return () => { document.body.classList.remove("color-background-main"); };
-	},[]);
 
 	return (
 		<TeamStyle>

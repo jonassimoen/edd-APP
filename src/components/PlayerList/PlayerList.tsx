@@ -146,7 +146,7 @@ export const PlayerList = (props: PlayerListProps) => {
 
 	const currentWeekMatches = useMemo(() => matches?.filter((match: Match) => match.weekId === deadlineWeek), [matches, deadlineWeek]);
 
-	const columns = [
+	const columns: any = [
 		{
 			title: "",
 			key: "avatar",

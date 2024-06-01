@@ -187,12 +187,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		isTeamOwner?: boolean,
 		teamUser?: any
 	) => {
-		console.log("[AT] initTeamState called", new Date());
 		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
 		state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
-		console.log("[AT] validator set", new Date());
 		setState({
 			...state,
 			starting,
@@ -604,7 +602,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			state.bench.filter(benchPlayer => benchPlayer && benchPlayer.clubId === player.clubId).length;
 
 		const underClubLimit = pickerSoFarFromSameClub < deadlineInfo.deadlineInfo.sC;
-		console.log("Picking player ", player.short, "(", player.clubId,") ==> ", underClubLimit);
 
 		const playerPositionMaxPicks = [].concat(state.starting as any, state.bench as any)
 			.filter((p: Player) => p.positionId === player.positionId).length;

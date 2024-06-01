@@ -99,6 +99,14 @@ const _NewTeam = (props: AbstractTeamType) => {
 			.catch(() => {/*todo*/ });
 	};
 
+	const onPlayerIn = (player: Player) => {
+		player = {
+			...player,
+			upcomingMatches: matches.filter((match: any) => match.weekId >= props.visibleWeekId && ([match.home?.id, match.away?.id].includes(player.clubId))),
+		};
+		props.pickPlayer(player, false);
+	};
+
 	// matches from props/state
 	const { starting, bench, captainId, viceCaptainId, teamName, budget, savingTeamPending, activePositionFilter } = props;
 	const { redirectToPayments, hasPlayers } = state;
@@ -154,11 +162,6 @@ const _NewTeam = (props: AbstractTeamType) => {
 		},
 	];
 	const [tourOpen, setTourOpen] = useState<boolean>(false);
-
-	useEffect(() => {
-		document.body.classList.add("color-background-main");
-		return () => { document.body.classList.remove("color-background-main"); };
-	},[]);
 
 	return (
 		<NewTeamStyle>
@@ -241,7 +244,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 								hidePositions={false}
 								action={true}
 								isPickable={props.isPickAble}
-								onPick={props.pickPlayer}
+								onPick={onPlayerIn}
 								assetsCdn={competition.assetsCdn}
 								tourRef={playerListRef}
 								deadlineWeek={deadlineInfo.deadlineInfo.deadlineWeek}

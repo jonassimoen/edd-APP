@@ -92,7 +92,11 @@
     "deadline": "Deadline",
     "matchdayPoints": "Speeldag",
     "matchdayCamelCase": "Speeldag",
-    "typeStat": "Statistiek"
+    "typeStat": "Statistiek",
+    "transfer": {
+      "out": "uit",
+      "in": "in"
+    }
   },
   "player": {
     "midfielder": "Middenvelder",

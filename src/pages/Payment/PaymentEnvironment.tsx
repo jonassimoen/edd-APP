@@ -31,7 +31,6 @@ export const PaymentEnvironment = () => {
 				setClientSecret(clientSecretURL);
 			}
 		} else {
-			console.log("fetching");
 			setShowResult(false);
 			createPaymentIntent().unwrap().then((data: any) => setClientSecret(data.clientSecret));
 		}

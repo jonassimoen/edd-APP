@@ -18,7 +18,7 @@ export const ConfirmModal = (props: ConfirmModalProps) => {
 	return (
 		<ConfirmModalStyle
 			title={title}
-			closable={true}
+			closable={false}
 			open={visible}
 			onCancel={onCancel}
 			footer={[]}

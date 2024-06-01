@@ -27,7 +27,7 @@ export const CaptainSvg = () => (
 		<g id="Page-1" stroke="none" fill="none" transform="matrix(1, 0, 0, 1, 0, -1.7763568394002505e-15)">
 			<g id="Icon/Captain">
 				<ellipse fill="rgb(0, 191, 214)" cx="24" cy="24" rx="24" ry="24"/>
-				<text fill="#fff" fontFamily="UEFA Euro" fontSize={40} fontWeight={700} x="8.99" y="38.129">C</text>
+				<text fill="#fff" fontFamily="UEFAEuro" fontSize={40} fontWeight={700} x="8.99" y="38.129">C</text>
 			</g>
 		</g>
 	</svg>
@@ -107,7 +107,7 @@ export const TripleCaptSvg = () => (
 				<path d="M 0.084 41.896 C 0.084 39.587 0.215 37.309 0.469 35.068 L 28.573 35.068 L 28.573 41.978 L 0.084 41.978 C 0.084 41.951 0.084 41.923 0.084 41.896 Z" fill="rgb(255, 255, 255)"/>
 				<path d="M 28.573 15.387 L 28.573 22.297 L 3.367 22.297 C 4.19 19.922 5.158 17.615 6.26 15.387 Z" fill="rgb(255, 255, 255)"/>
 				<path d="M 28.573 54.748 L 28.573 61.658 L 3.423 61.658 C 2.638 59.413 1.983 57.106 1.467 54.748 Z" fill="rgb(255, 255, 255)"/>
-				<text fill="rgb(255, 255, 255)" fontFamily={"UEFA Euro"} fontSize={42.4} fontWeight={900} textAnchor="middle" x="59.933" y="55.37">X3</text>
+				<text fill="rgb(255, 255, 255)" fontFamily={"UEFAEuro"} fontSize={42.4} fontWeight={900} textAnchor="middle" x="59.933" y="55.37">X3</text>
 			</g>
 		</g>
 	</svg>
@@ -118,7 +118,7 @@ export const ViceCaptainButtonSvg = () => (
 		<g id="Page-1" stroke="none" fill="none" transform="matrix(1, 0, 0, 1, 0, -1.7763568394002505e-15)">
 			<g id="Icon/Captain">
 				<ellipse fill="rgb(0, 191, 214)" cx="24" cy="24" rx="24" ry="24"/>
-				<text fill="#fff" fontFamily="UEFA Euro" fontSize={40} fontWeight={700} x="8.99" y="38.129">V</text>
+				<text fill="#fff" fontFamily="UEFAEuro" fontSize={40} fontWeight={700} x="8.99" y="38.129">V</text>
 			</g>
 		</g>
 	</svg>
@@ -206,6 +206,17 @@ export const UnConfirmedSvg = () => (
 				<circle id="Oval" fill="#FFFFFF" cx="4" cy="10" r="2"></circle>
 				<circle id="Oval" fill="#FFFFFF" cx="10" cy="10" r="2"></circle>
 				<circle id="Oval" fill="#FFFFFF" cx="16" cy="10" r="2"></circle>
+			</g>
+		</g>
+	</svg>
+);
+
+export const TransferIconSvg = () => (
+	<svg width="1em" height="1em"  viewBox="0 0 48 48">
+		<g id="g-1" transform="matrix(0.4010089933872223, 0, 0, 0.4010089933872223, 0.10800100117921829, 7.23519992828369)">
+			<g id="Icons-/-Boosters-/-Hidden-Gem">
+				<path d="M -108.324 -68.325 H -50.32 L -50.32 -82.258 L -10.835 -59.033 L -50.32 -35.808 L -50.32 -49.742 H -108.324 V -68.325 Z" style={{transformBox: "fill-box", transformOrigin: "50% 50%", transform: "matrix(-1, 0, 0, -1, 119.158997, 118.066002)"}} fill="rgb(179, 29, 29)"  />
+				<path d="M 10.835 15.289 H 68.839 L 68.839 1.355 L 108.324 24.58 L 68.839 47.805 L 68.839 33.872 H 10.835 V 15.289 Z" style={{transformOrigin: "59.58px 24.58px"}} fill="rgb(65, 171, 56)" />
 			</g>
 		</g>
 	</svg>
