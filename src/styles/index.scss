@@ -78,13 +78,7 @@ body {
 	-webkit-user-select: none; /* Safari */
 	-ms-user-select: none; /* IE 10 and IE 11 */
 	user-select: none; /* Standard syntax */
-
-	background: linear-gradient(0deg, rgba(20, 60, 219, 0.8), rgba(20, 60, 219, 1)), url(/src/assets/img/pitch-xl.png);
-	background-size: cover;
-	background-position:center;
-	background-repeat: no-repeat;
-	background-color: $primaryColor;
-	background-attachment: fixed;
+	overflow-x: hidden;
 
 	input:focus{
 		outline: none;

@@ -3,6 +3,8 @@ import styled from "@/styles/styled-components";
 import { TeamProps } from "./Team";
 import { PlayerStyle } from "../Player/PlayerStyle";
 import { theme } from "@/styles/theme";
+import pitchBackground from "../../assets/img/pitch-xl.png";
+import pitchNoBoarding from "../../assets/img/fpl-pitch-no-boarding.svg";
 
 export const TeamStyle = styled.div`
     position: relative;
@@ -50,7 +52,7 @@ export const TeamStyle = styled.div`
         position: absolute;
         z-index: -999;
         top: -11rem;
-        background: url(/src/assets/img/pitch-xl.png);
+        background: url(${pitchBackground});
         background-size: cover;
         background-repeat: no-repeat;
         background-color: transparent;
@@ -91,7 +93,7 @@ export const TeamStyle = styled.div`
             z-index: -2;
             position: absolute;
             top: 0;
-            background: url(/src/assets/img/fpl-pitch-no-boarding.svg);
+            background: url(${pitchNoBoarding});
             background-size: contain;
             background-repeat: no-repeat;
             background-position: top;

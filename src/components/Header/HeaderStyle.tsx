@@ -1,6 +1,7 @@
 import { mediaQueries } from "@/styles/media-queries";
 import styled, { keyframes } from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
+import headerBg from "../../assets/img/new_pattern.png";
 
 const slideIn = keyframes`
 	0% { opacity: 0; top: -5px; }
@@ -42,7 +43,7 @@ export const HeaderStyle = styled.header`
         top: 0;
         z-index: 4;
         background-color: ${theme.primaryContrast};
-        background-image: url('/src/assets/img/new_pattern.png');
+        background-image: url(${headerBg});
         background-position: center top;
         border-bottom: 5px solid ${theme.primaryContrast};
         background-repeat: no-repeat;

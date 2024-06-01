@@ -16,11 +16,11 @@ export const PlayerStyle = styled.div`
 	}
 
     @media ${mediaQueries.mobileM} {
-        width: 110px;
-        height: 90px;
+        width: 70px;
+       	height: 50px;
     }
 
-    @media ${mediaQueries.tablet} {	
+    @media ${mediaQueries.tabletL} {	
         width: 120px;
         height: 100px;
     }
@@ -92,7 +92,7 @@ export const OpponentBadge = styled.div`
 	position: absolute;
 	inset: 100% 0px 0px;
 	width: 100%;
-	font-size: 12px;
+	font-size: 10px;
 	height: 20px;
 	display: flex;
     align-items: center;

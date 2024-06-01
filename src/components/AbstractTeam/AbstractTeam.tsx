@@ -187,11 +187,12 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		isTeamOwner?: boolean,
 		teamUser?: any
 	) => {
+		console.log("[AT] initTeamState called", new Date());
 		const startingPlayersValidatorFormat = playersToValidatorFormat(starting);
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
 		state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
-
+		console.log("[AT] validator set", new Date());
 		setState({
 			...state,
 			starting,
