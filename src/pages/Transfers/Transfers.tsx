@@ -31,6 +31,9 @@ import { notification } from "antd";
 import { TransfersOverview } from "@/components/Stats/TransfersOverview";
 import { ConfirmModal } from "@/components/ConfirmModal/ConfirmModal";
 import { Alert } from "@/components/UI/Alert/Alert";
+import { TransfersStyle } from "./TransfersStyle";
+import { useGetPlayersQuery } from "@/services/playersApi";
+import { useGetClubsQuery } from "@/services/clubsApi";
 
 type TransfersState = {
   notFound: boolean;
@@ -51,33 +54,37 @@ const _Transfers = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const { t } = useTranslation();
 
+	const {competition } = useSelector((state: StoreState) => state.application);
 	const { data: teamResult, isLoading: teamLoading, isError: teamError, isSuccess: teamSuccess, error: teamErrorData } = useGetTeamQuery(+(id || 0));
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
+	const { data: clubs, isSuccess: clubsSuccess, isLoading: clubsLoading } = useGetClubsQuery();
+	const { data: players, isSuccess: playersSuccess, isLoading: playersLoading } = useGetPlayersQuery();
 	
-	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
-	const players = JSON.parse(localStorage.getItem("_static_players"));
-	const {competition, playersLoading} = useSelector((state: StoreState) => state.application);
+	// const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	// const players = JSON.parse(localStorage.getItem("_static_players"));
+	// const {competition, playersLoading} = useSelector((state: StoreState) => state.application);
 
 	useEffect(() => {
-		if (teamSuccess) {
-			const playerProps =
-								["id", "externalId", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
+		if (teamSuccess && matches) {
+			const weekId = props.visibleWeekId;
+			const playerProps = ["id", "externalId", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
 			const selectionProps: any[] = [];
 
 			const starting = teamResult.players
 				.filter((player: any) => player.selection.starting === 1)
 				.map((player: any) => {
 					const tfValue = selectionPlayerSellValue(player);
-					return Object.assign({ inStarting: true }, pick(player, playerProps), pick(player.selection, selectionProps), { value: tfValue });
+					const displayWeekMatches = matches.filter((match: any) => match.weekId >= weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
+					return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, pick(player, playerProps), pick(player.selection, selectionProps), { value: tfValue });
 				});
 			const bench = teamResult.players
 				.filter((player: any) => player.selection.starting === 0)
 				.map((player: any) => {
 					const tfValue = selectionPlayerSellValue(player);
-					return Object.assign({ inStarting: false }, pick(player, playerProps), pick(player.selection, selectionProps), { value: tfValue });
+					const displayWeekMatches = matches.filter((match: any) => match.weekId >= weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
+					return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, pick(player, playerProps), pick(player.selection, selectionProps), { value: tfValue });
 				});
-
 			const teamName = teamResult.team.name;
 			const teamId = teamResult.team.id;
 
@@ -88,11 +95,11 @@ const _Transfers = (props: AbstractTeamType) => {
 
 			const pastTransfers = !teamResult.transfers ? ([] as Transfer[]) :
 				teamResult.transfers
-					.filter((tf: any) => deadlineInfo.deadlineInfo.deadlineWeek && (tf.weekId < deadlineInfo.deadlineInfo.deadlineWeek))
+					.filter((tf: any) => props.visibleWeekId && (tf.weekId < props.visibleWeekId))
 					.map((tf: any) => ({ inId: tf.inId, outId: tf.outId, weekId: tf.weekId }));
 			const deadlineWeekTransfers = !teamResult ? ([] as Transfer[]) :
 				teamResult.transfers
-					.filter((tf: any) => deadlineInfo.deadlineInfo.deadlineWeek && (tf.weekId === deadlineInfo.deadlineInfo.deadlineWeek))
+					.filter((tf: any) => props.visibleWeekId && (tf.weekId === props.visibleWeekId))
 					.map((tf: any) => ({ inId: tf.inId, outId: tf.outId, weekId: tf.weekId, extra: tf.extra }));
 
 			const getPlayersValueWithTransfers = (players: any) => {
@@ -124,7 +131,7 @@ const _Transfers = (props: AbstractTeamType) => {
 			console.error(teamError);
 			setState({ ...state, notFound: true });
 		}
-	}, [teamResult]);
+	}, [teamResult, matches]);
 
 	const formatTransfers = (tf: any) => {
 		const inPIDmeta = tf && tf.inId && Object.keys(tf.inId).length;
@@ -214,8 +221,8 @@ const _Transfers = (props: AbstractTeamType) => {
 
 	const team = useMemo(() => teamResult && teamResult.team, [teamResult]);
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
-	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek && deadlineInfo.deadlineInfo.deadlineWeek >= competition.officialStartWeek, [deadlineInfo]);
-	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
+	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId && props.visibleWeekId >= competition.officialStartWeek, [deadlineInfo]);
+	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId, [deadlineInfo]);
 	const deadlineFreeTransfers = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo  && deadlineInfo.deadlineInfo.freeTransfers, [deadlineInfo]);
 	
 	const enabledWildOrFreeHit = useMemo(() => boosters.freeHit == deadlineWeek, [boosters]);
@@ -250,29 +257,49 @@ const _Transfers = (props: AbstractTeamType) => {
 		);
 	}
 
+	useEffect(() => {
+		document.body.classList.add("color-background-main");
+		return () => { document.body.classList.remove("color-background-main"); };
+	},[]);
+
+
 	return (
 		clubs && teamResult && matches && players && deadlineInfo && (
-			<React.Fragment>
+			<TransfersStyle>
 				{(notTeamOwner || state.notFound) && <Navigate to={"/home"} />}
-				{team && deadlineInfo.deadlineInfo.deadlineWeek &&
+				{team && props.visibleWeekId &&
 					(!gameStarted || enabledWildOrFreeHit) && (<Navigate to={`/edit/${teamResult.team.id}`} />)}
-				{(initializedExternally && (
-					<Row>
-						<Col md={12} sm={12} xs={24}>
-							<Block>
-								<Title level={2}>
-									{t("transfersPage.transfersBlockTitle")}
-								</Title>
+				<Row>
+					<Col md={12} sm={12} xs={24}>
+						<div className="title">
+							<Title level={2}>{t("general.transfers")}</Title>
+							<p>{t("general.transferDescription")}</p>
+						</div>
+						{(initializedExternally && (
+							<>
+								<Team
+									widthRatio={15}
+									heightRatio={10}
+									clubs={clubs}
+									bg={teamBackground}
+									captainId={captainId}
+									selection={startingByPositions}
+									playerType={PlayerType.SoccerPortrait}
+									playerBadgeColor={"#fff"}
+									playerBadgeBgColor={theme.primaryContrast}
+									playerPointsColor={"#fff"}
+									playerPointsBgColor={theme.primaryColor}
+									modalEnabled={true}
+									showCaptainBadge={true}
+									showPlayerValue={true}
+									viceCaptainId={viceCaptainId}
+									showPlayerValueInsteadOfPoints={true}
+									onRemove={canTransferOut && ((player: Player) => onPlayerOut(player, true, false, []))}
+									onPlaceholderClick={onPlaceHolderClick}
+									actionLessPlayerIds={draftPlayerInIds}
+									assetsCdn={competition.assetsCdn}
+								/>
 								<React.Fragment>
-									<div style={{ textAlign: "center" }}>
-										<Title level={4}>{`${t("general.matchday")} ${deadlineWeek}`}</Title>
-									</div>
-									<TransfersList
-										data={deadlineWeekTransfersFormatted}
-										showHeader={true}
-										tax={competition.transferTaxPercentage}
-										size={15}
-									/>
 									<div style={{ textAlign: "center", paddingTop: "5px" }}>
 										{(draftTransfers && draftTransfers.length && canSaveDraftTransfers &&  team && (
 											<span style={{ padding: "5px" }}>
@@ -302,6 +329,9 @@ const _Transfers = (props: AbstractTeamType) => {
 								</React.Fragment>
 								<div style={{ marginBottom: "15px" }}>
 									<TransfersOverview
+										data={deadlineWeekTransfersFormatted}
+										tax={competition.transferTaxPercentage}
+										size={15}
 										budget={budget}
 										totalPlayers={ competition.lineupSize + competition.benchSize}
 										totalPlayersSelected={ startingPicked.length + benchPicked.length }
@@ -309,61 +339,33 @@ const _Transfers = (props: AbstractTeamType) => {
 										remainingFreeTransfers={remainingTransfers}
 									/>
 								</div>
-							</Block>
-							<Block>
-								<Title level={2}>{t("general.lineup")}</Title>
-								<Team
-									widthRatio={15}
-									heightRatio={10}
-									clubs={clubs}
-									bg={teamBackground}
-									captainId={captainId}
-									selection={startingByPositions}
-									playerType={PlayerType.SoccerPortrait}
-									playerBadgeColor={"#fff"}
-									playerBadgeBgColor={theme.primaryContrast}
-									playerPointsColor={"#000"}
-									playerPointsBgColor={theme.primaryColor}
-									modalEnabled={true}
-									showCaptainBadge={true}
-									showPlayerValue={true}
-									viceCaptainId={viceCaptainId}
-									showPlayerValueInsteadOfPoints={true}
-									onRemove={canTransferOut && ((player: Player) => onPlayerOut(player, true, false, []))}
-									onPlaceholderClick={onPlaceHolderClick}
-									actionLessPlayerIds={draftPlayerInIds}
-									assetsCdn={competition.assetsCdn}
-								/>
-							</Block>
-						</Col>
-						<Col md={12} sm={12} xs={24}>
-							<Block>
-								<Title level={2}>{t("general.allPlayers")}</Title>
-								<Element name="all-players">
-									<PlayerList
-										clubs={clubs}
-										matches={matches}
-										deadlineWeek={deadlineWeek}
-										isLoading={playersLoading}
-										hidePositions={false}
-										activePositionFilter={activePositionFilter}
-										isPickable={(player: Player) => props.isPickAble(player, false, true)}
-										playerType={PlayerType.SoccerPortrait}
-										actionLabel={t("transfersPage.transferButtonLabel")}
-										data={players}
-										playerTax={competition.transferTaxPercentage}
-										onPick={onPlayerIn}
-										action
-										assetsCdn={competition.assetsCdn}
-										showHeader={false}
-										size={10}
-									/>
-								</Element>
-							</Block>
-						</Col>
-					</Row>
-				)) ||
+							</>
+						)) ||
           null}
+					</Col>
+					<Col md={12} sm={12} xs={24}>
+						<Element name="all-players">
+							<PlayerList
+								clubs={clubs}
+								matches={matches}
+								deadlineWeek={deadlineWeek}
+								isLoading={playersLoading}
+								hidePositions={false}
+								activePositionFilter={activePositionFilter}
+								isPickable={(player: Player) => props.isPickAble(player, false, true) && draftTransfers.filter((tf: Transfer) => tf.outId !== player.id).length === draftTransfers.length}
+								playerType={PlayerType.SoccerPortrait}
+								actionLabel={t("transfersPage.transferButtonLabel")}
+								data={players}
+								playerTax={competition.transferTaxPercentage}
+								onPick={onPlayerIn}
+								action
+								assetsCdn={competition.assetsCdn}
+								showHeader={false}
+								size={10}
+							/>
+						</Element>
+					</Col>
+				</Row>
 				<ConfirmModal
 					visible={state.transferConfirmModalVisible}
 					onCancel={(e: any) => onTransferConfirmCancel()}
@@ -371,7 +373,7 @@ const _Transfers = (props: AbstractTeamType) => {
 					title={t("transfersPage.transferConfirmTitle")}
 					text={t("transfersPage.transferConfirmMessage")}
 				/>
-			</React.Fragment>
+			</TransfersStyle>
 		)
 	);
 };

@@ -7,6 +7,7 @@ import { Button } from "../UI/Button/Button";
 import { PlusOutlined, RedoOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { Col } from "../UI/Grid/Grid";
+import { CheckoutFormStyle } from "./CheckoutFormStyle";
 
 declare type PaymentResultProps = {
 	clientSecret: string
@@ -40,7 +41,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 
 	return (
 		(!profile.isLoading && code) ? (
-			<Col span={6}>
+			<CheckoutFormStyle>
 				<Title level={2}>{t(`payment.${code}Title`)}</Title>
 				<p>{t(`payment.${code}Description`)}</p>
 				{
@@ -71,7 +72,7 @@ export const PaymentResult = (props: PaymentResultProps) => {
 							</Button>
 						)
 				}
-			</Col>
+			</CheckoutFormStyle>
 		) : null
 	);
 };

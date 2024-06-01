@@ -30,8 +30,7 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 	};
 
 	return (
-		<BoosterStyle className="booster">
-			<p className="booster-type">{t(`boosters.${props.type}`)}</p>
+		<BoosterStyle className={`booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
 			<div className="booster-icon">
 				<Icon 
 					component={props.iconSvg} 
@@ -48,7 +47,7 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 					(props.onUse ? t("boosters.use") : t("boosters.active") )
 					: 
 					boosterUsed ? 
-						`${t("general.matchday")} ${props.activatedWeek}`
+						`${t("general.matchdayCamelCase")} ${props.activatedWeek}`
 						: t("boosters.activate")}
 			</Button>
 		</BoosterStyle>

@@ -43,7 +43,6 @@ declare type AbstractTeamType = {
 	onDayChange: (directionNext: boolean) => void,
 	teamUser?: any,
 	savingTeamPending?: boolean,
-	editTeamPending?: boolean,
 	visibleWeekId: number | null,
 	boosters?: Boosters,
 	initializedExternally: boolean,

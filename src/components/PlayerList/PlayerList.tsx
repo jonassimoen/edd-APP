@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContainerStyle, PlayerStyle, SelectGroupStyle, TableStyle } from "./PlayerListStyle";
 import Icon, { EuroOutlined, SearchOutlined, StarOutlined, TagsOutlined } from "@ant-design/icons";
@@ -11,6 +11,7 @@ import { Select } from "../UI/Select/Select";
 import { Player } from "../Player/Player";
 import { PlayerType } from "@/types/PlayerTypes";
 import { Tooltip } from "antd";
+import { useGetMatchesQuery } from "@/services/matchesApi";
 
 const CaptainIcon = (props: any) => <Icon component={CaptainSvg} {...props} />;
 const SetPiecesIcon = (props: any) => <Icon component={SetPiecesSvg} {...props} />;
@@ -21,6 +22,7 @@ const Injury = (props: any) => <Icon component={PlusSvg} {...props} />;
 declare type PlayerListProps = {
 	data: Player[]
 	clubs: Club[]
+	matches?: Match[]
 	size: number
 	activePositionFilter?: number
 	setActivePositionFilter?: any
@@ -32,7 +34,6 @@ declare type PlayerListProps = {
 	actionLabel?: string
 	isLoading?: boolean
 	playerType: PlayerType
-	matches?: any
 	deadlineWeek?: any;
 	playerTax?: number | undefined;
 	assetsCdn: string
@@ -61,6 +62,8 @@ export const PlayerList = (props: PlayerListProps) => {
 		isLoading,
 		showHeader,
 		tourRef,
+		matches,
+		deadlineWeek
 	} = props;
 
 	const [state, setState] = useState<PlayerListState>({
@@ -73,7 +76,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	});
 
 	const positions = [
-		{ id: -1, name: <span className={"prefixed-label"}> <TagsOutlined style={{ marginRight: 5 }} /> {t("general.allPositions")} </span> },
+		{ id: -1, name: t("general.allPositions") },
 		{ id: 1, name: t("player.goalkeeper") },
 		{ id: 2, name: t("player.defender") },
 		{ id: 3, name: t("player.midfielder") },
@@ -81,7 +84,7 @@ export const PlayerList = (props: PlayerListProps) => {
 	];
 
 	const budgets = [
-		{ text: <span className={"prefixed-label"}> <EuroOutlined style={{ marginRight: 5 }} /> {t("general.allBudget")} </span>, value: 100 },
+		{ text: t("general.allBudget"), value: 100 },
 		{ text: `${t("general.budgetFilterPrefix")} 10 ${t("general.budgetFilterSuffix")}`, value: 10 },
 		{ text: `${t("general.budgetFilterPrefix")} 7 ${t("general.budgetFilterSuffix")}`, value: 7 },
 		{ text: `${t("general.budgetFilterPrefix")} 6 ${t("general.budgetFilterSuffix")}`, value: 6 },
@@ -90,9 +93,9 @@ export const PlayerList = (props: PlayerListProps) => {
 
 	const clubsList = [{
 		id: -1,
-		name: <span className={"prefixed-label"}> <StarOutlined style={{ marginRight: 5 }} /> {t("general.allClubs")} </span>
+		name: t("general.allClubs")
 	}]
-		.concat(clubs.map((c: Club) => ({ id: c.id, name: <span>{c.name}</span> })));
+		.concat(clubs?.map((c: Club) => ({ id: c.id, name: c.name })));
 
 	useEffect(() => {
 		const filters = { ...state.filters, position: activePositionFilter };
@@ -140,6 +143,8 @@ export const PlayerList = (props: PlayerListProps) => {
 		}
 	};
 
+	const currentWeekMatches = useMemo(() => matches?.filter((match: Match) => match.weekId === deadlineWeek), [matches, deadlineWeek]);
+
 	const columns = [
 		{
 			title: "",
@@ -161,6 +166,7 @@ export const PlayerList = (props: PlayerListProps) => {
 					imgProps.shirt = `${assetsCdn}/jerseys/${record.clubId}.png`;
 					imgProps.shirtFallback = `${assetsCdn}/jerseys/dummy.png`;
 				}
+				const upcomingMatches = matches?.filter((m: Match) => [m.home?.id, m.away?.id].includes(record.clubId));
 
 				return (
 					<div className="avatar-container">
@@ -173,6 +179,11 @@ export const PlayerList = (props: PlayerListProps) => {
 							avatarOnly={true}
 							player={record}
 							type={playerType}
+							modalEnabled={true}
+							upcomingMatches={upcomingMatches}
+							club={clubs.find((c: Club) => c?.id === record.clubId )}
+							isPickable={isPickable}
+							onPick={onPick}
 							{...imgProps}
 						/>
 					</div>
@@ -191,8 +202,17 @@ export const PlayerList = (props: PlayerListProps) => {
 				);
 				const positionColor = getPlayerPositionHexColor(record, theme);
 
-				// fetch weekmatches
-				const opponentInfo: any = null;
+				let opponentInfo: any = { playing: "", short: "" };
+				const weekMatch = currentWeekMatches?.filter((m: Match) => [m.home?.id, m.away?.id].includes(record.clubId));
+				if(weekMatch?.length) {
+					const oppId = weekMatch[0].home.id === record.clubId ? weekMatch[0].away.id : weekMatch[0].home.id;
+					const club = clubs.find((c: Club) => c.id === oppId);
+					opponentInfo.short = club ? club.short : "";
+					opponentInfo.playing = weekMatch[0].home.id === record.clubId ? t("player.opponentHome") : t("player.opponentAway");
+				} else {
+					opponentInfo = null;
+				}
+
 
 				return (
 					<>
@@ -209,10 +229,13 @@ export const PlayerList = (props: PlayerListProps) => {
 									{record.setPieces ? <Tooltip title="Standaardsituaties expert"><span><SetPiecesIcon style={{ marginRight: "2px" }} /></span></Tooltip> : null}
 								</span>
 							</p>
-							<p>
-								<span>{club && club.short} {opponentInfo ? `vs ${opponentInfo.short}` : null} </span>
+							<p className="details">
+								<span>
+									<span>{club && club.short}</span>
+									{opponentInfo ? <span style={{color: "gray"}} > vs {opponentInfo.short}</span> : null}
+								</span>
 								<span className="player-position" style={{ color: positionColor }}>
-									{(!hidePositions && position && position.name) || null}
+									{(!hidePositions && position && position.name) || null} 
 								</span>
 							</p>
 						</PlayerStyle>
@@ -258,72 +281,70 @@ export const PlayerList = (props: PlayerListProps) => {
 		});
 	}
 
-	return (
+	return clubs && matches && (
 		<ContainerStyle>
-			{
-				<Input
-					prefix={<SearchOutlined />}
-					type="text"
-					placeholder={t("general.playersListSearchInputPlaceholder").toString()}
-					name="search"
-					onChange={(event: any) =>
-						onFilterChange(event.target.name, event.target.value)
-					}
-				/>
-			}
-			<SelectGroupStyle>
-				<Select
-					$block
-					values={clubsList}
-					style={{ marginLeft: 0 }}
-					keyProperty={"id"}
-					onSelect={(value: any) => onFilterChange("club", value)}
-					textProperty={"name"}
-					placeholder={clubsList[0].name}
-				/>
-				<Select
-					$block
-					values={budgets}
-					style={{ marginRight: 0 }}
-					keyProperty={"value"}
-					onSelect={(value: any) => onFilterChange("budget", value)}
-					textProperty={"text"}
-					placeholder={budgets[0].text}
-				/>
-			</SelectGroupStyle>
-			<SelectGroupStyle>
-				<Select
-					$block
-					values={positions}
-					value={state.filters.position}
-					style={{ margin: "0px 0px" }}
-					keyProperty={"id"}
-					onSelect={(value: any) => onFilterChange("position", value)}
-					textProperty={"name"}
-					placeholder={positions[0].name}
-				/>
-			</SelectGroupStyle>
-			<TableStyle
-				loading={isLoading}
-				showHeader={showHeader}
-				columns={columns}
-				dataSource={data.filter(player => playerFilter(player))}
-				rowKey="id"
-				rowClassName={(record: object, index: number) =>
-					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"}`
+			<div className="filters">
+				{
+					<Input
+						prefix={<SearchOutlined />}
+						type="text"
+						placeholder={t("general.playersListSearchInputPlaceholder").toString()}
+						name="search"
+						onChange={(event: any) =>
+							onFilterChange(event.target.name, event.target.value)
+						}
+					/>
 				}
-				onRow={(_: any, index: number) => {
-					if(index==0) {
-						console.log(index, _, tourRef);
-						return {ref: tourRef};
-					}
-				}}
-				pagination={{ position: ["bottomCenter"], pageSize: 9, showLessItems: true, showSizeChanger: false }}
-				locale={{
-					emptyText: t("players.noneFound")
-				}}
-			>
-			</TableStyle>
+				<SelectGroupStyle>
+					<Select
+						$block
+						values={clubsList}
+						keyProperty={"id"}
+						onSelect={(value: any) => onFilterChange("club", value)}
+						textProperty={"name"}
+						placeholder={clubsList[0].name}
+						placeholderTxt={t("general.club")}
+					/>
+					<Select
+						$block
+						values={budgets}
+						keyProperty={"value"}
+						onSelect={(value: any) => onFilterChange("budget", value)}
+						textProperty={"text"}
+						placeholder={budgets[0].text}
+						placeholderTxt={t("general.price")}
+					/>
+					<Select
+						$block
+						values={positions}
+						keyProperty={"id"}
+						onSelect={(value: any) => onFilterChange("position", value)}
+						textProperty={"name"}
+						placeholder={positions[0].name}
+						placeholderTxt={t("general.position")}
+					/>
+				</SelectGroupStyle>
+			</div>
+			{
+				matches && deadlineWeek && (
+					<TableStyle
+						loading={isLoading}
+						showHeader={showHeader}
+						columns={columns}
+						dataSource={data.filter(player => playerFilter(player))}
+						rowKey="id"
+						rowClassName={(record: Player, index: number) =>
+							isPickable(record) ? "pickable": "disabled"
+						}
+						onRow={(_: any, index: number) => index==0 ? {ref: tourRef} : null }
+						pagination={{ position: ["bottomCenter"], pageSize: 9, showLessItems: true, showSizeChanger: false }}
+						locale={{
+							emptyText: t("players.noneFound")
+						}}
+					>
+					</TableStyle>
+				)
+			}
 		</ContainerStyle>
 	);
 

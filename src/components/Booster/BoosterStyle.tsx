@@ -45,19 +45,28 @@ export const BoosterStyle = styled.div`
 		font-size: 50px;
 		display: block;
 		&.activeBooster {
-			color: ${theme.primaryContrast};
+			color: ${theme.secondaryColor};
 		}
 	}
 
 	.ant-btn-primary {
+		color: ${theme.secondaryColor};
 		width: 100%;
 		&:disabled {
-			background-color: transparent;
-			color: ${theme.primaryContrast};
+			color: ${theme.colorLightGray}
 		}
 		&.activeBooster {
+			color: ${theme.secondaryColor};
+		}
+	}
+
+	&.booster-disabled {
+		opacity: 50%;
+	}
+
+	&.booster-available {
+		.ant-btn-primary:not(.activeBooster):not(:disabled) {
 			background-color: ${theme.primaryColor};
-			color: ${theme.primaryContrast};
 		}
 	}
 `;

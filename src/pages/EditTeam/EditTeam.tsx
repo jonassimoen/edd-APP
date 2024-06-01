@@ -9,9 +9,7 @@ import { pick } from "lodash";
 import { useSelector } from "react-redux";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { Col, Row } from "@/components/UI/Grid/Grid";
-import Title from "antd/lib/typography/Title";
 import { useTranslation } from "react-i18next";
-import { Block } from "@/components/Block/Block";
 import { NewGameStats } from "@/components/Stats/NewGameStats";
 import { Team } from "@/components/Team/Team";
 
@@ -24,6 +22,9 @@ import { PlayerList } from "@/components/PlayerList/PlayerList";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { Button } from "@/components/UI/Button/Button";
 import { Alert } from "@/components/UI/Alert/Alert";
+import { useGetPlayersQuery } from "@/services/playersApi";
+import { useGetClubsQuery } from "@/services/clubsApi";
+import Title from "antd/es/typography/Title";
 
 const _EditTeam = (props: AbstractTeamType) => {
 	const { user, teams } = useAppSelector((state) => state.userState);
@@ -32,9 +33,12 @@ const _EditTeam = (props: AbstractTeamType) => {
 	const { data: teamResult, isSuccess: teamSucces, isError: teamError, error: teamErrorData } = useGetTeamQuery(+id || 0);
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const { data: matches, isSuccess: matchesSuccess, isLoading: matchesLoading } = useGetMatchesQuery();
-	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
-	const players = JSON.parse(localStorage.getItem("_static_players"));
-	const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
+	// const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	// const players = JSON.parse(localStorage.getItem("_static_players"));
+	// const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
+	const {competition } = useSelector((state: StoreState) => state.application);
+	const { data: clubs, isSuccess: clubsSuccess, isLoading: clubsLoading } = useGetClubsQuery();
+	const { data: players, isSuccess: playersSuccess, isLoading: playersLoading } = useGetPlayersQuery();
 
 	const getTeamInfo = () => {
 		if (!teamSucces) {
@@ -111,7 +115,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		captainId,
 		viceCaptainId,
 		activePositionFilter,
-		editTeamPending,
+		savingTeamPending,
 	} = props;
 
 	const totalPlayersToPick = competition.lineupSize + competition.benchSize;
@@ -144,6 +148,12 @@ const _EditTeam = (props: AbstractTeamType) => {
 		);
 	}
 
+	useEffect(() => {
+		document.body.classList.add("color-background-main");
+		return () => { document.body.classList.remove("color-background-main"); };
+	},[]);
+
+
 	return (
 		<NewTeamStyle>
 			{
@@ -152,89 +162,78 @@ const _EditTeam = (props: AbstractTeamType) => {
 			{
 				team && starting && starting.length === 0 && <Navigate to={{ pathname: "/new" }} />
 			}
-			{/* {
+			{
 				deadlineWeek && team && (firstPlayingWeekPassed && gameOfficialyStarted && !wildCardOrFreeHitEnabled)
 				&& <Navigate to={{ pathname: `/transfers/${team.id}` }} />
-			} */}
+			}
 			{
 				team && initializedExternally && players && clubs &&
 				<Row>
-					<Col md={12} sm={12} xs={24} className="left">
-						<Title level={2}>{t("general.lineup")}</Title>
-						<Block>
-							<NewGameStats
-								budget={budget}
-								totalPlayers={totalPlayersToPick}
-								selectedPlayers={totalPlayersPicked}
-							/>
-							<Team
-								widthRatio={15}
-								heightRatio={10}
-								bg={teamBackground}
-								selection={startingByPositions}
-								assetsCdn={competition.assetsCdn}
-								playerType={PlayerType.SoccerPortrait}
-								captainId={captainId}
-								viceCaptainId={viceCaptainId}
-								showCaptainBadge={true}
-								playerBadgeColor={"#fff"}
-								playerBadgeBgColor={theme.primaryContrast}
-								playerPointsColor={"#000"}
-								playerPointsBgColor={theme.primaryColor}
-								showPlayerValueInsteadOfPoints={true}
-								showPlayerValue={true}
-								onCaptainSelect={props.onCaptainSelect}
-								modalEnabled={true}
-								onRemove={(player: Player) => props.removePlayer(player)}
-								onPlaceholderClick={onPlaceHolderClick}
-								clubs={clubs}
-							/>
-							{
-								(team && <Button
-									onClick={updateTeam}
-									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-									type="primary"
-									disabled={editTeamPending}
-									loading={editTeamPending}
-									size="large">
-									{/* TODO: get updating state to disable button */}
-									<SaveOutlined style={{ marginRight: "10px" }} />
-									{t("team.saveTeam")}
-								</Button>)
-							}
-							{!gameOfficialyStarted && 
-								<Alert
-									message={t("editPage.hint.title")}
-									description={t("editPage.hint.description")}
-									type="info"
-									showIcon
-									style={{margin: "10px auto"}}
-								/>
-							}
-						</Block>
+					<Col lg={12} md={24} sm={24} xs={24} className="left">
+						<div className="title">
+							<Title level={2}>{t("general.team.edit")} {teamResult?.team.name}</Title>
+							<p>{t("general.editTeamDescription")}</p>
+						</div>
+						<Team
+							widthRatio={15}
+							heightRatio={10}
+							bg={teamBackground}
+							selection={startingByPositions}
+							assetsCdn={competition.assetsCdn}
+							playerType={PlayerType.SoccerPortrait}
+							captainId={captainId}
+							viceCaptainId={viceCaptainId}
+							showCaptainBadge={true}
+							playerBadgeColor={"#fff"}
+							playerBadgeBgColor={theme.primaryContrast}
+							playerPointsColor={"#fff"}
+							playerPointsBgColor={theme.primaryColor}
+							showPlayerValueInsteadOfPoints={true}
+							showPlayerValue={true}
+							onCaptainSelect={props.onCaptainSelect}
+							modalEnabled={true}
+							onRemove={(player: Player) => props.removePlayer(player)}
+							onPlaceholderClick={onPlaceHolderClick}
+							clubs={clubs}
+						/>
+						<NewGameStats
+							budget={budget}
+							totalPlayers={totalPlayersToPick}
+							selectedPlayers={totalPlayersPicked}
+						/>
+						{
+							(team && <Button
+								onClick={updateTeam}
+								style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+								type="primary"
+								disabled={savingTeamPending}
+								loading={savingTeamPending}
+								size="large">
+								{/* TODO: get updating state to disable button */}
+								<SaveOutlined style={{ marginRight: "10px" }} />
+								{t("team.saveTeam")}
+							</Button>)
+						}
 					</Col>
-					<Col md={12} sm={12} xs={24} className="right">
-						<Block>
-							<Title level={2}>{t("general.allPlayers")}</Title>
-							<Element name="all-players">
-								<PlayerList
-									data={players}
-									clubs={clubs}
-									isLoading={playersLoading}
-									playerType={PlayerType.SoccerPortrait}
-									size={10}
-									matches={matches}
-									deadlineWeek={deadlineWeek}
-									hidePositions={false}
-									assetsCdn={competition.assetsCdn}
-									activePositionFilter={activePositionFilter}
-									isPickable={props.isPickAble}
-									onPick={props.pickPlayer}
-									action
-									showHeader={false}
-								/>
-							</Element>
-						</Block>
+					<Col lg={12} md={24} sm={24} xs={24} className="right">
+						<Element name="all-players">
+							<PlayerList
+								data={players}
+								clubs={clubs}
+								isLoading={playersLoading}
+								playerType={PlayerType.SoccerPortrait}
+								size={10}
+								matches={matches}
+								deadlineWeek={deadlineWeek}
+								hidePositions={false}
+								assetsCdn={competition.assetsCdn}
+								activePositionFilter={activePositionFilter}
+								isPickable={props.isPickAble}
+								onPick={props.pickPlayer}
+								action
+								showHeader={false}
+							/>
+						</Element>
 					</Col>
 				</Row>
 			}

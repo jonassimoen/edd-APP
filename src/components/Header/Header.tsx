@@ -139,6 +139,13 @@ export const Header = () => {
 		window.location.reload();
 	};
 
+	useEffect(() => {
+		if (state.menuToggled) {
+			document.body.classList.add("fixed-position");
+		} else {
+			document.body.classList.remove("fixed-position");
+		}
+	}, [state]);
 
 	return (
 		<>
@@ -151,35 +158,20 @@ export const Header = () => {
 								<nav className="c-nav-main js-nav" role="navigation">
 									<ul className="c-nav-main__list">
 										{(isVisible("pay") && 
-											<li className={`c-nav_item ${(isActive("payment")) ? "is-selected" : " "}`}>
-												<Link
-													className="c-nav-main__link"
-													to={"payment"}
-												>
-													{t("menu.payment")}
-												</Link>
+											<li className={`c-nav-main__item ${(isActive("payment")) ? "is-selected" : " "}`}>
+												<Link className="c-nav-main__link" to={"payment"}>{t("menu.payment")}</Link>
 											</li>
 										) || null
 										}
 										{(userTeam && isVisible("team") && 
-											<li className={`c-nav_item ${(isActiveWithin(["edit","team","points","transfers"])) ? "is-selected" : " "}`}>
-												<Link
-													className="c-nav-main__link"
-													to={`/team/${userTeam.id}`}
-												>
-													{t("menu.team")}
-												</Link>
+											<li className={`c-nav-main__item ${(isActiveWithin(["edit","team","points","transfers"])) ? "is-selected" : " "}`}>
+												<Link className="c-nav-main__link" to={`/team/${userTeam.id}`}>{t("menu.team")}</Link>
 											</li>
 										) || null
 										}
 										{(teamVerification && !userTeam && isVisible("new") &&
 											<li className={`c-nav-main__item ${(isExactActive("new")) ? "is-selected" : ""}`}>
-												<Link
-													className="c-nav-main__link"
-													to={"/new"}
-												>
-													{t("menu.newTeam")}
-												</Link>
+												<Link className="c-nav-main__link" to={"/new"} >{t("menu.newTeam")}</Link>
 											</li>
 										) || null
 										}
@@ -215,7 +207,7 @@ export const Header = () => {
 										}
 									</ul>
 								</nav>
-								<Hamburger><a className="c-nav-trigger" onClick={openSubMenu}><span className="is-hidden">Menu</span><span className="c-nav-trigger__top" style={{ backgroundColor: theme.primaryColor }}></span><span className="c-nav-trigger__middle" style={{ backgroundColor: theme.primaryColor }}></span><span className="c-nav-trigger__bottom" style={{ backgroundColor: theme.primaryColor }}></span></a></Hamburger>
+								<Hamburger><a className="c-nav-trigger" onClick={openSubMenu}><span className="is-hidden">Menu</span><span className="c-nav-trigger__top" style={{ backgroundColor: theme.secondaryColor }}></span><span className="c-nav-trigger__middle" style={{ backgroundColor: theme.secondaryColor }}></span><span className="c-nav-trigger__bottom" style={{ backgroundColor: theme.secondaryColor }}></span></a></Hamburger>
 
 							</div>
 						</Layout>
@@ -309,17 +301,12 @@ export const Header = () => {
 					</div>
 				</nav>
 			</HeaderStyle >
-			<Layout>
-				{		
-					(profileFetched && !loadingProfile && !userHasPayed && !window.location.href.includes("payment")) ? 
-						<Alert
-							description={parseHTML(t("general.notPayed"))}
-							type="warning"
-							className="warning-not-payed"
-							showIcon
-						/> 
-						: null				
-				}
+			<Layout
+				style={{
+					marginTop: "2rem", 
+					minHeight: "calc(100vh - 176px)"/*isActiveWithin(["new","edit","team","points","transfers"]) ? "calc(100vh - 176px)" : "calc(100vh + 18px)"*/ 
+				}}
+			>
 				<Outlet />
 			</Layout>
 		</>

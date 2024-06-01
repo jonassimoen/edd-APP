@@ -1,15 +1,9 @@
-import { mediaQueries } from "@/styles/media-queries";
 import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
 import { Table } from "antd";
 
-import "antd/lib/table/style";
-
-export const ContainerStyle = styled.div`
-	width: 100%;
+export const RankingsStyle = styled.div`
 `;
-
-
 export const tablePagination = `
     .ant-pagination {
         background: ${theme.primaryColor};
@@ -80,10 +74,13 @@ export const TableStyle = styled(Table)`
 		>tr>th {
 			background-color: ${theme.primaryColor};
 			color: ${theme.colorLightGray};
-			padding: 1rem 0.5rem;
+			padding: 0.5rem;
             white-space: nowrap;
 			&:first-child {
-				text-align: center;
+				padding-left: 1rem;
+			}
+			&:last-child {
+				padding-left: 1rem;
 			}
 
 			&:last-child {
@@ -145,81 +142,4 @@ export const TableStyle = styled(Table)`
 
 	${tablePagination}
 
-` as any;
-
-export const PlayerStyle = styled.div`
-	${(props: any) =>
-	props.type === "desktop" &&
-		`
-		display: none;
-	`}
-	
-	@media ${mediaQueries.mobileL} {
-		${(props: any) =>
-			props.type === "desktop" &&
-		`
-			display: block;
-		`}
-	}
-
-	.name {
-		color: #FFF;
-		white-space: nowrap;
-    	overflow: hidden;
-    	text-overflow: ellipsis;
-    	max-width: 150px;
-	}
-
-	${(props: any) =>
-			props.type === "mobile" &&
-		`
-		display: block;
-	`}
-
-	@media ${mediaQueries.mobileL} {
-		${(props: any) =>
-			props.type === "mobile" &&
-		`
-			display: none;
-		`}
-	}
-
-	p {
-		margin-bottom: 0;
-
-		&:first-child {
-			font-weight: bold;
-		}
-
-		&:last-child {
-			color: ${(props: any) => props.clubColor};
-
-			span {
-				${(props: any) =>
-			props.position === "gk" &&
-		`
-					color: ${props.theme.positionGk};
-				`}
-
-				${(props: any) =>
-			props.position === "df" &&
-		`
-					color: ${props.theme.positionDf};
-				`}
-
-				${(props: any) =>
-			props.position === "mf" &&
-		`
-					color: ${props.theme.positionMf};
-				`}
-
-				${(props: any) =>
-			props.position === "fw" &&
-		`
-					color: ${props.theme.positionFw};
-				`}
-			}
-		}
-
-	}
 ` as any;

@@ -1,72 +1,144 @@
 import { mediaQueries } from "@/styles/media-queries";
 import styled from "@/styles/styled-components";
+import { theme } from "@/styles/theme";
+import { Table } from "antd";
 
-export const ContainerStyle = styled.div`
-.gameday {
-    a.team {
-        border-bottom: 0;
-        color: rgba(0, 0, 0, 0.65);
+export const ContainerStyle = styled.div<any>`
+    @media ${mediaQueries.tabletL} {
+        max-height: ${(props: any) => props.maxheight}px;
+        overflow-y: auto;
     }
-
-    .team {
-        width: 100%;
-
-        .team-name {
-            width: 60%;
-            
-            @media ${mediaQueries.tablet} {
-                width: 70%;
+    .gameday {
+        &:first-child {
+            .date {
+                border-radius: 1rem 1rem 0 0;
             }
-            
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-            vertical-align: middle;
         }
-    }
-}
-
-table {
-    tr {
-        cursor: pointer;
         
-        td:first-child {
-            text-align right;
+        &:not(:last-child) {
+            .ant-table {
+                border-radius: 0;
+            }
+        }
+        
+        .date {
+            padding: 1rem 0 0 0;
+            background: ${theme.primaryColor};
+
+            p {
+                text-align: center;
+                padding: 0.5rem 0;
+                color: white;
+
+            }
         }
 
-        td:nth-child(2) {
-            text-align: center;
+        a.team {
+            border-bottom: 0;
+            color: rgba(0, 0, 0, 0.65);
         }
 
-        td:last-child {
-            text-align left;
-        }
-    }
+        .team {
+            width: 100%;
 
-    td { 
-        .team-name, .score {
-        }
-
-        .score {
-            font-size: 18px;
-            display: flex;
-            justify-content: center;
-            
-            &.created, &.played, &.statsimported {
-                color:gray;
+            .team-name {
+                width: 60%;
+                
+                @media ${mediaQueries.tablet} {
+                    width: 70%;
+                }
+                
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+                vertical-align: middle;
             }
         }
     }
-}
+
+    table {
+        tr {
+            cursor: pointer;
+        }
+
+        td { 
+            .team-name, .score {
+            }
+
+            .score {
+                font-size: 18px;
+                display: flex;
+                justify-content: center;
+                
+                &.created, &.played, &.statsimported {
+                    color: ${theme.colorGray};
+                }
+            }
+        }
+    }
 `;
+
+
+export const TableStyle = styled(Table)`
+    .ant-table {
+        color: white;
+        border-radius: 0 0 0.5rem 0.5rem;
+        background-color: ${theme.primaryColor};
+        border: 1px solid rgba(255 255 255 / 0.15);
+        border-top: none;
+
+        &-content {
+            table {
+                border-spacing: 0;
+                border-collapse: collapse;
+            }
+
+            .ant-table-row {
+                &:last-child {
+                    .ant-table-cell {
+                        border: none;
+                    }
+                }
+                .ant-table-cell {
+                    border-bottom: none;
+                    // border-bottom-color: rgba(255, 255, 255, 0.1);
+                    padding: 1rem 0;
+
+                    &-row-hover {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                }
+
+                &.disabled {
+                    background: rgba(0, 0, 0, 0.15);
+
+                    .ant-table-cell {
+                        opacity: 0.5;
+                        &-row-hover {
+                            background: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+` as any;
 
 export const ClubDetails = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 5px;
     justify-content: center;
     align-items: center;
+
+    &.left {
+        justify-content: flex-start;
+    }
+    &.right {
+        justify-content: flex-end;
+    }
+    gap: 0.5rem;
 `;
 
 export const ClubBadgeBg = styled.img`

@@ -1,7 +1,12 @@
 import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
+import { Collapse } from "antd";
 
 export const RulesStyles = styled.div`
+	h2 {
+		color: ${theme.primaryColor};
+	}
+
 	.rules {
 		font-size: 14px;
 		line-height: 1.2rem;
@@ -14,7 +19,7 @@ export const RulesStyles = styled.div`
 				text-align: center;
 				font-weight: bold;
 				background-color: ${theme.primaryContrast};
-				color: ${theme.primaryColor};
+				color: ${theme.secondaryColor};
 				th {
 					padding: 0.4rem;
 					border: none;
@@ -57,6 +62,38 @@ export const RulesStyles = styled.div`
 		h4, h5 {
 				font-size: 18px;
 				color: rgba(0,0,0,0.6);
+		}
+	}
+`;
+
+export const RulesCollapse = styled(Collapse)`
+	&.ant-collapse {
+		&-borderless {
+			background:transparent;
+		}
+
+		.ant-collapse-header {
+			&-text {
+				font-weight: 400;
+				font-size: 18px;
+			}
+			.ant-collapse-arrow {
+				font-size: 18px;
+				color: ${theme.primaryContrast};
+
+				&.rotated {
+					transform: rotate(180deg);
+					transition-duration: .15s;
+					transition-property: transform;
+					transition-timing-function: cubic-bezier(.4,0,.2,1);
+				}
+			}
+		}
+
+		.ant-collapse-content-box {
+			font-size: 16px;
+			line-height: 1.5;
+			font-weight: 300;
 		}
 	}
 `;

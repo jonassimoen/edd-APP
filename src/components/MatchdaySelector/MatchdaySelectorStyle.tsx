@@ -1,16 +1,21 @@
 import styled from "@/styles/styled-components";
 import backIcon from "../../assets/img/back.png";
+import { theme } from "@/styles/theme";
 
 export const MatchdaySelectorStyle = styled.div`
 	text-align: center;
 	font-weight: bold;
 	padding: 5px;
 	font-size:18px;
+    background: ${theme.primaryColor};
+    border-radius: 2rem;
+	margin: 0 0 1rem 0;
 
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	color: black;
+	// color: ${theme.secondaryColor};
+	color: white;
 `;
 
 export const ButtonStyle = styled.a`

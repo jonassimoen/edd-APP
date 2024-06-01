@@ -1,137 +1,299 @@
 import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
-import { Modal } from "antd";
+import { Modal, Table, Tabs } from "antd";
 
-export const PlayerModalStyle = styled(Modal)`
+export const PlayerModalStyle = styled(Modal)<any>`
+	.ant-modal-header {
+		display: none;
+	}
 	.ant-modal-content {
-		border-radius: 0px;
-		background-color: #fff;
+        border-radius: 1rem;
 		padding: 0;
-
-		.ant-modal-close {
-			top: 0;
+		height: 80%;
+	
+		@media screen and (min-width: 905px) {
+			height: 570px;
+		}
+	
+		@media screen and (max-width: 904px) {
+			position: fixed;
+			bottom: 0;
+			left: 0;
 			right: 0;
-			width: 30px;
-			height: 30px;
-
-			> .ant-modal-close-x {
-				// width: 30px;
-				// height: 30px;
-				font-size: 20px;
-				color: ${theme.primaryColor};
-				line-height: 30px;
-			}
-
 		}
 
-		.ant-modal-header {
-			.ant-modal-title {
-				background-color: ${theme.primaryContrast};
-				padding: 5px 30px;
-				text-transform: uppercase;
-				color: #fff;
+		.ant-modal-close {
+			height: 24px;
+			width: 24px;
+			top: 12px;
+			right: 12px;
+			background: none;
+
+			&-x {
+				background: ${theme.primaryColor};
+				height: 100%;
+				width: 100%;
+				border-radius: 50%;
+
+				svg {
+					color: ${theme.colorLightGray};
+					font-size: 12px;
+				}
+
+				&:hover {
+					background: ${theme.primaryContrast};
+				}
 			}
 		}
 
 		.ant-modal-body {
-			padding: 24px;
+			border-radius: 1rem;
+			height: 100%;
+			overflow-y: hidden;
+			overflow-x: hidden;
+			transition: all 375ms ease-in;
 
-			.surname, .forename {
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				font-size: 18px;
-			}
+			.player-header {
+				background: ${theme.primaryColor};
+				padding: 1rem;
+				display: flex;
+				gap: 1rem;
+				align-items: center;
+				transition: all 375ms ease-in;
+				height: 140px;
 
-			.action {
-				margin-top: 15px;
-				text-align: center;
-				cursor: pointer;
+				.right {
+					color: #fff;
+					display: flex;
+					flex-direction: column;
+					flex: 1;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
 
-				.anticon {
-					font-size: 30px;
-					margin: 10px;
-					display: block;
+				.forename {
+					line-height: 1.2;
+					font-size: 14px;
+				}
+	
+				.surname {
+					line-height: 1.2;
+					font-size: 24px;
+					font-weight: 700;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+
+				.clubPosition {
+					line-height: 1;
+				}
+
+				.thumbnail {	
+					background-image: url(${props => props.bg});
+					background-repeat: no-repeat;
+					background-size: cover;
+					background-color: #fff;
+					position: relative;
+					height: 90px;
+					width: 90px;
+					border-radius: 50%;
+					border: 1px solid white;
+					transition: all 375ms ease-in;
+				}
+
+				&.small-header {
+					position: relative;
+					height: 90px;
+
+					.right {
+						gap: 3px;
+						flex-direction: row;
+						
+						.forename, .surname {
+							font-size: 20px;
+							margin: 0;
+						}
+					}
+					.clubPosition {
+						display: none;
+					} 
+					.thumbnail {
+						height: 50px;
+						width: 50px;
+					}
 				}
 			}
 
-			.player-header {
-				margin: 0px;
-				padding: 0px 25px;
-				display: flex;
-				align-items: center;
-				font-size: 16px;
-				margin-bottom: 10px;
+			.player-stats {
+				display:flex;
+				padding: 1rem 0;
+
+				.stat {
+					flex: 1;
+					text-align: center;
+
+					.label {
+						font-size: 12px;
+						line-height: 1;
+    					margin: 0.5rem 0 0.25rem;
+						color: ${theme.colorGray};
+					}
+					.value {
+						font-size: 20px;
+						line-height: 1.1;
+					}
+
+					&:not(:last-child)::after {
+						content: "";
+						background-color: ${theme.colorLightGray};
+						position: absolute;
+						right: 0;
+						top: 0;
+						bottom: 0;
+						width: 1px;
+					}
+				}
 			}
 
 			.player-actions {
-				margin-top: 2rem;
-				.title {
-					width: 100%;
-					background-color: ${theme.primaryColor};
-					color: ${theme.primaryContrast};
-					padding: 2px 10px;
-					line-height: 1.75;
-					margin: 0;
-					font-size: 14px;
+				display:flex;
+				padding: 1rem 0;
+				align-items: flex-start;
+				justify-content: center;
+				border-bottom: 1px solid ${theme.colorLightGray};
+
+				.action {
+					display: flex;
+					width: 5rem;
+					text-align: center;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					gap: 0.5rem;
+					margin: 0.5rem;
+					color: gray;
+					font-size: 12px; 
+
+					.anticon svg {
+						cursor: pointer;
+						font-size: 30px;
+						border-radius: 50%;
+					}
+
+					&.disabled {
+						opacity: 50%;
+						.anticon svg {
+							cursor: not-allowed;
+						}
+					}
 				}
 			}
+		}
 
-			.player-body {
-				margin: 0;
-			}
+		.points {
+			border-top: 1px solid ${theme.colorLightGray};
+			padding: 1rem;
+		}
 
-			.points {
-				background-color: ${theme.primaryColor};
-				color: ${theme.primaryContrast};
-				display: flex;
-				flex-direction: column;
-				text-align: center;
-				padding: 10px;
-				font-weight: bold;
+		.match-details {
+			border-top: 1px solid ${theme.colorLightGray};
+			align-items: center;
+			background: rgb(249 249 249);
 
-				.value {
-					font-size: 200%;
+			.ant-col {
+				padding: 0;
+				&:nth-child(2) {
+					text-align:center;
 				}
-
-				// .label {
-				// 	display: block;
-				// }
 			}
+		}
+		.player-body {
+			margin-bottom: 120px;
 		}
 	}
 `;
 
-export const PointsOverviewTable = styled.table`
-	width: 100%;
-	border-collapse: collapse;
+export const PointsTableStyle = styled(Table)`
+	padding: 0 1rem;
 
-	thead {
-		background: ${theme.primaryContrast};
-		color: #fff;
-		text-align: center;
-	}
-
-	tr {
-		th, td {
-			padding: 5px;
-			text-align: center;
-
-			&:nth-child(1) {
+    .ant-table-thead {
+		>tr>th {
+			&:first-child {
 				text-align: left;
 			}
-		}
-
-		&.points-total {
-			background: ${theme.primaryColor};
-		}
-
-		&.booster td {
-			padding-top: 1.5rem;
-
-			.anticon {
-				margin-right: 1rem;
-			}
+			color: ${theme.primaryColor};
+			text-align: center;
+			border-bottom: 1px solid ${theme.primaryColor};
+			padding: 5px;
 		}
 	}
+
+    .ant-table-tbody {
+		text-align: center;
+        .ant-table-row {
+            background-color: #FFF;
+            > td {
+				.ant-table-cell-row-hover {
+					background-color: #FFF;
+				}
+				padding: 5px;
+				text-align: center;
+
+				&:first-child {
+					text-align: left;
+				}
+            }
+
+			&[data-row-key^="special"] {
+				color: ${theme.primaryColor};
+				font-weight: 400;
+			}
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    }
 `;
+
+export const TableStyle = styled(Table)`
+	border-top: 1px solid ${theme.colorLightGray};
+
+    .ant-table-container table>thead>tr:first-child {
+        >*:first-child {
+            border-start-start-radius: 0px;
+        }
+        >*:last-child {
+            border-start-end-radius: 0px;
+        }
+    }
+
+    .ant-table-thead {
+        display: none;
+    }
+
+	.avatar-container {
+		margin-bottom: -10px;
+	}
+
+    .ant-table-tbody {
+		text-align: center;
+        .ant-table-row {
+            background-color: #FFF;
+            > td {
+				&:nth-child(2) {
+					text-align:center;
+				}
+
+                border: none;
+                padding: 3.5px;	
+            }
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    }
+` as any;

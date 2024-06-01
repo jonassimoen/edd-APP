@@ -5,40 +5,19 @@ import "antd/lib/button/style";
 import { theme } from "@/styles/theme";
 
 export const ButtonStyle = styled(Button)`
-	border-radius: 0px !important;
+	border-radius: 1rem;
 	line-height: normal;
+	height: auto;
+	padding: 0.5rem;
 
 	&.ant-btn-primary {
-		color: #FFF;
-		background-color: ${theme.primaryContrast};
-		
-		&:not(:disabled):not(.ant-btn-disabled):hover, &:hover {
-			background-color: ${theme.primaryColor};
-			color: ${theme.primaryContrast};
+		background: ${theme.primaryContrast};
+		box-shadow: none;
+		border: 1px solid rgba(255 255 255 / 0.15);
+
+		&:not(.ant-btn-disabled):hover {
+			color: ${theme.secondaryColor};
+			background: ${theme.primaryContrast};
 		}
 	}
-	&.ant-btn-default {
-		color: ${theme.primaryContrast};
-
-		&:hover {
-			background-color: ${theme.primaryContrast};
-			color: ${theme.primaryColor};
-		}
-	}
-
-    &.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
-		padding-left: 40px;
-		
-		&.ant-btn-sm, &.ant-btn-lg {
-			padding-left: 21.5px;
-
-			span {
-				margin-left: 5px;
-			}
-		}
-    }
-
-    &.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) .anticon {
-        margin-left: 0;
-    }
 `;

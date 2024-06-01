@@ -1,5 +1,4 @@
 import { AbstractTeam } from "@/components/AbstractTeam/AbstractTeam";
-import { Block } from "@/components/Block/Block";
 import { Team } from "@/components/Team/Team";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { startingListToPositionsList } from "@/lib/helpers";
@@ -23,20 +22,26 @@ import teamBackground from "./../../assets/img/fpl-pitch-no-boarding.svg";
 import { MatchdaySelector } from "@/components/MatchdaySelector/MatchdaySelector";
 import { Spin } from "antd";
 import { BoosterStats } from "@/components/BoosterStats/BoosterStats";
+import { PointsStyle } from "./PointsStyle";
+import { useGetClubsQuery } from "@/services/clubsApi";
+import { useGetPlayersQuery } from "@/services/playersApi";
 
 export const _TeamPoints = (props: AbstractTeamType) => {
 	const { id } = useParams();
 	const user = useAppSelector((state) => state.userState.user);
 	const [state, setState] = useState({});
 
-	const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
-	const players = JSON.parse(localStorage.getItem("_static_players"));
-	const {competition, clubsSuccess, clubsLoading} = useSelector((state: StoreState) => state.application);
+	// const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
+	// const players = JSON.parse(localStorage.getItem("_static_players"));
+	// const {competition, clubsSuccess, clubsLoading} = useSelector((state: StoreState) => state.application);
+	const {competition } = useSelector((state: StoreState) => state.application);
+	const { data: clubs, isSuccess: clubsSuccess, isLoading: clubsLoading } = useGetClubsQuery();
+	const { data: players, isSuccess: playersSuccess, isLoading: playersLoading } = useGetPlayersQuery();
 
 	const { data: matches, isLoading: matchesLoading, isError: matchesError, isSuccess: matchesSuccess } = useGetMatchesQuery();
 	const { data: deadlineInfo, isLoading: deadlineInfoLoading, isError: deadlineInfoError, isSuccess: deadlineInfoSuccess } = useGetDeadlineInfoQuery();
 	const { data: weeks, isLoading: weeksLoading, isError: weeksError, isSuccess: weeksSucces } = useGetWeeksQuery();
-	const [getPointsTeam] = useLazyGetPointsQuery();
+	const [getPointsTeam, {isSuccess: teamLoaded}] = useLazyGetPointsQuery();
 	const { t } = useTranslation();
 	const location = useLocation();
 
@@ -104,7 +109,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const endWinnerSelections = player.selections[0].endWinnerSelections;
 						const pointsOverview = endWinnerSelections?{endWinnerSelections, ...playerStats}:playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
-						return Object.assign({ inStarting: true, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), {stats: player.stats}, pick(player.selections[0], selectionProps));
+						return Object.assign({ inStarting: true, currentMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), {stats: player.stats}, pick(player.selections[0], selectionProps));
 					});
 				const bench = result.players
 					.filter((player: any) => player.selections[0].starting === 0)
@@ -113,7 +118,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 						const endWinnerSelections = player.selections[0].endWinnerSelections;
 						const pointsOverview = endWinnerSelections?{endWinnerSelections, ...playerStats}:playerStats;
 						const displayWeekMatches = matches.filter((match: any) => match.weekId === weekId && ([match.home?.id, match.away?.id].includes(player.clubId)));
-						return Object.assign({ inStarting: false, upcomingMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), {stats: player.stats}, pick(player.selections[0], selectionProps));
+						return Object.assign({ inStarting: false, currentMatches: displayWeekMatches }, { pointsOverview }, pick(player, playerProps), {stats: player.stats}, pick(player.selections[0], selectionProps));
 					}).sort((first: any, second: any) => {
 						return (first.positionId === 1) ? -1 : 0;
 					});
@@ -145,7 +150,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 				props.initTeamState(starting, bench, teamName, teamId, captainId, budget, undefined, weekId, teamPointsInfo, [], [], [], viceCaptainId, boosters, isTeamOwner, teamUser);
 			})
 			.catch(err => {
-				console.log(err);
+				console.error(err);
 				setState({ notFound: true });
 			});
 	};
@@ -176,111 +181,113 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const isPowerSubEnabled = false;
 	const isPublicRoute = location.pathname.includes("public");
 
+	useEffect(() => {
+		document.body.classList.add("color-background-main");
+		return () => { document.body.classList.remove("color-background-main"); };
+	},[]);
+
 	return (
-		<Spin spinning={clubsLoading || matchesLoading || deadlineInfoLoading} delay={0}>
+		<Spin spinning={clubsLoading || matchesLoading || deadlineInfoLoading || !initializedExternally || !teamLoaded} delay={0}>
 			{
-				(initializedExternally && visibleWeekId &&
+				(initializedExternally && teamLoaded && visibleWeekId &&
 					<Row style={{ margin: 0 }}>
 						<Col md={24} sm={24} xs={24}>
-							<Block>
-								<MatchdaySelector
-									day={visibleWeekId}
-									max={displayWeek ? displayWeek : visibleWeekId}
-									min={1}
-									name={currentWeekName?(`general.weeks.${currentWeekName}`):null}
-									onPrev={(e: any) => props.onDayChange(false)}
-									onNext={(e: any) => props.onDayChange(true)}
-								/>
-							</Block>
+							<MatchdaySelector
+								day={visibleWeekId}
+								max={displayWeek ? displayWeek : visibleWeekId}
+								min={1}
+								name={currentWeekName?(`general.weeks.${currentWeekName}`):null}
+								onPrev={(e: any) => props.onDayChange(false)}
+								onNext={(e: any) => props.onDayChange(true)}
+							/>
 						</Col>
 					</Row>)
 				|| null
 			}
 			{
-				(initializedExternally &&
+				<PointsStyle>
 					<Row style={{ margin: 0 }}>
-						<Col lg={12} md={12} sm={24} xs={24}>
-							<Block style={{ marginTop: "10px" }}>
-								<Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title>
-								{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
-								<PointsStats
-									visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
-									isPublic={isPublicRoute}
-									weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
-									weekAveragePoints={teamPointsInfo.weekAveragePoints}
-								/>
-							</Block>
-							<Block style={{ marginTop: "10px" }}>
-								<Title level={2}>{t("general.lineup")}</Title>
-								<Team widthRatio={15}
-									heightRatio={10}
-									clubs={clubs}
-									captainId={captainId}
-									captainHasPlayed={captainHasPlayed}
-									viceCaptainId={viceCaptainId}
-									centerAligned={true}
-									selection={startingByPositions}
-									assetsCdn={competition.assetsCdn}
-									onSwap={props.onPlayerSwap}
-									isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
-									swapPlayerId={props.swapPlayerId}
-									swappedFrom={props.swappedFrom}
-									// boosterWeekStatus={boosterWeekStatus}
-									replacePlayerPointsWithStatsPoints={false}
-									showCaptainBadge={true}
-									showBoosterBadge={true}
+						<Col lg={16} md={16} sm={24} xs={24}>
+							{/* <Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title> */}
+							{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
+							{teamLoaded && initializedExternally &&
+								<>
+									<PointsStats
+										visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
+										isPublic={isPublicRoute}
+										weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
+										weekAveragePoints={teamPointsInfo.weekAveragePoints}
+									/>
+									{/* <Title level={2}>{t("general.lineup")}</Title> */}
+									<Team widthRatio={15}
+										heightRatio={10}
+										clubs={clubs}
+										captainId={captainId}
+										captainHasPlayed={captainHasPlayed}
+										viceCaptainId={viceCaptainId}
+										centerAligned={true}
+										selection={startingByPositions}
+										assetsCdn={competition.assetsCdn}
+										onSwap={props.onPlayerSwap}
+										isSwapAble={(isPowerSubEnabled) ? props.isSwapAble : false}
+										swapPlayerId={props.swapPlayerId}
+										swappedFrom={props.swappedFrom}
+										// boosterWeekStatus={boosterWeekStatus}
+										replacePlayerPointsWithStatsPoints={false}
+										showCaptainBadge={true}
+										showBoosterBadge={true}
 									
-									modalEnabled={true}
-									playerBadgeColor={"#fff"}
-									playerBadgeBgColor={theme.primaryContrast}
-									playerPointsColor={"#000"}
-									playerPointsBgColor={theme.primaryColor}
-									bg={teamBackground}
-									playerType={PlayerType.SoccerPortrait} />
-								<Substitutes
-									selection={bench}
-									title={"De bank"}
-									clubs={clubs}
-									assetsCdn={competition.assetsCdn}
-									playerType={PlayerType.SoccerPortrait}
-									playerBadgeColor={"#fff"}
-									playerBadgeBgColor={theme.primaryContrast}
-									playerPointsColor={"#000"}
-									playerPointsBgColor={theme.primaryColor}
-									captainId={captainId}
-									viceCaptainId={viceCaptainId}
-									showCaptainBadge={true}
-									modalEnabled={true}
-									replacePlayerPointsWithStatsPoints={true}
-									showBoosterBadge={true}
+										modalEnabled={true}
+										playerBadgeColor={"#fff"}
+										playerBadgeBgColor={theme.primaryContrast}
+										playerPointsColor={"#fff"}
+										playerPointsBgColor={theme.primaryColor}
+										bg={teamBackground}
+										playerType={PlayerType.SoccerPortrait} />
+									<Substitutes
+										selection={bench}
+										title={"De bank"}
+										clubs={clubs}
+										assetsCdn={competition.assetsCdn}
+										playerType={PlayerType.SoccerPortrait}
+										playerBadgeColor={"#fff"}
+										playerBadgeBgColor={theme.primaryContrast}
+										playerPointsColor={"#fff"}
+										playerPointsBgColor={theme.primaryColor}
+										captainId={captainId}
+										viceCaptainId={viceCaptainId}
+										showCaptainBadge={true}
+										modalEnabled={true}
+										showPositionNumber={true}
+										replacePlayerPointsWithStatsPoints={true}
+										showBoosterBadge={true}
 
-									onSwap={props.onPlayerSwap}
-									swapPlayerId={props.swapPlayerId}
-									swappedFrom={props.swappedFrom}
-									isSwapAble={false} // todo: implement powersub
-								/>
-							</Block>
-							<Block style={{ marginTop: "10px" }}>
-								<Title level={2}>{t("pointsPage.boostersUsed")} </Title>
-								<BoosterStats
-									boosterWeekStatus={boosterWeekStatus}
-									boostedPlayers={
-										starting.concat(bench).filter(p => p.booster).map(p => 
-											Object.assign(
-												{generalPoints: p.stats[0]?.points},
-												pick(p, ["booster","id","short","name","points"])
+										onSwap={props.onPlayerSwap}
+										swapPlayerId={props.swapPlayerId}
+										swappedFrom={props.swappedFrom}
+										isSwapAble={false} // todo: implement powersub
+									/>
+									{/* <Title level={2}>{t("pointsPage.boostersUsed")} </Title>
+									<BoosterStats
+										boosterWeekStatus={boosterWeekStatus}
+										boostedPlayers={
+											starting.concat(bench).filter(p => p.booster).map(p => 
+												Object.assign(
+													{generalPoints: p.stats[0]?.points},
+													pick(p, ["booster","id","short","name","points"])
+												)
 											)
-										)
-									}
-									assetsCdn={competition.assetsCdn}
-								/>
-								
-							</Block>
+										}
+										assetsCdn={competition.assetsCdn}
+									/> */}
+								</>
+							}
+									
 						</Col>
-						<Col lg={12} md={12} sm={24} xs={24}>
+						<Col lg={8} md={8} sm={24} xs={24} className="right-col">
+							{/* <Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title> */}
 							{
-								<Block style={{ marginTop: "10px" }}>
-									<Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title>
+								initializedExternally && (
 									<Stats
 										visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
 										visibleWeekRank={teamPointsInfo.visibleWeekRank}
@@ -290,24 +297,23 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 										weekId={visibleWeekId}
 										weekPointsConfirmed={currentWeek.validated}
 									/>
-								</Block>
+								)
 							}
 							{
 								matches && matches.length && visibleWeekId ?
-									<Block style={{ marginTop: "10px" }}>
-										<Title level={2}>{t("general.calendar")}</Title>
-										<Calendar
-											assetsCdn={competition.assetsCdn}
-											size={30}
-											weekId={visibleWeekId}
-											showHeader={false}
-										/>
-									</Block>
+								// <Title level={2}>{t("general.calendar")}</Title>
+									<Calendar
+										assetsCdn={competition.assetsCdn}
+										size={30}
+										weekId={visibleWeekId}
+										showHeader={false}
+										maxHeight={400}
+									/>
 									: null
 							}
 						</Col>
 					</Row>
-				)
+				</PointsStyle>
 			}
 		</Spin >
 	);

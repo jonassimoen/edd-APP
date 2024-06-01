@@ -27,11 +27,11 @@
     "calendar": "Wedstrijden",
     "budgetFilterPrefix": "Max. €",
     "budgetFilterSuffix": "miljoen",
-    "allBudget": "Onbeperkt budget",
-    "allPositions": "Alle posities",
-    "allClubs": "Alle ploegen",
+    "allBudget": "Onbeperkt",
+    "allPositions": "Alle",
+    "allClubs": "Alle",
     "playersListSearchInputPlaceholder": "Zoek speler op naam",
-    "matchday": "Speeldag",
+    "matchday": "speeldag",
     "week": "Week",
     "allWeeks": "Alle speeldagen",
     "weeks": {
@@ -66,7 +66,9 @@
     "rules": "Spelregels",
     "team": {
       "tobedetermined": "Nog te bepalen",
-      "tbd": "N.t.b."
+      "tbd": "N.t.b.",
+      "name": "Team",
+      "edit": "Wijzig"
     },
     "teamBoosters": "Team boosters",
     "teamBooster": "Team booster",
@@ -79,7 +81,18 @@
     "finish": "Afsluiten",
     "confirmModalYesBtn": "Ja",
     "confirmModalNoBtn": "Neen",
-    "notPayed": "<b>Opgelet!</b><br>Om deel te kunnen nemen aan European Dream Draft is een instapkost van € 5 vereist, die u kan betalen in het menu 'Inschrijving'. Gelieve bij problemen een berichtje te sturen via de knop onderaan de website."
+    "notPayed": "<b>Opgelet!</b><br>Om deel te kunnen nemen aan European Dream Draft is een instapkost van € 5 vereist, die u kan betalen in het menu 'Inschrijving'. Gelieve bij problemen een berichtje te sturen via de knop onderaan de website.",
+    "short": {
+      "points": "pnt"
+    },
+    "club": "Club",
+    "price": "Prijs",
+    "position": "Positie",
+    "transfers": "Transfers",
+    "deadline": "Deadline",
+    "matchdayPoints": "Speeldag",
+    "matchdayCamelCase": "Speeldag",
+    "typeStat": "Statistiek"
   },
   "player": {
     "midfielder": "Middenvelder",
@@ -101,7 +114,18 @@
       "quantityColumnName": "Aantal",
       "pointsColumnName": "Punten",
       "selectionActions": "Selectie acties",
-      "totalRegularPoints": "Reguliere punten"
+      "totalRegularPoints": "Reguliere punten",
+      "matches": {
+        "matchday": "MD",
+        "homeAway": "T/U",
+        "opponent": "Tegenstander",
+        "result": "Resultaat"
+      },
+      "stats": {
+        "selected": "Geselecteerd door",
+        "points": "Totaal",
+        "price": "Prijs"
+      }
     },
     "assistsLabel": "Assist",
     "goalsLabel": "Doelpunt",
@@ -125,7 +149,8 @@
     "duelsWonMoreThanLostLabel": "Meer gewonnen dan verloren duels",
     "interceptionsPerSevenLabel": "Intercepties per zeven",
     "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3",
-    "endWinnerSelectionsLabel": "Eindwinnaar (per speeldagselectie)"
+    "endWinnerSelectionsLabel": "Eindwinnaar (per speeldagselectie)",
+    "addBadgeLabel": "Voeg toe"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {
@@ -206,7 +231,9 @@
       "translation": {
         "add": "Voeg vertaling toe"
       },
-      "remove": "Verwijder"
+      "remove": "Verwijder",
+      "edit": "Wijzig",
+      "noBody": "-- Geen tekst --"
     },
     "article": {
       "add": "Voeg nieuw artikel toe"
@@ -264,7 +291,19 @@
     "transferOut": "Uit",
     "transferIn": "In",
     "newTeam": "Maak een nieuw team",
-    "saveTeamFailed": "Opslaan van je team is mislukt."
+    "saveTeamFailed": "Opslaan van je team is mislukt.",
+    "save": {
+      "success": "Team succesvol opgeslagen",
+      "failed": "Team opslaan mislukt"
+    },
+    "edit": {
+      "success": "Wijziging team succesvol",
+      "failed": "Team wijzing mislukt"
+    },
+    "transfers": {
+      "success": "Transfers succesvol",
+      "failed": "Transfers opslaan mislukt"
+    }
   },
   "players": {
     "noneFound": "Geen spelers gevonden"
@@ -380,6 +419,17 @@
     "processingTitle": "Betaling wordt verwerkt",
     "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
     "tryAgain": "Probeer opnieuw te betalen",
-    "payNow": "Betaal nu"
+    "payNow": "Betaal nu",
+    "title": "Inschrijvingskost betalen"
+  },
+  "rules": {
+    "matchdays": "Speeldagen",
+    "squad": "Jouw team",
+    "substitutes": "Wissels",
+    "transfers": "Transfers",
+    "deadlines": "Deadlines",
+    "boosters": "Boosters",
+    "points": "Punten",
+    "legal": "Algemeen"
   }
 }

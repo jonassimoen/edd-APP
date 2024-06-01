@@ -15,7 +15,9 @@ export const NewGameStats = (props: StatsProps) => {
 		<StatsStyle ref={props.tourRef}>
 			<Row className="stat-row">
 				<Col lg={12} md={12} sm={12} xs={12}>
-					<p className="points">{props.selectedPlayers}/{props.totalPlayers}</p>
+					<p className="points">{props.selectedPlayers}
+						<span className="lower">/{props.totalPlayers}</span>
+					</p>
 					<p className="label">{t("team.players")}</p>
 
 				</Col>

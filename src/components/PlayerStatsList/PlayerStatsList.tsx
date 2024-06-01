@@ -36,6 +36,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			stat: 0
 		},
 		pagination: {
+			position: ["bottomCenter"],
 			current: 1,
 			total: 0,
 			pageSize: props.size,
@@ -160,6 +161,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 			title: t("stats.allPlayersTable.playerColumn"),
 			sorter: (a: any, b: any) => a.generalInfo.short.localeCompare(b.generalInfo.short),
 			dataIndex: "generalInfo",
+			fixed: "left",
 			render: (text: string, record: any) => {
 				return (<span>{record.generalInfo.short || record.generalInfo.name}</span>);
 			},
@@ -274,6 +276,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					placeholder={clubsList[0].name}
 					style={{ marginLeft: 0 }}
 					loading={clubsLoading}
+					placeholderTxt={t("general.club")}
 				/>
 				<Select
 					$block
@@ -283,6 +286,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					values={positionsList}
 					onSelect={(value: any) => onFilterChange("positionId", value)}
 					placeholder={positionsList[0].name}
+					placeholderTxt={t("general.position")}
 				/>
 				<Select
 					$block
@@ -293,6 +297,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					onSelect={(value: any) => onFilterChange("weekId", value)}
 					placeholder={weeksList[0].name}
 					loading={weeksLoading}
+					placeholderTxt={t("general.matchdayCamelCase")}
 				/>
 				<Select
 					$block
@@ -302,6 +307,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					onSelect={(value: any) => onFilterChange("playerValue", value)}
 					placeholder={budgetsList[0].name}
 					style={{ marginRight: 0 }}
+					placeholderTxt={t("general.price")}
 				/>
 				<Select
 					$block
@@ -312,6 +318,7 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 					onSelect={(value: any) => onFilterChange("stat", value)}
 					placeholder={statsList[0].name}
 					style={{ marginRight: 0 }}
+					placeholderTxt={t("general.typeStat")}
 				/>
 			</SelectGroupStyle>
 			<TableStyle
@@ -324,9 +331,6 @@ export const PlayerStatsList = (props: PlayerStatsListProps) => {
 				onRow={tableEventHandler}
 				onChange={handleTableChange}
 				rowKey="playerId"
-				rowClassName={(record: object, index: number) =>
-					`${index % 2 ? "ant-table-row--odd" : "ant-table-row--even"} ${props.onSelect ? "cursor-pointer" : ""}`
-				}
 				bordered={false}
 			/>
 

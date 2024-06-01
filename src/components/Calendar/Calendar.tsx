@@ -1,11 +1,10 @@
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { groupBy, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
-import { TableStyle } from "@/components/PlayerList/PlayerListStyle";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
 import "dayjs/locale/nl-be";
-import { ClubBadgeBg, ClubDetails, ClubName, ContainerStyle, FiltersArea } from "./CalendarStyle";
+import { ClubBadgeBg, ClubDetails, ClubName, ContainerStyle, FiltersArea, TableStyle } from "./CalendarStyle";
 import { useTranslation } from "react-i18next";
 import { Select } from "../UI/Select/Select";
 import { Navigate } from "react-router-dom";
@@ -16,6 +15,7 @@ type CalendarProps = {
 	showHeader?: boolean
 	size: number
 	assetsCdn: string
+	maxHeight?: number
 }
 
 type CalendarState = {
@@ -82,9 +82,9 @@ export const Calendar = (props: CalendarProps) => {
 			render: (homeId: any, record: any) => {
 				const clubBadge = record.home ? `${props.assetsCdn}/badges/${record.home.id}.png` : `${props.assetsCdn}/badges/dummy.png`;
 
-				return <ClubDetails>
-					<ClubBadgeBg src={clubBadge} />
+				return <ClubDetails className="right">
 					<ClubName className="team-name" fullName={record.home?.name || t("general.team.tobedetermined")} shortName={record.home?.short || t("general.team.tbd")}></ClubName>
+					<ClubBadgeBg src={clubBadge} />
 				</ClubDetails>;
 			}
 		},
@@ -105,7 +105,7 @@ export const Calendar = (props: CalendarProps) => {
 			render: (awayId: any, record: any) => {
 				const clubBadge = record.away ? `${props.assetsCdn}/badges/${record.away.id}.png` : `${props.assetsCdn}/badges/dummy.png`;
 
-				return <ClubDetails>
+				return <ClubDetails className="left">
 					<ClubBadgeBg src={clubBadge} />
 					<ClubName className="team-name" fullName={record.away?.name || t("general.team.tobedetermined")} shortName={record.away?.short || t("general.team.tbd")}></ClubName>
 				</ClubDetails>;
@@ -114,28 +114,34 @@ export const Calendar = (props: CalendarProps) => {
 	];
 
 	return matchesSuccess && (
-		<ContainerStyle>
+		<ContainerStyle maxheight={props.maxHeight}>
 			{
 				state.navigateToMatchId && <Navigate to={{ pathname: `/match/${state.navigateToMatchId}` }} />
 			}
-			<FiltersArea>
-				{
-					state.filtersActivated && selectedWeekId && selectedWeekId.id ?
-						<Select
-							$block
-							keyProperty="id"
-							textProperty="name"
-							onSelect={(value: any) => onCalendarWeekChanged(value)}
-							value={selectedWeekId.id}
-							values={matchWeekIds}
-						/> : null
-				}
-			</FiltersArea>
+			{
+				state.filtersActivated && (
+					<FiltersArea>
+						{
+							selectedWeekId && selectedWeekId.id ?
+								<Select
+									$block
+									keyProperty="id"
+									textProperty="name"
+									onSelect={(value: any) => onCalendarWeekChanged(value)}
+									value={selectedWeekId.id}
+									values={matchWeekIds}
+								/> : null
+						}
+					</FiltersArea>
+				)
+			}
 			{
 				Object.keys(matchesByDates).map((date: string, key: number) => {
 					return (
 						<div key={`gameday-${key + 1}`} className={`gameday day-${key + 1}`}>
-							<Title level={4}>{dayjs(date, "DD/MM/YYYY").format("dddd D MMMM")}</Title>
+							<div className="date">
+								<p>{dayjs(date, "DD/MM/YYYY").format("dddd D MMMM")}</p>
+							</div>
 							<TableStyle
 								columns={columns}
 								dataSource={matchesByDates[date]}

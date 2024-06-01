@@ -32,8 +32,8 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 	};
 
 	return (
-		<BoosterStyle className="booster">
-			<p className="booster-type">{t(`boosters.${props.type}`)}</p>
+		<BoosterStyle className={`booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
+			{/* <p className="booster-type">{t(`boosters.${props.type}`)}</p> */}
 			<div className="booster-icon">
 				{
 					boosterUsed && assignedPlayerValid ?
@@ -69,7 +69,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 					t("boosters.active") 
 					: 
 					boosterUsed ? 
-						`${t("general.matchday")} ${props.activatedWeek}`
+						`${t("general.matchdayCamelCase")} ${props.activatedWeek}`
 						: t("boosters.activate")}
 			</Button>
 		</BoosterStyle>

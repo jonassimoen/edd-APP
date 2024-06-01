@@ -42,7 +42,10 @@ export const HeaderStyle = styled.header`
         top: 0;
         z-index: 4;
         background-color: ${theme.primaryContrast};
-        border-bottom: 5px solid #2b1640;
+        background-image: url('/src/assets/img/new_pattern.png');
+        background-position: center top;
+        border-bottom: 5px solid ${theme.primaryContrast};
+        background-repeat: no-repeat;
 
         &__nav {
             @media ${mediaQueries.mobileS} {
@@ -58,7 +61,6 @@ export const HeaderStyle = styled.header`
                 align-items: center;
                 justify-content: space-between;
                 height: 5rem;
-                background-color: ${theme.primaryContrast};
                 
                 .c-logo {
                     display: inline-block;
@@ -98,13 +100,20 @@ export const HeaderStyle = styled.header`
                                 transition: border-color .2s, color .2s;
                                 text-decoration: none;
                                 color: #c9c5ce;
-                                padding: 1.75rem 0;
         
                                 &:hover {
-                                    color:white;
+                                    color: ${theme.secondaryColor};
                                 }
                             }
                         }
+                    }
+
+                    &__item {
+                        padding: 1.75rem 0;
+                    }
+
+                    &__link {
+                        padding: 0.2rem 0.3rem;
                     }
                 }
         
@@ -156,8 +165,8 @@ export const HeaderStyle = styled.header`
             padding: 0 0.75rem;
 
             &.is-selected .c-nav-tabs__link {
-                color: ${theme.primaryContrast};
-                border-color: ${theme.primaryColor};
+                color: ${theme.secondaryColor};
+                border-color: ${theme.secondaryColor};
             }
             
         }
@@ -172,8 +181,8 @@ export const HeaderStyle = styled.header`
             color: #61566b;
 
             &:hover {
-                color: ${theme.primaryContrast};
-                border-color: #c9c5ce;
+                color: ${theme.secondaryColor};
+                border-color: ${theme.secondaryColor};
             }
         }
     }
@@ -223,6 +232,11 @@ export const HeaderStyle = styled.header`
         }
 
         &__item {
+            &.active {
+                .c-nav-mobile__link {
+                    color: ${theme.secondaryColor};
+                }
+            }
             text-align: left;
             font-size: 2rem;
             line-height: 1.6875em;
@@ -232,14 +246,21 @@ export const HeaderStyle = styled.header`
         &__link {
             font-weight: 400;
             text-decoration: none;
-            color: #c9c5ce;
+            color: ${theme.colorLightGray};
         }
     }
 
-    .is-selected {
-    & .c-nav-main__link {
-        color: #fff;
-        border-bottom-color: ${theme.primaryColor} !important;
+    .is-selected.c-nav-main__item {
+        border-bottom: 3px solid;
+        border-bottom-color: ${theme.secondaryColor} !important;
+
+        .c-nav-main__link {
+            color: ${theme.secondaryColor};
+            border-radius: 1rem;
+            &:hover {
+                color: ${theme.primaryContrast};
+            }
+        }
     }
 ` as any;
 

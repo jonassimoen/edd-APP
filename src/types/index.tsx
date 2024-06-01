@@ -45,10 +45,11 @@ type Player = {
 	points: number
 	pointsOverview: any
 	booster: string
-
+	pSelections?: number
 	stats?: Statistic[]
 	selections?: PlayerSelection[]
 	upcomingMatches: Match[]
+	currentMatches: Match[]
 }
 
 type Statistic = {

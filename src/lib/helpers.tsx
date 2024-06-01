@@ -186,7 +186,7 @@ const PlayerActionsPoints: any = {
 	penaltySaved: [0, 5, 15, 15, 15],
 	// Attacking
 	shotsOffTargetPerTwo: [0, -1, -1, -1, -1],
-	shotsOnTargetPerTwo: [0, 1, 1, 1, 1],
+	shotsOnTargetPerThree: [0, 1, 1, 1, 1],
 	// Passing
 	passAccMore85: [0, 2, 2, 3, 2],
 	keyPassPerTwo: [0, 2, 2, 2, 2],
@@ -291,12 +291,12 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				}
 				break;
 			}
-			case "shotsOnTargetPerTwo": {
+			case "shotsOnTargetPerThree": {
 				const shotsOnTarget = player.pointsOverview && player.pointsOverview.shotsOnTarget;
-				const shotsOnTargetPerTwo = Math.floor(shotsOnTarget / 2);
+				const shotsOnTargetPerThree = Math.floor(shotsOnTarget / 3);
 
-				if (shotsOnTargetPerTwo) {
-					pointsOverview.push({ action: t("player.shotsOnTargetPerTwoLabel"), quantity: shotsOnTarget, points: shotsOnTargetPerTwo * actionPoints });
+				if (shotsOnTargetPerThree) {
+					pointsOverview.push({ action: t("player.shotsOnTargetPerThreeLabel"), quantity: shotsOnTarget, points: shotsOnTargetPerThree * actionPoints });
 				}
 				break;
 			}
@@ -439,13 +439,13 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 	return pointsOverview;
 };
 
-export const calendarLiveScoreComponent = (match: Match) => {
+export const calendarLiveScoreComponent = (match: Match, includeDay?: boolean) => {
 	const matchDate = dayjs(match.date);
 	let text = null;
 	let icon = null;
 	let className = "";
 	if(dayjs().isBefore(matchDate)) {
-		text = matchDate.format("HH:mm");
+		text = includeDay ? matchDate.format("DD MMM[\n]HH:mm") : matchDate.format("HH:mm");
 	} else {
 		if(dayjs().isBefore(matchDate.add(2, "hour"))) {
 			className = "live";

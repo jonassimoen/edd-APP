@@ -9,12 +9,12 @@ export const SubstitutesStyle = styled.div`
     align-items: center;
     justify-content: center;
     max-width: 975px;
-    padding-top: 2%;
     padding-bottom: 2%;
     row-gap: 2rem;
-	background: url('${(props: any) => props.bgImage}') center;
+    margin: 0 auto;
+	// background: url('${(props: any) => props.bgImage}') center;
 
-	@media ${mediaQueries.tablet} {
+	@media ${mediaQueries.tabletL} {
 		max-width: 960px;
 	}
     .substitutes {
@@ -29,7 +29,17 @@ export const SubstitutesStyle = styled.div`
     }
 
     .title {
-        color: ${theme.primaryColor};
+        background: ${theme.primaryColor};
+        width: 80%;
+        border-radius: 0.25rem;
+        border: 1px solid rgba(255 255 255 / 0.15);
+        @media ${mediaQueries.tabletL} {
+            width: 60%;
+        }
+        padding: 0.5rem;
+        text-align: center;
+        margin: 0 auto;
+        color: ${theme.secondaryColor};
         text-transform: uppercase;
         font-weight: bold;
     }
