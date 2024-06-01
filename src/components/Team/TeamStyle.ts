@@ -51,7 +51,7 @@ export const TeamStyle = styled.div`
         content: "";
         position: absolute;
         z-index: -999;
-        top: -11rem;
+        top: -12rem;
         background: url(${pitchBackground});
         background-size: cover;
         background-repeat: no-repeat;

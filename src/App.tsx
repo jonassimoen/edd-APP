@@ -19,7 +19,6 @@ import { useLazyGetPlayersQuery } from "./services/playersApi";
 import { useLazyGetClubsQuery } from "./services/clubsApi";
 import { clubsLoading, playersLoading, setClubs, setPlayers } from "./reducers/application";
 import { useDispatch } from "react-redux";
-import { StyledRouterProvider } from "./StyledRouterProvider";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -67,7 +66,7 @@ const App = () => {
 			<ToastContainer
 				autoClose={7500}
 			/>
-			<StyledRouterProvider router={router} />
+			<RouterProvider router={router} />
 		</ConfigProvider>
 	);
 };
