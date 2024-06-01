@@ -303,7 +303,8 @@
     "transfers": {
       "success": "Transfers succesvol",
       "failed": "Transfers opslaan mislukt"
-    }
+    },
+    "playersSameClub": "Spelers zelfde team"
   },
   "players": {
     "noneFound": "Geen spelers gevonden"

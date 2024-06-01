@@ -5,6 +5,7 @@ import { StatsStyle, TransferListStyle, TransfersOverviewStyle } from "./Transfe
 
 type TransfersOverviewProps = {
 	budget: number
+	maxPlayersSameClub: number
 	totalPlayers: number
 	totalPlayersSelected: number
 	remainingFreeTransfers: number
@@ -80,19 +81,23 @@ export const TransfersOverview = (props: TransfersOverviewProps) => {
 				single={false}
 			>
 				<Row className="stat-row">
-					<Col lg={6} md={6} sm={6} xs={6}>
+					<Col span={6}>
 						<p className="points">{props.budget.toFixed(2)}M</p>
 						<p className="label">{t("transfersPage.overviewBudget")}</p>
 					</Col>
-					<Col lg={6} md={6} sm={6} xs={6}>
+					<Col span={6}>
 						<p className="points">{props.totalPlayersSelected}/{props.totalPlayers}</p>
 						<p className="label">{t("transfersPage.overviewPlayers")}</p>
 					</Col>
-					<Col lg={6} md={6} sm={6} xs={6}>
+					<Col span={4}>
+						<p className="points">{props.maxPlayersSameClub}</p>
+						<p className="label">{t("team.playersSameClub")}</p>
+					</Col>
+					<Col span={4}>
 						<p className="points">{props.minusPoints}</p>
 						<p className="label">{t("transfersPage.minusPoints")}</p>
 					</Col>
-					<Col lg={6} md={6} sm={6} xs={6}>
+					<Col span={4}>
 						<p className="points">{props.remainingFreeTransfers < 0 ? 0 : props.remainingFreeTransfers}</p>
 						<p className="label">{t("transfersPage.overviewFreeTransfers")}</p>
 					</Col>

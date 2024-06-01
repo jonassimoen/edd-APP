@@ -267,8 +267,8 @@ const _Transfers = (props: AbstractTeamType) => {
 		clubs && teamResult && matches && players && deadlineInfo && (
 			<TransfersStyle>
 				{(notTeamOwner || state.notFound) && <Navigate to={"/home"} />}
-				{team && props.visibleWeekId &&
-					(!gameStarted || enabledWildOrFreeHit) && (<Navigate to={`/edit/${teamResult.team.id}`} />)}
+				{/* {team && props.visibleWeekId &&
+					(!gameStarted || enabledWildOrFreeHit) && (<Navigate to={`/edit/${teamResult.team.id}`} />)} */}
 				<Row>
 					<Col md={12} sm={12} xs={24}>
 						<div className="title">
@@ -333,6 +333,7 @@ const _Transfers = (props: AbstractTeamType) => {
 										tax={competition.transferTaxPercentage}
 										size={15}
 										budget={budget}
+										maxPlayersSameClub={deadlineInfo.deadlineInfo.sC}
 										totalPlayers={ competition.lineupSize + competition.benchSize}
 										totalPlayersSelected={ startingPicked.length + benchPicked.length }
 										minusPoints={minusPoints}

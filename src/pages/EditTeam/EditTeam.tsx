@@ -198,6 +198,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 						/>
 						<NewGameStats
 							budget={budget}
+							maxPlayersSameClub={deadlineInfo.deadlineInfo.sC}
 							totalPlayers={totalPlayersToPick}
 							selectedPlayers={totalPlayersPicked}
 						/>

@@ -209,6 +209,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 						<NewGameStats
 							budget={budget}
+							maxPlayersSameClub={deadlineInfo.deadlineInfo.sC}
 							totalPlayers={totalPlayersToPick}
 							selectedPlayers={totalPlayersPicked}
 							tourRef={statsRef}

@@ -16,8 +16,8 @@ export const PlayerStyle = styled.div`
 	}
 
     @media ${mediaQueries.mobileM} {
-        width: 70px;
-       	height: 50px;
+        width: 95px;
+        height: 80px;
     }
 
     @media ${mediaQueries.tabletL} {	
