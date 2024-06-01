@@ -81,7 +81,6 @@
     "finish": "Afsluiten",
     "confirmModalYesBtn": "Ja",
     "confirmModalNoBtn": "Neen",
-    "notPayed": "<b>Opgelet!</b><br>Om deel te kunnen nemen aan European Dream Draft is een instapkost van € 5 vereist, die u kan betalen in het menu 'Inschrijving'. Gelieve bij problemen een berichtje te sturen via de knop onderaan de website.",
     "short": {
       "points": "pnt"
     },
@@ -96,14 +95,20 @@
     "transfer": {
       "out": "uit",
       "in": "in"
-    }
+    },
+    "playersListEmpty": "Geen spelers gevonden.",
+    "editTeamDescription": "Je kan je team onbeperkt wijzigen tot de volgende speeldagen. Maak hier handig gebruik van!",
+    "noMatchesFound": "Geen wedstrijden gevonden.",
+    "lineupDescription": "Kies hier je elf basisspelers. Enkel zij verdienen punten deze speeldag. Als een basisspeler niet speelt, wordt deze automatisch vervangen met een bankzitter die wel speelde!",
+    "transferDescription": "Maak hier je transfers. Let op, je hebt een beperkt aantal transfers. Indien je meer transfers maakt, dan betaal je dit met minpunten."
   },
   "player": {
-    "midfielder": "Middenvelder",
+    "addBadgeLabel": "Voeg toe",
+    "coach": "Bondscoach",
     "goalkeeper": "Doelman",
     "defender": "Verdediger",
+    "midfielder": "Middenvelder",
     "attacker": "Aanvaller",
-    "goalkeeperShort": "DM",
     "opponentHome": "T",
     "opponentAway": "U",
     "btnCaptainBadgeLabel": "Maak aanvoerder",
@@ -131,30 +136,40 @@
         "price": "Prijs"
       }
     },
-    "assistsLabel": "Assist",
-    "goalsLabel": "Doelpunt",
+    "goalkeeperShort": "DM",
     "defenderShort": "VER",
     "midfielderShort": "MID",
     "attackerShort": "AAN",
     "playedMoreThan60MinLabel": "Meer dan 60 minuten gespeeld",
     "playedUpTo60MinLabel": "Tot 60 minuten gespeeld",
-    "savedPerTwoLabel": "Saves per 2",
+    "savedPerTwoLabel": "Saves (per 2)",
+    "assistsLabel": "Assist",
+    "goalsLabel": "Doelpunt",
     "penaltyMissedLabel": "Penalty gemist",
     "penaltySavedLabel": "Penalty gered",
     "motmLabel": "Man of the match",
     "yellowLabel": "Gele kaart",
     "redLabel": "Rode kaart",
     "stoppedPenaltyLabel": "Penlaty gestopt",
-    "concededTwoLabel": "Per 2 goals tegen",
+    "concededTwoLabel": "Goals tegen (per 2)",
     "cleanSheetLabel": "Geen doelpunt tegen",
     "passAccOver85Label": "Nauwkeurigheid passing meer dan 85%",
-    "keyPassesPerTwoLabel": "Sleutelpasses per 2",
-    "dribblesSuccessPerTwoLabel": "Per 2 succesvolle dribbels",
+    "keyPassesPerTwoLabel": "Sleutelpasses (per 2)",
+    "dribblesSuccessPerTwoLabel": "Succesvolle dribbels (per 2)",
     "duelsWonMoreThanLostLabel": "Meer gewonnen dan verloren duels",
     "interceptionsPerSevenLabel": "Intercepties per zeven",
-    "commitedFoulsPerThreeLabel": "Fouten gemaakt per 3",
+    "commitedFoulsPerThreeLabel": "Fouten gemaakt (per 3)",
+    "shotsOffTargetPerTwoLabel": "Schoten naast doel (per twee)",
+    "accCrossesPerTwoLabel": "Nauwkeurige voorzetten (per twee)",
+    "clearancesPerFiveLabel": "Clearance (per vijf)",
+    "blocksPerThreeLabel": "Blocks (per drie)",
+    "interceptionsPerFiveLabel": "Intercepties (per vijf)",
+    "tacklesPerThreeLabel": "Tackles (per drie)",
+    "pastDribblesPerThree": "Gepasseerde dribbels (per drie)",
     "endWinnerSelectionsLabel": "Eindwinnaar (per speeldagselectie)",
-    "addBadgeLabel": "Voeg toe"
+    "groundDuelsWonMoreThanLostLabel": "Meer grond duels gewonnen dan verloren",
+    "shotsOnTargetPerThreeLabel": "Schoten op doel (per drie)",
+    "coachShort": "TRA"
   },
   "propertyRequired": "Vul alsjeblieft deze eigenschap in",
   "property": {
@@ -189,6 +204,15 @@
         "body": "Tekst"
       },
       "slug": "Afkorting"
+    },
+    "match": {
+      "homescore": {
+        "required": "Thuisscore is nodig!"
+      },
+      "awayscore": {
+        "required": "Uitscore is nodig!"
+      },
+      "differentClubs": "Verschillende clubs!"
     }
   },
   "form": {
@@ -288,6 +312,8 @@
     "percentageViceCaptainForAllPlayersTable": "% vice"
   },
   "team": {
+    "invalidTeamTitle": "Ongeldig team",
+    "invalidTeamDescription": "Je team voldoet niet aan de voorwaarden. Bekijk de regels nogmaals!",
     "saveTeam": "Team opslaan",
     "players": "Spelers",
     "remainingBudget": "Resterend budget",
@@ -307,6 +333,10 @@
     "transfers": {
       "success": "Transfers succesvol",
       "failed": "Transfers opslaan mislukt"
+    },
+    "updateSelection": {
+      "success": "Opstelling team opgeslagen",
+      "failed": "Opstelling team mislukt"
     },
     "playersSameClub": "Spelers zelfde team"
   },
@@ -425,7 +455,8 @@
     "processingDescription": "Uw betaling wordt nog verwerkt. In tussentijd kan u reeds gebruikmaken van alle functies. Indien de betaling uiteindelijk toch niet slaagt, zullen wij contact met u opnemen.",
     "tryAgain": "Probeer opnieuw te betalen",
     "payNow": "Betaal nu",
-    "title": "Inschrijvingskost betalen"
+    "title": "Inschrijvingskost betalen",
+    "description": "Om deel te nemen moet je een inschrijvingskost betalen van € 10. Dit kan via overschrijving (BE54 7360 4375 0397) of online (hieronder). Online wordt een transactiekost van € 0,40 aangerekend."
   },
   "rules": {
     "matchdays": "Speeldagen",
@@ -436,5 +467,8 @@
     "boosters": "Boosters",
     "points": "Punten",
     "legal": "Algemeen"
+  },
+  "deadlines": {
+    "notFound": "Geen deadlines gevonden."
   }
 }

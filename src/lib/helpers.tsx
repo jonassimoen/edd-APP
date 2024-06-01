@@ -367,7 +367,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const pastDribbles = player.pointsOverview && player.pointsOverview.dribblesPast || 0;
 				const pastDribblesPerThree = Math.floor(pastDribbles / 3);
 				if(pastDribblesPerThree) {
-					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: pastDribbles, points: pastDribblesPerThree * actionPoints});
+					pointsOverview.push({action: t("player.pastDribblesPerThree"), quantity: pastDribbles, points: pastDribblesPerThree * actionPoints});
 				}
 				break;
 			}

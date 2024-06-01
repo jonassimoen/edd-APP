@@ -271,10 +271,6 @@ export const Header = () => {
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to={`/transfers/${userTeam.id}`}>{t("menu.transfers")}</Link>
 								</li>) || null}
 
-							{(isVisible("leagues") &&
-								<li className={`c-nav-mobile__item ${isActive("leagues") ? "active" : ""}`}>
-									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/leagues">{t("menu.minicompetition")}</Link></li>) || null}
-
 							{(isVisible("stats") &&
 								<li className={`c-nav-mobile__item ${isActive("stats") ? "active" : ""}`}>
 									<Link className="c-nav-mobile__link" onClick={openSubMenu} to="/stats">{t("menu.stats")}</Link></li>) || null}
