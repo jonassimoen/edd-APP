@@ -332,7 +332,7 @@ export const PlayerList = (props: PlayerListProps) => {
 						loading={isLoading}
 						showHeader={showHeader}
 						columns={columns}
-						dataSource={data.filter(player => playerFilter(player))}
+						dataSource={data?.filter(player => playerFilter(player))}
 						rowKey="id"
 						rowClassName={(record: Player, index: number) =>
 							isPickable(record) ? "pickable": "disabled"

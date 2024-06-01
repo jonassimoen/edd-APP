@@ -10,7 +10,7 @@ export const SubstitutesStyle = styled.div`
     justify-content: center;
     max-width: 975px;
     padding-bottom: 2%;
-    row-gap: 2rem;
+    row-gap: 1rem;
     margin: 0 auto;
 	// background: url('${(props: any) => props.bgImage}') center;
 

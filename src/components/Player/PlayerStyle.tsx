@@ -6,7 +6,7 @@ export const PlayerStyle = styled.div`
     position: relative;
     cursor: pointer;
     text-align: ${(props: any) => !props.player ? "center" : "inherit"};
-    width: 70px;
+    width: 60px;
     height: 50px;
 
 	&.no-player {
@@ -16,8 +16,8 @@ export const PlayerStyle = styled.div`
 	}
 
     @media ${mediaQueries.mobileM} {
-        width: 95px;
-        height: 80px;
+        width: 75px;
+        height: 65px;
     }
 
     @media ${mediaQueries.tabletL} {	
@@ -27,7 +27,7 @@ export const PlayerStyle = styled.div`
 
     .position-label {
 		position: relative;
-		top: 125%;
+		top: 145%;
         text-align: center;
         color: white;
     }
