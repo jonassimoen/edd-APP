@@ -247,7 +247,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 							<div className="player-actions">
 								{
 									props.onPick ?
-										<div className={`action ${isPickAble && isPickAble(player)?"":"disabled"}`} onClick={onPick}>
+										<div className={`action ${isPickAble && isPickAble(player)?"":"disabled"}`} onClick={isPickAble(player) ? onPick : null}>
 											<AddIcon />
 											{t("player.addBadgeLabel")}
 										</div> :
