@@ -140,6 +140,8 @@ type User = {
 
 type Week = {
 	id: number
+	maxTransfers: number
+	maxSameClub: number
 	deadlineDate: Date
 	validated: boolean
 	name: string

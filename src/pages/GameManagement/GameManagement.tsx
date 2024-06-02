@@ -105,25 +105,6 @@ export const GameManagement = () => {
 						/>
 					</FormItem>
 				</Col>
-				<Col span={6}>
-					<FormItem
-						name={"maxTransfers"}
-						label={"Max. transfers"}
-						tooltip='-1 = unlimited'
-						required
-					>
-						<Input min={-1} max={6}/>
-					</FormItem>
-				</Col>
-				<Col span={6}>
-					<FormItem
-						name={"maxSameClub"}
-						label={"Max. same club"}
-						required
-					>
-						<Input min={3} max={6}/>
-					</FormItem>
-				</Col>
 			</Row>
 			<Row gutter={16}>
 				<Col span={12}>

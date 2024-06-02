@@ -244,6 +244,13 @@ export const PointsTableStyle = styled(Table)`
 				&:first-child {
 					text-align: left;
 				}
+
+				.with-icon {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					gap: 0.5rem;
+				}
             }
 
 			&[data-row-key^="special"] {

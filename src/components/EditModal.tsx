@@ -40,6 +40,7 @@ export const EditModal = <T,>(props: React.PropsWithChildren<EditModalProps<T>>)
 				form
 					.validateFields()
 					.then((obj) => {
+						console.log(form, obj);
 						form.resetFields();
 						form.setFieldsValue(action === "edit" ? obj : {});
 						onCreate(obj);

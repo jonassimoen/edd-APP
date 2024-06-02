@@ -70,7 +70,26 @@ export const WeekManagement = () => {
 			</Col>
 		</Row>
 		<Row>
-			<Col span={24}>
+			<Col span={6}>
+				<FormItem
+					name={"maxTransfers"}
+					label={"Max. transfers"}
+					tooltip='-1 = unlimited'
+					required
+				>
+					<Input min={-1} max={6} type="number" />
+				</FormItem>
+			</Col>
+			<Col span={6}>
+				<FormItem
+					name={"maxSameClub"}
+					label={"Max. same club"}
+					required
+				>
+					<Input min={3} max={6} type="number" />
+				</FormItem>
+			</Col>
+			<Col span={12}>
 				<FormItem
 					name={"deadlineDate"}
 					label={"Deadline date"}
@@ -123,6 +142,16 @@ export const WeekManagement = () => {
 									<p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>
 								);
 							}
+						},
+						{
+							title: "# FT",
+							dataIndex: "maxTransfers",
+							width: "10%",
+						},
+						{
+							title: "# SC",
+							dataIndex: "maxSameClub",
+							width: "10%",
 						},
 						{
 							title: "Naam",

@@ -278,7 +278,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const highClaimsPerTwo = Math.floor(highClaims / 2);
 
 				if (highClaimsPerTwo) {
-					pointsOverview.push({ action: t("player.savedPerTwoLabel"), quantity: highClaims, points: highClaimsPerTwo * actionPoints });
+					pointsOverview.push({ action: t("player.highClaimsPerTwo"), quantity: highClaims, points: highClaimsPerTwo * actionPoints });
 				}
 				break;
 			}
@@ -359,7 +359,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const dribblesSuccess = player.pointsOverview && player.pointsOverview.dribblesSuccess || 0;
 				const successDribblesPerThree = Math.floor(dribblesSuccess / 3);
 				if(successDribblesPerThree) {
-					pointsOverview.push({action: t("player.dribblesSuccessPerTwoLabel"), quantity: dribblesSuccess, points: successDribblesPerThree * actionPoints});
+					pointsOverview.push({action: t("player.dribblesSuccessPerThreeLabel"), quantity: dribblesSuccess, points: successDribblesPerThree * actionPoints});
 				}
 				break;
 			}
@@ -383,7 +383,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				const drawnFouls = player.pointsOverview && player.pointsOverview.foulsDrawn || 0;
 				const drawnFoulsPerThree = Math.floor(drawnFouls / 3);
 				if(drawnFoulsPerThree) {
-					pointsOverview.push({action: t("player.commitedFoulsPerThreeLabel"), quantity: drawnFouls, points: drawnFoulsPerThree * actionPoints});
+					pointsOverview.push({action: t("player.drawnFoulsPerThreeLabel"), quantity: drawnFouls, points: drawnFoulsPerThree * actionPoints});
 				}
 				break;
 			}
