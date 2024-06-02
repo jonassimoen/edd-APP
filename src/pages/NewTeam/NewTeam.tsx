@@ -196,7 +196,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 								modalEnabled={true}
 								playerBadgeColor={"#fff"}
 								playerBadgeBgColor={theme.primaryContrast}
-								playerPointsColor={"#000"}
+								playerPointsColor={"#fff"}
 								playerPointsBgColor={theme.primaryColor} 
 								tourRef={specificPlayerRef}
 							/>
