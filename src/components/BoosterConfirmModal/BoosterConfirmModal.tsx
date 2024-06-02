@@ -3,7 +3,7 @@ import { useActivateBoosterMutation } from "@/services/teamsApi";
 import { BoosterConfirmModalStyle } from "./BoosterConfirmModalStyle";
 import { useTranslation } from "react-i18next";
 import parseHTML from "html-react-parser";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Select } from "../UI/Select/Select";
 import { Button } from "../UI/Button/Button";
 
@@ -21,7 +21,15 @@ export const BoosterConfirmModal = (props: BoosterConfirmModalProps) => {
 	const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null);
 	const [err, setErr] = useState<string|null>(null);
 
-	const isPlayerBooster = useMemo(() => ["hiddenGem","goalRush"].includes(props.type), [props.type]);
+	const isPlayerBooster = useMemo(() => ["hiddenGem","goalRush","fanFavourite"].includes(props.type), [props.type]);
+
+	useEffect(() => {
+		if(props.open) {
+			document.documentElement.classList.add("fixed-position");
+		} else {
+			document.documentElement.classList.remove("fixed-position");
+		}
+	},[props.open]);
 
 	const pushBooster = () => {
 		if(!isPlayerBooster || (selectedPlayerId != null)) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Icon from "@ant-design/icons";
 import { DeleteButtonSvg } from "@/styles/custom-icons";
@@ -21,6 +21,15 @@ export const TransfersModal = (props: TransfersModalProps) => {
 	const [state, setState] = useState<TransfersModalState>();
 	const { t } = useTranslation();
 	const { transfers } = props;
+
+	useEffect(() => {
+		if(props.visible) {
+			document.documentElement.classList.add("fixed-position");
+		} else {
+			document.documentElement.classList.remove("fixed-position");
+		}
+	},[props.visible]);
+
 
 	const columns = [
 		{

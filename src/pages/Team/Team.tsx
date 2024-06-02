@@ -145,6 +145,7 @@ export const _Team = (props: AbstractTeamType) => {
 									captainId={props.captainId}
 									viceCaptainId={props.viceCaptainId}
 									modalEnabled={true}
+									showBoosterBadge={true}
 									selection={startingByPositions}
 									assetsCdn={application.competition.assetsCdn}
 									playerType={PlayerType.SoccerPortrait}
@@ -166,6 +167,7 @@ export const _Team = (props: AbstractTeamType) => {
 									clubs={clubs}
 									bgImage={benchBackground}
 									modalEnabled={true}
+									showBoosterBadge={true}
 									showPositionNumber={true}
 									playerType={PlayerType.SoccerPortrait}
 									assetsCdn={application.competition.assetsCdn}

@@ -265,8 +265,8 @@ const _Transfers = (props: AbstractTeamType) => {
 		clubs && teamResult && matches && players && deadlineInfo && initializedExternally && (
 			<TransfersStyle>
 				{(notTeamOwner || state.notFound) && <Navigate to={"/home"} />}
-				{/* {team && props.visibleWeekId &&
-					(!gameStarted || enabledWildOrFreeHit) && (<Navigate to={`/edit/${teamResult.team.id}`} />)} */}
+				{team && props.visibleWeekId &&
+					(!gameStarted || enabledWildOrFreeHit) && (<Navigate to={`/edit/${teamResult.team.id}`} />)}
 				<Row>
 					<Col md={12} sm={12} xs={24}>
 						<div className="title">

@@ -180,25 +180,29 @@ export const PlayerModal = (props: PlayerModalProps) => {
 		},
 	];
 	const dataPoints = useMemo(() => {
-		const pointsWithTotal = pointsOverviewList.concat([{
-			special: true,
-			action: t("player.modal.totalRegularPoints"),
-			quantity: 0,
-			points: pointsOverviewList.reduce((acc: number, v: any) => acc + v.points, 0)
-		}]);
-		return (player.booster ? 
-			pointsWithTotal.concat([{
+		if(pointsOverviewList.length) {
+			const pointsWithTotal = pointsOverviewList.concat([{
 				special: true,
-				action: (
-					<div className="with-icon">
-						<Icon component={BoosterIcons[player.booster]} style={{fontSize: 28}} />
-						{t(`boosters.${player.booster.charAt(0).toLowerCase() + player.booster.slice(1)}`)}
-					</div>
-				),
+				action: t("player.modal.totalRegularPoints"),
 				quantity: 0,
-				points: (player.points - player.stats[0].points) || 0
-			}])
-			: pointsWithTotal)?.map((booster: any, index: number) => ({...booster, key: index}));
+				points: pointsOverviewList.reduce((acc: number, v: any) => acc + v.points, 0)
+			}]);
+			return (player.booster ? 
+				pointsWithTotal.concat([{
+					special: true,
+					action: (
+						<div className="with-icon">
+							<Icon component={BoosterIcons[player.booster]} style={{fontSize: 28}} />
+							{t(`boosters.${player.booster.charAt(0).toLowerCase() + player.booster.slice(1)}`)}
+						</div>
+					),
+					quantity: 0,
+					points: (player.points - player.stats[0].points) || 0
+				}])
+				: pointsWithTotal)?.map((booster: any, index: number) => ({...booster, key: index}));
+		} else {
+			return null;
+		}
 	}, [pointsOverviewList]);
 
 	const handleUpdate = (values: any) => {
@@ -211,7 +215,6 @@ export const PlayerModal = (props: PlayerModalProps) => {
 				playerInfoHeader.classList.remove("small-header", "on-scroll-gradient");
 			}
 		}
-
 	};
 	
 	return (

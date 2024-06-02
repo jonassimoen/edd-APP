@@ -190,7 +190,7 @@ export const Player = (props: PlayerProps) => {
 
 	const onPlayerClick = (showModal?: boolean) => {
 		if (props.player && props.player.id && showModal) {
-			document.body.classList.add("fixed-position");
+			document.documentElement.classList.add("fixed-position");
 			setState({ ...state, modalVisible: true });
 		}
 	};
@@ -198,7 +198,7 @@ export const Player = (props: PlayerProps) => {
 	const onCancel = (event: any) => {
 		event.stopPropagation();
 		setState({ ...state, modalVisible: false });
-		document.body.classList.remove("fixed-position");
+		document.documentElement.classList.remove("fixed-position");
 	};
 
 	const onBgLoadError = (event: any) => {

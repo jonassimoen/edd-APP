@@ -50,6 +50,7 @@ html {
 	font-family:	UEFAEuro, Helvetica Neue, Helvetica, Arial, sans-serif;
 	-webkit-overflow-scrolling: touch;
 	overflow-x: hidden;
+	overflow-x: visible;
 
 	::-webkit-scrollbar {
 			width: 5px;
@@ -68,11 +69,16 @@ html {
 	::-webkit-scrollbar-thumb:hover {
 			background: theme;
 	}
+
+	&.fixed-position {
+		overflow-y: hidden;
+	}
 }
 
 body {
 	padding: 0;
 	margin: 0;
+	height: 100%;
 	position: relative;
 	background: $primaryColor;
 	-webkit-user-select: none; /* Safari */
@@ -99,7 +105,6 @@ body {
 		background: $primaryColor;
 	}
 }
-
 p {
 	margin:0;
 	padding:0;

@@ -35,7 +35,11 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 		<BoosterStyle className={`booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
 			{/* <p className="booster-type">{t(`boosters.${props.type}`)}</p> */}
 			<div className="booster-icon">
-				{
+				<Icon 
+					component={props.iconSvg} 
+					className={`booster ${boosterActive ? "boosterActive" : ""}`}
+				/>
+				{/* {
 					boosterUsed && assignedPlayerValid ?
 						<div className="booster-player">
 							<Player
@@ -49,14 +53,13 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 								face = {`${props.assetsCdn}/players/${props.player.id}.png`}
 								faceFallback = {`${props.assetsCdn}/players/dummy.png`}
 							/>
-							<p className="player-name">{props.player.short}</p>
 						</div>
 						:
 						<Icon 
 							component={props.iconSvg} 
 							className={`booster ${boosterActive ? "boosterActive" : ""}`}
 						/>
-				}
+				} */}
 			</div>
 			
 			<Button

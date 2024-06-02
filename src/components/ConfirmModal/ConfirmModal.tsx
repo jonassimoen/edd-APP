@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "../UI/Button/Button";
 import { Col, Row } from "../UI/Grid/Grid";
 import { ConfirmModalStyle } from "./ConfirmModalStyle";
@@ -15,6 +16,14 @@ export const ConfirmModal = (props: ConfirmModalProps) => {
 	const { visible, onCancel, onConfirm, text, title } = props;
 	const { t } = useTranslation();
 
+	useEffect(() => {
+		if(props.visible) {
+			document.documentElement.classList.add("fixed-position");
+		} else {
+			document.documentElement.classList.remove("fixed-position");
+		}
+	},[props.visible]);
+	
 	return (
 		<ConfirmModalStyle
 			title={title}
