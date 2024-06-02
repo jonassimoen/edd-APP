@@ -45,10 +45,11 @@ type Player = {
 	points: number
 	pointsOverview: any
 	booster: string
-
+	pSelections?: number
 	stats?: Statistic[]
 	selections?: PlayerSelection[]
 	upcomingMatches: Match[]
+	currentMatches: Match[]
 }
 
 type Statistic = {
@@ -262,7 +263,8 @@ type DeadlineInfo = {
 	deadlineWeek: number
 	deadlineDate: string
 	endWeek: number
-	freeTransfers: number
+	fT: number
+	sC: number
 }
 
 type BoostersWeekStatus = {

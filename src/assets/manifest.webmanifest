@@ -8,8 +8,8 @@
 		"type": "image/png"
 	  }
 	],
-	"theme_color": "#000d40",
-	"background_color": "#000d40",
+	"theme_color": "#0d1e62",
+	"background_color": "#0d1e62",
 	"display": "standalone",
 	"id": "european-dream-draft",
 	"description": "Fantasy Draft for Euro 2024",

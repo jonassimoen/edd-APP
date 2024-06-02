@@ -18,8 +18,8 @@ export const PaginationStyle = styled(Pagination)`
 
 	.ant-pagination-jump-next, .ant-pagination-jump-prev {
 		.ant-pagination-item-link-icon {
-			color: ${theme.primaryContrast};
-		}
+			color: ${theme.secondaryColor};
+		}	
 	}
 
 	.ant-pagination-item {
@@ -29,7 +29,7 @@ export const PaginationStyle = styled(Pagination)`
 			border-color: ${theme.primaryColor};
 			a {
 				font-weight: bold;
-				color: ${theme.primaryContrast};
+				color: ${theme.secondaryColor};
 			}
 		}
 	}

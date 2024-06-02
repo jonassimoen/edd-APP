@@ -10,7 +10,7 @@ export const TableStyle = styled(Table)`
 	.ant-table-thead {
 		>tr>th {
 			background-color: ${theme.primaryContrast};
-			color: ${theme.primaryColor};
+			color: ${theme.secondaryColor};
 			padding-top: 10px;
 			padding-bottom: 10px;
 			border-radius: 0px !important;
@@ -24,7 +24,7 @@ export const TableStyle = styled(Table)`
 
 			&.ant-table-column-has-sorters:hover {
 				background: ${theme.primaryColor} !important;
-				color: ${theme.primaryContrast} !important;
+				color: ${theme.secondaryColor} !important;
 			}
 
 			&.ant-table-column-has-actions {

@@ -5,21 +5,28 @@ import { FormItem } from "@/components/UI/Form/Form";
 import { Col, Row } from "@/components/UI/Grid/Grid";
 import { InputNumber } from "@/components/UI/InputNumber/InputNumber";
 import { useCreatePageMutation, useDeletePageMutation, useGetPagesQuery, useUpdatePageMutation } from "@/services/pagesApi";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined, SaveFilled } from "@ant-design/icons";
 import { Divider, Form, Input, Table } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Title from "antd/lib/typography/Title";
-import { useState } from "react";
+import parseHTML from "html-react-parser";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TranslationStyle } from "./PlayerManagementStyle";
+import JoditEditor from "jodit-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 declare type PageManagementState = {
 	openEditModal: boolean
 	openCreateModal: boolean
 	editObject?: Page
+	changingLang?: number
+	changingLangValue?: string
 }
 
 export const PageManagement = () => {
+	const { t } = useTranslation();
 	const { data: pages, isLoading: pagesLoading, isError: pagesError, isSuccess: pagesSucces } = useGetPagesQuery();
 	const [updatePage] = useUpdatePageMutation();
 	const [createPage] = useCreatePageMutation();
@@ -28,9 +35,8 @@ export const PageManagement = () => {
 	const [state, setState] = useState<PageManagementState>({
 		openEditModal: false,
 		openCreateModal: false,
+		changingLang: -1,
 	});
-
-	const { t } = useTranslation();
 
 	const PageForm =
 		<>
@@ -44,6 +50,7 @@ export const PageManagement = () => {
 					</FormItem>
 				</Col>
 			</Row>
+			<Divider style={{margin: "1rem 0"}} />
 			<Form.List name="translation">
 				{(fields, { add, remove }) => (
 					<>
@@ -60,6 +67,15 @@ export const PageManagement = () => {
 									</Col>
 									<Col span={8}>
 										<Button
+											icon={<EditOutlined />}
+											onClick={(event) => {
+												setState((state) => ({...state, changingLang: field.key, changingLangValue: state.editObject.translation[field.key]?.body }));
+											}}
+											style={{ marginTop: "30px" }}
+										>
+											{t("management.page.edit")}
+										</Button>
+										<Button
 											icon={<DeleteOutlined />}
 											onClick={() => remove(field.name)}
 											type="dashed"
@@ -69,14 +85,9 @@ export const PageManagement = () => {
 										</Button>
 									</Col>
 									<Col span={24}>
-										<Form.Item
-											label={t("property.page.translation.body")}
-											name={[field.name, "body"]}
-										>
-											<TextArea rows={10} />
-										</Form.Item>
+										{parseHTML(state.editObject.translation[field.key]?.body || t("management.page.noBody")) }
 									</Col>
-									<Divider />
+									<Divider style={{margin: "1rem 0"}} />
 								</Row>
 							))}
 
@@ -84,12 +95,46 @@ export const PageManagement = () => {
 							icon={<PlusOutlined />}
 							onClick={() => add()}
 							type="primary"
+							style={{width:"100%"}}
 						>
 							{t("management.page.add")}
 						</Button>
 					</>
 				)}
 			</Form.List>
+			<Divider style={{margin: "1rem 0"}} />
+			{
+				state.changingLang !== -1 ? (
+					<>
+						<CKEditor
+							editor={ ClassicEditor }
+							data={state.changingLangValue}
+							onReady={ editor => editor.data.set(state.changingLangValue || "Write html...") }
+							onChange={ ( event, editor ) => setState((state) => ({...state, changingLangValue: editor.data.get()})) }
+						/>
+						<Button
+							icon={<SaveFilled />}
+							onClick={() => {
+								console.log(state.editObject, state.changingLang, state.changingLangValue);
+								const translations = state.editObject.translation.map((tl: PageTranslation, index: number) => 
+									(index === state.changingLang) ? ({...tl, body: state.changingLangValue}) : tl);
+								setState({
+									...state, 
+									editObject: {
+										...state.editObject,
+										translation: translations
+									},
+									changingLang: -1,
+									changingLangValue: "",
+								});
+							}}
+							type="primary"
+							style={{width:"100%"}}
+						></Button>
+					</>
+				) : null
+			}
+			
 		</>;
 
 	return (
@@ -170,10 +215,11 @@ export const PageManagement = () => {
 			<EditModal
 				object={state.editObject}
 				open={state.openEditModal}
-				onCreate={(page: any) => { console.log(page); updatePage(page); setState({ ...state, openEditModal: false }); }}
+				onCreate={(page: any) => { updatePage(page); setState({ ...state, openEditModal: false }); }}
 				onCancel={() => setState({ ...state, openEditModal: false })}
 				type='page'
 				action='edit'
+				width={950}
 			>
 
 				<FormItem
@@ -190,6 +236,7 @@ export const PageManagement = () => {
 				onCreate={(page: Page) => { createPage(page); setState({ ...state, openCreateModal: false }); }}
 				onCancel={() => setState({ ...state, openCreateModal: false })}
 				title={t("pageTitle")}
+				width={950}
 			>
 				{PageForm}
 			</CreateModal>

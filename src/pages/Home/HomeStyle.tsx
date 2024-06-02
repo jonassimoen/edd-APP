@@ -6,15 +6,15 @@ export const HomeStyle = styled.div`
     .login {
         margin: 20px auto;
         padding: 40px 20px;
-        background: ${theme.primaryContrast};
-        color: #FFF;
+        background: ${theme.primaryColor};
+        color: #fff;
 
         h2 {
             font-size: 36px;
             margin-top: 0px;
             margin-bottom: 0.5rem;
             line-height: 2.5rem;
-            color: ${theme.primaryColor};
+            color: ${theme.secondaryColor};
         }
 
         .playNow {
@@ -27,12 +27,12 @@ export const HomeStyle = styled.div`
             height: 50px;
             margin-top: 40px;
 
-            background-color: ${theme.primaryColor};
-            color: ${theme.primaryContrast};
-            border-color: ${theme.primaryColor};
+            background-color: ${theme.primaryContrast};
+            color: #fff;
+            border-color: ${theme.primaryContrast};
 
             &:hover {
-                color: ${theme.primaryColor};
+                color: ${theme.secondaryColor};
                 background-color: ${theme.primaryContrast};
             }
         }

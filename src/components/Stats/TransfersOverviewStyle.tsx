@@ -1,10 +1,61 @@
+import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
-import styled from "styled-components";
+import { Table } from "antd";
 
-export const StatsStyle = styled.div `
-	border-radius: 0.5rem;
+export const TransfersOverviewStyle = styled.div`
+`;
+
+export const TransferListStyle = styled(Table)`
+	background: transparent;
+
+	.ant-table {
+		border-radius: 0 0 0.5rem 0.5rem;
+		border-top: none;
+		border: 1px solid rgba(255 255 255 / 0.15);
+		background: ${theme.primaryColor};
+
+		table {
+			td {
+				border: none;
+				padding: 0.2rem 1rem;
+				}
+				
+			}
+		}
+		.ant-table-tbody {
+			color:white;
+
+			.ant-table-row {
+				&>.ant-table-cell-row-hover  {
+					background: none;
+				}
+				&>.ant-table-cell {
+					.player-name {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+					}
+					&:nth-child(1) {
+						text-align: left;
+					}
+					&:nth-child(2) {
+						text-align: center;
+					}
+					&:nth-child(3) {
+						text-align: right;
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const StatsStyle = styled.div<any>`
+	border-radius:  ${(props: any) => props.single ? "0.5rem" : "0.5rem 0.5rem 0 0;" };
 	background-color: ${theme.primaryContrast};
 	border: 1px solid rgba(255 255 255 / 0.15);
+	${(props: any) => !props.single && "border-bottom: none" };
+	
 
 	.stat-row {
 		&.no-border {
@@ -37,10 +88,6 @@ export const StatsStyle = styled.div `
 			text-align: center;
 			font-weight: bold;
 			margin: 0;
-			.lower {
-				font-size: 16px;
-    			font-weight: 200;
-			}
 		}
 
 		.team-name {
@@ -55,10 +102,7 @@ export const StatsStyle = styled.div `
 
 	.stat {
 		padding: 15px 10px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-		&:last-child {
-			border-bottom: none;
-		}
+		border-bottom: 1px solid rgba(238,238,238,0.3);
 		color: white;
 		// color: ${theme.primaryContrast};
 
@@ -88,22 +132,5 @@ export const StatsStyle = styled.div `
 		.red {
 			color: red;
 		}
-	}
-`;
-
-export const MatchStatsStyle = styled.div `
-	display:flex;
-	justify-content: center;
-	background-color: ${theme.primaryContrast};
-	color: white;
-	font-size: 15px;
-
-	.team {
-		padding: 15px;
-	}
-
-	.score {
-		display:flex;
-		align-items: center;
 	}
 `;

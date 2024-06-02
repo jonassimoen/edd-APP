@@ -6,25 +6,35 @@ export const PlayerStyle = styled.div`
     position: relative;
     cursor: pointer;
     text-align: ${(props: any) => !props.player ? "center" : "inherit"};
-    width: 70px;
+    width: 60px;
     height: 50px;
 
+	&.no-player {
+		background: rgba(255,255,255,0.3);
+		border-radius: 1rem 1rem 0 0;
+		backdrop-filter: blur(20px);
+	}
+
     @media ${mediaQueries.mobileM} {
-        width: 70px;
+        width: 75px;
         height: 65px;
     }
 
-    @media ${mediaQueries.tablet} {
-        width: 80px;
-        height: 75px;
+    @media ${mediaQueries.tabletL} {	
+        width: 120px;
+        height: 100px;
     }
 
     .position-label {
 		position: relative;
-		top: 125%;
+		top: 145%;
         text-align: center;
         color: white;
     }
+
+	svg {
+		font-size: 20px;
+	}
 
     margin: auto;
 ` as any;
@@ -83,7 +93,10 @@ export const OpponentBadge = styled.div`
 	inset: 100% 0px 0px;
 	width: 100%;
 	font-size: 10px;
-	height: 15px;
+	height: 20px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
 	
 	background: ${(props: any) => props.bgColor};
 	color:  ${(props: any) => props.color};
@@ -92,8 +105,6 @@ export const OpponentBadge = styled.div`
         text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
-		line-height: 0.9em;
-		padding: 3px;
     }
 
 	@media ${mediaQueries.tablet} {
@@ -109,7 +120,7 @@ export const NoPlayer = styled.div`
 
 	.add-icon {
 		fontSize: 2em;
-		color: ${theme.primaryContrast};
+		color: ${theme.primaryColor};
 		cursor: pointer;
 	}
 ` as any;
@@ -188,11 +199,9 @@ export const Points = styled.span`
 
 	position: absolute;
 	right: 0px;
-	top: 40%;
-	width: 20px;
-	height: 20px;
-
-	line-height: 1;
+    bottom: 20%;
+    width: 25px;
+    height: 25px;
 
 	display: flex;
 	justify-content: center;

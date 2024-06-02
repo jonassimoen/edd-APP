@@ -18,7 +18,7 @@ export const BoosterConfirmModalStyle = styled(Modal)`
 				// width: 30px;
 				// height: 30px;
 				font-size: 20px;
-				color: ${theme.primaryColor};
+				color: ${theme.secondaryColor};
 				line-height: 30px;
 			}
 

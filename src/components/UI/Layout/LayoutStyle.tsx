@@ -2,21 +2,15 @@ import { Layout } from "antd";
 import styled from "styled-components";
 
 import { mediaQueries } from "@/styles/media-queries";
-export const LayoutStyle = styled(Layout)`
-		/* padding: 20px;
-
-		@media ${mediaQueries.tablet} {
-			padding: 15px 32px;
-		} */
-		
-    &.ant-layout {		
+import { theme } from "@/styles/theme";
+export const LayoutStyle = styled(Layout)`	
+    &.ant-layout {
 		background: transparent;
 		margin: 0 auto;
-		width: 90%;
-		@media ${mediaQueries.laptop} {
+		width: 100%;
+		@media ${mediaQueries.tabletL} {
 			width: 80%;
 		}
-		
     }
 `;
 

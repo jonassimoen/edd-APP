@@ -83,9 +83,9 @@ const getInitializedList = (size: number, forStarting?: boolean) => {
 export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props: AbstractTeamProps, options?: Options,) => {
 	const [addTeam, {isLoading: savingTeamPending, error: savingTeamError}] = useAddTeamMutation();
 	const [editTeam, {isLoading: editTeamPending, error: editTeamError}] = useEditTeamMutation();
-	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult }] = useUpdateTeamSelectionMutation();
+	const [updateTeamSelections, { isSuccess: updateTeamSelectionsSucces, data: updateTeamSelectionsResult, isLoading: updateTeamSelectionsLoading }] = useUpdateTeamSelectionMutation();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
-	const [submitTransfers, { isSuccess: submitTransfersSucces, data: submitTransfersResult }] = useSubmitTransfersMutation();
+	const [submitTransfers, { isSuccess: submitTransfersSucces, data: submitTransfersResult, isLoading: submitTransfersLoading }] = useSubmitTransfersMutation();
 
 	const application = useSelector((state: StoreState) => state.application);
 
@@ -191,7 +191,6 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 		const benchPlayersValidatorFormat = playersToValidatorFormat(bench);
 
 		state.validator.set(startingPlayersValidatorFormat, benchPlayersValidatorFormat);
-
 		setState({
 			...state,
 			starting,
@@ -434,7 +433,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				teamName: state.teamName,
 				captainId: state.captainId,
 				viceCaptainId: state.viceCaptainId
-			});
+			})
+				.unwrap()
+				.then((res) => openSuccessNotification({ title: t("team.save.success") }))
+				.catch((err) => openErrorNotification({ title: t("team.save.failed") }));
 		} else {
 			openErrorNotification({
 				title: t("team.invalidTeamTitle"),
@@ -468,7 +470,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				teamName: state.teamName,
 				captainId: state.captainId,
 				viceCaptainId: state.viceCaptainId
-			});
+			})
+				.unwrap()
+				.then((res) => openSuccessNotification({ title: t("team.edit.success") }))
+				.catch((err) => openErrorNotification({ title: t("team.edit.failed") }));
 		} else {
 			openErrorNotification({
 				title: t("team.invalidTeamTitle"),
@@ -491,7 +496,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				captainId: state.captainId,
 				viceCaptainId: state.viceCaptainId,
 				teamName: state.teamName,
-			}).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t("team.updateSelection.failed") }));
+			})
+				.unwrap()
+				.then((res) => openSuccessNotification({ title: res.msg }))
+				.catch((err) => openErrorNotification({ title: t("team.updateSelection.failed") }));
 		}
 	};
 
@@ -578,6 +586,9 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	};
 
 	const isPickable = (player: Player, taxForPicking?: boolean, isTransferPick?: boolean) => {
+		if(!player.value) {
+			return false;
+		}
 		const notInStarting = !state.starting.find(startingPlayer => startingPlayer && startingPlayer.id && startingPlayer.id === player.id);
 		const notInBench = !state.bench.find(benchPlayer => benchPlayer && benchPlayer.id && benchPlayer.id === player.id);
 		const affordable = player.value <= state.budget;
@@ -590,7 +601,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 			state.starting.filter(startingPlayer => startingPlayer && startingPlayer.clubId === player.clubId).length +
 			state.bench.filter(benchPlayer => benchPlayer && benchPlayer.clubId === player.clubId).length;
 
-		const underClubLimit = pickerSoFarFromSameClub < application.competition.teamSameClubPlayersLimit;
+		const underClubLimit = pickerSoFarFromSameClub < deadlineInfo.deadlineInfo.sC;
 
 		const playerPositionMaxPicks = [].concat(state.starting as any, state.bench as any)
 			.filter((p: Player) => p.positionId === player.positionId).length;
@@ -681,7 +692,10 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 	const onTransfersSubmit = (teamId: number) => {
 		const transfers = state.draftTransfers
 			.map((transfer: Transfer) => pick(transfer, ["inId", "outId"]));
-		submitTransfers({ teamId, transfers }).unwrap().then((res) => openSuccessNotification({ title: res.msg })).catch((err) => openErrorNotification({ title: t("team.transfers.failed") }));
+		submitTransfers({ teamId, transfers })
+			.unwrap()
+			.then((res) => openSuccessNotification({ title: t("team.transfers.success") }))
+			.catch((err) => openErrorNotification({ title: t("team.transfers.failed") }));
 	};
 
 	const onTransfersReset = (teamId: number) => {
@@ -752,8 +766,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 					deadlineWeekTransfers={state.deadlineWeekTransfers}
 					pastTransfers={state.pastTransfers}
 					teamPointsInfo={state.teamPointsInfo}
-					savingTeamPending={savingTeamPending}
-					editTeamPending={editTeamPending}
+					savingTeamPending={savingTeamPending || updateTeamSelectionsLoading || submitTransfersLoading || editTeamPending}
 					{...props}
 				/> : null}
 		</React.Fragment>

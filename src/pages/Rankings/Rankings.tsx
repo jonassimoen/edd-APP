@@ -1,10 +1,10 @@
-import { ContainerStyle, TableStyle } from "@/components/PlayerList/PlayerListStyle";
 import { Row } from "@/components/UI/Grid/Grid";
 import { useGetTeamRankingsQuery } from "@/services/teamsApi";
 import { Col } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { RankingsStyle, TableStyle } from "./RankingsStyle";
 
 type RankingsProps = {
 	q?: null
@@ -49,25 +49,23 @@ export const Rankings = (props: RankingsProps) => {
 	];
 
 	return (
-		<React.Fragment>
+		<RankingsStyle>
 			<Row style={{ paddingBottom: "20px" }}>
 				<Col md={24} sm={24} xs={24}>
 					<Title level={2}>{t("rankingsPage.rankingsTitle")}</Title>
 				</Col>
 				<Col md={24} sm={24} xs={24} style={{ marginTop: "10px" }}>
-					<ContainerStyle>
-						<TableStyle
-							columns={columns}
-							dataSource={data}
-							showHeader={true}
-							loading={isLoading}
-							locale={{ emptyText: t("rankingsPage.rankingsNotAvailableYet") }}
-							rowKey={(rec: any, idx: number) => `record-${idx + 1}`}
-							rowClassName={(rec: any, idx: number) => idx % 2 ? "ant-table-row--odd" : "ant-table-row--even"}
-						/>
-					</ContainerStyle>
+					<TableStyle
+						columns={columns}
+						dataSource={data}
+						showHeader={true}
+						loading={isLoading}
+						locale={{ emptyText: t("rankingsPage.rankingsNotAvailableYet") }}
+						rowKey={(rec: any, idx: number) => `record-${idx + 1}`}
+						pagination={{ position: ["bottomCenter"], pageSize: 10, showLessItems: true, showSizeChanger: false }}
+					/>
 				</Col>
 			</Row>
-		</React.Fragment>
+		</RankingsStyle>
 	);
 };

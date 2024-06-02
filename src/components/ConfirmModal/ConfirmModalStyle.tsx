@@ -4,16 +4,16 @@ import { Modal } from "antd";
 
 export const ConfirmModalStyle = styled(Modal)`
 .ant-modal-content {
-    border-radius: 0px;
+    border-radius: 1rem;
     max-width: 575px;
     padding: 0;
 
     .ant-modal-title {
-        background-color: ${theme.primaryContrast};
-        padding: 5px 30px;
+        background:transparent;
+        border-radius: 1rem 1rem 0 0;
+        padding: 1rem;
         text-transform: uppercase;
         color: #fff;
-        padding: 5px 5px 5px 36.5px;
     }
 
     .ant-modal-close-x {
@@ -26,10 +26,12 @@ export const ConfirmModalStyle = styled(Modal)`
 
     .ant-modal-header {
         border: 0px;
-        border-radius: 0px;
+        border-radius: 1rem 1rem 0 0;
+        background-color: ${theme.primaryContrast};
         padding: 0;
 
         .ant-modal-title {
+            
             color: white;
             p {
                 margin: 0px;

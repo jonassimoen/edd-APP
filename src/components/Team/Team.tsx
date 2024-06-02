@@ -38,6 +38,7 @@ export declare type TeamProps = {
     centerAligned?: boolean | undefined;
 	motmId?: number
 	tourRef?: any
+	pitchClassName?: string
 };
 
 export const Team = (props: TeamProps) => {
@@ -75,73 +76,77 @@ export const Team = (props: TeamProps) => {
 		onViceCaptainSelect,
 		motmId,
 		tourRef,
+		pitchClassName,
 	} = props;
 
 	return (
 		<TeamStyle bg={bg} widthRatio={widthRatio} heightRatio={heightRatio} centerAligned={centerAligned} >
-			{selection ? selection.map((position: any, positionIdx: number) => {
-				const imgProps: {
-					shirt?: string,
-					face?: string,
-					faceFallback?: string,
-					shirtFallback?: string,
-				} = {};
+			<div className={pitchClassName ? `pitch ${pitchClassName}` : "pitch"}>
+				{selection ? selection.map((position: any, positionIdx: number) => {
+					const imgProps: {
+						shirt?: string,
+						face?: string,
+						faceFallback?: string,
+						shirtFallback?: string,
+					} = {};
 
-				return (
-					<div className={"position"} key={`posIdx-${positionIdx}`}>
-						{
-							position.map((player: any, playerIdx: number) => {
-								const club = clubs.find((item: Club, index: number) => player && item.id === player.clubId);
-								
-								if(PlayerType.SoccerPortrait === playerType) {
-									imgProps.face = `${assetsCdn}/players/${player.id}.png`;
-									imgProps.faceFallback = `${assetsCdn}/players/dummy.png`;
-								} else if(PlayerType.SoccerShirt === playerType) {
-									imgProps.shirt = `${assetsCdn}/jerseys/${player.clubId}.png`;
-									imgProps.shirtFallback = `${assetsCdn}/jerseys/dummy.png`;
-								}
+					return (
+						<div className={"position"} key={`posIdx-${positionIdx}`}>
+							{
+								position.map((player: any, playerIdx: number) => {
+									const club = clubs?.find((item: Club, index: number) => player && item.id === player.clubId);
+									
+									if(PlayerType.SoccerPortrait === playerType) {
+										imgProps.face = `${assetsCdn}/players/${player.id}.png`;
+										imgProps.faceFallback = `${assetsCdn}/players/dummy.png`;
+									} else if(PlayerType.SoccerShirt === playerType) {
+										imgProps.shirt = `${assetsCdn}/jerseys/${player.clubId}.png`;
+										imgProps.shirtFallback = `${assetsCdn}/jerseys/dummy.png`;
+									}
 
-								return (
-									<Player
-										tourRef={(positionIdx==2&&playerIdx==2)?tourRef:null}
-										key={`player-${positionIdx}-${playerIdx}`}
-										pointsColor={playerPointsColor}
-										pointsBgColor={playerPointsBgColor}
-										badgeColor={playerBadgeColor}
-										badgeBgColor={playerBadgeBgColor}
-										positionIndex={positionIdx + 1}
-										modalEnabled={modalEnabled}
-										captainId={captainId}
-										viceCaptainId={viceCaptainId}
-										captainHasPlayed={captainHasPlayed}
-										player={player}
-										replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
-										showPlayerValue={showPlayerValue}
-										showCaptainBadge={showCaptainBadge}
-										showBoosterBadge={showBoosterBadge}
-										onRemove={onRemove}
-										showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
-										onSwap={onSwap}
-										isSwapable={isSwapAble}
-										onCaptainSelect={onCaptainSelect}
-										onViceCaptainSelect={onViceCaptainSelect}
-										onPlaceholderClick={onPlaceholderClick}
-										swapPlayerId={swapPlayerId}
-										actionLessPlayerIds={actionLessPlayerIds}
-										swappedFrom={swappedFrom}
-										club={club}
-										type={playerType}
-										motm={motmId===player.id}
-										{...imgProps}
-									/>
-								);
-							})
-						}
-					</div>
-				);
-			})
-				: "Deze ploeg heeft geen opstelling voor deze speeldag."
-			}
+									return (
+										<Player
+											tourRef={(positionIdx==2&&playerIdx==2)?tourRef:null}
+											key={`player-${positionIdx}-${playerIdx}`}
+											pointsColor={playerPointsColor}
+											pointsBgColor={playerPointsBgColor}
+											badgeColor={playerBadgeColor}
+											badgeBgColor={playerBadgeBgColor}
+											positionIndex={positionIdx + 1}
+											modalEnabled={modalEnabled}
+											captainId={captainId}
+											viceCaptainId={viceCaptainId}
+											captainHasPlayed={captainHasPlayed}
+											player={player}
+											replacePlayerPointsWithStatsPoints={replacePlayerPointsWithStatsPoints}
+											showPlayerValue={showPlayerValue}
+											showCaptainBadge={showCaptainBadge}
+											showBoosterBadge={showBoosterBadge}
+											onRemove={onRemove}
+											showPlayerValueInsteadOfPoints={showPlayerValueInsteadOfPoints}
+											onSwap={onSwap}
+											isSwapable={isSwapAble}
+											onCaptainSelect={onCaptainSelect}
+											onViceCaptainSelect={onViceCaptainSelect}
+											onPlaceholderClick={onPlaceholderClick}
+											swapPlayerId={swapPlayerId}
+											actionLessPlayerIds={actionLessPlayerIds}
+											swappedFrom={swappedFrom}
+											club={club}
+											type={playerType}
+											motm={motmId===player.id}
+											upcomingMatches={player.upcomingMatches}
+											{...imgProps}
+										/>
+									);
+								})
+							}
+						</div>
+					);
+				})
+					: "Deze ploeg heeft geen opstelling voor deze speeldag."
+				}
+			</div>
 		</TeamStyle>
 	);
 };

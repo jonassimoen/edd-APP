@@ -1,16 +1,15 @@
-import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Badge, NoPlayer, OpponentBadge, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRightAction, Value } from "./PlayerStyle";
 import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
-import Icon, { CloseCircleFilled } from "@ant-design/icons";
-import { CaptainButtonSvg, RacketSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import Icon  from "@ant-design/icons";
+import { AddButtonSvg, CaptainButtonSvg, DeleteButtonSvg, RacketSvg, RollBackSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 import { PlayerModal } from "../PlayerModal/PlayerModal";
 
-const AddIcon = (props: any) => <IconPlus {...props} />;
-const DeleteIcon = (props: any) => <CloseCircleFilled {...props} style={{ color: "red" }} shape="circle" />;
+const AddIcon = (props: any) => <Icon component={AddButtonSvg} {...props} />;
+const DeleteIcon = (props: any) => <Icon component={DeleteButtonSvg} {...props} />;
 const SwapIcon = (props: any) => <Icon component={SwapButtonSvg} {...props} />;
 const UndoIcon = (props: any) => <Icon component={RollBackSvg} {...props} />;
 const CaptainIcon = (props: any) => <Icon component={CaptainButtonSvg} {...props} />;
@@ -45,10 +44,13 @@ declare type PlayerProps = {
 	showBoosterBadge?: boolean
 	club?: Club
 	isSwapable?: any
+	isPickable?: any
 	swappedFrom?: string | null
 	modalEnabled?: boolean
+	upcomingMatches?: Match[]
 	onRemove?: any
 	onSwap?: any
+	onPick?: any
 	onCaptainSelect?: any
 	onViceCaptainSelect?: any
 	benchPlayer?: boolean
@@ -85,7 +87,9 @@ export const Player = (props: PlayerProps) => {
 		swapPlayerId,
 		positionLabel,
 		isSwapable,
+		isPickable,
 		showCaptainBadge,
+		onPick,
 		showBoosterBadge,
 		swappedFrom,
 		onRemove,
@@ -99,6 +103,7 @@ export const Player = (props: PlayerProps) => {
 		type,
 		motm,
 		tourRef,
+		upcomingMatches,
 	} = props;
 
 	const [state, setState] = useState<PlayerState>({
@@ -140,11 +145,12 @@ export const Player = (props: PlayerProps) => {
 
 	const opponentInfo = useMemo(
 		() => {
-			if (player && player.upcomingMatches && player.upcomingMatches.length) {
-				const nextMatch = player.upcomingMatches[0];
+			const matchDetails = player && player.currentMatches && player.currentMatches.length ? player.currentMatches[0] :
+				(player && player.upcomingMatches && player.upcomingMatches.length ? player.upcomingMatches[0] : null);
+			if (matchDetails) {
 				return {
-					playing: nextMatch.home?.id === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
-					opponentShort: nextMatch.home?.id === player.clubId ? nextMatch.away?.short || t("general.team.tbd"): nextMatch.home?.short || t("general.team.tbd"),
+					playing: matchDetails.home?.id === player.clubId ? t("player.opponentHome") : t("player.opponentAway"),
+					opponentShort: matchDetails.home?.id === player.clubId ? matchDetails.away?.short || t("general.team.tbd"): matchDetails.home?.short || t("general.team.tbd"),
 				};
 			} else {
 				return null;
@@ -158,10 +164,7 @@ export const Player = (props: PlayerProps) => {
 	const isCaptain = useMemo(() => player && player.id && player.id === captainId, [player, captainId]);
 	const isViceCaptain = useMemo(() => player && player.id && player.id === viceCaptainId, [player, viceCaptainId]);
 	const hasBooster = useMemo(() => player && !!player.booster, [player]);
-	const isActionLess = useMemo(() => {
-		console.log(actionLessPlayerIds, player?.id, actionLessPlayerIds?.indexOf(player?.id) >= 0);
-		return actionLessPlayerIds?.indexOf(player?.id) >= 0;
-	}, [actionLessPlayerIds, player]);
+	const isActionLess = useMemo(() => actionLessPlayerIds?.indexOf(player?.id) >= 0, [actionLessPlayerIds, player]);
 
 	const showPoints = (player && player.points !== undefined && player.points !== null) || showPlayerValueInsteadOfPoints || replacePlayerPointsWithStatsPoints;
 	const showPlayerName = !avatarOnly;
@@ -187,6 +190,7 @@ export const Player = (props: PlayerProps) => {
 
 	const onPlayerClick = (showModal?: boolean) => {
 		if (props.player && props.player.id && showModal) {
+			document.documentElement.classList.add("fixed-position");
 			setState({ ...state, modalVisible: true });
 		}
 	};
@@ -194,6 +198,7 @@ export const Player = (props: PlayerProps) => {
 	const onCancel = (event: any) => {
 		event.stopPropagation();
 		setState({ ...state, modalVisible: false });
+		document.documentElement.classList.remove("fixed-position");
 	};
 
 	const onBgLoadError = (event: any) => {
@@ -205,7 +210,7 @@ export const Player = (props: PlayerProps) => {
 	return (
 		<PlayerStyle 
 			onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} 
-			className={`position_${player.positionId}` && props.className}
+			className={`position_${player.positionId} ${props.player.id ? "player": "no-player"} ${props.className?props.className:""}`}
 			ref={tourRef}
 		>
 			{
@@ -222,14 +227,14 @@ export const Player = (props: PlayerProps) => {
 
 			{
 				showPoints && hasStats && (player.played != null ? !!player.played : player.points != null) &&
-				<Points color={"#000"} bgColor={(isCaptain && captainHasPlayed) || (!captainHasPlayed && isViceCaptain) ? "#ffc422" : props.pointsBgColor}>{player.points}</Points>
+				<Points color={"#fff"} bgColor={(isCaptain && captainHasPlayed) || (!captainHasPlayed && isViceCaptain) ? "#ffc422" : props.pointsBgColor}>{player.points}</Points>
 			}
 
 			{
 				opponentInfo ?
 					<OpponentBadge color={pointsColor} bgColor={pointsBgColor}>
 						<p>
-							{`${opponentInfo.opponentShort} (${opponentInfo.playing})`}
+							{`v ${opponentInfo.opponentShort} (${opponentInfo.playing})`}
 						</p>
 					</OpponentBadge> : null
 			}
@@ -297,7 +302,7 @@ export const Player = (props: PlayerProps) => {
 				<span className="position-label">{positionLabel}</span>
 			}
 			{
-				player && player.id && props.club && hasModal ?
+				player && player.id && hasModal ?
 					<PlayerModal
 						visible={state.modalVisible}
 						onCancel={onCancel}
@@ -311,9 +316,12 @@ export const Player = (props: PlayerProps) => {
 						onRemove={onRemove}
 						isSwapAble={isSwapable}
 						onSwap={onSwap}
+						isPickAble={isPickable}
+						onPick={onPick}
 						isCaptain={isCaptain}
 						isViceCaptain={isViceCaptain}
 						noActions={isActionLess}
+						upcomingMatches={upcomingMatches}
 					/> :
 					null
 			}

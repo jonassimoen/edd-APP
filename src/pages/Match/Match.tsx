@@ -75,6 +75,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 								</Title>
 								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints || 0} {t("general.points")}</span>
 								<Team
+									pitchClassName="m-left"
 									widthRatio={15}
 									heightRatio={10}
 									clubs={clubs}
@@ -115,6 +116,7 @@ const _MatchContainer = (props: AbstractTeamType) => {
 								</Title>
 								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints || 0} {t("general.points")}</span>
 								<Team
+									pitchClassName="m-right"
 									widthRatio={15}
 									heightRatio={10}
 									clubs={clubs}

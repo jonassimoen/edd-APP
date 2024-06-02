@@ -124,7 +124,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	useEffect(() => {
 		const playersWithStats = playersReduced?.map((p: any) => {
-			console.log(p);
 			const statsPlayer = stats?.find(
 				(s: Statistic) => s.playerId == p.playerId
 			);
@@ -140,8 +139,6 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 
 	useEffect(() => {
 		if(matchStatisticsImportSuccess) {
-			console.log(playersReduced);
-			console.log(importedStats);
 			const playersWithImportedStats = playersReduced?.map((p: any) => {
 				const importedStatsPlayer = importedStats?.find(
 					(s: Statistic) => s.id == p.playerId

@@ -4,7 +4,7 @@ import { SelectProps } from "antd";
 
 const dropDownStyle = {
 	backgroundColor: "#FFF", //theme.primaryContrast,
-	borderRadius: "0px",
+	borderRadius: "0.5rem",
 	border: "1px solid #d9d9d9",
 	overflow: "hidden",
 	boxShadow: "none",
@@ -18,15 +18,17 @@ export declare type MySelectProps = SelectProps & {
 	keyProperty: string;
 	textProperty: string;
 	$block?: boolean;
+	placeholderTxt?: string
 };
 
 export const Select = (props: MySelectProps) => {
-	const { values, keyProperty, textProperty, onChange, ...rest } = props;
+	const { values, keyProperty, textProperty, onChange, placeholderTxt, ...rest } = props;
 	return (
 		<SelectStyle
 			{...rest}
 			dropdownStyle={dropDownStyle}
 			onChange={onChange as any}
+			placeholdertxt={placeholderTxt}
 			options={values?.map((value: any) => (
 				{value: value[keyProperty], label: value[textProperty]}
 				// <OptionStyle

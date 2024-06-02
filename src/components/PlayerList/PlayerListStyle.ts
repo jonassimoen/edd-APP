@@ -4,7 +4,24 @@ import { theme } from "@/styles/theme";
 import { Table } from "antd";
 
 export const ContainerStyle = styled.div`
-    
+    .filters {
+        background: ${theme.primaryContrast};
+        border-radius: 1rem 1rem 0 0;
+        border: 1px solid rgba(255 255 255 / 0.15);
+        border-bottom: none;
+        padding: 0.5rem 1rem;
+    }
+
+    .avatar-container {
+        .player {
+            height: 70px;
+            width: 70px;
+            img {
+                max-height: 100%;
+                max-width: 90%;
+            }
+        }
+    }
 `;
 
 export const SelectGroupStyle = styled.div`
@@ -12,30 +29,33 @@ export const SelectGroupStyle = styled.div`
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 10px;
-
-    > div {
-        margin: 5px 0;
-    }
+    gap: 0.5rem;
+    flex-direction: column;
 
     @media ${mediaQueries.tablet} {
         flex-wrap: nowrap;
         justify-content: space-between;
-
-        > div {
-            margin: 0 5px;
-        }
+        flex-direction: row;
     }
 ` as any;
 
 export const PlayerStyle = styled.div`
     display: block;
+    line-height: 1.1;
 
     .name {
+        font-size: 16px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 250px;
         display: inline;
+    }
+
+    .details {
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
     }
 
     p {
@@ -48,103 +68,99 @@ export const PlayerStyle = styled.div`
 ` as any;
 
 export const tablePagination = `
-.ant-pagination {
-    width: 100%;
-    text-align: center;
+    .ant-pagination {
+        background: ${theme.primaryColor};
+        border: 1px solid rgba(255 255 255 / 0.15);
+        color: white;
+        border-radius: 0.5rem;
+        width: 100%;
+        text-align: center;
 
-    .ant-pagination-prev, .ant-pagination-next {
-        a {
-            border-radius: 0px;
-        }
-
-        &:hover:not(.ant-pagination-disabled) a {
-            color: white;
-        }
-    }
-
-    .ant-pagination-jump-next, .ant-pagination-jump-prev {
-        .ant-pagination-item-link-icon {
-            color: ${theme.primaryContrast};
-        }
-    }
-
-    .ant-pagination-item {
-        border-radius: 0px;
-
-        &:hover:not(.ant-pagination-disabled), &.ant-pagination-item-active {
-            border-color: ${theme.primaryColor};
+        .ant-pagination-prev, .ant-pagination-next {
+            &.ant-pagination-disabled svg {
+                color: ${theme.colorGray};
+            }
+            svg {
+                color:white;
+                &:hover {
+                    color: ${theme.secondaryColor};
+                }
+            }
             a {
-                font-weight: bold;
-                color: ${theme.primaryContrast};
+                border-radius: 0px;
             }
         }
-    }
-
-    .ant-pagination-disabled {
-        a {
-            font-weight: bold;
-            color: #ababab;
+        .ant-pagination-jump-next, .ant-pagination-jump-prev {
+            .ant-pagination-item-link-icon, .ant-pagination-item-ellipsis {
+                color: white;
+            }
         }
-    }
+
+        .ant-pagination-item {
+            border-radius: 1rem;
+            a, svg {
+                color: white;
+            }
+
+            &-active {
+                border: none;
+                background: ${theme.secondaryColor};
+                a {
+                    color: ${theme.primaryColor};
+                }
+            }
+
+            &:hover:not(.ant-pagination-item-active) a {
+                color: ${theme.secondaryColor};
+            }
+        }
+
 }
 `;
 
 export const TableStyle = styled(Table)`
-    .ant-table-container table>thead>tr:first-child {
-        >*:first-child {
-            border-start-start-radius: 0px;
-        }
-        >*:last-child {
-            border-start-end-radius: 0px;
-        }
-    }
-
     .ant-table {
-        color: #000;
-    }
+        color: white;
+        border-radius: 0 0 0.5rem 0.5rem;
+        background-color: ${theme.primaryColor};
+        border: 1px solid rgba(255 255 255 / 0.15);
+        border-top: none;
 
-    .ant-table-thead {
-        >tr>th {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            background: ${theme.primaryContrast};
-            color: ${theme.primaryColor};
-			padding: 5px;
-
-			&::before {
-				display: none;
-			}
-        }
-    }
-
-	.avatar-container {
-		margin-bottom: -10px;
-	}
-
-    .ant-table-tbody {
-        .ant-table-row {
-            background-color: #FFF;
-            > td:first-child {
-                padding: 0px 10px 0px 15px;
+        &-content {
+            table {
+                border-spacing: 0;
+                border-collapse: collapse;
             }
-            > td {
-                border: none;
-                padding: 3.5px;
 
-                & p {
-                    margin-top:0;
+            .ant-table-row {
+                &:last-child {
+                    .ant-table-cell {
+                        border: none;
+                    }
+                }
+                .ant-table-cell {
+                    border-bottom-color: rgba(255, 255, 255, 0.1);
+                    &:first-child {
+                        padding: 0px;
+                    }
+
+                    &-row-hover {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                }
+
+                &.disabled {
+                    background: rgba(0, 0, 0, 0.15);
+
+                    .ant-table-cell {
+                        opacity: 0.5;
+                        &-row-hover {
+                            background: none;
+                        }
+                    }
                 }
             }
-
-            &--odd {
-                background-color: #f2f0f4;
-            }
-        }
-
-        .cursor-pointer {
-            cursor: pointer;
         }
     }
-
     ${tablePagination}  
 ` as any;

@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PlayerModalStyle } from "../PlayerModal/PlayerModalStyle";
 import Icon from "@ant-design/icons";
 import { DeleteButtonSvg } from "@/styles/custom-icons";
 import { Row } from "../UI/Grid/Grid";
-import { TableStyle } from "../PlayerStatsList/PlayerStatsListStyle";
+import { TransfersModalStyle, TransfersModalListStyle } from "./TransfersModalStyle";
 
 const ExitIcon = (props: any) => <Icon component={DeleteButtonSvg} {...props} />;
 
@@ -23,9 +22,14 @@ export const TransfersModal = (props: TransfersModalProps) => {
 	const { t } = useTranslation();
 	const { transfers } = props;
 
-	const title = <div className={"custom-title-container"}>
-		<ExitIcon onClick={props.onCancel} />
-	</div>;
+	useEffect(() => {
+		if(props.visible) {
+			document.documentElement.classList.add("fixed-position");
+		} else {
+			document.documentElement.classList.remove("fixed-position");
+		}
+	},[props.visible]);
+
 
 	const columns = [
 		{
@@ -34,7 +38,7 @@ export const TransfersModal = (props: TransfersModalProps) => {
 			title: "#",
 			dataIndex: "id",
 			render: (txt: string, record: any, index: number) => {
-				return <b>{index + 1}</b>;
+				return index + 1;
 			}
 		},
 		{
@@ -43,30 +47,30 @@ export const TransfersModal = (props: TransfersModalProps) => {
 			title: t("team.transferOut"),
 			dataIndex: "outId",
 			render: (txt: string, record: any) => {
-				return <b>{record.outPlayer && record.outPlayer.name}</b>;
+				return record.outPlayer && record.outPlayer.name;
 			}
 		},
 		{
-			key: "outId",
+			key: "inId",
 			width: "45%",
 			title: t("team.transferIn"),
 			dataIndex: "inId",
 			render: (txt: string, record: any) => {
-				return <b>{record.inPlayer && record.inPlayer.name}</b>;
+				return record.inPlayer && record.inPlayer.name;
 			}
 		},
 	];
 
 	return (
-		<PlayerModalStyle
-			title={title}
-			closable={false}
+		<TransfersModalStyle
+			title={t("general.transfers")}
+			closable={true}
 			open={props.visible}
 			onCancel={props.onCancel}
 			footer={[]}
 		>
 			<Row>
-				<TableStyle
+				<TransfersModalListStyle
 					columns={columns}
 					dataSource={transfers}
 					showHeader={true}
@@ -77,6 +81,6 @@ export const TransfersModal = (props: TransfersModalProps) => {
 					rowClassName={(record: object, index: number) => index % 2 ? "ant-table-row--odd" : "ant-table-row--even"}
 				/>
 			</Row>
-		</PlayerModalStyle>
+		</TransfersModalStyle>
 	);
 };

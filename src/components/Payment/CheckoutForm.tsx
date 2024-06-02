@@ -6,6 +6,8 @@ import { Col, Row } from "../UI/Grid/Grid";
 import { Button } from "../UI/Button/Button";
 import { EuroOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { CheckoutFormStyle } from "./CheckoutFormStyle";
+import Title from "antd/lib/typography/Title";
 
 export const CheckoutForm = () => {
 	const stripe = useStripe();
@@ -38,24 +40,22 @@ export const CheckoutForm = () => {
 		setIsLoading(false);
 	};
 	return (
-		<form id="payment-form" onSubmit={handleSubmit}>
-			<Row>
-				<Col span={8}>
-					<PaymentElement id="payment-element" options={{layout: "tabs"}} />
-					<Button
-						type="primary"
-						onClick={handleSubmit}
-						id="submit"
-						disabled={isLoading || !stripe || !elements}
-						loading={isLoading}
-						style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-						size="large"
-					>
-						<EuroOutlined style={{ marginRight: "10px" }} />
-						{t("payment.payNow")}
-					</Button>
-				</Col>
-			</Row>
-		</form>
+		<CheckoutFormStyle id="payment-form" onSubmit={handleSubmit}>
+			<Title level={2}>{t("payment.title")}</Title>
+			<p style={{fontSize: 18, marginBottom: "1rem"}}>{t("payment.description")}</p>
+			<PaymentElement id="payment-element" options={{layout: "tabs"}} />
+			<Button
+				type="primary"
+				onClick={handleSubmit}
+				id="submit"
+				disabled={isLoading || !stripe || !elements}
+				loading={isLoading}
+				style={{ width: "100%", maxWidth: "100%", margin: "2rem 0" }}
+				size="large"
+			>
+				<EuroOutlined style={{ marginRight: "10px" }} />
+				{t("payment.payNow")}
+			</Button>
+		</CheckoutFormStyle>
 	);
 };
