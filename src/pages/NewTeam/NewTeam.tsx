@@ -165,95 +165,95 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 	return (
 		<NewTeamStyle>
-			{/* {team && team.id && hasPlayers ? <Navigate to={{ pathname: `/team/${team.id}` }} /> : */}
-			{/* (playersSuccess && clubs) && */}
-			<>
-				<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
-				<Row>
-					<Col lg={12} md={24} sm={24} xs={24} className="left">
-						<div className="title">
-							<Title level={2}>{t("general.lineup")}</Title>
-							<p>{t("general.lineupDescription")}</p>
-						</div>
-						<Team
-							widthRatio={15}
-							heightRatio={10}
-							clubs={clubs}
-							bg={teamBackground}
-							assetsCdn={competition.assetsCdn}
-							selection={startingByPositions}
-							showCaptainBadge={true}
-							showPlayerValue={true}
-							// playerType={}
-							playerType={PlayerType.SoccerPortrait}
-							captainId={captainId}
-							viceCaptainId={viceCaptainId}
-							onPlaceholderClick={onPlaceHolderClick}
-							showPlayerValueInsteadOfPoints={true}
-							onCaptainSelect={props.onCaptainSelect}
-							onViceCaptainSelect={props.onViceCaptainSelect}
-							onRemove={(player: Player) => props.removePlayer(player)}
-							modalEnabled={true}
-							playerBadgeColor={"#fff"}
-							playerBadgeBgColor={theme.primaryContrast}
-							playerPointsColor={"#000"}
-							playerPointsBgColor={theme.primaryColor} 
-							tourRef={specificPlayerRef}
-						/>
-
-						<Input
-							onChange={props.onTeamNameChange}
-							style={{ maxWidth: "100%"}}
-							placeholder={t("team.newTeamNameInput")}
-							value={teamName}
-							maxLength={55}
-							tourRef={nameRef}
-						/>
-
-						<NewGameStats
-							budget={budget}
-							maxPlayersSameClub={deadlineInfo.deadlineInfo.sC}
-							totalPlayers={totalPlayersToPick}
-							selectedPlayers={totalPlayersPicked}
-							tourRef={statsRef}
-						/>
-						<Row>
-							<Button
-								onClick={onTeamSave}
-								type="primary"
-								disabled={savingTeamPending}
-								loading={savingTeamPending}
-								style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
-								size="large">
-								<SaveOutlined style={{ marginRight: "10px" }} />
-								{t("team.saveTeam")}
-							</Button>
-						</Row>
-					</Col>
-					<Col lg={12} md={24} sm={24} xs={24} className="right">
-						<Element name="all-players">
-							<PlayerList
-								data={players}
+			{team && team.id && hasPlayers ? <Navigate to={{ pathname: `/team/${team.id}` }} /> :
+				(playersSuccess && clubs) &&
+				<>
+					<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
+					<Row>
+						<Col lg={12} md={24} sm={24} xs={24} className="left">
+							<div className="title">
+								<Title level={2}>{t("general.lineup")}</Title>
+								<p>{t("general.lineupDescription")}</p>
+							</div>
+							<Team
+								widthRatio={15}
+								heightRatio={10}
 								clubs={clubs}
-								matches={matches}
-								isLoading={playersLoading}
-								playerType={PlayerType.SoccerPortrait}
-								size={10}
-								activePositionFilter={activePositionFilter}
-								showHeader={false}
-								hidePositions={false}
-								action={true}
-								isPickable={props.isPickAble}
-								onPick={onPlayerIn}
+								bg={teamBackground}
 								assetsCdn={competition.assetsCdn}
-								tourRef={playerListRef}
-								deadlineWeek={deadlineInfo.deadlineInfo.deadlineWeek}
+								selection={startingByPositions}
+								showCaptainBadge={true}
+								showPlayerValue={true}
+								// playerType={}
+								playerType={PlayerType.SoccerPortrait}
+								captainId={captainId}
+								viceCaptainId={viceCaptainId}
+								onPlaceholderClick={onPlaceHolderClick}
+								showPlayerValueInsteadOfPoints={true}
+								onCaptainSelect={props.onCaptainSelect}
+								onViceCaptainSelect={props.onViceCaptainSelect}
+								onRemove={(player: Player) => props.removePlayer(player)}
+								modalEnabled={true}
+								playerBadgeColor={"#fff"}
+								playerBadgeBgColor={theme.primaryContrast}
+								playerPointsColor={"#000"}
+								playerPointsBgColor={theme.primaryColor} 
+								tourRef={specificPlayerRef}
 							/>
-						</Element>
-					</Col>
-				</Row>
-			</>
-			{/* } */}
+
+							<Input
+								onChange={props.onTeamNameChange}
+								style={{ maxWidth: "100%"}}
+								placeholder={t("team.newTeamNameInput")}
+								value={teamName}
+								maxLength={55}
+								tourRef={nameRef}
+							/>
+
+							<NewGameStats
+								budget={budget}
+								maxPlayersSameClub={deadlineInfo.deadlineInfo.sC}
+								totalPlayers={totalPlayersToPick}
+								selectedPlayers={totalPlayersPicked}
+								tourRef={statsRef}
+							/>
+							<Row>
+								<Button
+									onClick={onTeamSave}
+									type="primary"
+									disabled={savingTeamPending}
+									loading={savingTeamPending}
+									style={{ width: "100%", maxWidth: "100%", margin: "10px 0" }}
+									size="large">
+									<SaveOutlined style={{ marginRight: "10px" }} />
+									{t("team.saveTeam")}
+								</Button>
+							</Row>
+						</Col>
+						<Col lg={12} md={24} sm={24} xs={24} className="right">
+							<Element name="all-players">
+								<PlayerList
+									data={players}
+									clubs={clubs}
+									matches={matches}
+									isLoading={playersLoading}
+									playerType={PlayerType.SoccerPortrait}
+									size={10}
+									activePositionFilter={activePositionFilter}
+									showHeader={false}
+									hidePositions={false}
+									action={true}
+									isPickable={props.isPickAble}
+									onPick={onPlayerIn}
+									assetsCdn={competition.assetsCdn}
+									tourRef={playerListRef}
+									deadlineWeek={deadlineInfo.deadlineInfo.deadlineWeek}
+								/>
+							</Element>
+						</Col>
+					</Row>
+				</>
+			}
 		</NewTeamStyle>
 	);
 };

@@ -9,17 +9,17 @@ import Title from "antd/es/typography/Title";
 import Meta from "antd/es/card/Meta";
 import { Card } from "antd";
 import config from "@/config";
+import { useMemo } from "react";
 
 export declare type HomeProps = {
 	// onLogOut?: () => void
 }
 
 export const Home = (props: HomeProps) => {
-	const authenticated = useAppSelector((state) => state.userState.authenticated);
-	const teams: any[] = [];
+	const {authenticated, user, teams} = useAppSelector((state) => state.userState);
 	const { t } = useTranslation();
 	const redirectToMyTeams = true;
-	const team = teams && teams[0];
+	const team = useMemo(() => teams && teams[0], [teams]);
 
 	const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 	const options = {
@@ -33,11 +33,13 @@ export const Home = (props: HomeProps) => {
 		),
 	};
 	const qs = new URLSearchParams(options);
-
+	console.log(user, team);
 	return (
 		<HomeStyle>
 			{
-				redirectToMyTeams && team && <Navigate to={{ pathname: `/team/${teams[0].id}` }} ></Navigate>
+				redirectToMyTeams && user && (
+					team ? <Navigate to={{ pathname: `/team/${team.id}` }} /> : <Navigate to={{ pathname: "/new" }} />
+				)
 			}
 			{
 				!authenticated ?
