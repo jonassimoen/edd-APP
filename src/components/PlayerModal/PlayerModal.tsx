@@ -227,7 +227,9 @@ export const PlayerModal = (props: PlayerModalProps) => {
 			footer={[]}
 		>
 			<Row className="player-header">
-				<div className="thumbnail" />
+				<div className="thumbnail">
+					<ClubBadgeBg className="club-badge" src={`${competition.assetsCdn}/badges/${player.clubId}.png`} />
+				</div>
 				<div className="right">
 					<p className="forename">{player.forename}</p>
 					<p className="surname">{player.surname}</p>

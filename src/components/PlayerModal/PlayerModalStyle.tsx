@@ -101,6 +101,16 @@ export const PlayerModalStyle = styled(Modal)<any>`
 					border-radius: 50%;
 					border: 1px solid white;
 					transition: all 375ms ease-in;
+
+					.club-badge {
+						position: absolute;
+						bottom: 0;
+						right: 0;
+						height: 28px;
+						width: 28px;
+						padding: 0;
+						margin: 0;
+					}
 				}
 
 				&.small-header {
@@ -122,6 +132,9 @@ export const PlayerModalStyle = styled(Modal)<any>`
 					.thumbnail {
 						height: 50px;
 						width: 50px;
+						.club-badge {
+							display: none;
+						}
 					}
 				}
 			}
