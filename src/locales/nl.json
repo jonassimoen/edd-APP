@@ -100,7 +100,9 @@
     "editTeamDescription": "Je kan je team onbeperkt wijzigen tot de volgende speeldagen. Maak hier handig gebruik van!",
     "noMatchesFound": "Geen wedstrijden gevonden.",
     "lineupDescription": "Kies hier je elf basisspelers. Enkel zij verdienen punten deze speeldag. Als een basisspeler niet speelt, wordt deze automatisch vervangen met een bankzitter die wel speelde!",
-    "transferDescription": "Maak hier je transfers. Let op, je hebt een beperkt aantal transfers. Indien je meer transfers maakt, dan betaal je dit met minpunten."
+    "transferDescription": "Maak hier je transfers. Let op, je hebt een beperkt aantal transfers. Indien je meer transfers maakt, dan betaal je dit met minpunten.",
+    "newTeam": "Nieuw team",
+    "newTeamDescription": "Kies hier je 15 spelers voor jouw team volgens de regels en geef je team ook een naam. In de volgende stap kan je je basiself kiezen."
   },
   "player": {
     "addBadgeLabel": "Voeg toe",
@@ -175,9 +177,6 @@
     "bigChancesMissedLabel": "Grote kansen gemist",
     "errorLeadingToShotLabel": "Fout leidt tot schot",
     "errorLeadingToGoalLabel": "Fout leidt tot doelpunt",
-    "": "",
-    "": "",
-    "": "",
     "": "",
     "coachShort": "TRA"
   },

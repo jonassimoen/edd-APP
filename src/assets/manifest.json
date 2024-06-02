@@ -8,12 +8,12 @@
 		"type": "image/png"
 	  }
 	],
-	"theme_color": "#0d1e62",
-	"background_color": "#0d1e62",
+	"theme_color": "#143cdb",
+	"background_color": "#143cdb",
 	"display": "standalone",
 	"id": "european-dream-draft",
 	"description": "Fantasy Draft for Euro 2024",
-	"start_url": "https://staging.dreamdraft.be",
+	"start_url": "https://www.dreamdraft.be",
 	"dir": "ltr",
 	"lang": "nl"
   }

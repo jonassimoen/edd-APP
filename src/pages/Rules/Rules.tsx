@@ -40,11 +40,6 @@ export const Rules = () => {
 
 	const items: CollapseProps["items"] = [
 		{
-			key: "points",
-			label: t("rules.points"),
-			children: parseHTML(getRule("rules_points")),
-		},
-		{
 			key: "matchdays",
 			label: t("rules.matchdays"),
 			children: parseHTML(getRule("rules_matchdays")),
@@ -70,9 +65,19 @@ export const Rules = () => {
 			children: parseHTML(getRule("rules_deadlines")),
 		},
 		{
+			key: "points",
+			label: t("rules.points"),
+			children: parseHTML(getRule("rules_points")),
+		},
+		{
 			key: "boosters",
 			label: t("rules.boosters"),
 			children: parseHTML(getRule("rules_boosters")),
+		},
+		{
+			key: "prices",
+			label: t("rules.prices"),
+			children: parseHTML(getRule("rules_prices")),
 		},
 		{
 			key: "legal",

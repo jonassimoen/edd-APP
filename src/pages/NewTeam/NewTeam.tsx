@@ -172,8 +172,8 @@ const _NewTeam = (props: AbstractTeamType) => {
 					<Row>
 						<Col lg={12} md={24} sm={24} xs={24} className="left">
 							<div className="title">
-								<Title level={2}>{t("general.lineup")}</Title>
-								<p>{t("general.lineupDescription")}</p>
+								<Title level={2}>{t("general.newTeam")}</Title>
+								<p>{t("general.newTeamDescription")}</p>
 							</div>
 							<Team
 								widthRatio={15}
