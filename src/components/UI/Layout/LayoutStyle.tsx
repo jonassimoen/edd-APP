@@ -9,6 +9,9 @@ export const LayoutStyle = styled(Layout)`
 		margin: 0 auto;
 		width: 100%;
 		@media ${mediaQueries.tabletL} {
+			width: 90%;
+		}
+		@media ${mediaQueries.desktopL} {
 			width: 80%;
 		}
     }

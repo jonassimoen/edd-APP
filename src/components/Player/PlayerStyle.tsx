@@ -21,6 +21,11 @@ export const PlayerStyle = styled.div`
     }
 
     @media ${mediaQueries.tabletL} {	
+        width: 85px;
+        height: 70px;
+    }
+
+    @media ${mediaQueries.desktopL} {	
         width: 120px;
         height: 100px;
     }

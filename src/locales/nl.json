@@ -163,7 +163,7 @@
     "commitedFoulsPerThreeLabel": "Fouten gemaakt (per drie)",
     "drawnFoulsPerThreeLabel": "Fouten uitgelokt (per drie)",
     "shotsOffTargetPerTwoLabel": "Schoten naast doel (per twee)",
-    "shotsOnTargetPerThreLabele": "Schoten op doel (per drie)",
+    "shotsOnTargetPerThreeLabel": "Schoten op doel (per drie)",
     "accCrossesPerTwoLabel": "Nauwkeurige voorzetten (per twee)",
     "clearancesPerFiveLabel": "Clearance (per vijf)",
     "blocksPerThreeLabel": "Blocks (per drie)",
@@ -475,6 +475,7 @@
     "deadlines": "Deadlines",
     "boosters": "Boosters",
     "points": "Punten",
+    "prices": "Prijzen",
     "legal": "Algemeen"
   },
   "deadlines": {

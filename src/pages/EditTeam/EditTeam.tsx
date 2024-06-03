@@ -45,8 +45,8 @@ const _EditTeam = (props: AbstractTeamType) => {
 			return;
 		}
 		const playerProps =
-			["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "pSelections", "points"];
-		const selectionProps: any[] = [];
+			["id", "name", "short", "positionId", "clubId", "ban", "injury", "form", "forename", "surname", "portraitUrl", "pSelections", "points"];
+		const selectionProps: any[] = ["value"];
 		const result = teamResult;
 		const starting = result.players
 			.filter((player: any) => player.selection.starting === 1)
@@ -102,7 +102,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 	};
 
 	useEffect(() => {
-		if (deadlineInfoSuccess && teamSucces && clubsSuccess) {
+		if (deadlineInfoSuccess && teamSucces && clubsSuccess && matches) {
 			getTeamInfo();
 		}
 	}, [clubsSuccess, teamSucces, deadlineInfoSuccess]);

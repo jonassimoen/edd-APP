@@ -202,7 +202,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 					{
 						initializedExternally && 
 						<Row style={{ margin: 0 }}>
-							<Col lg={16} md={16} sm={24} xs={24}>
+							<Col lg={14} md={12} sm={24} xs={24}>
 								{/* <Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title> */}
 								{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
 								<PointsStats
@@ -275,7 +275,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 								/> */}
 										
 							</Col>
-							<Col lg={8} md={8} sm={24} xs={24} className="right-col">
+							<Col lg={10} md={12} sm={24} xs={24} className="right-col">
 								{/* <Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title> */}
 								<Stats
 									visibleWeekPoints={teamPointsInfo.visibleWeekPoints}

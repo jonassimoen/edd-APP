@@ -61,8 +61,12 @@ export const TeamStyle = styled.div`
         pointer-events: none;
         left: 50%;
         transform: translateX(-50%);
-        height: 975px;
         width: calc(100vw + 105%);
+        height: 875px;
+
+        @media ${mediaQueries.desktopL} {
+            height: 975px;
+        }
     }
     
     // &::after {
@@ -99,17 +103,18 @@ export const TeamStyle = styled.div`
             background-position: top;
             left: 50%;
             width: 1500px;
-            height: 825px;
             transform: translateX(-50%);
             clip-path: inset(0 0 26px 0);
-            @media ${mediaQueries.tablet} {
+            height: 725px;
+    
+            @media ${mediaQueries.desktopL} {
                 height: 825px;
             }
         }
         &.m-left::before {
             clip-path: inset(0rem 0rem 8rem 0em);
 
-            @media ${mediaQueries.tabletL} {
+            @media ${mediaQueries.desktopL} {
                 clip-path: inset(0rem 0rem 4rem 0em);
             }
         }
