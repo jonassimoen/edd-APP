@@ -23,7 +23,7 @@ export const NewGameStats = (props: StatsProps) => {
 
 				</Col>
 				<Col span={8}>
-					<p className="points">€{props.budget.toFixed(2)}M</p>
+					<p className="points">€{props.budget}M</p>
 					<p className="label">{t("team.remainingBudget")}</p>
 				</Col>
 				<Col span={8}>

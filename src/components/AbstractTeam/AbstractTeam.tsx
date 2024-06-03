@@ -435,7 +435,7 @@ export const AbstractTeam = (Component: (props: AbstractTeamType) => any, props:
 				viceCaptainId: state.viceCaptainId
 			})
 				.unwrap()
-				.then((res) => openSuccessNotification({ title: t("team.save.success") }))
+				.then((res) => {openSuccessNotification({ title: t("team.save.success") }); return res; })
 				.catch((err) => openErrorNotification({ title: t("team.save.failed") }));
 		} else {
 			openErrorNotification({

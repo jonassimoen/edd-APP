@@ -6,7 +6,7 @@ import { useLazyGetTeamQuery } from "@/services/teamsApi";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Element, scroller } from "react-scroll";
 import Title from "antd/es/typography/Title";
 import { PlayerType } from "@/types/PlayerTypes";
@@ -33,6 +33,7 @@ declare type NewTeamState = {
 
 const _NewTeam = (props: AbstractTeamType) => {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 	// const {competition, clubsSuccess, playersLoading} = useSelector((state: StoreState) => state.application);
 	// const clubs = JSON.parse(localStorage.getItem("_static_clubs"));
 	// const players = JSON.parse(localStorage.getItem("_static_players"));
@@ -85,8 +86,9 @@ const _NewTeam = (props: AbstractTeamType) => {
 		}
 
 		props.onTeamSave()
-			.then((result) => setState({ ...state, hasPlayers: result.data.status === "success", redirectToPayments: true }))
-			.then(() => getTeams())
+			.then((result) => setState({ ...state, hasPlayers: result.status === "success", redirectToPayments: true }))
+			.then(() => getTeams().unwrap())
+			.then(({teams}) => navigate(`/team/${teams[0].id}`))
 			.catch((err) => console.error(err));
 	};
 
