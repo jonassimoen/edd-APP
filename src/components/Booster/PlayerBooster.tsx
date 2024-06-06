@@ -32,7 +32,7 @@ export const PlayerBooster = (props: PlayerBoosterProps) => {
 	};
 
 	return (
-		<BoosterStyle className={`booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
+		<BoosterStyle className={`booster booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
 			{/* <p className="booster-type">{t(`boosters.${props.type}`)}</p> */}
 			<div className="booster-icon">
 				<Icon 

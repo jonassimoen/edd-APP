@@ -72,6 +72,7 @@ export const BoosterList = (props: BoosterListProps) => {
 
 	return (
 		<BoosterListStyle>
+			<Title level={4}>Boosters</Title>
 			<Row justify={"center"}>
 				<Col span={8}>
 					<PlayerBooster

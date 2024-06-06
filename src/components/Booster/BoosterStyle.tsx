@@ -18,6 +18,10 @@ export const BoosterStyle = styled.div`
 		// 	height: 2rem;
 		// }
 	}
+
+	&.booster {
+		padding: 0;
+	}
 	
 	.booster-icon {
 		vertical-align: middle;

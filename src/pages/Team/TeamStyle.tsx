@@ -36,6 +36,6 @@ export const TeamStyle = styled.div`
 	.right-col {
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
+		gap: 1rem;
 	}
 `;

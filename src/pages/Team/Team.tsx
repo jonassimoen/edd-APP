@@ -117,7 +117,7 @@ export const _Team = (props: AbstractTeamType) => {
 				)
 			}
 			<Row>				
-				<Col lg={16} md={16} sm={24} xs={24}>
+				<Col xl={16} lg={14} md={24} sm={24} xs={24}>
 					<div className="header">
 						<div className="title">
 							<Title level={2}>{t("general.team.name")} {teamResult?.team.name}</Title>
@@ -185,7 +185,7 @@ export const _Team = (props: AbstractTeamType) => {
 					}
 				</Col>
 				
-				<Col lg={8} md={8} sm={24} xs={24} className="right-col">
+				<Col xl={8} lg={10} md={24} sm={24} xs={24} className="right-col">
 					<BoosterList 
 						teamId={props.teamId}
 						boosters={props.boosters}

@@ -140,6 +140,9 @@ export const ClubDetails = styled.div`
     }
     &.right {
         justify-content: flex-end;
+        .team-name {
+            text-align: right;
+        }
     }
     gap: 0.5rem;
 `;

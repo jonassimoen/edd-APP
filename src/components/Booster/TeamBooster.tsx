@@ -30,7 +30,7 @@ export const TeamBooster = (props: TeamBoosterProps) => {
 	};
 
 	return (
-		<BoosterStyle className={`booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
+		<BoosterStyle className={`booster booster-${(boosterActive ? "active" : ((boosterUsed || props.boosterLimit) ? "disabled" : "available") )}`}>
 			<div className="booster-icon">
 				<Icon 
 					component={props.iconSvg} 
