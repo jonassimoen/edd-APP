@@ -321,6 +321,7 @@ export const PlayerList = (props: PlayerListProps) => {
 						keyProperty={"id"}
 						onSelect={(value: any) => onFilterChange("position", value)}
 						textProperty={"name"}
+						value={activePositionFilter}
 						placeholder={positions[0].name}
 						placeholderTxt={t("general.position")}
 					/>

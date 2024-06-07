@@ -352,6 +352,7 @@ const _Transfers = (props: AbstractTeamType) => {
 								isLoading={playersLoading}
 								hidePositions={false}
 								activePositionFilter={activePositionFilter}
+								setActivePositionFilter={props.setActivePositionFilter}
 								isPickable={(player: Player) => props.isPickAble(player, false, true) && draftTransfers.filter((tf: Transfer) => tf.outId !== player.id).length === draftTransfers.length}
 								playerType={PlayerType.SoccerPortrait}
 								actionLabel={t("transfersPage.transferButtonLabel")}

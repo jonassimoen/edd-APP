@@ -237,6 +237,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 								hidePositions={false}
 								assetsCdn={competition.assetsCdn}
 								activePositionFilter={activePositionFilter}
+								setActivePositionFilter={props.setActivePositionFilter}
 								isPickable={props.isPickAble}
 								onPick={onPlayerIn}
 								action

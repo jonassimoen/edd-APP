@@ -242,6 +242,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 									playerType={PlayerType.SoccerPortrait}
 									size={10}
 									activePositionFilter={activePositionFilter}
+									setActivePositionFilter={props.setActivePositionFilter}
 									showHeader={false}
 									hidePositions={false}
 									action={true}
