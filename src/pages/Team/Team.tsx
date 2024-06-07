@@ -111,7 +111,7 @@ export const _Team = (props: AbstractTeamType) => {
 				teamResult && (
 					!teamResult.team && <Navigate to="/home" /> ||
 					teamResult.team && notTeamOwner && <Navigate to={`/public/${id}`} /> ||
-					teamResult.team && teamResult.team.players && teamResult.team.players.length === 0 && <Navigate to="/new" /> ||	
+					teamResult.team && teamResult.players && teamResult.players.length === 0 && <Navigate to="/new" /> ||	
 					!gameInProgress && <Navigate to={`/points/${id}`} />
 					
 				)
