@@ -207,8 +207,8 @@ const PlayerActionsPoints: any = {
 	groundMoreDuelsWon: [0, 1, 1, 1, 1],
 	aerialMoreDuelsWon: [0, 1, 1, 1, 1],
 	// Magic
-	errorLeadingToShot: [0, -1, -1, -1, -1],
-	errorLeadingToGoal: [0, -3, -3, -3, -3],
+	errorLeadingShot: [0, -1, -1, -1, -1],
+	errorLeadingGoal: [0, -3, -3, -3, -3],
 	bigChancesCreated: [0, 2, 2, 2, 2],
 	bigChancesMissed: [0, -2, -2, -2, -2],
 	// Penalty's
@@ -430,6 +430,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				// This is the case for the following stats
 				//	GOALS - ASSISTS - OWN GOALS - PEN. SAVED - LINE CLEARANCE - ERR. SHOT - ERR. GOAL - BC MISSED - BC CREATED - PEN. MISSED - PEN. WON - PEN. COMMITED
 				const amount = player.pointsOverview && player.pointsOverview[actionName] || 0;
+				console.log(player.short, actionName);
 				if (amount) {
 					pointsOverview.push({ action: t(`player.${actionName}Label`), quantity: amount, points: amount * actionPoints });
 				}
