@@ -6,6 +6,16 @@ export const StatsStyle = styled.div `
 	background-color: ${theme.primaryContrast};
 	border: 1px solid rgba(255 255 255 / 0.15);
 
+	.title {
+		color: white;
+		font-size: 20px;
+		align-items: center;
+		justify-content: center;
+		padding-top: 0.5rem;
+		font-weight:700;
+		text-transform: uppercase;
+	}
+
 	.stat-row {
 		&.no-border {
 			border-bottom: none;

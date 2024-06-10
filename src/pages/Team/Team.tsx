@@ -40,7 +40,7 @@ export const _Team = (props: AbstractTeamType) => {
 
 	const getTeamInfo = (weekId: number) => {
 		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "pSelections"];
-		const selectionProps: any[] = ["booster"];
+		const selectionProps: any[] = ["booster", "captain"];
 		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
 			.map((p: any) => {
 				const displayWeekMatches: any[] = matches.filter(
@@ -93,7 +93,7 @@ export const _Team = (props: AbstractTeamType) => {
 	const notTeamOwner = useMemo(() => teamResult && teamResult.team && teamResult.team.userId && user && user.id &&( user.id != teamResult.team.userId), [teamResult, user]);
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const boostedPlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => p?.booster), [props.starting, props.bench]);
-	const unboostedPlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => !p?.booster), [props.starting, props.bench]);
+	const unboostedEligiblePlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => !p?.booster && !p.captain), [props.starting, props.bench]);
 	
 	if(teamError) {
 		return (
@@ -192,7 +192,7 @@ export const _Team = (props: AbstractTeamType) => {
 						deadlineWeek={deadlineWeek}
 						assetsCdn={application.competition.assetsCdn}
 						playersWithBoosters={boostedPlayers}
-						possiblePlayers={unboostedPlayers}
+						possiblePlayers={unboostedEligiblePlayers}
 					/>
 					<Calendar
 						assetsCdn={application.competition.assetsCdn}

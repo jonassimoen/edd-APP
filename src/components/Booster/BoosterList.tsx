@@ -57,7 +57,7 @@ export const BoosterList = (props: BoosterListProps) => {
 	};
 
 	const boosterLimitReached = useMemo(() => 
-		[tripleCaptain, freeHit, superSubs, goalRush, hiddenGem, fanFavourite].filter((v: number) => v == deadlineWeek).length >= 2
+		[tripleCaptain, freeHit, superSubs, goalRush, hiddenGem, fanFavourite].filter((v: number) => v == deadlineWeek).length >= 1
 	, [props]);
 
 	const hiddenGemPlayer = useMemo(() => 

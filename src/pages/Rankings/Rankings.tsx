@@ -5,6 +5,8 @@ import Title from "antd/lib/typography/Title";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { RankingsStyle, TableStyle } from "./RankingsStyle";
+import { Button } from "@/components/UI/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 type RankingsProps = {
 	q?: null
@@ -13,6 +15,7 @@ type RankingsProps = {
 export const Rankings = (props: RankingsProps) => {
 	const [t] = useTranslation();
 	const { data, isLoading } = useGetTeamRankingsQuery();
+	const navigate = useNavigate();
 
 	const columns = [
 		{
@@ -28,7 +31,7 @@ export const Rankings = (props: RankingsProps) => {
 			title: t("rankingsPage.rankingsTableTeamColumnName"),
 			key: "team",
 			dataIndex: "team",
-			width: "60%",
+			width: "50%",
 			render: (team: Team, record: any) =>
 				<React.Fragment>
 					<b>{team.name}</b>
@@ -36,6 +39,14 @@ export const Rankings = (props: RankingsProps) => {
 						{`${record.user.firstName} ${record.user.lastName}`}
 					</span>
 				</React.Fragment>
+		},
+		{
+			key: "team",
+			dataIndex: "team",
+			width: "10%",
+			render: (team: Team) => {
+				return <Button onClick={() => navigate(`/public/${team.id}`)}>{t("rankingsPage.visitTeam")}</Button>;
+			}
 		},
 		{
 			title: t("rankingsPage.rankingsTablePointsColumnName"),

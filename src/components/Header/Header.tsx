@@ -1,5 +1,5 @@
 import { useGetTeamsQuery, useLazyGetProfileQuery, useLogoutMutation } from "@/services/usersApi";
-import { useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ import { theme } from "@/styles/theme";
 import { Crisp } from "crisp-sdk-web";
 import { Alert } from "../UI/Alert/Alert";
 import parseHTML from "html-react-parser";
+import { Modal } from "antd";
+import dayjs from "dayjs";
 
 export const staticPagesTitleMap: { [key: string]: string } = {
 	"/stats": "STATS",
@@ -33,11 +35,12 @@ export const Header = () => {
 	const [logoutRequest] = useLogoutMutation();
 	const { data: teams } = useGetTeamsQuery();
 	const dispatch = useDispatch();
-	const [getProfile, { isSuccess: profileFetched, isLoading: loadingProfile }] = useLazyGetProfileQuery();
+	const [getProfile, { isSuccess: profileFetched, isLoading: loadingProfile, data: profileResult }] = useLazyGetProfileQuery();
 	const { data: deadlineInfo, isSuccess: deadlineInfoSuccess, isLoading: deadlineInfoLoading, isError: deadlineInfoError } = useGetDeadlineInfoQuery();
 	const [userTeam, setUserTeam] = useState<Team>();
 	const [teamVerification, setTeamVerification] = useState(false);
 
+	const [update, setUpdate] = useState<ReactNode>(null);
 
 	const [state, setState] = useState({
 		windowWidth: window.innerWidth,
@@ -79,6 +82,20 @@ export const Header = () => {
 			getProfile();
 		}
 	}, [user]);
+
+	useEffect(() => {
+		if(profileFetched && profileResult?.notification?.update) {
+			const lv = localStorage.getItem("lv");
+			if(!lv || dayjs(lv).isBefore(dayjs(profileResult.notification.time))) {
+				setUpdate(parseHTML(profileResult.notification.update));
+			}
+		}
+	}, [profileResult]);
+
+	const onOkUpdate = () => {
+		setUpdate(null);
+		localStorage.setItem("lv", dayjs(profileResult.notification.update).toString());
+	};
 
 	if (user) {
 		allMenuItems.push("logout");
@@ -303,6 +320,15 @@ export const Header = () => {
 					minHeight: "calc(100vh - 176px)"/*isActiveWithin(["new","edit","team","points","transfers"]) ? "calc(100vh - 176px)" : "calc(100vh + 18px)"*/ 
 				}}
 			>
+				<Modal
+					title={"Update"}
+					open={!!update}
+					onOk={() => onOkUpdate()}
+					onCancel={() => onOkUpdate()}
+					cancelButtonProps={{ style: { display: "none" } }}
+				>
+					{update}
+				</Modal>
 				<Outlet />
 			</Layout>
 		</>

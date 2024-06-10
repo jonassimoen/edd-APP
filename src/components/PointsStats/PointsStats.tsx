@@ -6,15 +6,21 @@ declare type StatsOverviewProps = {
     visibleWeekPoints: number | string
     weekWinnerPoints: number
     isPublic: boolean
+	publicTitle?: string
     weekAveragePoints: number
 }
 
 export const PointsStats = (props: StatsOverviewProps) => {
 	const { t } = useTranslation();
-	const { isPublic } = props;
+	const { isPublic, publicTitle } = props;
 
 	return (
 		<StatsStyle>
+			{isPublic && publicTitle && (
+				<Row className="title">
+					{publicTitle}
+				</Row>
+			)}
 			<Row className="stat-row">
 				<Col lg={8} md={8} sm={8} xs={8}>
 					<p className="points">{isNaN(props.weekAveragePoints as any) ? "-" : Math.floor(props.weekAveragePoints as number)}</p>
