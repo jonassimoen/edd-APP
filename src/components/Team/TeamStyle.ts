@@ -64,6 +64,10 @@ export const TeamStyle = styled.div`
         width: calc(100vw + 105%);
         height: 875px;
 
+        @media ${mediaQueries.tabletL} {
+            height: 900px;
+        }
+
         @media ${mediaQueries.desktopL} {
             height: 975px;
         }
@@ -106,6 +110,10 @@ export const TeamStyle = styled.div`
             transform: translateX(-50%);
             clip-path: inset(0 0 26px 0);
             height: 725px;
+    
+            @media ${mediaQueries.tabletL} {
+                height: 750px;
+            }
     
             @media ${mediaQueries.desktopL} {
                 height: 825px;

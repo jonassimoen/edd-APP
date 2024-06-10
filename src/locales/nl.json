@@ -382,7 +382,8 @@
     "rankingsTableTeamColumnName": "Team",
     "rankingsTablePointsColumnName": "Punten",
     "rankingsTitle": "Rangschikking",
-    "rankingsNotAvailableYet": "Ranking niet beschikbaar"
+    "rankingsNotAvailableYet": "Ranking niet beschikbaar",
+    "visitTeam": "Bekijk"
   },
   "transfersPage": {
     "overviewFreeTransfers": "Gratis",
