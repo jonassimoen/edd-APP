@@ -40,22 +40,22 @@ const App = () => {
 		});
 	}, []);
 
-	useEffect(() => {
-		const latestFetch = +JSON.parse(localStorage.getItem("static_latest_fetch"));
-		const players = localStorage.getItem("_static_players");
-		const clubs = localStorage.getItem("_static_clubs");
-		if(!latestFetch || !players || !clubs || latestFetch < new Date(data?.rft).getTime()) {
-			dispatch(playersLoading());
-			dispatch(clubsLoading());
-			getPlayers().unwrap().then(
-				(p: Player[]) => localStorage.setItem("_static_players", JSON.stringify(p)));
-			getClubs().unwrap().then(
-				(c: Club[]) => localStorage.setItem("_static_clubs", JSON.stringify(c)));
-			localStorage.setItem("static_latest_fetch", JSON.stringify(Date.now()));
-		}
-		dispatch(setPlayers(JSON.parse(players)));
-		dispatch(setClubs(JSON.parse(clubs)));
-	}, [data?.rft]);
+	// useEffect(() => {
+	// 	const latestFetch = +JSON.parse(localStorage.getItem("static_latest_fetch"));
+	// 	const players = localStorage.getItem("_static_players");
+	// 	const clubs = localStorage.getItem("_static_clubs");
+	// 	if(!latestFetch || !players || !clubs || latestFetch < new Date(data?.rft).getTime()) {
+	// 		dispatch(playersLoading());
+	// 		dispatch(clubsLoading());
+	// 		getPlayers().unwrap().then(
+	// 			(p: Player[]) => localStorage.setItem("_static_players", JSON.stringify(p)));
+	// 		getClubs().unwrap().then(
+	// 			(c: Club[]) => localStorage.setItem("_static_clubs", JSON.stringify(c)));
+	// 		localStorage.setItem("static_latest_fetch", JSON.stringify(Date.now()));
+	// 	}
+	// 	dispatch(setPlayers(JSON.parse(players)));
+	// 	dispatch(setClubs(JSON.parse(clubs)));
+	// }, [data?.rft]);
 
 	return (
 		<ConfigProvider theme={{

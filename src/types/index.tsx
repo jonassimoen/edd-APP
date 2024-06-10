@@ -136,6 +136,7 @@ type User = {
 	payed?: boolean
 	banned?: boolean
 	teams?: Team[]
+	notification?: any
 }
 
 type Week = {
