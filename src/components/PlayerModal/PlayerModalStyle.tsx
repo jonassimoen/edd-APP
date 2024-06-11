@@ -139,6 +139,27 @@ export const PlayerModalStyle = styled(Modal)<any>`
 				}
 			}
 
+			.warning {
+			    display: flex;
+				width: 100%;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+				height: 50px;
+				background: rgba(255 5 5 / 0.3);
+
+				p.icon {
+					background: red;
+					height: 25px;
+					width: 25px;
+					font-size: 18px;
+					font-weight:700;
+					text-align: center;
+					border-radius: 50%;
+					color: white;
+				}
+			}
+
 			.player-stats {
 				display:flex;
 				padding: 1rem 0;

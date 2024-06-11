@@ -136,7 +136,9 @@
         "selected": "Geselecteerd door",
         "points": "Totaal",
         "price": "Prijs"
-      }
+      },
+      "banned": "Deze speler komt niet in actie op het tornooi.",
+      "injury": "Deze speler is geblesseerd."
     },
     "goalkeeperShort": "DM",
     "defenderShort": "VER",

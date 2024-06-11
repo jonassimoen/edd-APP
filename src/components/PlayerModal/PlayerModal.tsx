@@ -299,6 +299,14 @@ export const PlayerModal = (props: PlayerModalProps) => {
 							</div>
 						)
 					}
+					{
+						(player.ban || player.injury) && 
+							<Row className="warning">
+								<p className="icon">!</p>
+								{player.ban && <p>{t("player.modal.banned")}</p>}
+								{player.injury && <p>{t("player.modal.injury")}</p>}
+							</Row>
+					}
 					<Row className="player-stats">
 						<Col className="stat">
 							<div className="label">{t("player.modal.stats.selected")}</div>

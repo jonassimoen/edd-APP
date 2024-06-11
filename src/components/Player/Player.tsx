@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Badge, NoPlayer, OpponentBadge, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRightAction, Value } from "./PlayerStyle";
+import { Badge, NoPlayer, OpponentBadge, PlayerBg, PlayerStyle, Points, TopLeftAction, TopRightAction, Value, WarningLocation } from "./PlayerStyle";
 import { firstLetterUppercased, getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { PlayerType } from "@/types/PlayerTypes";
@@ -206,7 +206,7 @@ export const Player = (props: PlayerProps) => {
 			setState({ ...state, face: state.faceFallback, });
 		}
 	};
-	
+	console.log(player.short, player && !hasActions && player.injury);
 	return (
 		<PlayerStyle 
 			onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} 
@@ -260,6 +260,13 @@ export const Player = (props: PlayerProps) => {
 				<TopLeftAction onClick={(e: any) => onRemoveHandler(e, player)} bgColor={theme.primaryContrast}>
 					<DeleteIcon />
 				</TopLeftAction>
+			}
+
+			{
+				player && player.injury &&
+				<WarningLocation onClick={null} bgColor={theme.colorLightGray} color={"red"}>
+					<p>!</p>
+				</WarningLocation>
 			}
 
 			{

@@ -195,6 +195,29 @@ export const TopLeftAction = styled.div`
 	top: 0px;
 ` as any;
 
+export const WarningLocation = styled.div`
+	position: absolute;
+	right: 10px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	cursor: pointer;
+	bottom: 20px;
+	border-radius: 50%;
+	background: ${(props: any) => props.bgColor};
+	
+	@media ${mediaQueries.mobileM} {
+		right: 0px;
+	}
+
+	p {
+		font-size: 22px;
+		font-weight: 700;
+		color: ${(props: any) => props.color};
+	}
+	
+` as any;
+
 export const Points = styled.span`
 	font-family: C-Regular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: bold;
