@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContainerStyle, PlayerStyle, SelectGroupStyle, TableStyle } from "./PlayerListStyle";
 import Icon, { EuroOutlined, SearchOutlined, StarOutlined, TagsOutlined } from "@ant-design/icons";
-import { CaptainSvg, PlusSvg, RacketSvg, SetPiecesSvg, StarSvg } from "@/styles/custom-icons";
+import { CaptainSvg, PlusSvg, FormSvg, SetPiecesSvg, StarSvg } from "@/styles/custom-icons";
 import { getPlayerPositionHexColor } from "@/lib/helpers";
 import { theme } from "@/styles/theme";
 import { Input } from "@/components/UI/Input/Input";
@@ -16,7 +16,7 @@ import { useGetMatchesQuery } from "@/services/matchesApi";
 const CaptainIcon = (props: any) => <Icon component={CaptainSvg} {...props} />;
 const SetPiecesIcon = (props: any) => <Icon component={SetPiecesSvg} {...props} />;
 const StarIcon = (props: any) => <Icon component={StarSvg} {...props} />;
-const InForm = (props: any) => <Icon component={RacketSvg} {...props} />;
+const InForm = (props: any) => <Icon component={FormSvg} {...props} />;
 const Injury = (props: any) => <Icon component={PlusSvg} {...props} />;
 
 declare type PlayerListProps = {
