@@ -65,8 +65,8 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	const getTeamInfo = (weekId: number) => {
 		// const pointsWeekId = deadlineInfo.deadlineInfo.displayWeek;
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl", "externalId", "pSelections"];
-		const selectionProps: any[] = ["booster", "played", "points"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "form", "forename", "surname", "portraitUrl", "externalId", "pSelections"];
+		const selectionProps: any[] = ["booster", "played", "points", "value"];
 		Promise.all([getPointsTeam({ teamId: +(id || 0), weekId: weekId })])
 			.then(([result]: any[]) => {
 				result = result.data;
@@ -189,7 +189,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 								day={visibleWeekId}
 								max={displayWeek ? displayWeek : visibleWeekId}
 								min={1}
-								name={currentWeekName?(`general.weeks.${currentWeekName}`):null}
+								name={currentWeekName?t(`general.weeks.${currentWeekName}`):null}
 								onPrev={(e: any) => props.onDayChange(false)}
 								onNext={(e: any) => props.onDayChange(true)}
 							/>
