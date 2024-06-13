@@ -45,7 +45,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 			return;
 		}
 		const playerProps =
-			["id", "name", "short", "positionId", "clubId", "ban", "injury", "form", "forename", "surname", "portraitUrl", "pSelections", "points"];
+			["id", "name", "short", "positionId", "clubId", "banned", "injury", "form", "forename", "surname", "portraitUrl", "pSelections", "points"];
 		const selectionProps: any[] = ["value"];
 		const result = teamResult;
 		const starting = result.players

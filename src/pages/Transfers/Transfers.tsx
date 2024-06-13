@@ -68,7 +68,7 @@ const _Transfers = (props: AbstractTeamType) => {
 	useEffect(() => {
 		if (teamSuccess && matches) {
 			const weekId = props.visibleWeekId;
-			const playerProps = ["id", "externalId", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "portraitUrl"];
+			const playerProps = ["id", "externalId", "name", "short", "positionId", "clubId", "value", "banned", "injury", "form", "forename", "surname", "portraitUrl"];
 			const selectionProps: any[] = [];
 
 			const starting = teamResult.players

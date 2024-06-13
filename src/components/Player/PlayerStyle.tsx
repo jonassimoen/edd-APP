@@ -215,6 +215,13 @@ export const WarningLocation = styled.div`
 		font-weight: 700;
 		color: ${(props: any) => props.color};
 	}
+
+	&.small {
+		bottom: 0px;
+		p {
+			font-size: 16px;
+		}
+	}
 	
 ` as any;
 

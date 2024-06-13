@@ -27,7 +27,7 @@ type Player = {
 	positionId: number
 	externalId: number
 	value: number
-	ban: number
+	banned: number
 	injury: number
 	form: number
 	squadDepth: any

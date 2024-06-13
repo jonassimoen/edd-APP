@@ -39,7 +39,7 @@ export const _Team = (props: AbstractTeamType) => {
 	const application = useSelector((state: StoreState) => state.application);
 
 	const getTeamInfo = (weekId: number) => {
-		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "ban", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "pSelections"];
+		const playerProps = ["id", "name", "short", "positionId", "clubId", "value", "banned", "injury", "form", "forename", "surname", "points", "portraitUrl", "externalId", "pSelections"];
 		const selectionProps: any[] = ["booster", "captain"];
 		const starting = teamResult.players.filter((p: any) => p.selection.starting === 1)
 			.map((p: any) => {

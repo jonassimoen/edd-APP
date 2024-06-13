@@ -263,8 +263,8 @@ export const Player = (props: PlayerProps) => {
 			}
 
 			{
-				player && player.injury &&
-				<WarningLocation onClick={null} bgColor={theme.colorLightGray} color={"red"}>
+				player && !!player.injury || !!player.banned &&
+				<WarningLocation className={avatarOnly && "small"} onClick={null} bgColor={theme.colorLightGray} color={"red"}>
 					<p>!</p>
 				</WarningLocation>
 			}
