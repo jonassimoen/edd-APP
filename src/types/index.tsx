@@ -275,7 +275,7 @@ type BoostersWeekStatus = {
 	fanFavourite: boolean,
 	goalRush: boolean,
 	hiddenGem: boolean,
-	superSub: boolean,
+	superSubs: boolean,
 	freeHit: boolean,
 }
 

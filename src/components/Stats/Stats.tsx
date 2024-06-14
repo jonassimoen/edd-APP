@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { StatsStyle } from "./StatsStyle";
 import { Col, Row } from "../UI/Grid/Grid";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,7 @@ declare type StatsOverviewState = {
 declare type StatsOverviewProps = {
     weekPointsConfirmed?: boolean
     weekId: number
-
+	boosters: BoostersWeekStatus
     visibleWeekPoints: number | string
     visibleWeekRank: number | string
     weekWinnerPoints?: number
@@ -35,7 +35,7 @@ declare type StatsOverviewProps = {
 }
 
 export const Stats = (props: StatsOverviewProps) => {
-	const { weekPointsConfirmed } = props;
+	const { weekPointsConfirmed, boosters } = props;
 	const [state, setState] = useState<StatsOverviewState>({
 		pointsConfirmation: [],
 		transfersModalEnabled: false,
@@ -50,7 +50,7 @@ export const Stats = (props: StatsOverviewProps) => {
 		setState(state => ({ ...state, transfersModalEnabled: false }));
 	};
 
-
+	const boosterUsed = useMemo(() => Object.entries(boosters).filter((val: [string, boolean]) => val[1])?.[0]?.[0], [boosters]);
 
 	return (
 		<StatsStyle>
@@ -68,6 +68,10 @@ export const Stats = (props: StatsOverviewProps) => {
 							</React.Fragment>
 					}
 				</Col>
+			</Row>
+			<Row className="stat">
+				<Col lg={15} md={15} sm={15} xs={15} className="label">{`${t("pointsPage.boosterWeekUsed")} ${props.weekId}`}</Col>
+				<Col lg={9} md={9} sm={9} xs={9}  className="points">{boosterUsed ? t(`boosters.${boosterUsed}`) : "-"}</Col>
 			</Row>
 			<Row className="stat">
 				<Col lg={15} md={15} sm={15} xs={15} className="label">{`${t("pointsPage.overviewWeekPoints")} ${props.weekId}`}</Col>

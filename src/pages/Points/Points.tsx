@@ -135,7 +135,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 				const boosters = {
 					tripleCaptain: result.team.tripleCaptain,
-					superSubs: result.team.superSub,
+					superSubs: result.team.superSubs,
 					freeHit: result.team.freeHit,
 					goalRush: result.team.goalRush,
 					hiddenGem: result.team.hiddenGem,
@@ -161,7 +161,8 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo, boosters } = props;
 
-	const boosterWeekStatus: any = {
+	console.log(boosters.superSubs, visibleWeekId);
+	const boosterWeekStatus: BoostersWeekStatus = {
 		tripleCaptain: boosters.tripleCaptain === visibleWeekId,
 		goalRush: boosters.goalRush === visibleWeekId,
 		hiddenGem: boosters.hiddenGem === visibleWeekId,
@@ -173,7 +174,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 	const captainSelection = useMemo(() => starting.find(player => player && player.id === captainId), [starting, captainId]);
 	const captainBench = useMemo(() => bench.find(player => player && player.id === captainId), [bench, captainId]);
 	// todo: check variable
-	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.minutesPlayed > 0) || (boosterWeekStatus && boosterWeekStatus.bank && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
+	const captainHasPlayed = useMemo(() => !!((captainSelection && captainSelection.pointsOverview && captainSelection.pointsOverview.minutesPlayed > 0) || (boosterWeekStatus && boosterWeekStatus.superSubs && captainBench && captainBench.pointsOverview && captainBench.pointsOverview.time)), [captainBench, captainSelection]);
 	const currentWeekName = useMemo(() => weeks?.find((week: Week) => week.id === visibleWeekId)?.name, [weeks, visibleWeekId]);
 	const startingByPositions = startingListToPositionsList(starting, competition.lineupPositionRows);
 	const isPowerSubEnabled = false;
@@ -279,6 +280,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 							<Col lg={10} md={12} sm={24} xs={24} className="right-col">
 								{/* <Title level={2}>{t("pointsPage.overviewBlockTitle")}</Title> */}
 								<Stats
+									boosters={boosterWeekStatus}
 									visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
 									visibleWeekRank={teamPointsInfo.visibleWeekRank}
 									transfers={teamPointsInfo.transfers}

@@ -377,7 +377,8 @@
       "player": "Speler",
       "extraPoints": "Extra punten"
     },
-    "noBoostersUsed": "Geen boosters gebruikt deze speeldag."
+    "noBoostersUsed": "Geen boosters gebruikt deze speeldag.",
+    "boosterWeekUsed": "Booster speeldag"
   },
   "pageTitle": "Pagina",
   "rankingsPage": {
