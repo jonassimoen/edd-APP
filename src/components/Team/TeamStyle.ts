@@ -122,14 +122,23 @@ export const TeamStyle = styled.div`
         &.m-left::before {
             clip-path: inset(0rem 0rem 8rem 0em);
 
+            @media ${mediaQueries.tabletL} {
+                clip-path: inset(0rem 0rem 12rem 0em);
+            }
+
             @media ${mediaQueries.desktopL} {
-                clip-path: inset(0rem 0rem 4rem 0em);
+                clip-path: inset(0rem 0rem 2rem 0em);
             }
         }
         &.m-right::before {
-            clip-path: inset(0rem 0rem 6rem 0em);
+            clip-path: inset(0rem 0rem 8rem 0em);
+
             @media ${mediaQueries.tabletL} {
-                clip-path: inset(0rem 0rem 4rem 23.15em);
+                clip-path: inset(0rem 0rem 12rem 0em);
+            }
+
+            @media ${mediaQueries.desktopL} {
+                clip-path: inset(0rem 0rem 2rem 23.15em);
             }
         }
     }

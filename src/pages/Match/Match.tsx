@@ -68,12 +68,12 @@ const _MatchContainer = (props: AbstractTeamType) => {
 			{match && clubs &&
 				<MatchStyles>
 					<Row>
-						<Col md={12} sm={24} xs={24} className="left">
+						<Col xl={12} lg={24} md={24} sm={24} xs={24} className="left">
 							<Block>
 								<Title level={2}>
 									{match?.home?.name || t("general.team.tobedetermined")}
 								</Title>
-								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{homeTotalPoints || 0} {t("general.points")}</span>
+								<span className="points">{homeTotalPoints || 0} {t("general.points")}</span>
 								<Team
 									pitchClassName="m-left"
 									widthRatio={15}
@@ -109,12 +109,12 @@ const _MatchContainer = (props: AbstractTeamType) => {
 								/>
 							</Block>
 						</Col>
-						<Col md={12} sm={24} xs={24} className="right">
+						<Col xl={12} lg={24} md={24} sm={24} xs={24} className="right">
 							<Block>
 								<Title level={2}>
 									{match?.away?.name || t("general.team.tobedetermined")}
 								</Title>
-								<span style={{ display: "block", fontSize: "16px", textAlign: "center" }}>{awayTotalPoints || 0} {t("general.points")}</span>
+								<span className="points">{awayTotalPoints || 0} {t("general.points")}</span>
 								<Team
 									pitchClassName="m-right"
 									widthRatio={15}
