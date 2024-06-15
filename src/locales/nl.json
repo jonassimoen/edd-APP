@@ -179,8 +179,8 @@
     "groundDuelsWonMoreThanLostLabel": "Meer grond duels gewonnen dan verloren",
     "bigChancesCreatedLabel": "Grote kansen gecreëerd",
     "bigChancesMissedLabel": "Grote kansen gemist",
-    "errorLeadingToShotLabel": "Fout leidt tot schot",
-    "errorLeadingToGoalLabel": "Fout leidt tot doelpunt",
+    "errorLeadingShotLabel": "Fout leidt tot schot",
+    "errorLeadingGoalLabel": "Fout leidt tot doelpunt",
     "": "",
     "coachShort": "TRA"
   },
