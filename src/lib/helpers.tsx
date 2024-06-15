@@ -301,7 +301,7 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				break;
 			}
 			case "passAccMore85": {
-				const passAcc = player.pointsOverview && player.pointsOverview.totalPasses && player.pointsOverview.accuratePasses / player.pointsOverview.totalPasses || 0;
+				const passAcc = player.pointsOverview && player.pointsOverview.totalPasses && player.pointsOverview.totalPasses > 10 && player.pointsOverview.accuratePasses / player.pointsOverview.totalPasses || 0;
 				if(passAcc && passAcc > 0.85) {
 					pointsOverview.push({action: t("player.passAccOver85Label"), quantity: passAcc.toPrecision(2), points: passAcc > 0.85 ? actionPoints : 0});
 				}

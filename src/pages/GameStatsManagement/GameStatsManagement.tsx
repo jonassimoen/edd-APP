@@ -335,9 +335,9 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 								...ps,
 							};
 						}
-						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0) + 
+						const homeScore = playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.goals || 0) + (val.penaltyScored || 0), 0) + 
 									playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.ownGoals || 0), 0);
-						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0) + 
+						const awayScore = playerStats.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0) + (val.penaltyScored || 0), 0) + 
 							playerStats.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.ownGoals || 0), 0);
 						setState((state: GameStatsManagementState) => ({ ...state, playerStats, awayScore, homeScore }));
 						setPlayerState({ index: 0, open: false });
