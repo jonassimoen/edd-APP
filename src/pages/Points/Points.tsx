@@ -207,7 +207,7 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 								{/* <Title level={2}>{t("pointsPage.statsBlockTitle")} {isPublicRoute ? `"${teamName}"` : ""}</Title> */}
 								{/* {`Managed by ${teamUser?.firstName} ${teamUser?.lastName}`} */}
 								<PointsStats
-									publicTitle={teamName}
+									publicTitle={teamName || `${teamUser.firstName} ${teamUser.lastName}`}
 									visibleWeekPoints={teamPointsInfo.visibleWeekPoints}
 									isPublic={isPublicRoute}
 									weekWinnerPoints={teamPointsInfo.weekWinnerPoints}
