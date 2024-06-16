@@ -142,7 +142,7 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 	useEffect(() => {
 		if(matchStatisticsImportSuccess) {
 			const playersWithImportedStats = playersReduced?.map((p: any) => {
-				const importedStatsPlayer = importedStats?.find(
+				const importedStatsPlayer = importedStats?.players?.find(
 					(s: Statistic) => s.id == p.playerId
 				);
 				return importedStatsPlayer ? { ...p, ...importedStatsPlayer } : p;
@@ -154,6 +154,10 @@ export const GameStatsManagement = (props: GameStatsMangementProps) => {
 				awayScore: playersWithImportedStats?.filter((p: any) => p?.clubId === match.away?.id).reduce((acc: number, val: any) => acc + (val.goals || 0), 0)
 					+ playersWithImportedStats?.filter((p: any) => p?.clubId === match.home?.id).reduce((acc: number, val: any) => acc + (val.ownGoals || 0), 0),
 				playerStats: playersWithImportedStats,
+				goalMinutes: {
+					home: importedStats?.goals[0],
+					away: importedStats?.goals[1],
+				},
 			}));
 		}
 	}, [playersReduced, importedStats]);

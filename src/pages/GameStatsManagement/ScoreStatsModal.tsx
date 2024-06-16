@@ -62,6 +62,7 @@ export const ScoreStatsModal = (props: ScoreStatsProps) => {
 									<Form.Item
 										name={`goal-home-${index}`}
 										label={`Goal ${index + 1}`}
+										initialValue={props.goalMinutes.home[index]}
 									>
 										<InputNumber size={"small"} controls={false} />
 									</Form.Item>
@@ -88,6 +89,7 @@ export const ScoreStatsModal = (props: ScoreStatsProps) => {
 									<Form.Item
 										name={`goal-away-${index}`}
 										label={`Goal ${index + 1}`}
+										initialValue={props.goalMinutes.away[index]}
 									>
 										<InputNumber size={"small"} controls={false} />
 									</Form.Item>

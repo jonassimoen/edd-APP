@@ -80,7 +80,7 @@ export const matchesApi = createApi({
 			invalidatesTags: (res, err, arg) => [{ type: "MatchStatistics", id: arg.matchId }, { type: "Match", id: arg.matchId }, "PlayerStats"],
 		}),
 
-		importMatchStatistics: builder.query<Statistic[], number>({
+		importMatchStatistics: builder.query<{players: Statistic[], goals: number[][]}, number>({
 			query: (matchId) => `${matchId}/stats/import`,
 			providesTags: (res, err, arg) =>
 				res
