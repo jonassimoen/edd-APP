@@ -33,7 +33,6 @@ export const Home = (props: HomeProps) => {
 		),
 	};
 	const qs = new URLSearchParams(options);
-	console.log(user, team);
 	return (
 		<HomeStyle>
 			{

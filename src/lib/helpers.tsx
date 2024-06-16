@@ -430,7 +430,6 @@ export const getPointsOverviewList = (player: any, t: TFunction<"translation", u
 				// This is the case for the following stats
 				//	GOALS - ASSISTS - OWN GOALS - PEN. SAVED - LINE CLEARANCE - ERR. SHOT - ERR. GOAL - BC MISSED - BC CREATED - PEN. MISSED - PEN. WON - PEN. COMMITED
 				const amount = player.pointsOverview && player.pointsOverview[actionName] || 0;
-				console.log(player.short, actionName);
 				if (amount) {
 					pointsOverview.push({ action: t(`player.${actionName}Label`), quantity: amount, points: amount * actionPoints });
 				}

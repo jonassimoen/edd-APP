@@ -161,7 +161,6 @@ export const _TeamPoints = (props: AbstractTeamType) => {
 
 	const { starting, bench, initializedExternally, teamName, teamUser, captainId, viceCaptainId, teamPointsInfo, boosters } = props;
 
-	console.log(boosters.superSubs, visibleWeekId);
 	const boosterWeekStatus: BoostersWeekStatus = {
 		tripleCaptain: boosters.tripleCaptain === visibleWeekId,
 		goalRush: boosters.goalRush === visibleWeekId,

@@ -206,7 +206,6 @@ export const Player = (props: PlayerProps) => {
 			setState({ ...state, face: state.faceFallback, });
 		}
 	};
-	console.log(player.short, player && !hasActions && player.injury);
 	return (
 		<PlayerStyle 
 			onClick={(e: any) => onPlayerClick(!hasInactiveOverlay)} 
