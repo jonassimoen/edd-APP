@@ -63,6 +63,10 @@ export const RulesStyles = styled.div`
 				font-size: 18px;
 				color: rgba(0,0,0,0.6);
 		}
+
+		img.totmd {
+			max-height: 75vh;
+		}
 	}
 `;
 

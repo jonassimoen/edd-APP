@@ -44,7 +44,7 @@ export const Rules = () => {
 		{
 			key: "teamotm",
 			label: t("rules.totmd"),
-			children: <Image src={`${competition.assetsCdn}/general/teamofthematchday.jpg`} preview={false} height={"75vh"} />
+			children: <Image className="totmd" src={`${competition.assetsCdn}/general/teamofthematchday.jpg`} preview={false} />
 		},
 		{
 			key: "matchdays",
