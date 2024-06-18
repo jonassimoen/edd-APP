@@ -351,7 +351,8 @@
       "success": "Opstelling team opgeslagen",
       "failed": "Opstelling team mislukt"
     },
-    "playersSameClub": "Spelers zelfde team"
+    "playersSameClub": "Spelers zelfde team",
+    "noViceSelected": "Geen vicekapitein geselecteerd."
   },
   "players": {
     "noneFound": "Geen spelers gevonden"

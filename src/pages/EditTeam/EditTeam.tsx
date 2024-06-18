@@ -27,7 +27,7 @@ import { useGetClubsQuery } from "@/services/clubsApi";
 import Title from "antd/es/typography/Title";
 
 const _EditTeam = (props: AbstractTeamType) => {
-	const { user, teams } = useAppSelector((state) => state.userState);
+	const { user, teams } = useAppSelector((state: { userState: any; }) => state.userState);
 	const [t] = useTranslation();
 	const { id } = useParams();
 	const { data: teamResult, isSuccess: teamSucces, isError: teamError, error: teamErrorData } = useGetTeamQuery(+id || 0);

@@ -1,3 +1,4 @@
+import { mediaQueries } from "@/styles/media-queries";
 import styled from "@/styles/styled-components";
 import { theme } from "@/styles/theme";
 
@@ -37,5 +38,13 @@ export const TeamStyle = styled.div`
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+	}
+
+	.captain-error {
+		background: rgba(250, 200, 200);
+		color: darkred;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		text-align: center;
 	}
 `;

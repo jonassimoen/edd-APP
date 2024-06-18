@@ -19,7 +19,7 @@ import { Col, Row } from "@/components/UI/Grid/Grid";
 import { Calendar } from "@/components/Calendar/Calendar";
 import { Button } from "@/components/UI/Button/Button";
 import { useAppSelector } from "@/reducers";
-import { SaveOutlined } from "@ant-design/icons";
+import { SaveOutlined, WarningOutlined } from "@ant-design/icons";
 import { useGetMatchesQuery } from "@/services/matchesApi";
 import { useGetDeadlineInfoQuery } from "@/services/weeksApi";
 import { Block } from "@/components/Block/Block";
@@ -127,12 +127,19 @@ export const _Team = (props: AbstractTeamType) => {
 							onClick={(e: any) => props.onTeamSelectionsUpdate(teamResult.team.id, props.visibleWeekId)}
 							type="primary"
 							loading={teamLoading || clubsLoading || props.savingTeamPending}
-							disabled={teamLoading || clubsLoading || props.savingTeamPending}
+							disabled={teamLoading || clubsLoading || props.savingTeamPending || !(props.viceCaptainId && props.captainId)}
 							size="large">
 							<SaveOutlined style={{ marginRight: "10px" }} />
 							{t("team.saveTeam")}
 						</Button>
 					</div>
+					{(!props.viceCaptainId || !props.captainId) && 
+						<div className="captain-error">
+							<WarningOutlined style={{marginRight: "2rem"}} />
+							{!props.viceCaptainId ? t("team.noViceSelected") : !props.captainId ? t("team.noCaptainSelected") : null}
+							<WarningOutlined style={{marginLeft: "2rem"}} />
+						</div>
+					}
 					{
 						clubs && matches && (
 							<>
