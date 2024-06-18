@@ -86,7 +86,7 @@ export const Header = () => {
 	useEffect(() => {
 		if(profileFetched && profileResult?.notification?.update) {
 			const lv = localStorage.getItem("lv");
-			if(!lv || dayjs(lv).isBefore(dayjs(profileResult.notification.time))) {
+			if(!lv || !dayjs(lv).isValid() || dayjs(lv).isBefore(dayjs(profileResult.notification.time))) {
 				setUpdate(parseHTML(profileResult.notification.update));
 			}
 		}
@@ -94,7 +94,7 @@ export const Header = () => {
 
 	const onOkUpdate = () => {
 		setUpdate(null);
-		localStorage.setItem("lv", dayjs(profileResult.notification.update).toString());
+		localStorage.setItem("lv", dayjs(profileResult.notification.time).toString());
 	};
 
 	if (user) {
