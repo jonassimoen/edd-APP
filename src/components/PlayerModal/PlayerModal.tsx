@@ -6,7 +6,7 @@ import { theme } from "@/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useEffect, useMemo } from "react";
 import Icon from "@ant-design/icons";
-import { AddButtonSvg, CaptainButtonSvg, DeleteButtonSvg, RollBackSvg, SuperSubsSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
+import { AddButtonSvg, CaptainButtonSvg, DeleteButtonSvg, FanFavouriteSvg, RollBackSvg, SuperSubsSvg, SwapButtonSvg, ViceCaptainButtonSvg } from "@/styles/custom-icons";
 import { GoalRushSvg, HiddenGemSvg, TripleCaptSvg } from "@/styles/custom-icons";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const BoosterIcons: {[type: string]: () => JSX.Element} = {
 	"GoalRush": GoalRushSvg,
 	"HiddenGem": HiddenGemSvg,
 	"SuperSubs": SuperSubsSvg,
-	"FanFavourite": TripleCaptSvg,
+	"FanFavourite": FanFavouriteSvg,
 };
 
 export const PlayerModal = (props: PlayerModalProps) => {
