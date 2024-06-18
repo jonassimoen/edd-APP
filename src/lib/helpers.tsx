@@ -196,7 +196,7 @@ const PlayerActionsPoints: any = {
 	blocksPerThree: [0, 1, 1, 1, 1],
 	interceptionsPerFive: [0, 1, 1, 1, 1],
 	tacklesPerThree: [0, 1, 1, 1, 1],
-	lineClearance: [0, 3, 3, 3, 3],
+	lineClearances: [0, 3, 3, 3, 3],
 	// Dribbles
 	successDribblesPerThree: [0, 1, 1, 1, 1],
 	pastDribblesPerThree: [0, -1, -1, -1, -1],
