@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { RulesCollapse, RulesStyles } from "./RulesStyle";
 import { Block } from "@/components/Block/Block";
 import parseHTML from "html-react-parser";
-import { CollapseProps } from "antd";
+import { CollapseProps, Image } from "antd";
 import { DownCircleOutlined, UpCircleOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 type RulesState = {
 	text: string
@@ -15,6 +16,7 @@ type RulesState = {
 
 export const Rules = () => {
 	const { data: page, isLoading: pageLoading } = useGetPageQuery("rules");
+	const {competition } = useSelector((state: StoreState) => state.application);
 	const [state, setState] = useState<RulesState>({
 		text: "",
 	});
@@ -39,6 +41,11 @@ export const Rules = () => {
 	}, [page]);
 
 	const items: CollapseProps["items"] = [
+		{
+			key: "teamotm",
+			label: t("rules.totmd"),
+			children: <Image src={`${competition.assetsCdn}/general/teamofthematchday.jpg`} preview={false} height={"75vh"} />
+		},
 		{
 			key: "matchdays",
 			label: t("rules.matchdays"),

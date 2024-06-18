@@ -483,7 +483,8 @@
     "boosters": "Boosters",
     "points": "Punten",
     "prices": "Prijzen",
-    "legal": "Algemeen"
+    "legal": "Algemeen",
+    "totmd": "Team of the Matchday"
   },
   "deadlines": {
     "notFound": "Geen deadlines gevonden."
