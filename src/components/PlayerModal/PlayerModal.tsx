@@ -254,7 +254,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 										null
 								}
 								{
-									props.onCaptainSelect ?
+									props.onCaptainSelect && !player.booster ?
 										<div className="action" onClick={onCaptainSelect}>
 											<CaptainIcon />
 											{t("player.btnCaptainBadgeLabel")}
@@ -262,7 +262,7 @@ export const PlayerModal = (props: PlayerModalProps) => {
 										null
 								}
 								{
-									props.onViceCaptainSelect ?
+									props.onViceCaptainSelect && !player.booster ?
 										<div className="action" onClick={onViceCaptainSelect}>
 											<ViceCaptainIcon />
 											{t("player.btnViceCaptainBadgeLabel")}
