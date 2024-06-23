@@ -149,7 +149,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 		[team, deadlineInfo]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	// TODO
-	const wildCardOrFreeHitEnabled = useMemo(() => false/*boosters.wildCard === deadlineWeek || boosters.freeHit === deadlineWeek*/, [deadlineInfo]);
+	const wildCardOrFreeHitEnabled = useMemo(() => boosters.freeHit === deadlineWeek, [deadlineInfo, boosters]);
 	const startingByPositions = startingListToPositionsList([].concat(starting as any, bench as any), [2, 5, 5, 3]);
 
 	if(teamError) {
@@ -171,7 +171,7 @@ const _EditTeam = (props: AbstractTeamType) => {
 				team && starting && starting.length === 0 && <Navigate to={{ pathname: "/new" }} />
 			}
 			{
-				deadlineWeek && team && (firstPlayingWeekPassed && gameOfficialyStarted && !wildCardOrFreeHitEnabled)
+				deadlineWeek && team && initializedExternally &&  (firstPlayingWeekPassed && gameOfficialyStarted && !wildCardOrFreeHitEnabled)
 				&& <Navigate to={{ pathname: `/transfers/${team.id}` }} />
 			}
 			{

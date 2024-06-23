@@ -225,7 +225,7 @@ const _Transfers = (props: AbstractTeamType) => {
 
 	const team = useMemo(() => teamResult && teamResult.team, [teamResult]);
 	const notTeamOwner = useMemo(() => team && team.userId && user && (team.userId !== user.id), [team, user]);
-	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId && props.visibleWeekId >= competition.officialStartWeek, [deadlineInfo, props.visibleWeekId]);
+	const gameStarted = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId && props.visibleWeekId > competition.officialStartWeek, [deadlineInfo, props.visibleWeekId]);
 	const deadlineWeek = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo && props.visibleWeekId, [deadlineInfo, props.visibleWeekId]);
 	const deadlineFreeTransfers = useMemo(() => deadlineInfo && deadlineInfo.deadlineInfo  && deadlineInfo.deadlineInfo.fT, [deadlineInfo]);
 	
