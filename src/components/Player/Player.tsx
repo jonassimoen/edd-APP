@@ -233,7 +233,7 @@ export const Player = (props: PlayerProps) => {
 				opponentInfo ?
 					<OpponentBadge color={pointsColor} bgColor={pointsBgColor}>
 						<p>
-							{`v ${opponentInfo.opponentShort} (${opponentInfo.playing})`}
+							{`v ${opponentInfo?.opponentShort || t("tbd")} (${opponentInfo?.playing})`}
 						</p>
 					</OpponentBadge> : null
 			}
