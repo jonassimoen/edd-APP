@@ -182,7 +182,7 @@ export const PlayerList = (props: PlayerListProps) => {
 							type={playerType}
 							modalEnabled={true}
 							upcomingMatches={upcomingMatches}
-							club={clubs.find((c: Club) => c?.id === record.clubId )}
+							club={clubs.find((c: Club) => c?.id === record?.clubId )}
 							isPickable={isPickable}
 							onPick={onPick}
 							{...imgProps}
@@ -206,7 +206,7 @@ export const PlayerList = (props: PlayerListProps) => {
 				let opponentInfo: any = { playing: "", short: "" };
 				const weekMatch = currentWeekMatches?.filter((m: Match) => [m.home?.id, m.away?.id].includes(record.clubId));
 				if(weekMatch?.length) {
-					const oppId = weekMatch[0].home.id === record.clubId ? weekMatch[0].away.id : weekMatch[0].home.id;
+					const oppId = weekMatch[0].home.id === record.clubId ? weekMatch[0]?.away?.id : weekMatch[0]?.home?.id;
 					const club = clubs.find((c: Club) => c.id === oppId);
 					opponentInfo.short = club ? club.short : "";
 					opponentInfo.playing = weekMatch[0].home.id === record.clubId ? t("player.opponentHome") : t("player.opponentAway");
