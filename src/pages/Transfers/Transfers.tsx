@@ -114,7 +114,10 @@ const _Transfers = (props: AbstractTeamType) => {
 				return competition.budget - playersValue;
 			};
 
-			const budget = (teamResult.team.budget !== null) ? teamResult.team.budget : getPlayersValueWithTransfers(teamResult.players);
+			// const budget = result.team.budget !== null
+			// 	? result.team.budget
+			// 	: result.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
+			const budget = teamResult.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
 
 			const boosters = {
 				tripleCaptain: teamResult.team.tripleCaptain,

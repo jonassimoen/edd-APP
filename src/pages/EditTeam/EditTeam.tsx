@@ -68,9 +68,10 @@ const _EditTeam = (props: AbstractTeamType) => {
 		captainId = result.players.find((player: any) => player.selection.captain === 1)?.id;
 		viceCaptainId = result.players.find((player: any) => player.selection.captain === 2)?.id;
 
-		const budget = result.team.budget !== null
-			? result.team.budget
-			: result.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
+		// const budget = result.team.budget !== null
+		// 	? result.team.budget
+		// 	: result.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
+		const budget = teamResult.players.reduce((acc: any, player: any) => acc - player.value, competition.budget);
 
 		const boosters = {
 			tripleCaptain: teamResult.team.tripleCaptain,
