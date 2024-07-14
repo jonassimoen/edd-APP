@@ -94,6 +94,7 @@ export const _Team = (props: AbstractTeamType) => {
 	const gameInProgress = useMemo(() => deadlineInfoSuccess && !!deadlineInfo.deadlineInfo.deadlineWeek, [deadlineInfo]);
 	const boostedPlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => p?.booster), [props.starting, props.bench]);
 	const unboostedEligiblePlayers = useMemo(() => props.starting?.concat(props.bench).filter((p: any) => !p?.booster && !p.captain), [props.starting, props.bench]);
+	const endGame = useMemo(() => deadlineInfo?.deadlineInfo?.displayWeek == deadlineInfo?.deadlineInfo?.endWeek, [deadlineInfo]);
 	
 	if(teamError) {
 		return (
@@ -111,7 +112,7 @@ export const _Team = (props: AbstractTeamType) => {
 				teamResult && (
 					!teamResult.team && <Navigate to="/home" /> ||
 					teamResult.team && notTeamOwner && <Navigate to={`/public/${id}`} /> ||
-					teamResult.team && teamResult.players && teamResult.players.length === 0 && <Navigate to="/new" /> ||	
+					teamResult.team && teamResult.players && teamResult.players.length === 0 && !endGame &&  <Navigate to="/new" /> ||	
 					!gameInProgress && <Navigate to={`/points/${id}`} />
 					
 				)
