@@ -118,6 +118,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 	const startingPicked = useMemo(() => starting?.filter(player => !!player.id), [props.starting]);
 	const benchPicked = useMemo(() => bench?.filter(player => !!player.id), [props.bench]);
 	const totalPlayersPicked = useMemo(() => (startingPicked?.length || 0) + (benchPicked?.length || 0), [startingPicked, benchPicked]);
+	const endGame = useMemo(() => deadlineInfo?.deadlineInfo?.displayWeek == deadlineInfo?.deadlineInfo?.endWeek, [deadlineInfo]);
 	const team = user && user.teams && user.teams[0];
 
 	const nameRef = useRef(null);
@@ -167,6 +168,7 @@ const _NewTeam = (props: AbstractTeamType) => {
 
 	return (
 		<NewTeamStyle>
+			{endGame && <Navigate to={{ pathname: `/points/${team.id}` }} />}
 			{team && team.id && hasPlayers ? <Navigate to={{ pathname: `/team/${team.id}` }} /> :
 				(playersSuccess && clubs) &&
 				<>
