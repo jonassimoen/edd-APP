@@ -10,11 +10,12 @@ import { title } from "process";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { GeneralManagementStyle } from "./GeneralManagementStyle";
+import { useGetClubsQuery } from "@/services/clubsApi";
 
 export const GeneralManagement = () => {
 	const {data} = useGetGeneralInfoQuery() as any;
 	const [open, setOpen] = useState<boolean>(false);
-	const application = useSelector((state: StoreState) => state.application);
+	const { data: clubs, isLoading: clubsLoading, isError: clubsError, isSuccess: clubsSucces } = useGetClubsQuery();
 	const [form] = Form.useForm();
 	const [setWinner] = usePostClubWinnerMutation();
 
@@ -87,7 +88,7 @@ export const GeneralManagement = () => {
 							keyProperty="value"
 							textProperty="label"
 							// values={[{value: 1, label: "A"},{value: 2, label: "B"},{value: 3, label: "C"}]}
-							values={application.clubs.map((c: Club) => ({value: c.id, label: c.name }))}
+							values={clubs?.map((c: Club) => ({value: c.id, label: c.name }))}
 						/>
 					</FormItem>
 				</Form>
